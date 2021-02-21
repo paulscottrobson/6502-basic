@@ -1,0 +1,13 @@
+;
+;	Automatically generated
+;
+../source/error/errorhandler.asm
+../source/main/00start.asm
+../source/main/imath/int32binary.asm
+../source/main/imath/int32compare.asm
+../source/main/imath/int32divide.asm
+../source/main/imath/int32fromstr.asm
+../source/main/imath/int32math.asm
+../source/main/imath/int32multiply.asm
+../source/main/imath/int32tostr.asm
+../source/main/imath/int32unary.asm

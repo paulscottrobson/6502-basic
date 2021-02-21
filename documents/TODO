@@ -1,9 +1,6 @@
 Todo
 ====
 
-Write code to generate errors file (collection of constants to use with Error macro)
-e.g. Error SyntaxError
-
 Tokens class, constants, range etc.
 Token tables class (initially no generator), split the sources up.
 Tokenising class 

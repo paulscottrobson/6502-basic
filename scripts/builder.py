@@ -5,6 +5,7 @@
 #		Author:		Paul Robson (paul@robsons.org.uk)
 #		Date:		21st February 2021
 #		Purpose:	Builds files that glue system together
+#					Creates list of files inlcuded for scanning.
 #
 # *****************************************************************************
 # *****************************************************************************
@@ -32,6 +33,7 @@ groups = """
 	tokeniser
 """
 #
+sourceList = []															# list of asm files.
 sourceDir = ".."+os.sep+"source"										# where the source is.
 #
 mainIncludes = [] 														# includes for root assembler file
@@ -63,6 +65,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 							m = re.match("^(.*?)\\:\\s*\\;\\;\\s*\\<(.*?)\\>\\s*$",s)
 							assert m is not None,"Bad line "+s
 							vectors[m.group(2).strip()] = m.group(1).strip()
+					sourceList.append(fn)								# add to source list.
 
 	comFiles.sort()														# put files into alphabetical order.
 	#
@@ -108,4 +111,11 @@ h.write(header)
 for i in mainIncludes:
 	h.write('\t.include "{0}"\n'.format(i))
 h.close()
-
+#
+#		Write out files
+#
+h = open(sourceDir+os.sep+"files.list","w")
+h.write(header)
+sourceList.sort()
+h.write("\n".join(sourceList))
+h.close()

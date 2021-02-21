@@ -12,7 +12,7 @@
 		.section code
 Start:		
 		debug
-		Error 	42
+		Error 	Syntax
 		jmp 	Start
 
 		.send code

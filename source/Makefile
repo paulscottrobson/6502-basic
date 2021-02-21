@@ -25,6 +25,7 @@ run : $(APPNAME)
 	$(EMULATOR) $<
 
 $(APPNAME) : $(SOURCEDIR)basic.asm 
+	python ..$(S)/scripts$(S)errorgen.py
 	python ..$(S)/scripts$(S)builder.py
 	$(ASM) $(ASMOPTS) -o $@ $^
 

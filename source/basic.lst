@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -q -c -L basic.lst -l basic.lbl -Wall -o basic.prg ../source/basic.asm
-; Sun Feb 21 07:49:04 2021
+; Sun Feb 21 12:57:17 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -75,6 +75,15 @@
 ;******  Processing file: ../source/error/errorhandler.inc
 
 
+;******  Processing file: ../source/error/../generated/errorid.inc
+
+=1					ErrorID_Syntax = 1 ; Syntax Error
+=2					ErrorID_Stop = 2 ; Stop
+=3					ErrorID_BadType = 3 ; BadType
+
+;******  Return to file: ../source/error/errorhandler.inc
+
+
 ;******  Return to file: ../source/basic.asm
 
 
@@ -109,7 +118,7 @@
 
 .1000					Start:
 >1000	db						.byte 	$DB
-.1001	a2 2a		ldx #$2a			ldx 	#42
+.1001	a2 01		ldx #$01			ldx 	#ErrorID_Syntax
 .1003	20 09 10	jsr $1009			jsr 	ErrorHandler
 .1006	4c 00 10	jmp $1000			jmp 	Start
 .1010					test0:
