@@ -1,0 +1,1 @@
+64tass -L test.lst -o test.prg test.asm

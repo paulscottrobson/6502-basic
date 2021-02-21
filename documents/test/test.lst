@@ -1,0 +1,21 @@
+
+; 64tass Turbo Assembler Macro V1.55.2200 listing file
+; 64tass -L test.lst -o test.prg test.asm
+; Sat Feb 20 21:21:47 2021
+
+;Offset	;Hex		;Monitor	;Source
+
+;******  Processing input file: test.asm
+
+.1000	a9 01		lda #$01		lda 	#1
+.1002	a0 02		ldy #$02		ldy 	#2
+.1004	a2 0d		ldx #$0d		ldx 	#13
+.1006	20 12 10	jsr $1012		jsr 	Editor
+.1009	a5 04		lda $04			lda 	$04
+.100b	a4 05		ldy $05			ldy 	$05
+.100d	a2 0d		ldx #$0d		ldx 	#13
+.100f	20 12 10	jsr $1012		jsr 	Editor
+.1012					Editor:
+.1012	60		rts			rts
+
+;******  End of listing
