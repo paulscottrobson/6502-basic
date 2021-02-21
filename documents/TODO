@@ -1,9 +1,9 @@
 Todo
 ====
 
-Token tables class (initially no generator), split the sources up.
-Tokenising class 
+Tokenising worker class 
 Create Dummy Floating point code.
 Write basic evaluator, no variables, then A-Z variables.
+Scanner for operators.
 Add Unary functions.
 Write basic runner, and start 

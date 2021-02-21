@@ -47,7 +47,6 @@ class Tokens(object):
 	#		Add a new token.
 	#
 	def defineToken(self,groupID,tokenID,token,typeID):
-		print("<<"+token+">>")
 		l = groupID*1024+tokenID
 		assert l not in self.tokens
 		self.tokens[l] = { "group":groupID,"token":token,"id":tokenID,"longid":l,"type":typeID }
@@ -80,6 +79,8 @@ class Tokens(object):
 	def getFromID(self,groupID,tokenID):
 		n = groupID*1024+tokenID
 		return self.tokens[n] if n in self.tokens else None
+	def getAllTokens(self):
+		return self.tokens
 	#
 	#		Source
 	#
@@ -143,9 +144,9 @@ class Tokens(object):
 
 Tokens.SYSTEM =   0x40								# shifts, eol etc.
 Tokens.BINARY =   0x00 								# binary operator 00-0F
-Tokens.UNARY =    0x80 								# unary function
-Tokens.INCDEPTH = 0x12 								# structure level adjusters
-Tokens.DECDEPTH = 0x10
+Tokens.UNARY =    0x10 								# unary function
+Tokens.INCDEPTH = 0x82 								# structure level adjusters
+Tokens.DECDEPTH = 0x80
 Tokens.STANDARD = 0x20 								# ordinary token.
 
 if __name__ == "__main__":
