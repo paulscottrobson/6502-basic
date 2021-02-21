@@ -19,6 +19,9 @@
 temp0: 	.fill 	2
 temp1: 	.fill 	2
 temp2: 	.fill 	2
+
+tempShort:	
+		.fill 	1
 		.send zeropage
 
 ; ************************************************************************************************
@@ -29,11 +32,22 @@ temp2: 	.fill 	2
 
 		.section storage
 
+; ************************************************************************************************
+;
+;		type bits
+;		7 		1 indicates reference, 0 constant
+;		6 		0 indicates number, 1 string
+;		0 		0 indicates integer, 1 floating point
+;
+; ************************************************************************************************
+
 esType:	.fill 	StackSize
+
 esInt0:	.fill 	StackSize
 esInt1:	.fill 	StackSize
 esInt2:	.fill 	StackSize
 esInt3:	.fill 	StackSize
+
 esExp:	.fill 	StackSize
 
 esMant0 = esInt0

@@ -12,3 +12,27 @@
 debug 		.macro
 		.byte 	$DB
 		.endm
+
+dispatch 	.macro
+		jmp 	(\1,x)
+		.endm
+
+pshy 	.macro
+		tya
+		pha
+		.endm
+
+puly 	.macro
+		pla
+		tay
+		.endm
+
+pshx 	.macro
+		txa
+		pha
+		.endm
+
+pulx 	.macro
+		pla
+		tax
+		.endm

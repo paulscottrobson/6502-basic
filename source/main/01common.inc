@@ -14,7 +14,7 @@
 		* = $800
 		.dsection storage
 
-		* = $2000
+		* = $1000
 		.dsection code
 
 StackSize = 8
