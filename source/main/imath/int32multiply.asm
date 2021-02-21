@@ -15,24 +15,24 @@
 ;
 ; *****************************************************************************
 
-Int32Multiply:
+MInt32Multiply:
 		inx 								; copy 2nd -> 3rd
-		jsr 	Int32CopyUp
+		jsr 	MInt32CopyUp
 		dex 	
-		jsr 	Int32CopyUp 				; copy 1st -> 2nd
-		jsr 	Int32False 					; zero 1st.
+		jsr 	MInt32CopyUp 				; copy 1st -> 2nd
+		jsr 	MInt32False 					; zero 1st.
 _I32Loop:
 		lda 	esInt0+2,x 					; get low bit of 3rd
 		and 	#1
 		beq 	_I32NoAdd 					; if set
-		jsr 	Int32Add 					; add 2nd to 1st.
+		jsr 	MInt32Add 					; add 2nd to 1st.
 _I32NoAdd:
 		inx 								; shift 2nd left
-		jsr 	Int32ShiftLeft		
+		jsr 	MInt32ShiftLeft		
 		inx  								; shift 3rd right
-		jsr 	Int32ShiftRight
+		jsr 	MInt32ShiftRight
 		;
-		jsr 	Int32Zero 					; check if zero.
+		jsr 	MInt32Zero 					; check if zero.
 		php 								; save status bits
 		dex 	 							; point back to 1st
 		dex 		
@@ -46,7 +46,7 @@ _I32NoAdd:
 ;
 ; *****************************************************************************
 
-Int32CopyUp:
+MInt32CopyUp:
 		lda 	esInt0,x
 		sta 	esInt0+1,x
 		lda 	esInt1,x

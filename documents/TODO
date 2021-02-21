@@ -1,0 +1,13 @@
+Todo
+====
+
+Write code to generate errors file (collection of constants to use with Error macro)
+e.g. Error SyntaxError
+
+Tokens class, constants, range etc.
+Token tables class (initially no generator), split the sources up.
+Tokenising class 
+Create Dummy Floating point code.
+Write basic evaluator, no variables, then A-Z variables.
+Add Unary functions.
+Write basic runner, and start 

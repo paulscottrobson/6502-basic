@@ -15,20 +15,20 @@
 ;
 ; *****************************************************************************
 
-Int32Equal:
+MInt32Equal:
 		lda 	esInt0,x
 		cmp 	esInt0+1,x
-		bne 	Int32CFail
+		bne 	MInt32CFail
 		lda 	esInt1,x
 		cmp 	esInt1+1,x
-		bne 	Int32CFail
+		bne 	MInt32CFail
 		lda 	esInt2,x
 		cmp 	esInt2+1,x
-		bne 	Int32CFail
+		bne 	MInt32CFail
 		lda 	esInt3,x
 		cmp 	esInt3+1,x
-		bne 	Int32CFail
-Int32CSucceed:
+		bne 	MInt32CFail
+MInt32CSucceed:
 		sec
 		rts
 
@@ -38,7 +38,7 @@ Int32CSucceed:
 ;
 ; *****************************************************************************
 
-Int32Less:
+MInt32Less:
 		sec
 		lda		esInt0,x
 		sbc 	esInt0+1,x		
@@ -51,7 +51,7 @@ Int32Less:
 		bvc 	_I32LNoOverflow
 		eor 	#$80
 _I32LNoOverflow		
-		bmi 	Int32CSucceed
-Int32CFail:
+		bmi 	MInt32CSucceed
+MInt32CFail:
 		clc
 		rts

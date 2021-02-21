@@ -15,8 +15,8 @@ else
 include ../documents/general.make
 endif
 
-APPNAME = action.prg
-ASMOPTS = -q -c -L action.lst -l action.lbl -Wall
+APPNAME = basic.prg
+ASMOPTS = -q -c -L basic.lst -l basic.lbl -Wall
 .PHONY: all run
 
 all : $(APPNAME)
@@ -24,8 +24,7 @@ all : $(APPNAME)
 run : $(APPNAME)
 	$(EMULATOR) $<
 
-$(APPNAME) : $(SOURCEDIR)action.asm 
+$(APPNAME) : $(SOURCEDIR)basic.asm 
+	python ..$(S)/scripts$(S)builder.py
 	$(ASM) $(ASMOPTS) -o $@ $^
-	$(CCOPY) $(APPNAME) ..$(S)bin
-	$(CCOPY) action.lbl ..$(S)bin
 

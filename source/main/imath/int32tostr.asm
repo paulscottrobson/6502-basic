@@ -10,7 +10,7 @@
 ; *****************************************************************************
 
 		.section storage
-IToSCount:	.fill 	1						; count of converted characters
+MCharCount:	.fill 	1						; count of converted characters
 		.send storage
 
 ; *****************************************************************************
@@ -22,11 +22,11 @@ IToSCount:	.fill 	1						; count of converted characters
 ;
 ; *****************************************************************************
 
-Int32ToString:
+MInt32ToString:
 		pha 								; save base
 		sta 	tempShort 					; save target base.
 		lda 	#0
-		sta 	IToSCount 					; clear character count.
+		sta 	MCharCount 					; clear character count.
 		pshy 								; save Y on the stack.
 		;
 		lda 	tempShort 					; check if we are signed conversion
@@ -36,36 +36,36 @@ Int32ToString:
 		bpl 	_I32TSNoFlip
 		;
 		lda 	#"-" 						; write a '-' prefix out.
-		jsr 	I32WriteCharacter 			
-		jsr 	Int32Negate 				; negate the value.
+		jsr 	MI32WriteCharacter 			
+		jsr 	MInt32Negate 				; negate the value.
 _I32TSNoFlip:
 		pla 								; get the base back
 		and 	#$7F 						; clear the sign flag so it's just a base now.		
 _I32TSUnsigned:		
-		jsr 	I32DivideWrite 				; recursive code to output string.
+		jsr 	MI32DivideWrite 				; recursive code to output string.
 		puly 								; restore YA
 		pla
 		rts
 ;
 ; 		Divide value by base in A ; if result is non-zero do it again, then output the modulus.
 ;
-I32DivideWrite:
+MI32DivideWrite:
 		pha 								; save the divisor/base
 		inx 								; write in the dividing position.
-		jsr 	Int32Set8Bit
+		jsr 	MInt32Set8Bit
 		dex
-		jsr 	Int32UDivide 				; divide number by base.
+		jsr 	MInt32UDivide 				; divide number by base.
 		;
 		pla 								; get the base into Y
 		tay
 		lda 	esInt0+2,x 					; get the remainder and push on the stack.
 		pha
 		;
-		jsr 	Int32Zero 					; is the result zero ?
+		jsr 	MInt32Zero 					; is the result zero ?
 		beq 	_I32NoRecurse 				; if so, don't recurse.
 		;
 		tya 								; put base into A
-		jsr 	I32DivideWrite 				; and jsr the dividor recursively.
+		jsr 	MI32DivideWrite 				; and jsr the dividor recursively.
 _I32NoRecurse:
 		pla 								; get the remainder back
 		cmp 	#10  						; handle hexadecimals.
@@ -74,18 +74,18 @@ _I32NoRecurse:
 _I32NotHex:
 		clc 								; make it ASCII
 		adc 	#48		
-		jsr 	I32WriteCharacter 			; write the character out
+		jsr 	MI32WriteCharacter 			; write the character out
 		rts 								; and exit.
 ;
 ;		Write character A out to the target string (breaks Y)
 ;
-I32WriteCharacter:
-		ldy 	IToSCount 					; get position
+MI32WriteCharacter:
+		ldy 	MCharCount 					; get position
 		sta 	(temp0),y 					; write out with trailing 0
 		iny
 		lda 	#0
 		sta 	(temp0),y
-		inc 	IToSCount 					; bump count
+		inc 	MCharCount 					; bump count
 		rts
 
-		rts
+		

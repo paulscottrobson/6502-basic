@@ -25,7 +25,6 @@ groups = """
 	main 			
 	assembler 		
 	error			*
-	generated 		
 	string 			
 	device 			
 	floatingpoint 	

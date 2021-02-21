@@ -10,7 +10,7 @@
 ; *****************************************************************************
 
 		.section storage
-Seed32:	.fill 	4							; random number seed.
+MSeed32:	.fill 	4							; random number seed.
 		.send storage
 
 ; *****************************************************************************
@@ -19,9 +19,9 @@ Seed32:	.fill 	4							; random number seed.
 ;
 ; *****************************************************************************
 
-Int32Absolute:
+MInt32Absolute:
 		lda 	esInt3,x 					; use negate code if -ve.
-		bmi 	Int32Negate
+		bmi 	MInt32Negate
 		rts
 		
 ; *****************************************************************************
@@ -30,7 +30,7 @@ Int32Absolute:
 ;
 ; *****************************************************************************
 
-Int32Negate:
+MInt32Negate:
 		sec
 		lda 	#0
 		sbc 	esInt0,x
@@ -52,7 +52,7 @@ Int32Negate:
 ;
 ; *****************************************************************************
 
-Int32Not:
+MInt32Not:
 		lda 	esInt0,x
 		eor 	#$FF
 		sta 	esInt0,x
@@ -69,33 +69,33 @@ Int32Not:
 
 ; *****************************************************************************
 ;
-;									Int32 Sign.
+;									MInt32 Sign.
 ;
 ; *****************************************************************************
 
-Int32Sign:
+MInt32Sign:
 		lda 	esInt3,x					; look at MSB
-		bmi 	Int32True 					; if set return -1 (true)
-		jsr 	Int32Zero 					; is it zero ?
-		beq 	Int32False 					; if zero return 0 (false)
-		jsr 	Int32False 					; > 0 return 1
+		bmi 	MInt32True 					; if set return -1 (true)
+		jsr 	MInt32Zero 					; is it zero ?
+		beq 	MInt32False 					; if zero return 0 (false)
+		jsr 	MInt32False 					; > 0 return 1
 		inc 	esInt0,x 
 		rts
 
 ; *****************************************************************************
 ;
-;							Int32 True/False values
+;							MInt32 True/False values
 ;
 ; *****************************************************************************
 
-Int32True:
+MInt32True:
 		lda 	#$FF 						; set to $FFFFFFFF
-		bne 	Int32WriteAll
-Int32False:									; set to 0
+		bne 	MInt32WriteAll
+MInt32False:									; set to 0
 		lda 	#0
-Int32WriteAll:								; fill all integer fields with A
+MInt32WriteAll:								; fill all integer fields with A
 		sta 	esInt0,x
-Int32Write123:		
+MInt32Write123:		
 		sta 	esInt1,x
 		sta 	esInt2,x
 		sta 	esInt3,x
@@ -109,18 +109,18 @@ Int32Write123:
 ;
 ; *****************************************************************************
 		
-Int32Set8Bit:
+MInt32Set8Bit:
 		sta 	esInt0,x
 		lda 	#0
-		beq		Int32Write123
+		beq		MInt32Write123
 
 ; *****************************************************************************
 ;
-;							Int32 Shift Left
+;							MInt32 Shift Left
 ;
 ; *****************************************************************************
 
-Int32ShiftLeft:
+MInt32ShiftLeft:
 		asl 	esInt0,x
 		rol	 	esInt1,x
 		rol	 	esInt2,x
@@ -129,11 +129,11 @@ Int32ShiftLeft:
 
 ; *****************************************************************************
 ;
-;						Int32 Shift Right (Logical)
+;						MInt32 Shift Right (Logical)
 ;
 ; *****************************************************************************
 
-Int32ShiftRight:
+MInt32ShiftRight:
 		lsr 	esInt3,x
 		ror 	esInt2,x
 		ror 	esInt1,x
@@ -146,7 +146,7 @@ Int32ShiftRight:
 ;
 ; *****************************************************************************
 		
-Int32Zero:
+MInt32Zero:
 		lda 	esInt0,x
 		ora 	esInt1,x
 		ora 	esInt2,x
@@ -159,30 +159,30 @@ Int32Zero:
 ;
 ; *****************************************************************************
 
-Int32Random:
+MInt32Random:
 		pshy
 		ldy 	#7
-		lda 	Seed32+0
+		lda 	MSeed32+0
 		bne 	_Random1
 		tay
 		lda		#$AA
 _Random1:
 		asl 	a
-		rol 	Seed32+1
-		rol 	Seed32+2
-		rol 	Seed32+3
+		rol 	MSeed32+1
+		rol 	MSeed32+2
+		rol 	MSeed32+3
 		bcc 	_Random2
 		eor 	#$C5
 _Random2:		
 		dey
 		bne 	_Random1
-		sta 	Seed32+0
+		sta 	MSeed32+0
 		sta 	esInt0,x
-		lda 	Seed32+1
+		lda 	MSeed32+1
 		sta 	esInt1,x
-		lda 	Seed32+2
+		lda 	MSeed32+2
 		sta 	esInt2,x
-		lda 	Seed32+3
+		lda 	MSeed32+3
 		sta 	esInt3,x
 		puly
 		rts

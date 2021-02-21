@@ -16,7 +16,7 @@
 ;
 ; *****************************************************************************
 
-Int32FromString:
+MInt32FromString:
 		sta 	tempShort 					; save base
 		pshy  								; save Y
 		ldy 	#0 							; set index into string being read
@@ -31,7 +31,7 @@ _I32FSNotNegative:
 		ora 	#$80						; set bit 7, this indicates a negated result.
 _I32FSNN2:
 		pha 								; save base + final sign on stack.
-		jsr 	Int32False 					; zero the return value.		
+		jsr 	MInt32False 					; zero the return value.		
 		;
 		;		Main loop - get and process one character.
 		;
@@ -62,14 +62,14 @@ _I32FSValidate:
 
 		inx 								; put base into next slot.
 		lda 	tempShort
-		jsr 	Int32Set8Bit
+		jsr 	MInt32Set8Bit
 		dex
-		jsr 	Int32Multiply 				; multiply current by the base
+		jsr 	MInt32Multiply 				; multiply current by the base
 		inx
 		pla  								; put additive into next slot
-		jsr 	Int32Set8Bit		
+		jsr 	MInt32Set8Bit		
 		dex
-		jsr 	Int32Add 					; and add it
+		jsr 	MInt32Add 					; and add it
 		iny 								; look at next character
 		jmp 	I32FSMainLoop 				; and go round again.
 		;
@@ -78,7 +78,7 @@ _I32FSDone:
 		bpl 	_I32FSNN3 				
 		;
 		dey 								; one fewer character to allow for the - prefix.
-		jsr 	Int32Negate 				; negate the result.
+		jsr 	MInt32Negate 				; negate the result.
 _I32FSNN3:
 		sty 	tempShort 					; save the count of characters read
 		puly 								; restore Y
