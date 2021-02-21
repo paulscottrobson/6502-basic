@@ -14,6 +14,7 @@
 	.include "interaction/interaction.inc"
 	.include "string/string.inc"
 	.include "tokeniser/tokeniser.inc"
+	.include "variables/variables.inc"
 	.include "main/main.asm"
 	.include "assembler/assembler.asm"
 	.include "device/device.asm"
@@ -22,3 +23,4 @@
 	.include "interaction/interaction.asm"
 	.include "string/string.asm"
 	.include "tokeniser/tokeniser.asm"
+	.include "variables/variables.asm"

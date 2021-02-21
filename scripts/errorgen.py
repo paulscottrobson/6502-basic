@@ -17,6 +17,7 @@ import re,os,sys
 #
 errorDef = """
 	Syntax:Syntax Error
+	DivZero:Divide By Zero 
 	Stop
 	BadType
 """

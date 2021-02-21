@@ -1,7 +1,6 @@
 Todo
 ====
 
-Tokens class, constants, range etc.
 Token tables class (initially no generator), split the sources up.
 Tokenising class 
 Create Dummy Floating point code.

@@ -20,7 +20,7 @@ MInt32SDivide:
 		tya  								; save Y, which is the count of negations		
 		pha 
 		ldy 	#0 							; zero count
-		jsr 	_MInt32SRemSign 				; unsign TOS
+		jsr 	_MInt32SRemSign 			; unsign TOS
 		inx 								; unsign TOS+1
 		jsr 	_MInt32SRemSign
 		dex
@@ -56,6 +56,11 @@ MInt32UDivide:
 		;
 		;		TOS = Q TOS+1 = M TOS+2 = A
 		;
+		lda 	esInt0+1,x 					; check for division by zero
+		ora 	esInt1+1,x
+		ora 	esInt1+2,x
+		ora 	esInt1+3,x
+		beq 	_MInt32DZero
 		inx 								; clear A
 		inx
 		jsr 	MInt32False
@@ -111,6 +116,9 @@ _MInt32Next:
 		tay
 		rts
 
+_MInt32DZero:
+		Error 	DivZero
+		
 ; *****************************************************************************
 ;
 ;					32 bit modulus of unsigned divide

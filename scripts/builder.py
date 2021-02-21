@@ -23,7 +23,8 @@ import re,os,sys
 #		than routine scanning.
 #
 groups = """
-	main 			
+	main 	
+	variables		
 	assembler 		
 	error			*
 	string 			
