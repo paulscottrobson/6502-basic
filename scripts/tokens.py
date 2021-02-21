@@ -9,36 +9,42 @@
 # *****************************************************************************
 # *****************************************************************************
 
+# *****************************************************************************
+#
+#				Class encapsulating 4 groups of rokens $80-$FF
+#
+# *****************************************************************************
+
 class Tokens(object):
 	def __init__(self):
-		self.tokens = { }
-		self.tokenToID = { }
-		tokenID = [ 0x80 ]
-		groupID = 0x00
-		currentMode = Tokens.SYSTEM
+		self.tokens = { }													# token long ID -> data
+		self.tokenToInfo = { } 												# token text -> data
+		tokenID = [ 0x80 ] 													# current token for each group
+		groupID = 0x00														# current group
+		currentMode = Tokens.SYSTEM 										# what analysing
 		#
-		for t in "EOL,SH1,SH2,SH3,FPC,STR".split(","):
+		for t in "EOL,SH1,SH2,SH3,FPC,STR".split(","):						# add the known specials to group 0
 			self.defineToken(groupID,tokenID[0],"[["+t+"]]",currentMode)
 			tokenID[0] += 1
-		tokenID += [tokenID[0],tokenID[0],tokenID[0]]
+		tokenID += [tokenID[0],tokenID[0],tokenID[0]]						# start all at the same.
 		#
-		toks = [x.strip() for x in self.getSource().upper().split("\n")]
+		toks = [x.strip() for x in self.getSource().upper().split("\n")]	# get the source and split into words
 		toks = [s for s in toks if not s.startswith("#")]
 		toks = [x.strip() for x in (" ".join(toks)).split() if x.strip() != ""]
 		for t in toks:
-			if t.startswith("[") and t.endswith("]"):
-				if t[1] >= '1' and t[1] <= '9':
+			if t.startswith("[") and t.endswith("]"):						# [x] is some sort of switch
+				if t[1] >= '1' and t[1] <= '9':								# binary 1-9
 					currentMode = Tokens.BINARY + int(t[1])
-				if t == "[+]" or t == "[-]":
+				if t == "[+]" or t == "[-]":								# structure in/out
 					self.firstStructureMod = tokenID[groupID]
 					currentMode = Tokens.INCDEPTH if t == "[+]" else Tokens.DECDEPTH
-				if t == "[UNARY]":
+				if t == "[UNARY]":											# unary functions
 					self.firstUnary = tokenID[groupID]
 					currentMode = Tokens.UNARY
-				if t == "[COMMAND]":
+				if t == "[COMMAND]":										# ordinary commands
 					self.firstStdToken = tokenID[groupID]
 					currentMode = Tokens.STANDARD
-				if t.startswith("[GROUP"):
+				if t.startswith("[GROUP"):									# switch group
 					groupID = int(t[-2])
 			else:
 				self.defineToken(groupID,tokenID[groupID],t,currentMode)
@@ -50,8 +56,8 @@ class Tokens(object):
 		l = groupID*1024+tokenID
 		assert l not in self.tokens
 		self.tokens[l] = { "group":groupID,"token":token,"id":tokenID,"longid":l,"type":typeID }
-		assert token not in self.tokenToID,token+" duplicate"
-		self.tokenToID[token] = self.tokens[l]
+		assert token not in self.tokenToInfo,token+" duplicate"
+		self.tokenToInfo[token] = self.tokens[l]
 	#
 	#		Getters.
 	#
@@ -74,7 +80,7 @@ class Tokens(object):
 	#
 	def getFromToken(self,token):
 		token = token.strip().upper()
-		return self.tokenToID[token] if token in self.tokenToID else None
+		return self.tokenToInfo[token] if token in self.tokenToInfo else None
 	#
 	def getFromID(self,groupID,tokenID):
 		n = groupID*1024+tokenID
@@ -118,7 +124,7 @@ class Tokens(object):
 		[command]
 			) 		: 		, 		; 		]
 			to 		step 	proc 	endproc	local
-			rem 	let 	'		[ 		
+			rem 	let 	'		[ 		input
 			else	vdu 	read 	data	restore
 			print	goto 	gosub 	return 	
 			assert 	stop 	end 	dim		
@@ -141,13 +147,13 @@ class Tokens(object):
 			vpeek(
 """		
 
-
 Tokens.SYSTEM =   0x40								# shifts, eol etc.
 Tokens.BINARY =   0x00 								# binary operator 00-0F
 Tokens.UNARY =    0x10 								# unary function
 Tokens.INCDEPTH = 0x82 								# structure level adjusters
 Tokens.DECDEPTH = 0x80
 Tokens.STANDARD = 0x20 								# ordinary token.
+
 
 if __name__ == "__main__":
 	t = Tokens()			

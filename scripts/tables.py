@@ -11,6 +11,7 @@
 
 from tokens import *
 import os,re,sys
+
 header= ";\n;\tAutomatically generated\n;\n"							# header used.
 genDir = "../source/generated/".replace("/",os.sep)					
 #
@@ -20,7 +21,7 @@ t= Tokens()
 #
 h = open(genDir+"tokenconst.inc","w")
 h.write(header)
-h.write("TOK_EOL=${0:x}\n".format(t.getEOLToken()))
+h.write("TOK_EOL=${0:x}\n".format(t.getEOLToken())) 					# firstly all the positional ones
 h.write("TOK_SHIFT1=${0:x}\n".format(t.getShiftToken(1)))
 h.write("TOK_SHIFT2=${0:x}\n".format(t.getShiftToken(2)))
 h.write("TOK_SHIFT3=${0:x}\n".format(t.getShiftToken(3)))
@@ -32,12 +33,12 @@ h.write("TOK_UNARYST=${0:x}\n".format(t.getUnaryStart()))
 h.write("TOK_TOKENS=${0:x}\n".format(t.getStandardStart()))
 h.write("\n")
 
-allTokens = t.getAllTokens()
+allTokens = t.getAllTokens() 											# get all tokens and keys in order
 keys = [x for x in allTokens.keys()]
 keys.sort()
 for k in keys:
-	s = allTokens[k]["token"]
-	if not s.startswith("[["):
+	s = allTokens[k]["token"]											# for every non special token
+	if not s.startswith("[["):											# convert puncuation to words
 		s2 = s.replace("+","PLUS").replace("-","MINUS").replace("*","STAR").replace("/","SLASH")
 		s2 = s2.replace("(","LPAREN").replace(")","RPAREN").replace("[","LSQPAREN").replace("]","RSQPAREN")
 		s2 = s2.replace(">","GREATER").replace("=","EQUAL").replace("<","LESS").replace("@","AT")
@@ -45,29 +46,31 @@ for k in keys:
 		s2 = s2.replace("^","HAT").replace("#","HASH").replace("%","PERCENT").replace("&","AMP")
 		s2 = s2.replace(":","COLON").replace(";","SEMICOLON").replace(",","COMMA").replace("'","QUOTE")
 		#s2 = s2.replace("","").replace("","").replace("","").replace("","")
-		assert re.match("^([A-Z]+)$",s2) is not None,"Fail on "+s2
+		assert re.match("^([A-Z]+)$",s2) is not None,"Fail on "+s2 		# check it's just words.
 		h.write("TKW_{0:24} = ${1:02x} ; {2}\n".format(s2,allTokens[k]["id"],s.lower()))
 h.close()
+#
+#		Scan the sources in files.list for keyword markers.
 #
 handlers = {}
 #
 #		Output the vector tables. Build the lists of tokens as well.
 #
-tokenText = [ [],[],[],[] ]
+tokenText = [ [],[],[],[] ] 											# text list goes in here.
 for group in range(0,4):
 	done = False
-	n = t.getBinaryStart() if group > 0 else t.getEOLToken()
-	h = open(genDir+"tokenvectors"+str(group)+".inc","w")
+	n = t.getBinaryStart() if group > 0 else t.getEOLToken() 			# start at different places
+	h = open(genDir+"tokenvectors"+str(group)+".inc","w")				# write to file
 	h.write(header)
 	h.write("Group{0}Vectors:\n".format(group))
-	while not done:
-		token = t.getFromID(group,n)
-		done = token is None
-		if not done:
+	while not done:														# while not finished
+		token = t.getFromID(group,n)									# get next token
+		done = token is None											# fail if no token
+		if not done:													# token found.
 			tt = token["token"]
-			if not tt.startswith("[["):
+			if not tt.startswith("[["):									# add to name list if not special
 				tokenText[group].append(tt)
-			handler = handlers[tt] if tt in handlers else "Unimplemented"
+			handler=handlers[tt] if tt in handlers else "Unimplemented"	# what to run, then output table.
 			h.write("\t.word\t{0:16} ; ${1:02x} {2}\n".format(handler,token["id"],tt.lower()))
 		n += 1
 #
@@ -76,26 +79,26 @@ for group in range(0,4):
 h = open(genDir+"binarystructinfo.inc","w")
 h.write(header)
 h.write("BinaryStructTable:\n")
-for tid in range(t.getBinaryStart(),t.getUnaryStart()):
+for tid in range(t.getBinaryStart(),t.getUnaryStart()):					# Just Binary and Structure +/-
 	token = t.getFromID(0,tid)
 	h.write("\t.byte\t${0:02x}\t\t\t; ${1:02x} {2}\n".format(token["type"],tid,token["token"].lower()))
 h.close()
 #
 #		Output text entry lists.
 #
-for group in range(0,4):
+for group in range(0,4):												# for each group
 	h = open(genDir+"tokentext"+str(group)+".inc","w")
 	h.write(header)
 	h.write("Group{0}Text:\n".format(group))
-	n = t.getBinaryStart()
-	for token in tokenText[group]:
-		t1 = token
-		if t1.endswith("$("):
-			t1 = t1[:-2] + chr(0x3D)
-		elif t1.endswith("("):
+	n = t.getBinaryStart()												# so we can track the number
+	for token in tokenText[group]:										# for each token
+		t1 = token 														# we tokenise to identifier 
+		if t1.endswith("$("):											# format, so some may end
+			t1 = t1[:-2] + chr(0x3D)									# width $3D (string array)
+		elif t1.endswith("("):											# or $3B (integer array)
 			t1 = t1[:-1] + chr(0x3B)
-		bList = [ord(c.upper()) & 0x3F for c in t1]
-		bList.insert(0,len(bList))
-		bList = ",".join(["${0:02x}".format(c) for c in bList])
+		bList = [ord(c.upper()) & 0x3F for c in t1]						# convert to 6 bit format
+		bList.insert(0,len(bList))										# length up front
+		bList = ",".join(["${0:02x}".format(c) for c in bList])			# reformat and write out.
 		h.write("\t.byte {0:32} ; ${1:02x} {2}\n".format(bList,n,token.lower()))
-	h.write("\t.byte $00\n\n")
+	h.write("\t.byte $00\n\n")											# marks end of list.
