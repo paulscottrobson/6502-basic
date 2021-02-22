@@ -120,7 +120,7 @@ if __name__ == "__main__":
 		tw.test("az.09$ input inputd len( left$(")
 		tw.test("=<=< > >=")
 	else:
-		code = tw.tokenise('2*5+3*5')+[0x80]
+		code = tw.tokenise('5+10 xor 6')+[0x80]
 		header= ";\n;\tAutomatically generated\n;\n"							# header used.
 		genDir = "../source/generated/".replace("/",os.sep)			
 		h = open(genDir+"testcode.inc","w")

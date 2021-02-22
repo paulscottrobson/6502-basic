@@ -1,16 +1,15 @@
 Todo
 ====
 
-Then extend it with typing & dereference, and add other binary funcs
-Add the other operators.
-Write basic evaluator, no variables, 
+Add the other operators (comparators, shift left and right)
+Add byte and word indirect, dereference code check byte and word indirect work.
+A-Z variables. @ operator.
 Add Unary functions handler include ( ! ? etc.
-then A-Z variables.
-Create Dummy Floating point code.
-Scanner for operators.
 Complete unary functions.
 Write basic runner, and start 
 
 Incomplete but hooked in:	
-	FP Import from token.
+	FP Import from token, int/float conversions, add/sub/mul/div
 	Variable Access
+	String Concatenation
+	Stack position fudged for readability.

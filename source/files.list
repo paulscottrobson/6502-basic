@@ -2,9 +2,13 @@
 ;	Automatically generated
 ;
 ../source/error/errorhandler.asm
+../source/floatingpoint/addsub.asm
+../source/floatingpoint/convert.asm
 ../source/floatingpoint/importexport.asm
+../source/floatingpoint/muldiv.asm
 ../source/main/00start.asm
 ../source/main/evaluate/binary.asm
+../source/main/evaluate/dereference.asm
 ../source/main/evaluate/evaluate.asm
 ../source/main/imath/int32binary.asm
 ../source/main/imath/int32compare.asm
@@ -14,4 +18,5 @@
 ../source/main/imath/int32multiply.asm
 ../source/main/imath/int32tostr.asm
 ../source/main/imath/int32unary.asm
+../source/string/concat.asm
 ../source/variable/access.asm

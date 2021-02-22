@@ -118,6 +118,7 @@ class Tokens(object):
 			timer(	event(	get( 	inkey(	alloc( 	
 			chr$(	left$(	mid$(	right$(	str$(
 			val(	peek( 	deek(	leek(
+			int(	float(
 		#
 		#		Then command and syntax and so on.
 		#

@@ -39,14 +39,15 @@ tempShort:
 ;		type bits
 ;		7 		1 indicates reference, 0 constant
 ;		6 		0 indicates number, 1 string
+;		5 		1 indicates byte reference,0 indicates normal reference (int refs only)
 ;		0 		0 indicates integer, 1 floating point
 ;
 ; ************************************************************************************************
 
-		
 		.section zeropage
 
 		* = $40
+
 esType:	.fill 	StackSize
 
 esInt0:	.fill 	StackSize
