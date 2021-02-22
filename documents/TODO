@@ -1,9 +1,15 @@
 Todo
 ====
 
-Demo code and setup.
-Write basic evaluator, no variables, then A-Z variables.
+Get + working basically, then extend it with typing & dereference, and add - * / and check precedence.
+Add the other operators.
+Write basic evaluator, no variables, 
+then A-Z variables.
 Create Dummy Floating point code.
 Scanner for operators.
 Add Unary functions.
 Write basic runner, and start 
+
+Incomplete but hooked in:	
+	FP Import from token.
+	Variable Access

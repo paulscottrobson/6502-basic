@@ -78,19 +78,20 @@ Group0Vectors:
 	.word	Unimplemented    ; $c9 let
 	.word	Unimplemented    ; $ca '
 	.word	Unimplemented    ; $cb [
-	.word	Unimplemented    ; $cc else
-	.word	Unimplemented    ; $cd vdu
-	.word	Unimplemented    ; $ce read
-	.word	Unimplemented    ; $cf data
-	.word	Unimplemented    ; $d0 restore
-	.word	Unimplemented    ; $d1 print
-	.word	Unimplemented    ; $d2 goto
-	.word	Unimplemented    ; $d3 gosub
-	.word	Unimplemented    ; $d4 return
-	.word	Unimplemented    ; $d5 assert
-	.word	Unimplemented    ; $d6 stop
-	.word	Unimplemented    ; $d7 end
-	.word	Unimplemented    ; $d8 dim
-	.word	Unimplemented    ; $d9 poke
-	.word	Unimplemented    ; $da doke
-	.word	Unimplemented    ; $db loke
+	.word	Unimplemented    ; $cc input
+	.word	Unimplemented    ; $cd else
+	.word	Unimplemented    ; $ce vdu
+	.word	Unimplemented    ; $cf read
+	.word	Unimplemented    ; $d0 data
+	.word	Unimplemented    ; $d1 restore
+	.word	Unimplemented    ; $d2 print
+	.word	Unimplemented    ; $d3 goto
+	.word	Unimplemented    ; $d4 gosub
+	.word	Unimplemented    ; $d5 return
+	.word	Unimplemented    ; $d6 assert
+	.word	Unimplemented    ; $d7 stop
+	.word	Unimplemented    ; $d8 end
+	.word	Unimplemented    ; $d9 dim
+	.word	Unimplemented    ; $da poke
+	.word	Unimplemented    ; $db doke
+	.word	Unimplemented    ; $dc loke

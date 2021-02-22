@@ -26,6 +26,7 @@ run : $(APPNAME)
 
 $(APPNAME) : $(SOURCEDIR)basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)
+	python ..$(S)/scripts$(S)tokeniser.py
 	python ..$(S)/scripts$(S)errorgen.py
 	python ..$(S)/scripts$(S)builder.py
 	python ..$(S)/scripts$(S)tables.py

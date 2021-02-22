@@ -97,7 +97,7 @@ class Tokeniser(object):
 	#		Tokenise an integer.
 	#
 	def tokeniseInteger(self,n):
-		n = n & 0xFFFF
+		n = n & 0xFFFFFFFF
 		if n > 63:
 			self.tokeniseInteger(n >> 6)
 		self.code.append((n & 0x3F)+0x40)
@@ -113,10 +113,20 @@ class Tokeniser(object):
 
 if __name__ == "__main__":
 	tw = Tokeniser()
-	tw.test("42 67 $2A $43")		
-	tw.test('"" "Hello"')
-	tw.test("a a% a%( a$ a$( a# a#(")
-	tw.test("az.09$ input inputd len( left$(")
-	tw.test("=<=< > >=")
+	if False:
+		tw.test("42 67 $2A $43")		
+		tw.test('"" "Hello"')
+		tw.test("a a% a%( a$ a$( a# a#(")
+		tw.test("az.09$ input inputd len( left$(")
+		tw.test("=<=< > >=")
+	else:
+		code = tw.tokenise('129+5')+[0x80]
+		header= ";\n;\tAutomatically generated\n;\n"							# header used.
+		genDir = "../source/generated/".replace("/",os.sep)			
+		h = open(genDir+"testcode.inc","w")
+		h.write(header)
+		h.write("TestCode:\n")
+		h.write("\t.byte {0}\n\n".format(",".join([str(x) for x in code])))
+		h.close()
 
 	

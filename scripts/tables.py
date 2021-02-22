@@ -75,10 +75,10 @@ for group in range(0,4):
 		n += 1
 #
 #		Output the information table for group 0 - gives structure shifts and binary precedence.
+#		(this has no label)
 #
 h = open(genDir+"binarystructinfo.inc","w")
 h.write(header)
-h.write("BinaryStructTable:\n")
 for tid in range(t.getBinaryStart(),t.getUnaryStart()):					# Just Binary and Structure +/-
 	token = t.getFromID(0,tid)
 	h.write("\t.byte\t${0:02x}\t\t\t; ${1:02x} {2}\n".format(token["type"],tid,token["token"].lower()))

@@ -2,6 +2,7 @@
 ;	Automatically generated
 ;
 	.include "00start.asm"
+	.include "evaluate/evaluate.asm"
 	.include "imath/int32binary.asm"
 	.include "imath/int32compare.asm"
 	.include "imath/int32divide.asm"
@@ -15,5 +16,3 @@ mainHandler:
 	dispatch mainVectors
 
 mainVectors:
-	.word test0                ; index 0
-	.word test1                ; index 2

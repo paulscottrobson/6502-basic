@@ -24,7 +24,7 @@ import re,os,sys
 #
 groups = """
 	main 	
-	variables		
+	variable		
 	assembler 		
 	error			*
 	string 			
@@ -93,7 +93,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 		h.write(".section code\n")
 		ix = 0
 		for k in vectorKeys:
-			h.write("{0}_{1} .macro\n".format(section,vectors[k]))
+			h.write("{0}_{1} .macro\n".format(section,k))
 			h.write("\tldx\t#{0}\n".format(ix))
 			h.write("\tjsr\t{0}Handler\n".format(section))
 			h.write("\t.endm\n\n")

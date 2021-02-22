@@ -11,11 +11,20 @@
 
 		.section code
 Start:		
-		debug
-		Error 	Syntax
-		jmp 	Start
+		set16 	codePtr,TestCode
+		ldy 	#0
+		lda 	#0
+		ldx 	#0
+		jsr 	EvaluateLevel
 
+halt:	jmp 	halt
+
+Unimplemented:
+		debug
+		jmp 	Unimplemented
+		
+		.include "../generated/testcode.inc"
+
+		.include "../generated/tokenvectors0.inc"
 		.send code
 
-test0:	;; <test0>
-test1:	;; <test1>

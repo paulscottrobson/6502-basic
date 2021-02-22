@@ -16,7 +16,10 @@
 ; ************************************************************************************************
 
 		.section zeropage
-temp0: 	.fill 	2
+
+codePtr:.fill 	2							; (codePtr),y points to code.
+
+temp0: 	.fill 	2							; working variables.
 temp1: 	.fill 	2
 temp2: 	.fill 	2
 
@@ -30,7 +33,6 @@ tempShort:
 ;
 ; ************************************************************************************************
 
-		.section storage
 
 ; ************************************************************************************************
 ;
@@ -41,6 +43,10 @@ tempShort:
 ;
 ; ************************************************************************************************
 
+		
+		.section zeropage
+
+		* = $40
 esType:	.fill 	StackSize
 
 esInt0:	.fill 	StackSize
@@ -50,10 +56,14 @@ esInt3:	.fill 	StackSize
 
 esExp:	.fill 	StackSize
 
+		.send zeropage
+
 esMant0 = esInt0
 esMant1 = esInt1
 esMant2 = esInt2
 esMant3 = esInt3
 
+		.section storage
 		.send storage
 
+		.include "../generated/tokenconst.inc"

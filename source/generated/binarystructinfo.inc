@@ -1,7 +1,6 @@
 ;
 ;	Automatically generated
 ;
-BinaryStructTable:
 	.byte	$01			; $86 and
 	.byte	$01			; $87 or
 	.byte	$01			; $88 xor
