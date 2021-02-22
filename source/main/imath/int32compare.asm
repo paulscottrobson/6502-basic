@@ -11,47 +11,47 @@
 
 ; *****************************************************************************
 ;
+;					Compare two floats TOS, return $FF,$00,$01
+;
+; *****************************************************************************
+
+; *****************************************************************************
+;
 ;					Test top stack values are equals, CS = Yes
 ;
 ; *****************************************************************************
 
-MInt32Equal:
-		lda 	esInt0,x
+MInt32Compare:
+		lda 	esInt0,x 					; equality check.
 		cmp 	esInt0+1,x
-		bne 	MInt32CFail
+		bne 	MInt32Compare2
 		lda 	esInt1,x
 		cmp 	esInt1+1,x
-		bne 	MInt32CFail
+		bne 	MInt32Compare2
 		lda 	esInt2,x
 		cmp 	esInt2+1,x
-		bne 	MInt32CFail
+		bne 	MInt32Compare2
 		lda 	esInt3,x
-		cmp 	esInt3+1,x
-		bne 	MInt32CFail
-MInt32CSucceed:
-		sec
+		eor 	esInt3+1,x 					; will return 0 if the same.
+		bne 	MInt32Compare2
 		rts
 
-; *****************************************************************************
-;
-;						Test 1st < 2nd (signed), CS = Yes
-;
-; *****************************************************************************
-
-MInt32Less:
-		sec
-		lda		esInt0,x
-		sbc 	esInt0+1,x		
+MInt32Compare2:
+		lda		esInt0,x 					; unsigned 32 bit comparison.
+		cmp 	esInt0+1,x		
 		lda		esInt1,x
 		sbc 	esInt1+1,x		
 		lda		esInt2,x
 		sbc 	esInt2+1,x		
 		lda		esInt3,x
 		sbc 	esInt3+1,x		
-		bvc 	_I32LNoOverflow
+		bvc 	_I32LNoOverflow 			; make it signed 32 bi comparison
 		eor 	#$80
 _I32LNoOverflow		
-		bmi 	MInt32CSucceed
-MInt32CFail:
-		clc
+		bmi 	MInt32CLess					; if -ve then return $FF
+		lda 	#$01						; else return $01
+		rts
+;
+MInt32CLess:
+		lda 	#$FF
 		rts

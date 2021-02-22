@@ -76,7 +76,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	h = open(localDir+os.sep+section+".asm","w")						# create the file for this level.
 	h.write(header)
 	for i in comFiles:
-		h.write('\t.include "{0}"\n'.format(i))
+		h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
 	if createDispatcher:												# dispatcher here ??
 		h.write("\n{0}Handler:\n".format(section))
 		h.write("\tdispatch {0}Vectors\n\n".format(section))
@@ -110,7 +110,7 @@ mainIncludes.sort(key = lambda x:sortFn(x))
 h = open(sourceDir+os.sep+"basic.asm","w")
 h.write(header)
 for i in mainIncludes:
-	h.write('\t.include "{0}"\n'.format(i))
+	h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
 h.close()
 #
 #		Write out files

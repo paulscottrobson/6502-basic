@@ -42,17 +42,27 @@ BinaryProcess:
 		clc 								; return CC for integer
 		and 	#$02 						; $02 because of ASL A.
 		beq 	_BPExit 					; if both integer then return with CC.
-		jsr 	_BPMakeFloat 				; one is a float, so we do both as floats.
-		inx
-		jsr 	_BPMakeFloat
-		dex
+		jsr 	BPMakeBothFloat 			; make both float
 		lda 	#$01 						; set result type to float
 		sta 	esType,x
 		sec 								; and return with carry set.
 _BPExit:
 		rts		
 
-_BPMakeFloat:
+_BPStringType:
+		error 	BadType
+
+; ************************************************************************************************
+;
+;						Make the top two or top one a floating point number
+;
+; ************************************************************************************************
+
+BPMakeBothFloat:
+		inx
+		jsr 	BPMakeFloat 				; one is a float, so we do both as floats.
+		dex
+BPMakeFloat:
 		lda 	esType,x 					; get type bit.
 		lsr 	a
 		bcs 	_BPIsFloat
@@ -61,8 +71,6 @@ _BPMakeFloat:
 		tax
 _BPIsFloat:
 		rts
-_BPStringType:
-		error 	BadType
 
 ; ************************************************************************************************
 ;

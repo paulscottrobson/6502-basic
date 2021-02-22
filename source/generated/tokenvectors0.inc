@@ -15,7 +15,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $8a <=
 	.word	Unimplemented            ; $8b >
 	.word	Unimplemented            ; $8c <
-	.word	Unimplemented            ; $8d =
+	.word	CompareEquals            ; $8d =
 	.word	Unimplemented            ; $8e <>
 	.word	AddHandler               ; $8f +
 	.word	SubHandler               ; $90 -

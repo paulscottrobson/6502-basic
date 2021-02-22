@@ -7,6 +7,11 @@ string_concat .macro
 	jsr	stringHandler
 	.endm
 
+string_sCompare .macro
+	ldx	#2
+	jsr	stringHandler
+	.endm
+
 string_repeat .macro
 	jsr	stringHandler
 	.endm
