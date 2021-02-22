@@ -53,6 +53,16 @@ h.close()
 #		Scan the sources in files.list for keyword markers.
 #
 handlers = {}
+fileList = open(".."+os.sep+"source"+os.sep+"files.list").readlines()	# read in file list.
+fileList = [x.strip() for x in fileList if not x.startswith(";")]		# remove comments
+for f in [x for x in fileList if x != ""]:								# read through each file
+	for s in open(f).readlines():
+		if s.find(";;") > 0 and s.find("[") > 0:						# quick check.
+			m = re.match("^(.*?)\\:\\s*\\;\\;\\s*\\[(.*)\\]\\s*$",s)	# rip parts out
+			assert m is not None," Can't process "+s 					# check format and duplicate
+			token = m.group(2).upper()
+			assert token not in handlers,"Duplicate "+token
+			handlers[token] = m.group(1).strip()
 #
 #		Output the vector tables. Build the lists of tokens as well.
 #
@@ -67,11 +77,11 @@ for group in range(0,4):
 		token = t.getFromID(group,n)									# get next token
 		done = token is None											# fail if no token
 		if not done:													# token found.
-			tt = token["token"]
+			tt = token["token"].upper()
 			if not tt.startswith("[["):									# add to name list if not special
 				tokenText[group].append(tt)
 			handler=handlers[tt] if tt in handlers else "Unimplemented"	# what to run, then output table.
-			h.write("\t.word\t{0:16} ; ${1:02x} {2}\n".format(handler,token["id"],tt.lower()))
+			h.write("\t.word\t{0:24} ; ${1:02x} {2}\n".format(handler,token["id"],tt.lower()))
 		n += 1
 #
 #		Output the information table for group 0 - gives structure shifts and binary precedence.

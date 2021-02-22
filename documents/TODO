@@ -1,13 +1,14 @@
 Todo
 ====
 
-Get + working basically, then extend it with typing & dereference, and add - * / and check precedence.
+Then extend it with typing & dereference, and add other binary funcs
 Add the other operators.
 Write basic evaluator, no variables, 
+Add Unary functions handler include ( ! ? etc.
 then A-Z variables.
 Create Dummy Floating point code.
 Scanner for operators.
-Add Unary functions.
+Complete unary functions.
 Write basic runner, and start 
 
 Incomplete but hooked in:	

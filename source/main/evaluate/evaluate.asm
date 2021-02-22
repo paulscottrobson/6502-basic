@@ -101,7 +101,6 @@ _ELExit: 									; exit having thrown precedence.
 		;		Have a binary operator, now check the precedence.
 		;
 _ELHasBinaryTerm:
-		debug
 		sty 	tempShort 					; save position
 		tay 								; use token as an index and get the precedence.
 		lda 	ELBinaryOperatorInfo-TOK_BINARYST,y

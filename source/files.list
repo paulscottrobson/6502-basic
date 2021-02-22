@@ -4,6 +4,7 @@
 ../source/error/errorhandler.asm
 ../source/floatingpoint/importexport.asm
 ../source/main/00start.asm
+../source/main/evaluate/binary.asm
 ../source/main/evaluate/evaluate.asm
 ../source/main/imath/int32binary.asm
 ../source/main/imath/int32compare.asm
