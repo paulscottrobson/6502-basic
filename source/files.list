@@ -6,6 +6,7 @@
 ..\source\floatingpoint\compare.asm
 ..\source\floatingpoint\convert.asm
 ..\source\floatingpoint\importexport.asm
+..\source\floatingpoint\loadstore.asm
 ..\source\floatingpoint\muldiv.asm
 ..\source\main\00start.asm
 ..\source\main\evaluate\binary.asm

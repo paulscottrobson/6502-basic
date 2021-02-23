@@ -168,7 +168,7 @@ Mint32WordIndirect:
 		lda 	#$80 				 		; word reference type
 		bne 	Min32Indirect
 Mint32ByteIndirect:
-		lda 	#$82 						; byte reference type
+		lda 	#$A0 						; byte reference type
 Min32Indirect:
 		pha 								; save the indirection
 		jsr 	MInt32Add 					; add a!b a?b

@@ -40,6 +40,7 @@ tempShort:
 ;		7 		1 indicates reference, 0 constant
 ;		6 		0 indicates number, 1 string
 ;		5 		1 indicates byte reference,0 indicates normal reference (int refs only)
+;		1..4 	0
 ;		0 		0 indicates integer, 1 floating point
 ;
 ; ************************************************************************************************
@@ -48,23 +49,27 @@ tempShort:
 
 		* = $40
 
-esType:	.fill 	StackSize
+esType:	.fill 	StackSize  					; type byte (see above)					
 
-esInt0:	.fill 	StackSize
-esInt1:	.fill 	StackSize
+esInt0:	.fill 	StackSize 					; integer or mantissa
+esInt1:	.fill 	StackSize 
 esInt2:	.fill 	StackSize
 esInt3:	.fill 	StackSize
 
-esExp:	.fill 	StackSize
+esExp:	.fill 	StackSize 					; exponent
+esSign: .fill 	StackSize 					; sign byte for floating point only
 
 		.send zeropage
 
-esMant0 = esInt0
+esMant0 = esInt0 							; synonyms.
 esMant1 = esInt1
 esMant2 = esInt2
 esMant3 = esInt3
 
 		.section storage
+
+.slvar 	.fill 	26*4 						; storage for variable A-Z.
+
 		.send storage
 
 		.include "../generated/tokenconst.inc"

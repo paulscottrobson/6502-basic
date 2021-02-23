@@ -12,8 +12,4 @@ string_sCompare .macro
 	jsr	stringHandler
 	.endm
 
-string_repeat .macro
-	jsr	stringHandler
-	.endm
-
 .send code

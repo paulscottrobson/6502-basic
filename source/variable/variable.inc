@@ -7,8 +7,4 @@ variable_access .macro
 	jsr	variableHandler
 	.endm
 
-variable_repeat .macro
-	jsr	variableHandler
-	.endm
-
 .send code

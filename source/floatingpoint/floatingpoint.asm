@@ -5,19 +5,21 @@
 	.include "compare.asm"
 	.include "convert.asm"
 	.include "importexport.asm"
+	.include "loadstore.asm"
 	.include "muldiv.asm"
 
 floatingpointHandler:
 	dispatch floatingpointVectors
 
 floatingpointVectors:
-	.word FPAdd                ; index 0
-	.word FLTCompare           ; index 2
-	.word FPDivide             ; index 4
-	.word FPImpossible         ; index 6
-	.word FPMultiply           ; index 8
-	.word FPSubtract           ; index 10
-	.word FPFtoI               ; index 12
-	.word FPPower              ; index 14
-	.word FPImport             ; index 16
-	.word FPItoF               ; index 18
+	.word FPLoad               ; index 0
+	.word FPAdd                ; index 2
+	.word FLTCompare           ; index 4
+	.word FPDivide             ; index 6
+	.word FPImpossible         ; index 8
+	.word FPMultiply           ; index 10
+	.word FPSubtract           ; index 12
+	.word FPFtoI               ; index 14
+	.word FPPower              ; index 16
+	.word FPImport             ; index 18
+	.word FPItoF               ; index 20
