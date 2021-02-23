@@ -1,8 +1,6 @@
 Todo
 ====
 
-Check equals
-Write other comparators.
 Add the other operators (shift left and right)
 Add byte and word indirect, dereference code check byte and word indirect work.
 A-Z variables. @ operator.

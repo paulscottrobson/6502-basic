@@ -62,7 +62,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 				else:
 					comFiles.append(fn[len(localDir)+1:])				# add to includes, relative to group/
 					for s in open(fn).readlines():						# scan for ;; <xxxx> markings.
-						if s.find(";;") >= 0 and s.find(">") >= 0:
+						if s.find(";;") >= 0 and s.find(">") >= 0 and s.strip().endswith(">"):
 							m = re.match("^(.*?)\\:\\s*\\;\\;\\s*\\<(.*?)\\>\\s*$",s)
 							assert m is not None,"Bad line "+s
 							vectors[m.group(2).strip()] = m.group(1).strip()

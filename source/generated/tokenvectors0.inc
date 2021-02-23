@@ -11,12 +11,12 @@ Group0Vectors:
 	.word	AndHandler               ; $86 and
 	.word	OrHandler                ; $87 or
 	.word	XorHandler               ; $88 xor
-	.word	Unimplemented            ; $89 >=
-	.word	Unimplemented            ; $8a <=
-	.word	Unimplemented            ; $8b >
-	.word	Unimplemented            ; $8c <
+	.word	CompareGreaterEq         ; $89 >=
+	.word	CompareLessEq            ; $8a <=
+	.word	CompareGreater           ; $8b >
+	.word	CompareLess              ; $8c <
 	.word	CompareEquals            ; $8d =
-	.word	Unimplemented            ; $8e <>
+	.word	CompareNotEquals         ; $8e <>
 	.word	AddHandler               ; $8f +
 	.word	SubHandler               ; $90 -
 	.word	Unimplemented            ; $91 >>

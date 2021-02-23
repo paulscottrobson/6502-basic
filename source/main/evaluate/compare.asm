@@ -62,7 +62,24 @@ _PCError:									; mixed types
 ; ************************************************************************************************
 
 CompareEquals:	;; [=]
-		comparer 	0,beq 				
+		comparer 	$00,beq 				
+
+CompareLess: 	;; [<]
+		comparer 	$FF,beq 				
+
+CompareGreater: ;; [>]
+		comparer 	$01,beq 				
+
+; ================================================================================================
+
+CompareNotEquals:	;; [<>]
+		comparer 	$00,bne 				
+
+CompareGreaterEq: 	;; [>=]
+		comparer 	$FF,bne 				
+
+CompareLessEq: ;; [<=]
+		comparer 	$01,bne
 
 ; ************************************************************************************************
 ;
