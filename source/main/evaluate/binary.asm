@@ -129,5 +129,76 @@ AndHandler: ;; [and]
 		jsr 	DereferenceTwo 			
 		binop 	MInt32And,fImpossible
 
+ShlHandler: ;; [<<]		
+		jsr 	DereferenceTwo 			
+		binop 	Mint32ShiftLeftX,fImpossible
 
+ShrHandler: ;; [>>]		
+		jsr 	DereferenceTwo 			
+		binop 	MInt32ShiftRightX,fImpossible
 
+WordRefHandler: ;; [!]
+		jsr 	DereferenceTwo 			
+		binop 	MInt32WordIndirect,fImpossible
+
+ByteRefHandler: ;; [?]
+		jsr 	DereferenceTwo 			
+		binop 	MInt32ByteIndirect,fImpossible
+
+; ************************************************************************************************
+;
+;										Byte/Word Indirect
+;
+; ************************************************************************************************
+
+Mint32WordIndirect:
+		lda 	#$80 				 		; word reference type
+		bne 	Min32Indirect
+Mint32ByteIndirect:
+		lda 	#$82 						; byte reference type
+Min32Indirect:
+		pha 								; save the indirection
+		jsr 	MInt32Add 					; add a!b a?b
+		pla 								; and set the type to reference.
+		sta 	esType,x 	
+		rts		
+
+; ************************************************************************************************
+;
+;										Shift left or right
+;
+; ************************************************************************************************
+
+Mint32ShiftLeftX:
+		clc
+		bcc 	Mint32Shift
+Mint32ShiftRightX:
+		sec
+Mint32Shift:								; at this point, CS is right, CC is left
+		php 								; save carry flag on stack.
+		lda 	esInt1+1,x 					; if shift >= 32 then it is zero.
+		ora 	esInt2+1,x
+		ora 	esInt3+1,x		
+		bne 	_MShiftZero
+		lda 	esInt0+1,x		
+		cmp 	#32
+		bcs 	_MShiftZero
+_MShiftLoop:
+		lda 	esInt0+1,x 					; check count is zero
+		beq 	_MShiftExit
+		dec 	esInt0+1,x
+		plp 								; restore and save carry
+		php
+		bcc 	_MShiftLeft
+		jsr 	Mint32ShiftRight
+		jmp 	_MShiftLoop
+_MShiftLeft:		
+		jsr 	Mint32ShiftLeft
+		jmp 	_MShiftLoop
+_MShiftExit:
+		plp	 								; throw saved carry and exit
+		rts
+
+_MShiftZero:
+		jmp 	MInt32False 				; return 0.
+		

@@ -19,14 +19,14 @@ Group0Vectors:
 	.word	CompareNotEquals         ; $8e <>
 	.word	AddHandler               ; $8f +
 	.word	SubHandler               ; $90 -
-	.word	Unimplemented            ; $91 >>
-	.word	Unimplemented            ; $92 <<
+	.word	ShrHandler               ; $91 >>
+	.word	ShlHandler               ; $92 <<
 	.word	MulHandler               ; $93 *
 	.word	DivHandler               ; $94 /
 	.word	ModHandler               ; $95 mod
 	.word	Unimplemented            ; $96 ^
-	.word	Unimplemented            ; $97 !
-	.word	Unimplemented            ; $98 ?
+	.word	WordRefHandler           ; $97 !
+	.word	ByteRefHandler           ; $98 ?
 	.word	Unimplemented            ; $99 repeat
 	.word	Unimplemented            ; $9a while
 	.word	Unimplemented            ; $9b for
