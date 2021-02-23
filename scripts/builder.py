@@ -98,9 +98,6 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 			h.write("\tjsr\t{0}Handler\n".format(section))
 			h.write("\t.endm\n\n")
 			ix += 2
-		h.write("{0}_repeat .macro\n".format(section))
-		h.write("\tjsr\t{0}Handler\n".format(section))
-		h.write("\t.endm\n\n")
 		h.write(".send code\n")
 	h.close()
 #
