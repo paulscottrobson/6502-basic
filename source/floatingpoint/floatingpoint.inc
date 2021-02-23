@@ -37,13 +37,18 @@ floatingpoint_floatToInt .macro
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_importtoken .macro
+floatingpoint_fpower .macro
 	ldx	#14
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_intToFloat .macro
+floatingpoint_importtoken .macro
 	ldx	#16
+	jsr	floatingpointHandler
+	.endm
+
+floatingpoint_intToFloat .macro
+	ldx	#18
 	jsr	floatingpointHandler
 	.endm
 

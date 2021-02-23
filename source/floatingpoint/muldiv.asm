@@ -17,6 +17,9 @@ FPDivide:	;; <fDivide>
 		debug
 		jmp 	FPDivide
 
-FPImpossible:		;; <fImpossible>
+FPImpossible:	;; <fImpossible>
 		error 	BadType 					; can't do FP modulus/and/or/xor. Makes no sense.
-		
+
+FPPower:	;; <fpower>		
+		debug
+		jmp 	FPPower

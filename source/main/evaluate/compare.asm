@@ -42,14 +42,18 @@ PerformComparison:
 		and 	#$02 						; because of ASL, check type in bit 0
 		beq 	_PCIsInteger 				; if not two integers
 		jsr 	BPMakeBothFloat 			; make both float
+		txa
 		floatingpoint_fCompare 				; and compare them.
+		tax
 		rts
 
 _PCIsInteger:
 		jmp 	MInt32Compare
 
 _PCIsString:
+		txa
 		string_sCompare
+		tax
 		rts
 
 _PCError:									; mixed types

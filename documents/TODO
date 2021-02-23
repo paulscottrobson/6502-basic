@@ -7,8 +7,10 @@ Add standard Unary functions handler include ( ! ? & and len()
 Complete unary functions.
 Write basic runner, and start 
 
-Incomplete but hooked in:	
-	FP Import from token, int/float conversions, add/sub/mul/div/compare
+Incomplete but hooked in for write and test:	
 	Variable Access
 	String Concatenation, Compare
+	FP Import from token, int/float conversions, add/sub/mul/div/compare
+
+Notes:
 	Stack position fudged for readability.

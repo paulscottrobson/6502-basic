@@ -24,7 +24,7 @@ Group0Vectors:
 	.word	MulHandler               ; $93 *
 	.word	DivHandler               ; $94 /
 	.word	ModHandler               ; $95 mod
-	.word	Unimplemented            ; $96 ^
+	.word	PowerHandler             ; $96 ^
 	.word	WordRefHandler           ; $97 !
 	.word	ByteRefHandler           ; $98 ?
 	.word	Unimplemented            ; $99 repeat

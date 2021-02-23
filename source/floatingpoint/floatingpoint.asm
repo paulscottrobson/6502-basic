@@ -18,5 +18,6 @@ floatingpointVectors:
 	.word FPMultiply           ; index 8
 	.word FPSubtract           ; index 10
 	.word FPFtoI               ; index 12
-	.word FPImport             ; index 14
-	.word FPItoF               ; index 16
+	.word FPPower              ; index 14
+	.word FPImport             ; index 16
+	.word FPItoF               ; index 18

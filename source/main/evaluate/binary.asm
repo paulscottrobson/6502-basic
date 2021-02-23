@@ -145,6 +145,19 @@ ByteRefHandler: ;; [?]
 		jsr 	DereferenceTwo 			
 		binop 	MInt32ByteIndirect,fImpossible
 
+PowerHandler:	;; [^]
+		jsr 	DereferenceTwo
+		binop 	PowerInteger,fPower
+PowerInteger:
+		jsr 	BPMakeBothFloat				; make them float.
+		txa
+		floatingpoint_fpower()				; do the power calculation
+		floatingpoint_floatToInt()			; convert back to integer.
+		tax
+		lda 	#0 							; make type integer
+		sta 	esType,x
+		rts
+
 ; ************************************************************************************************
 ;
 ;										Byte/Word Indirect
@@ -201,4 +214,3 @@ _MShiftExit:
 
 _MShiftZero:
 		jmp 	MInt32False 				; return 0.
-		
