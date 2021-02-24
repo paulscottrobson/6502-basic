@@ -12,6 +12,7 @@
 		.section code
 Start:		
 		set16 	codePtr,TestCode
+
 		ldy 	#0
 		lda 	#0
 		ldx 	#0

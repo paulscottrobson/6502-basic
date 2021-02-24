@@ -1,7 +1,5 @@
 Todo
 ====
-
-A-Z variables. 
 Add standard Unary functions handler include ( ! ? & @ and len()
 Complete unary functions (integer only)
 Write basic runner, and start 

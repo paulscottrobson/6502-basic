@@ -2,5 +2,5 @@
 ;	Automatically generated
 ;
 TestCode:
-	.byte 127,127,151,65,128
+	.byte 3,58,128
 

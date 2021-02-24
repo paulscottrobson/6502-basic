@@ -68,8 +68,17 @@ esMant3 = esInt3
 
 		.section storage
 
-.slvar 	.fill 	26*4 						; storage for variable A-Z.
+		.align	256
+SingleLetterVar:
+ 		.fill 	26*4 						; storage for variable A-Z.
 
 		.send storage
 
 		.include "../generated/tokenconst.inc"
+
+TYPE_INT =		($3A) 						; type bytes that end identifier.
+TYPE_INTARRAY =	($3B)
+TYPE_STR =		($3C)
+TYPE_STRARRAY =	($3D)
+TYPE_FLOAT =	($3E)
+TYPE_FLOATARRAY=($3F)

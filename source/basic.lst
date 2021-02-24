@@ -1,27 +1,27 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
-; 64tass -q -c -L basic.lst -l basic.lbl -Wall -o basic.prg ..\source\basic.asm
-; Tue Feb 23 17:34:51 2021
+; 64tass -q -c -L basic.lst -l basic.lbl -Wall -o basic.prg ../source/basic.asm
+; Wed Feb 24 17:01:10 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
-;******  Processing input file: ..\source\basic.asm
+;******  Processing input file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\main/01common.inc
+;******  Processing file: ../source/main/01common.inc
 
 =8					StackSize = 8
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\main/02macros.inc
+;******  Processing file: ../source/main/02macros.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\main/03data.inc
+;******  Processing file: ../source/main/03data.inc
 
 >0002					codePtr:.fill 	2							; (codePtr),y points to code.
 >0004					temp0: 	.fill 	2							; working variables.
@@ -29,19 +29,22 @@
 >0008					temp2: 	.fill 	2
 .000a					tempShort:
 >000a							.fill 	1
->0040					esType:	.fill 	StackSize
->0048					esInt0:	.fill 	StackSize
+>0040					esType:	.fill 	StackSize  					; type byte (see above)
+>0048					esInt0:	.fill 	StackSize 					; integer or mantissa
 >0050					esInt1:	.fill 	StackSize
 >0058					esInt2:	.fill 	StackSize
 >0060					esInt3:	.fill 	StackSize
->0068					esExp:	.fill 	StackSize
->0070					esSign: .fill 	StackSize
-=$48					esMant0 = esInt0
+>0068					esExp:	.fill 	StackSize 					; exponent
+>0070					esSign: .fill 	StackSize 					; sign byte for floating point only
+=$48					esMant0 = esInt0 							; synonyms.
 =$50					esMant1 = esInt1
 =$58					esMant2 = esInt2
 =$60					esMant3 = esInt3
+>0800							.align	256
+.0800					SingleLetterVar:
+>0800					 		.fill 	26*4 						; storage for variable A-Z.
 
-;******  Processing file: ..\source\main/../generated/tokenconst.inc
+;******  Processing file: ../source/main/../generated/tokenconst.inc
 
 =$80					TOK_EOL=$80
 =$81					TOK_SHIFT1=$81
@@ -153,1458 +156,1489 @@
 =$86					TKW_VPOKE                    = $86 ; vpoke
 =$86					TKW_VPEEKLPAREN              = $86 ; vpeek(
 
-;******  Return to file: ..\source\main/03data.inc
+;******  Return to file: ../source/main/03data.inc
+
+=$3a					TYPE_INT =		($3A) 						; type bytes that end identifier.
+=$3b					TYPE_INTARRAY =	($3B)
+=$3c					TYPE_STR =		($3C)
+=$3d					TYPE_STRARRAY =	($3D)
+=$3e					TYPE_FLOAT =	($3E)
+=$3f					TYPE_FLOATARRAY=($3F)
+
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/main/imath/intmacros.inc
 
 
-;******  Processing file: ..\source\main/imath/intmacros.inc
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/main/main.inc
 
 
-;******  Processing file: ..\source\main/main.inc
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/assembler/assembler.inc
 
 
-;******  Processing file: ..\source\assembler/assembler.inc
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/device/device.inc
 
 
-;******  Processing file: ..\source\device/device.inc
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/error/error.inc
 
 
-;******  Processing file: ..\source\error/error.inc
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/error/errorhandler.inc
 
 
-;******  Processing file: ..\source\error/errorhandler.inc
-
-
-;******  Processing file: ..\source\error/../generated/errorid.inc
+;******  Processing file: ../source/error/../generated/errorid.inc
 
 =1					ErrorID_Syntax = 1 ; Syntax Error
 =2					ErrorID_DivZero = 2 ; Divide By Zero
 =3					ErrorID_Stop = 3 ; Stop
 =4					ErrorID_BadType = 4 ; BadType
 
-;******  Return to file: ..\source\error/errorhandler.inc
+;******  Return to file: ../source/error/errorhandler.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\floatingpoint/floatingpoint.inc
+;******  Processing file: ../source/floatingpoint/floatingpoint.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\interaction/interaction.inc
+;******  Processing file: ../source/interaction/interaction.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\string/string.inc
+;******  Processing file: ../source/string/string.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\tokeniser/tokeniser.inc
+;******  Processing file: ../source/tokeniser/tokeniser.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\variable/variable.inc
+;******  Processing file: ../source/variable/variable.inc
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\main/main.asm
+;******  Processing file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/00start.asm
+;******  Processing file: ../source/main/00start.asm
 
 .1000					Start:
-.1000	a9 1c		lda #$1c			lda 	#(TestCode) & $FF
+.1000	a9 26		lda #$26			lda 	#(TestCode) & $FF
 .1002	85 02		sta $02				sta 	codePtr
 .1004	a9 10		lda #$10			lda 	#(TestCode) >> 8
 .1006	85 03		sta $03				sta 	1+(codePtr)
-.1008	a0 00		ldy #$00			ldy 	#0
-.100a	a9 00		lda #$00			lda 	#0
-.100c	a2 00		ldx #$00			ldx 	#0
-.100e	20 2b 13	jsr $132b			jsr 	EvaluateLevel
-.1011	20 dd 12	jsr $12dd			jsr 	DeReferenceOne
->1014	db						.byte 	$DB
-.1015	4c 15 10	jmp $1015	halt:	jmp 	halt
-.1018					Unimplemented:
->1018	db						.byte 	$DB
-.1019	4c 18 10	jmp $1018			jmp 	Unimplemented
+.1008	a9 f9		lda #$f9			lda 	#$F9
+.100a	8d 08 08	sta $0808			sta 	SingleLetterVar+8
+.100d	a9 01		lda #$01			lda 	#1
+.100f	8d 0a 08	sta $080a			sta 	SingleLetterVar+10
+.1012	a0 00		ldy #$00			ldy 	#0
+.1014	a9 00		lda #$00			lda 	#0
+.1016	a2 00		ldx #$00			ldx 	#0
+.1018	20 33 13	jsr $1333			jsr 	EvaluateLevel
+.101b	20 e5 12	jsr $12e5			jsr 	DeReferenceOne
+>101e	db						.byte 	$DB
+.101f	4c 1f 10	jmp $101f	halt:	jmp 	halt
+.1022					Unimplemented:
+>1022	db						.byte 	$DB
+.1023	4c 22 10	jmp $1022			jmp 	Unimplemented
 
-;******  Processing file: ..\source\main/../generated/testcode.inc
+;******  Processing file: ../source/main/../generated/testcode.inc
 
-.101c					TestCode:
->101c	7f 7f 97 41 80				.byte 127,127,151,65,128
+.1026					TestCode:
+>1026	03 3a 80				.byte 3,58,128
 
-;******  Return to file: ..\source\main/00start.asm
-
-
-;******  Processing file: ..\source\main/../generated/tokenvectors0.inc
-
-.1021					Group0Vectors:
->1021	18 10					.word	Unimplemented            ; $80 [[eol]]
->1023	18 10					.word	Unimplemented            ; $81 [[sh1]]
->1025	18 10					.word	Unimplemented            ; $82 [[sh2]]
->1027	18 10					.word	Unimplemented            ; $83 [[sh3]]
->1029	18 10					.word	Unimplemented            ; $84 [[fpc]]
->102b	18 10					.word	Unimplemented            ; $85 [[str]]
->102d	a7 11					.word	AndHandler               ; $86 and
->102f	94 11					.word	OrHandler                ; $87 or
->1031	81 11					.word	XorHandler               ; $88 xor
->1033	be 12					.word	CompareGreaterEq         ; $89 >=
->1035	c8 12					.word	CompareLessEq            ; $8a <=
->1037	aa 12					.word	CompareGreater           ; $8b >
->1039	a0 12					.word	CompareLess              ; $8c <
->103b	96 12					.word	CompareEquals            ; $8d =
->103d	b4 12					.word	CompareNotEquals         ; $8e <>
->103f	12 11					.word	AddHandler               ; $8f +
->1041	35 11					.word	SubHandler               ; $90 -
->1043	cd 11					.word	ShrHandler               ; $91 >>
->1045	ba 11					.word	ShlHandler               ; $92 <<
->1047	48 11					.word	MulHandler               ; $93 *
->1049	5b 11					.word	DivHandler               ; $94 /
->104b	6e 11					.word	ModHandler               ; $95 mod
->104d	06 12					.word	PowerHandler             ; $96 ^
->104f	e0 11					.word	WordRefHandler           ; $97 !
->1051	f3 11					.word	ByteRefHandler           ; $98 ?
->1053	18 10					.word	Unimplemented            ; $99 repeat
->1055	18 10					.word	Unimplemented            ; $9a while
->1057	18 10					.word	Unimplemented            ; $9b for
->1059	18 10					.word	Unimplemented            ; $9c if
->105b	18 10					.word	Unimplemented            ; $9d until
->105d	18 10					.word	Unimplemented            ; $9e wend
->105f	18 10					.word	Unimplemented            ; $9f next
->1061	18 10					.word	Unimplemented            ; $a0 then
->1063	18 10					.word	Unimplemented            ; $a1 endif
->1065	18 10					.word	Unimplemented            ; $a2 ~
->1067	18 10					.word	Unimplemented            ; $a3 (
->1069	18 10					.word	Unimplemented            ; $a4 &
->106b	18 10					.word	Unimplemented            ; $a5 @
->106d	18 10					.word	Unimplemented            ; $a6 len(
->106f	18 10					.word	Unimplemented            ; $a7 sgn(
->1071	18 10					.word	Unimplemented            ; $a8 abs(
->1073	18 10					.word	Unimplemented            ; $a9 random(
->1075	18 10					.word	Unimplemented            ; $aa page
->1077	18 10					.word	Unimplemented            ; $ab true
->1079	18 10					.word	Unimplemented            ; $ac false
->107b	18 10					.word	Unimplemented            ; $ad min(
->107d	18 10					.word	Unimplemented            ; $ae max(
->107f	18 10					.word	Unimplemented            ; $af sys(
->1081	18 10					.word	Unimplemented            ; $b0 timer(
->1083	18 10					.word	Unimplemented            ; $b1 event(
->1085	18 10					.word	Unimplemented            ; $b2 get(
->1087	18 10					.word	Unimplemented            ; $b3 inkey(
->1089	18 10					.word	Unimplemented            ; $b4 alloc(
->108b	18 10					.word	Unimplemented            ; $b5 chr$(
->108d	18 10					.word	Unimplemented            ; $b6 left$(
->108f	18 10					.word	Unimplemented            ; $b7 mid$(
->1091	18 10					.word	Unimplemented            ; $b8 right$(
->1093	18 10					.word	Unimplemented            ; $b9 str$(
->1095	18 10					.word	Unimplemented            ; $ba val(
->1097	18 10					.word	Unimplemented            ; $bb peek(
->1099	18 10					.word	Unimplemented            ; $bc deek(
->109b	18 10					.word	Unimplemented            ; $bd leek(
->109d	18 10					.word	Unimplemented            ; $be int(
->109f	18 10					.word	Unimplemented            ; $bf float(
->10a1	18 10					.word	Unimplemented            ; $c0 )
->10a3	18 10					.word	Unimplemented            ; $c1 :
->10a5	18 10					.word	Unimplemented            ; $c2 ,
->10a7	18 10					.word	Unimplemented            ; $c3 ;
->10a9	18 10					.word	Unimplemented            ; $c4 ]
->10ab	18 10					.word	Unimplemented            ; $c5 to
->10ad	18 10					.word	Unimplemented            ; $c6 step
->10af	18 10					.word	Unimplemented            ; $c7 proc
->10b1	18 10					.word	Unimplemented            ; $c8 endproc
->10b3	18 10					.word	Unimplemented            ; $c9 local
->10b5	18 10					.word	Unimplemented            ; $ca rem
->10b7	18 10					.word	Unimplemented            ; $cb let
->10b9	18 10					.word	Unimplemented            ; $cc '
->10bb	18 10					.word	Unimplemented            ; $cd [
->10bd	18 10					.word	Unimplemented            ; $ce input
->10bf	18 10					.word	Unimplemented            ; $cf else
->10c1	18 10					.word	Unimplemented            ; $d0 vdu
->10c3	18 10					.word	Unimplemented            ; $d1 read
->10c5	18 10					.word	Unimplemented            ; $d2 data
->10c7	18 10					.word	Unimplemented            ; $d3 restore
->10c9	18 10					.word	Unimplemented            ; $d4 print
->10cb	18 10					.word	Unimplemented            ; $d5 goto
->10cd	18 10					.word	Unimplemented            ; $d6 gosub
->10cf	18 10					.word	Unimplemented            ; $d7 return
->10d1	18 10					.word	Unimplemented            ; $d8 assert
->10d3	18 10					.word	Unimplemented            ; $d9 stop
->10d5	18 10					.word	Unimplemented            ; $da end
->10d7	18 10					.word	Unimplemented            ; $db dim
->10d9	18 10					.word	Unimplemented            ; $dc poke
->10db	18 10					.word	Unimplemented            ; $dd doke
->10dd	18 10					.word	Unimplemented            ; $de loke
-
-;******  Return to file: ..\source\main/00start.asm
+;******  Return to file: ../source/main/00start.asm
 
 
-;******  Return to file: ..\source\main/main.asm
+;******  Processing file: ../source/main/../generated/tokenvectors0.inc
+
+.1029					Group0Vectors:
+>1029	22 10					.word	Unimplemented            ; $80 [[eol]]
+>102b	22 10					.word	Unimplemented            ; $81 [[sh1]]
+>102d	22 10					.word	Unimplemented            ; $82 [[sh2]]
+>102f	22 10					.word	Unimplemented            ; $83 [[sh3]]
+>1031	22 10					.word	Unimplemented            ; $84 [[fpc]]
+>1033	22 10					.word	Unimplemented            ; $85 [[str]]
+>1035	af 11					.word	AndHandler               ; $86 and
+>1037	9c 11					.word	OrHandler                ; $87 or
+>1039	89 11					.word	XorHandler               ; $88 xor
+>103b	c6 12					.word	CompareGreaterEq         ; $89 >=
+>103d	d0 12					.word	CompareLessEq            ; $8a <=
+>103f	b2 12					.word	CompareGreater           ; $8b >
+>1041	a8 12					.word	CompareLess              ; $8c <
+>1043	9e 12					.word	CompareEquals            ; $8d =
+>1045	bc 12					.word	CompareNotEquals         ; $8e <>
+>1047	1a 11					.word	AddHandler               ; $8f +
+>1049	3d 11					.word	SubHandler               ; $90 -
+>104b	d5 11					.word	ShrHandler               ; $91 >>
+>104d	c2 11					.word	ShlHandler               ; $92 <<
+>104f	50 11					.word	MulHandler               ; $93 *
+>1051	63 11					.word	DivHandler               ; $94 /
+>1053	76 11					.word	ModHandler               ; $95 mod
+>1055	0e 12					.word	PowerHandler             ; $96 ^
+>1057	e8 11					.word	WordRefHandler           ; $97 !
+>1059	fb 11					.word	ByteRefHandler           ; $98 ?
+>105b	22 10					.word	Unimplemented            ; $99 repeat
+>105d	22 10					.word	Unimplemented            ; $9a while
+>105f	22 10					.word	Unimplemented            ; $9b for
+>1061	22 10					.word	Unimplemented            ; $9c if
+>1063	22 10					.word	Unimplemented            ; $9d until
+>1065	22 10					.word	Unimplemented            ; $9e wend
+>1067	22 10					.word	Unimplemented            ; $9f next
+>1069	22 10					.word	Unimplemented            ; $a0 then
+>106b	22 10					.word	Unimplemented            ; $a1 endif
+>106d	22 10					.word	Unimplemented            ; $a2 ~
+>106f	22 10					.word	Unimplemented            ; $a3 (
+>1071	22 10					.word	Unimplemented            ; $a4 &
+>1073	22 10					.word	Unimplemented            ; $a5 @
+>1075	22 10					.word	Unimplemented            ; $a6 len(
+>1077	22 10					.word	Unimplemented            ; $a7 sgn(
+>1079	22 10					.word	Unimplemented            ; $a8 abs(
+>107b	22 10					.word	Unimplemented            ; $a9 random(
+>107d	22 10					.word	Unimplemented            ; $aa page
+>107f	22 10					.word	Unimplemented            ; $ab true
+>1081	22 10					.word	Unimplemented            ; $ac false
+>1083	22 10					.word	Unimplemented            ; $ad min(
+>1085	22 10					.word	Unimplemented            ; $ae max(
+>1087	22 10					.word	Unimplemented            ; $af sys(
+>1089	22 10					.word	Unimplemented            ; $b0 timer(
+>108b	22 10					.word	Unimplemented            ; $b1 event(
+>108d	22 10					.word	Unimplemented            ; $b2 get(
+>108f	22 10					.word	Unimplemented            ; $b3 inkey(
+>1091	22 10					.word	Unimplemented            ; $b4 alloc(
+>1093	22 10					.word	Unimplemented            ; $b5 chr$(
+>1095	22 10					.word	Unimplemented            ; $b6 left$(
+>1097	22 10					.word	Unimplemented            ; $b7 mid$(
+>1099	22 10					.word	Unimplemented            ; $b8 right$(
+>109b	22 10					.word	Unimplemented            ; $b9 str$(
+>109d	22 10					.word	Unimplemented            ; $ba val(
+>109f	22 10					.word	Unimplemented            ; $bb peek(
+>10a1	22 10					.word	Unimplemented            ; $bc deek(
+>10a3	22 10					.word	Unimplemented            ; $bd leek(
+>10a5	22 10					.word	Unimplemented            ; $be int(
+>10a7	22 10					.word	Unimplemented            ; $bf float(
+>10a9	22 10					.word	Unimplemented            ; $c0 )
+>10ab	22 10					.word	Unimplemented            ; $c1 :
+>10ad	22 10					.word	Unimplemented            ; $c2 ,
+>10af	22 10					.word	Unimplemented            ; $c3 ;
+>10b1	22 10					.word	Unimplemented            ; $c4 ]
+>10b3	22 10					.word	Unimplemented            ; $c5 to
+>10b5	22 10					.word	Unimplemented            ; $c6 step
+>10b7	22 10					.word	Unimplemented            ; $c7 proc
+>10b9	22 10					.word	Unimplemented            ; $c8 endproc
+>10bb	22 10					.word	Unimplemented            ; $c9 local
+>10bd	22 10					.word	Unimplemented            ; $ca rem
+>10bf	22 10					.word	Unimplemented            ; $cb let
+>10c1	22 10					.word	Unimplemented            ; $cc '
+>10c3	22 10					.word	Unimplemented            ; $cd [
+>10c5	22 10					.word	Unimplemented            ; $ce input
+>10c7	22 10					.word	Unimplemented            ; $cf else
+>10c9	22 10					.word	Unimplemented            ; $d0 vdu
+>10cb	22 10					.word	Unimplemented            ; $d1 read
+>10cd	22 10					.word	Unimplemented            ; $d2 data
+>10cf	22 10					.word	Unimplemented            ; $d3 restore
+>10d1	22 10					.word	Unimplemented            ; $d4 print
+>10d3	22 10					.word	Unimplemented            ; $d5 goto
+>10d5	22 10					.word	Unimplemented            ; $d6 gosub
+>10d7	22 10					.word	Unimplemented            ; $d7 return
+>10d9	22 10					.word	Unimplemented            ; $d8 assert
+>10db	22 10					.word	Unimplemented            ; $d9 stop
+>10dd	22 10					.word	Unimplemented            ; $da end
+>10df	22 10					.word	Unimplemented            ; $db dim
+>10e1	22 10					.word	Unimplemented            ; $dc poke
+>10e3	22 10					.word	Unimplemented            ; $dd doke
+>10e5	22 10					.word	Unimplemented            ; $de loke
+
+;******  Return to file: ../source/main/00start.asm
 
 
-;******  Processing file: ..\source\main/evaluate/binary.asm
+;******  Return to file: ../source/main/main.asm
 
-.10e6					BinaryProcess:
-.10e6	b5 40		lda $40,x			lda 	esType,x 					; or type bytes together and check bit 6.
-.10e8	15 41		ora $41,x			ora 	esType+1,x
-.10ea	0a		asl a				asl 	a
-.10eb	30 0e		bmi $10fb			bmi 	_BPStringType 				; if one is set, then string type.
-.10ed	18		clc				clc 								; return CC for integer
-.10ee	29 02		and #$02			and 	#$02 						; $02 because of ASL A.
-.10f0	f0 08		beq $10fa			beq 	_BPExit 					; if both integer then return with CC.
-.10f2	20 00 11	jsr $1100			jsr 	BPMakeBothFloat 			; make both float
-.10f5	a9 01		lda #$01			lda 	#$01 						; set result type to float
-.10f7	95 40		sta $40,x			sta 	esType,x
-.10f9	38		sec				sec 								; and return with carry set.
-.10fa					_BPExit:
-.10fa	60		rts				rts
-.10fb					_BPStringType:
-.10fb	a2 04		ldx #$04			ldx 	#ErrorID_BadType
-.10fd	20 df 10	jsr $10df			jsr 	ErrorHandler
-.1100					BPMakeBothFloat:
-.1100	e8		inx				inx
-.1101	20 05 11	jsr $1105			jsr 	BPMakeFloat 				; one is a float, so we do both as floats.
-.1104	ca		dex				dex
-.1105					BPMakeFloat:
-.1105	b5 40		lda $40,x			lda 	esType,x 					; get type bit.
-.1107	4a		lsr a				lsr 	a
-.1108	b0 07		bcs $1111			bcs 	_BPIsFloat
-.110a	8a		txa				txa
-.110b	a2 14		ldx #$14		ldx	#20
-.110d	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1110	aa		tax				tax
-.1111					_BPIsFloat:
-.1111	60		rts				rts
-.1112					AddHandler:
-.1112	20 d8 12	jsr $12d8			jsr 	DereferenceTwo 				; dereference top two on stack.
-.1115	b5 40		lda $40,x			lda 	esType,x 					; check two strings.
-.1117	35 41		and $41,x			and 	esType+1,x
-.1119	29 40		and #$40			and 	#$40 						; if both have bit 6 set ...
-.111b	d0 10		bne $112d			bne 	_AHStringConcat				; concatenate strings.
-.111d	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.1120	b0 03		bcs $1125			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.1122	4c 83 15	jmp $1583			jmp 	MInt32Add 							; else do it as integer.
-.1125					_IsFPOperation:
-.1125	8a		txa				txa 								; call the relevant fp routine
-.1126	a2 02		ldx #$02		ldx	#2
-.1128	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.112b	aa		tax				tax
-.112c	60		rts				rts
-.112d					_AHStringConcat:
-.112d	8a		txa				txa
-.112e	a2 00		ldx #$00		ldx	#0
-.1130	20 4e 17	jsr $174e		jsr	stringHandler
+
+;******  Processing file: ../source/main/evaluate/binary.asm
+
+.10ee					BinaryProcess:
+.10ee	b5 40		lda $40,x			lda 	esType,x 					; or type bytes together and check bit 6.
+.10f0	15 41		ora $41,x			ora 	esType+1,x
+.10f2	0a		asl a				asl 	a
+.10f3	30 0e		bmi $1103			bmi 	_BPStringType 				; if one is set, then string type.
+.10f5	18		clc				clc 								; return CC for integer
+.10f6	29 02		and #$02			and 	#$02 						; $02 because of ASL A.
+.10f8	f0 08		beq $1102			beq 	_BPExit 					; if both integer then return with CC.
+.10fa	20 08 11	jsr $1108			jsr 	BPMakeBothFloat 			; make both float
+.10fd	a9 01		lda #$01			lda 	#$01 						; set result type to float
+.10ff	95 40		sta $40,x			sta 	esType,x
+.1101	38		sec				sec 								; and return with carry set.
+.1102					_BPExit:
+.1102	60		rts				rts
+.1103					_BPStringType:
+.1103	a2 04		ldx #$04			ldx 	#ErrorID_BadType
+.1105	20 e7 10	jsr $10e7			jsr 	ErrorHandler
+.1108					BPMakeBothFloat:
+.1108	e8		inx				inx
+.1109	20 0d 11	jsr $110d			jsr 	BPMakeFloat 				; one is a float, so we do both as floats.
+.110c	ca		dex				dex
+.110d					BPMakeFloat:
+.110d	b5 40		lda $40,x			lda 	esType,x 					; get type bit.
+.110f	4a		lsr a				lsr 	a
+.1110	b0 07		bcs $1119			bcs 	_BPIsFloat
+.1112	8a		txa				txa
+.1113	a2 14		ldx #$14		ldx	#20
+.1115	20 33 17	jsr $1733		jsr	floatingpointHandler
+.1118	aa		tax				tax
+.1119					_BPIsFloat:
+.1119	60		rts				rts
+.111a					AddHandler:
+.111a	20 e0 12	jsr $12e0			jsr 	DereferenceTwo 				; dereference top two on stack.
+.111d	b5 40		lda $40,x			lda 	esType,x 					; check two strings.
+.111f	35 41		and $41,x			and 	esType+1,x
+.1121	29 40		and #$40			and 	#$40 						; if both have bit 6 set ...
+.1123	d0 10		bne $1135			bne 	_AHStringConcat				; concatenate strings.
+.1125	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.1128	b0 03		bcs $112d			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.112a	4c 8b 15	jmp $158b			jmp 	MInt32Add 							; else do it as integer.
+.112d					_IsFPOperation:
+.112d	8a		txa				txa 								; call the relevant fp routine
+.112e	a2 02		ldx #$02		ldx	#2
+.1130	20 33 17	jsr $1733		jsr	floatingpointHandler
 .1133	aa		tax				tax
 .1134	60		rts				rts
-.1135					SubHandler:
-.1135	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.1138	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.113b	b0 03		bcs $1140			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.113d	4c 9d 15	jmp $159d			jmp 	MInt32Sub 							; else do it as integer.
-.1140					_IsFPOperation:
-.1140	8a		txa				txa 								; call the relevant fp routine
-.1141	a2 0c		ldx #$0c		ldx	#12
-.1143	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1146	aa		tax				tax
-.1147	60		rts				rts
-.1148					MulHandler:
-.1148	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.114b	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.114e	b0 03		bcs $1153			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.1150	4c b7 15	jmp $15b7			jmp 	MInt32Multiply 							; else do it as integer.
-.1153					_IsFPOperation:
-.1153	8a		txa				txa 								; call the relevant fp routine
-.1154	a2 0a		ldx #$0a		ldx	#10
-.1156	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1159	aa		tax				tax
-.115a	60		rts				rts
-.115b					DivHandler:
-.115b	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.115e	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.1161	b0 03		bcs $1166			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.1163	4c 91 14	jmp $1491			jmp 	MInt32SDivide 							; else do it as integer.
-.1166					_IsFPOperation:
-.1166	8a		txa				txa 								; call the relevant fp routine
-.1167	a2 06		ldx #$06		ldx	#6
-.1169	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.116c	aa		tax				tax
-.116d	60		rts				rts
-.116e					ModHandler:
-.116e	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.1171	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.1174	b0 03		bcs $1179			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.1176	4c 0f 15	jmp $150f			jmp 	MInt32Modulus 							; else do it as integer.
-.1179					_IsFPOperation:
-.1179	8a		txa				txa 								; call the relevant fp routine
-.117a	a2 08		ldx #$08		ldx	#8
-.117c	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.117f	aa		tax				tax
-.1180	60		rts				rts
-.1181					XorHandler:
-.1181	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.1184	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.1187	b0 03		bcs $118c			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.1189	4c 43 14	jmp $1443			jmp 	MInt32Xor 							; else do it as integer.
-.118c					_IsFPOperation:
-.118c	8a		txa				txa 								; call the relevant fp routine
-.118d	a2 08		ldx #$08		ldx	#8
-.118f	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1192	aa		tax				tax
-.1193	60		rts				rts
-.1194					OrHandler:
-.1194	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.1197	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.119a	b0 03		bcs $119f			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.119c	4c 2a 14	jmp $142a			jmp 	MInt32Or 							; else do it as integer.
-.119f					_IsFPOperation:
-.119f	8a		txa				txa 								; call the relevant fp routine
-.11a0	a2 08		ldx #$08		ldx	#8
-.11a2	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.11a5	aa		tax				tax
-.11a6	60		rts				rts
-.11a7					AndHandler:
-.11a7	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.11aa	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.11ad	b0 03		bcs $11b2			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.11af	4c 11 14	jmp $1411			jmp 	MInt32And 							; else do it as integer.
-.11b2					_IsFPOperation:
-.11b2	8a		txa				txa 								; call the relevant fp routine
-.11b3	a2 08		ldx #$08		ldx	#8
-.11b5	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.11b8	aa		tax				tax
-.11b9	60		rts				rts
-.11ba					ShlHandler:
-.11ba	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.11bd	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.11c0	b0 03		bcs $11c5			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.11c2	4c 3b 12	jmp $123b			jmp 	Mint32ShiftLeftX 							; else do it as integer.
-.11c5					_IsFPOperation:
-.11c5	8a		txa				txa 								; call the relevant fp routine
-.11c6	a2 08		ldx #$08		ldx	#8
-.11c8	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.11cb	aa		tax				tax
-.11cc	60		rts				rts
-.11cd					ShrHandler:
-.11cd	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.11d0	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.11d3	b0 03		bcs $11d8			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.11d5	4c 3e 12	jmp $123e			jmp 	MInt32ShiftRightX 							; else do it as integer.
-.11d8					_IsFPOperation:
-.11d8	8a		txa				txa 								; call the relevant fp routine
-.11d9	a2 08		ldx #$08		ldx	#8
-.11db	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.11de	aa		tax				tax
-.11df	60		rts				rts
-.11e0					WordRefHandler:
-.11e0	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.11e3	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.11e6	b0 03		bcs $11eb			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.11e8	4c 2d 12	jmp $122d			jmp 	MInt32WordIndirect 							; else do it as integer.
-.11eb					_IsFPOperation:
-.11eb	8a		txa				txa 								; call the relevant fp routine
-.11ec	a2 08		ldx #$08		ldx	#8
-.11ee	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.11f1	aa		tax				tax
-.11f2	60		rts				rts
-.11f3					ByteRefHandler:
-.11f3	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.11f6	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.11f9	b0 03		bcs $11fe			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.11fb	4c 31 12	jmp $1231			jmp 	MInt32ByteIndirect 							; else do it as integer.
-.11fe					_IsFPOperation:
-.11fe	8a		txa				txa 								; call the relevant fp routine
-.11ff	a2 08		ldx #$08		ldx	#8
-.1201	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1204	aa		tax				tax
-.1205	60		rts				rts
-.1206					PowerHandler:
-.1206	20 d8 12	jsr $12d8			jsr 	DereferenceTwo
-.1209	20 e6 10	jsr $10e6			jsr 	BinaryProcess 				; check to see if either is float
-.120c	b0 03		bcs $1211			bcs 	_IsFPOperation 				; if so do the whole thing as float.
-.120e	4c 19 12	jmp $1219			jmp 	PowerInteger 							; else do it as integer.
-.1211					_IsFPOperation:
-.1211	8a		txa				txa 								; call the relevant fp routine
-.1212	a2 10		ldx #$10		ldx	#16
-.1214	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1217	aa		tax				tax
-.1218	60		rts				rts
-.1219					PowerInteger:
-.1219	20 00 11	jsr $1100			jsr 	BPMakeBothFloat				; make them float.
-.121c	8a		txa				txa
-.121d	a2 10		ldx #$10		ldx	#16
-.121f	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1222	a2 0e		ldx #$0e		ldx	#14
-.1224	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1227	aa		tax				tax
-.1228	a9 00		lda #$00			lda 	#0 							; make type integer
-.122a	95 40		sta $40,x			sta 	esType,x
-.122c	60		rts				rts
-.122d					Mint32WordIndirect:
-.122d	a9 80		lda #$80			lda 	#$80 				 		; word reference type
-.122f	d0 02		bne $1233			bne 	Min32Indirect
-.1231					Mint32ByteIndirect:
-.1231	a9 a0		lda #$a0			lda 	#$A0 						; byte reference type
-.1233					Min32Indirect:
-.1233	48		pha				pha 								; save the indirection
-.1234	20 83 15	jsr $1583			jsr 	MInt32Add 					; add a!b a?b
-.1237	68		pla				pla 								; and set the type to reference.
-.1238	95 40		sta $40,x			sta 	esType,x
-.123a	60		rts				rts
-.123b					Mint32ShiftLeftX:
-.123b	18		clc				clc
-.123c	90 01		bcc $123f			bcc 	Mint32Shift
-.123e					Mint32ShiftRightX:
-.123e	38		sec				sec
-.123f					Mint32Shift:
-.123f	08		php				php 								; save carry flag on stack.
-.1240	b5 51		lda $51,x			lda 	esInt1+1,x 					; if shift >= 32 then it is zero.
-.1242	15 59		ora $59,x			ora 	esInt2+1,x
-.1244	15 61		ora $61,x			ora 	esInt3+1,x
-.1246	d0 1e		bne $1266			bne 	_MShiftZero
-.1248	b5 49		lda $49,x			lda 	esInt0+1,x
-.124a	c9 20		cmp #$20			cmp 	#32
-.124c	b0 18		bcs $1266			bcs 	_MShiftZero
-.124e					_MShiftLoop:
-.124e	b5 49		lda $49,x			lda 	esInt0+1,x 					; check count is zero
-.1250	f0 12		beq $1264			beq 	_MShiftExit
-.1252	d6 49		dec $49,x			dec 	esInt0+1,x
-.1254	28		plp				plp 								; restore and save carry
-.1255	08		php				php
-.1256	90 06		bcc $125e			bcc 	_MShiftLeft
-.1258	20 af 16	jsr $16af			jsr 	Mint32ShiftRight
-.125b	4c 4e 12	jmp $124e			jmp 	_MShiftLoop
-.125e					_MShiftLeft:
-.125e	20 a6 16	jsr $16a6			jsr 	Mint32ShiftLeft
-.1261	4c 4e 12	jmp $124e			jmp 	_MShiftLoop
-.1264					_MShiftExit:
-.1264	28		plp				plp	 								; throw saved carry and exit
-.1265	60		rts				rts
-.1266					_MShiftZero:
-.1266	4c 91 16	jmp $1691			jmp 	MInt32False 				; return 0.
+.1135					_AHStringConcat:
+.1135	8a		txa				txa
+.1136	a2 00		ldx #$00		ldx	#0
+.1138	20 56 17	jsr $1756		jsr	stringHandler
+.113b	aa		tax				tax
+.113c	60		rts				rts
+.113d					SubHandler:
+.113d	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.1140	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.1143	b0 03		bcs $1148			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.1145	4c a5 15	jmp $15a5			jmp 	MInt32Sub 							; else do it as integer.
+.1148					_IsFPOperation:
+.1148	8a		txa				txa 								; call the relevant fp routine
+.1149	a2 0c		ldx #$0c		ldx	#12
+.114b	20 33 17	jsr $1733		jsr	floatingpointHandler
+.114e	aa		tax				tax
+.114f	60		rts				rts
+.1150					MulHandler:
+.1150	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.1153	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.1156	b0 03		bcs $115b			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.1158	4c bf 15	jmp $15bf			jmp 	MInt32Multiply 							; else do it as integer.
+.115b					_IsFPOperation:
+.115b	8a		txa				txa 								; call the relevant fp routine
+.115c	a2 0a		ldx #$0a		ldx	#10
+.115e	20 33 17	jsr $1733		jsr	floatingpointHandler
+.1161	aa		tax				tax
+.1162	60		rts				rts
+.1163					DivHandler:
+.1163	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.1166	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.1169	b0 03		bcs $116e			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.116b	4c 99 14	jmp $1499			jmp 	MInt32SDivide 							; else do it as integer.
+.116e					_IsFPOperation:
+.116e	8a		txa				txa 								; call the relevant fp routine
+.116f	a2 06		ldx #$06		ldx	#6
+.1171	20 33 17	jsr $1733		jsr	floatingpointHandler
+.1174	aa		tax				tax
+.1175	60		rts				rts
+.1176					ModHandler:
+.1176	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.1179	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.117c	b0 03		bcs $1181			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.117e	4c 17 15	jmp $1517			jmp 	MInt32Modulus 							; else do it as integer.
+.1181					_IsFPOperation:
+.1181	8a		txa				txa 								; call the relevant fp routine
+.1182	a2 08		ldx #$08		ldx	#8
+.1184	20 33 17	jsr $1733		jsr	floatingpointHandler
+.1187	aa		tax				tax
+.1188	60		rts				rts
+.1189					XorHandler:
+.1189	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.118c	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.118f	b0 03		bcs $1194			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.1191	4c 4b 14	jmp $144b			jmp 	MInt32Xor 							; else do it as integer.
+.1194					_IsFPOperation:
+.1194	8a		txa				txa 								; call the relevant fp routine
+.1195	a2 08		ldx #$08		ldx	#8
+.1197	20 33 17	jsr $1733		jsr	floatingpointHandler
+.119a	aa		tax				tax
+.119b	60		rts				rts
+.119c					OrHandler:
+.119c	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.119f	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.11a2	b0 03		bcs $11a7			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.11a4	4c 32 14	jmp $1432			jmp 	MInt32Or 							; else do it as integer.
+.11a7					_IsFPOperation:
+.11a7	8a		txa				txa 								; call the relevant fp routine
+.11a8	a2 08		ldx #$08		ldx	#8
+.11aa	20 33 17	jsr $1733		jsr	floatingpointHandler
+.11ad	aa		tax				tax
+.11ae	60		rts				rts
+.11af					AndHandler:
+.11af	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.11b2	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.11b5	b0 03		bcs $11ba			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.11b7	4c 19 14	jmp $1419			jmp 	MInt32And 							; else do it as integer.
+.11ba					_IsFPOperation:
+.11ba	8a		txa				txa 								; call the relevant fp routine
+.11bb	a2 08		ldx #$08		ldx	#8
+.11bd	20 33 17	jsr $1733		jsr	floatingpointHandler
+.11c0	aa		tax				tax
+.11c1	60		rts				rts
+.11c2					ShlHandler:
+.11c2	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.11c5	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.11c8	b0 03		bcs $11cd			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.11ca	4c 43 12	jmp $1243			jmp 	Mint32ShiftLeftX 							; else do it as integer.
+.11cd					_IsFPOperation:
+.11cd	8a		txa				txa 								; call the relevant fp routine
+.11ce	a2 08		ldx #$08		ldx	#8
+.11d0	20 33 17	jsr $1733		jsr	floatingpointHandler
+.11d3	aa		tax				tax
+.11d4	60		rts				rts
+.11d5					ShrHandler:
+.11d5	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.11d8	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.11db	b0 03		bcs $11e0			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.11dd	4c 46 12	jmp $1246			jmp 	MInt32ShiftRightX 							; else do it as integer.
+.11e0					_IsFPOperation:
+.11e0	8a		txa				txa 								; call the relevant fp routine
+.11e1	a2 08		ldx #$08		ldx	#8
+.11e3	20 33 17	jsr $1733		jsr	floatingpointHandler
+.11e6	aa		tax				tax
+.11e7	60		rts				rts
+.11e8					WordRefHandler:
+.11e8	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.11eb	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.11ee	b0 03		bcs $11f3			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.11f0	4c 35 12	jmp $1235			jmp 	MInt32WordIndirect 							; else do it as integer.
+.11f3					_IsFPOperation:
+.11f3	8a		txa				txa 								; call the relevant fp routine
+.11f4	a2 08		ldx #$08		ldx	#8
+.11f6	20 33 17	jsr $1733		jsr	floatingpointHandler
+.11f9	aa		tax				tax
+.11fa	60		rts				rts
+.11fb					ByteRefHandler:
+.11fb	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.11fe	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.1201	b0 03		bcs $1206			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.1203	4c 39 12	jmp $1239			jmp 	MInt32ByteIndirect 							; else do it as integer.
+.1206					_IsFPOperation:
+.1206	8a		txa				txa 								; call the relevant fp routine
+.1207	a2 08		ldx #$08		ldx	#8
+.1209	20 33 17	jsr $1733		jsr	floatingpointHandler
+.120c	aa		tax				tax
+.120d	60		rts				rts
+.120e					PowerHandler:
+.120e	20 e0 12	jsr $12e0			jsr 	DereferenceTwo
+.1211	20 ee 10	jsr $10ee			jsr 	BinaryProcess 				; check to see if either is float
+.1214	b0 03		bcs $1219			bcs 	_IsFPOperation 				; if so do the whole thing as float.
+.1216	4c 21 12	jmp $1221			jmp 	PowerInteger 							; else do it as integer.
+.1219					_IsFPOperation:
+.1219	8a		txa				txa 								; call the relevant fp routine
+.121a	a2 10		ldx #$10		ldx	#16
+.121c	20 33 17	jsr $1733		jsr	floatingpointHandler
+.121f	aa		tax				tax
+.1220	60		rts				rts
+.1221					PowerInteger:
+.1221	20 08 11	jsr $1108			jsr 	BPMakeBothFloat				; make them float.
+.1224	8a		txa				txa
+.1225	a2 10		ldx #$10		ldx	#16
+.1227	20 33 17	jsr $1733		jsr	floatingpointHandler
+.122a	a2 0e		ldx #$0e		ldx	#14
+.122c	20 33 17	jsr $1733		jsr	floatingpointHandler
+.122f	aa		tax				tax
+.1230	a9 00		lda #$00			lda 	#0 							; make type integer
+.1232	95 40		sta $40,x			sta 	esType,x
+.1234	60		rts				rts
+.1235					Mint32WordIndirect:
+.1235	a9 80		lda #$80			lda 	#$80 				 		; word reference type
+.1237	d0 02		bne $123b			bne 	Min32Indirect
+.1239					Mint32ByteIndirect:
+.1239	a9 a0		lda #$a0			lda 	#$A0 						; byte reference type
+.123b					Min32Indirect:
+.123b	48		pha				pha 								; save the indirection
+.123c	20 8b 15	jsr $158b			jsr 	MInt32Add 					; add a!b a?b
+.123f	68		pla				pla 								; and set the type to reference.
+.1240	95 40		sta $40,x			sta 	esType,x
+.1242	60		rts				rts
+.1243					Mint32ShiftLeftX:
+.1243	18		clc				clc
+.1244	90 01		bcc $1247			bcc 	Mint32Shift
+.1246					Mint32ShiftRightX:
+.1246	38		sec				sec
+.1247					Mint32Shift:
+.1247	08		php				php 								; save carry flag on stack.
+.1248	b5 51		lda $51,x			lda 	esInt1+1,x 					; if shift >= 32 then it is zero.
+.124a	15 59		ora $59,x			ora 	esInt2+1,x
+.124c	15 61		ora $61,x			ora 	esInt3+1,x
+.124e	d0 1e		bne $126e			bne 	_MShiftZero
+.1250	b5 49		lda $49,x			lda 	esInt0+1,x
+.1252	c9 20		cmp #$20			cmp 	#32
+.1254	b0 18		bcs $126e			bcs 	_MShiftZero
+.1256					_MShiftLoop:
+.1256	b5 49		lda $49,x			lda 	esInt0+1,x 					; check count is zero
+.1258	f0 12		beq $126c			beq 	_MShiftExit
+.125a	d6 49		dec $49,x			dec 	esInt0+1,x
+.125c	28		plp				plp 								; restore and save carry
+.125d	08		php				php
+.125e	90 06		bcc $1266			bcc 	_MShiftLeft
+.1260	20 b7 16	jsr $16b7			jsr 	Mint32ShiftRight
+.1263	4c 56 12	jmp $1256			jmp 	_MShiftLoop
+.1266					_MShiftLeft:
+.1266	20 ae 16	jsr $16ae			jsr 	Mint32ShiftLeft
+.1269	4c 56 12	jmp $1256			jmp 	_MShiftLoop
+.126c					_MShiftExit:
+.126c	28		plp				plp	 								; throw saved carry and exit
+.126d	60		rts				rts
+.126e					_MShiftZero:
+.126e	4c 99 16	jmp $1699			jmp 	MInt32False 				; return 0.
 
-;******  Return to file: ..\source\main/main.asm
-
-
-;******  Processing file: ..\source\main/evaluate/compare.asm
-
-.1269					PerformComparison:
-.1269	b5 40		lda $40,x			lda 	esType,x 					; check for two strings.
-.126b	35 41		and $41,x			and 	esType+1,x
-.126d	0a		asl a				asl 	a
-.126e	30 19		bmi $1289			bmi 	_PCIsString
-.1270	b5 40		lda $40,x			lda 	esType,x 					; check either is floating point.
-.1272	15 41		ora $41,x			ora 	esType+1,x
-.1274	0a		asl a				asl 	a 							; shift bit 6 (string) to bit 7
-.1275	30 1a		bmi $1291			bmi 	_PCError
-.1277	29 02		and #$02			and 	#$02 						; because of ASL, check type in bit 0
-.1279	f0 0b		beq $1286			beq 	_PCIsInteger 				; if not two integers
-.127b	20 00 11	jsr $1100			jsr 	BPMakeBothFloat 			; make both float
-.127e	8a		txa				txa
-.127f	a2 04		ldx #$04		ldx	#4
-.1281	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1284	aa		tax				tax
-.1285	60		rts				rts
-.1286					_PCIsInteger:
-.1286	4c 5c 14	jmp $145c			jmp 	MInt32Compare
-.1289					_PCIsString:
-.1289	8a		txa				txa
-.128a	a2 02		ldx #$02		ldx	#2
-.128c	20 4e 17	jsr $174e		jsr	stringHandler
-.128f	aa		tax				tax
-.1290	60		rts				rts
-.1291					_PCError:
-.1291	a2 04		ldx #$04			ldx 	#ErrorID_BadType
-.1293	20 df 10	jsr $10df			jsr 	ErrorHandler
-.1296					CompareEquals:
-.1296	20 69 12	jsr $1269			jsr 	PerformComparison
-.1299	c9 00		cmp #$00			cmp 	#$00
-.129b	f0 35		beq $12d2			beq  	CompareTrue
-.129d	4c d5 12	jmp $12d5			jmp 	CompareFalse
-.12a0					CompareLess:
-.12a0	20 69 12	jsr $1269			jsr 	PerformComparison
-.12a3	c9 ff		cmp #$ff			cmp 	#$FF
-.12a5	f0 2b		beq $12d2			beq  	CompareTrue
-.12a7	4c d5 12	jmp $12d5			jmp 	CompareFalse
-.12aa					CompareGreater:
-.12aa	20 69 12	jsr $1269			jsr 	PerformComparison
-.12ad	c9 01		cmp #$01			cmp 	#$01
-.12af	f0 21		beq $12d2			beq  	CompareTrue
-.12b1	4c d5 12	jmp $12d5			jmp 	CompareFalse
-.12b4					CompareNotEquals:
-.12b4	20 69 12	jsr $1269			jsr 	PerformComparison
-.12b7	c9 00		cmp #$00			cmp 	#$00
-.12b9	d0 17		bne $12d2			bne  	CompareTrue
-.12bb	4c d5 12	jmp $12d5			jmp 	CompareFalse
-.12be					CompareGreaterEq:
-.12be	20 69 12	jsr $1269			jsr 	PerformComparison
-.12c1	c9 ff		cmp #$ff			cmp 	#$FF
-.12c3	d0 0d		bne $12d2			bne  	CompareTrue
-.12c5	4c d5 12	jmp $12d5			jmp 	CompareFalse
-.12c8					CompareLessEq:
-.12c8	20 69 12	jsr $1269			jsr 	PerformComparison
-.12cb	c9 01		cmp #$01			cmp 	#$01
-.12cd	d0 03		bne $12d2			bne  	CompareTrue
-.12cf	4c d5 12	jmp $12d5			jmp 	CompareFalse
-.12d2					CompareTrue:
-.12d2	4c 8d 16	jmp $168d			jmp 	MInt32True
-.12d5					CompareFalse:
-.12d5	4c 91 16	jmp $1691			jmp 	MInt32False
-
-;******  Return to file: ..\source\main/main.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/evaluate/dereference.asm
+;******  Processing file: ../source/main/evaluate/compare.asm
 
-.12d8					DereferenceTwo:
-.12d8	e8		inx				inx
-.12d9	20 dd 12	jsr $12dd			jsr 	DereferenceOne
-.12dc	ca		dex				dex
-.12dd					DereferenceOne:
-.12dd	b5 40		lda $40,x			lda 	esType,x
-.12df	10 3d		bpl $131e			bpl 	_DRNotReference 			; is it a reference ?
-.12e1	4a		lsr a				lsr 	a 							; do float dereference if bit 0 set.
-.12e2	b0 3b		bcs $131f			bcs 	_DRFloatDeReference
-.12e4	98		tya				tya
-.12e5	48		pha				pha
-.12e6	b5 48		lda $48,x			lda 	esInt0,x 					; copy address to temp0
-.12e8	85 04		sta $04				sta 	temp0
-.12ea	b5 50		lda $50,x			lda 	esInt1,x
-.12ec	85 05		sta $05				sta 	temp0+1
-.12ee	a9 00		lda #$00			lda 	#0 							; clear esInt1..3
-.12f0	95 50		sta $50,x			sta 	esInt1,x
-.12f2	95 58		sta $58,x			sta 	esInt2,x
-.12f4	95 60		sta $60,x			sta 	esInt3,x
-.12f6	b5 40		lda $40,x			lda 	esType,x 					; get the type byte.
-.12f8	29 60		and #$60			and 	#$60 						; get string flag ($40) and byte flag ($20)
-.12fa	0a		asl a				asl 	a 							; now string ($80) byte ($40)
-.12fb	30 0d		bmi $130a			bmi 	_DeRefString 				; string, 2 bytes only
-.12fd	d0 11		bne $1310			bne 	_DeRefByte 					; byte 1 byte only
-.12ff					_DeRefLong:
-.12ff	a0 03		ldy #$03			ldy 	#3
-.1301	b1 04		lda ($04),y			lda 	(temp0),y
-.1303	95 60		sta $60,x			sta 	esInt3,x
-.1305	88		dey				dey
-.1306	b1 04		lda ($04),y			lda 	(temp0),y
-.1308	95 58		sta $58,x			sta 	esInt2,x
-.130a					_DeRefString:
-.130a	a0 01		ldy #$01			ldy 	#1
-.130c	b1 04		lda ($04),y			lda 	(temp0),y
-.130e	95 50		sta $50,x			sta 	esInt1,x
-.1310					_DeRefByte:
-.1310	a0 00		ldy #$00			ldy 	#0
-.1312	b1 04		lda ($04),y			lda 	(temp0),y
-.1314	95 48		sta $48,x			sta 	esInt0,x
-.1316	b5 40		lda $40,x			lda 	esType,x 					; clear byte and deref bits.
-.1318	29 40		and #$40			and 	#$40
-.131a	95 40		sta $40,x			sta 	esType,x
-.131c	68		pla				pla
-.131d	a8		tay				tay
-.131e					_DRNotReference
-.131e	60		rts				rts
-.131f					_DRFloatDereference:
-.131f	8a		txa				txa
-.1320	a2 00		ldx #$00		ldx	#0
-.1322	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.1325	aa		tax				tax
-.1326	a9 01		lda #$01			lda 	#$01 						; type to FP (float)
-.1328	95 40		sta $40,x			sta 	esType,x
-.132a	60		rts				rts
+.1271					PerformComparison:
+.1271	b5 40		lda $40,x			lda 	esType,x 					; check for two strings.
+.1273	35 41		and $41,x			and 	esType+1,x
+.1275	0a		asl a				asl 	a
+.1276	30 19		bmi $1291			bmi 	_PCIsString
+.1278	b5 40		lda $40,x			lda 	esType,x 					; check either is floating point.
+.127a	15 41		ora $41,x			ora 	esType+1,x
+.127c	0a		asl a				asl 	a 							; shift bit 6 (string) to bit 7
+.127d	30 1a		bmi $1299			bmi 	_PCError
+.127f	29 02		and #$02			and 	#$02 						; because of ASL, check type in bit 0
+.1281	f0 0b		beq $128e			beq 	_PCIsInteger 				; if not two integers
+.1283	20 08 11	jsr $1108			jsr 	BPMakeBothFloat 			; make both float
+.1286	8a		txa				txa
+.1287	a2 04		ldx #$04		ldx	#4
+.1289	20 33 17	jsr $1733		jsr	floatingpointHandler
+.128c	aa		tax				tax
+.128d	60		rts				rts
+.128e					_PCIsInteger:
+.128e	4c 64 14	jmp $1464			jmp 	MInt32Compare
+.1291					_PCIsString:
+.1291	8a		txa				txa
+.1292	a2 02		ldx #$02		ldx	#2
+.1294	20 56 17	jsr $1756		jsr	stringHandler
+.1297	aa		tax				tax
+.1298	60		rts				rts
+.1299					_PCError:
+.1299	a2 04		ldx #$04			ldx 	#ErrorID_BadType
+.129b	20 e7 10	jsr $10e7			jsr 	ErrorHandler
+.129e					CompareEquals:
+.129e	20 71 12	jsr $1271			jsr 	PerformComparison
+.12a1	c9 00		cmp #$00			cmp 	#$00
+.12a3	f0 35		beq $12da			beq  	CompareTrue
+.12a5	4c dd 12	jmp $12dd			jmp 	CompareFalse
+.12a8					CompareLess:
+.12a8	20 71 12	jsr $1271			jsr 	PerformComparison
+.12ab	c9 ff		cmp #$ff			cmp 	#$FF
+.12ad	f0 2b		beq $12da			beq  	CompareTrue
+.12af	4c dd 12	jmp $12dd			jmp 	CompareFalse
+.12b2					CompareGreater:
+.12b2	20 71 12	jsr $1271			jsr 	PerformComparison
+.12b5	c9 01		cmp #$01			cmp 	#$01
+.12b7	f0 21		beq $12da			beq  	CompareTrue
+.12b9	4c dd 12	jmp $12dd			jmp 	CompareFalse
+.12bc					CompareNotEquals:
+.12bc	20 71 12	jsr $1271			jsr 	PerformComparison
+.12bf	c9 00		cmp #$00			cmp 	#$00
+.12c1	d0 17		bne $12da			bne  	CompareTrue
+.12c3	4c dd 12	jmp $12dd			jmp 	CompareFalse
+.12c6					CompareGreaterEq:
+.12c6	20 71 12	jsr $1271			jsr 	PerformComparison
+.12c9	c9 ff		cmp #$ff			cmp 	#$FF
+.12cb	d0 0d		bne $12da			bne  	CompareTrue
+.12cd	4c dd 12	jmp $12dd			jmp 	CompareFalse
+.12d0					CompareLessEq:
+.12d0	20 71 12	jsr $1271			jsr 	PerformComparison
+.12d3	c9 01		cmp #$01			cmp 	#$01
+.12d5	d0 03		bne $12da			bne  	CompareTrue
+.12d7	4c dd 12	jmp $12dd			jmp 	CompareFalse
+.12da					CompareTrue:
+.12da	4c 95 16	jmp $1695			jmp 	MInt32True
+.12dd					CompareFalse:
+.12dd	4c 99 16	jmp $1699			jmp 	MInt32False
 
-;******  Return to file: ..\source\main/main.asm
-
-
-;******  Processing file: ..\source\main/evaluate/evaluate.asm
-
-.132b					EvaluateLevel:
-.132b	48		pha				pha 								; save precedence level.
-.132c	a9 00		lda #$00			lda 	#0 							; zero the current stack level.
-.132e	95 48		sta $48,x			sta 	esInt0,x
-.1330	95 50		sta $50,x			sta 	esInt1,x
-.1332	95 58		sta $58,x			sta 	esInt2,x
-.1334	95 60		sta $60,x			sta 	esInt3,x
-.1336	95 40		sta $40,x			sta 	esType,x 					; zero the type (integer value)
-.1338	b1 02		lda ($02),y			lda 	(codePtr),y	 				; look at first token/character
-.133a	30 21		bmi $135d			bmi 	_ELIsToken 					; if -ve could be string, float, or unary function.
-.133c	0a		asl a				asl 	a 							; if 00-3F then will now be PL and it's a variable.
-.133d	30 0a		bmi $1349			bmi 	_ELIsConstant 				; 40-7F will be -ve and that's an integer constant.
-.133f	8a		txa				txa 								; stack level in X
-.1340	a2 00		ldx #$00		ldx	#0
-.1342	20 5b 17	jsr $175b		jsr	variableHandler
-.1345	aa		tax				tax
-.1346	4c 86 13	jmp $1386			jmp		_ELHasTerm
-.1349					_ELIsConstant:
-.1349	4a		lsr a				lsr 	a 							; get the value back
-.134a	29 3f		and #$3f			and 	#$3F 						; force into range 0-63
-.134c	95 48		sta $48,x			sta 	esInt0,x 					; and put in LSB.
-.134e					_ELCheckNext:
-.134e	c8		iny				iny 								; look at next
-.134f	b1 02		lda ($02),y			lda 	(codePtr),y
-.1351	49 40		eor #$40			eor 	#$40 						; shift around so 40-7F => 00-3F
-.1353	c9 40		cmp #$40			cmp 	#$40 						; out of range ?
-.1355	b0 2f		bcs $1386			bcs 	_ELHasTerm 					; done getting the constant.
-.1357	20 c7 13	jsr $13c7			jsr 	ELShiftByteIn 				; shift byte into position.
-.135a	4c 4e 13	jmp $134e			jmp 	_ELCheckNext
-.135d					_ELIsToken:
-.135d	c9 85		cmp #$85			cmp 	#TOK_STR 					; handle strings.
-.135f	f0 0f		beq $1370			beq 	_ELIsString
-.1361	c9 84		cmp #$84			cmp 	#TOK_FPC 					; if no, then check unary.
-.1363	d0 5f		bne $13c4			bne 	_ELCheckUnary
-.1365	8a		txa				txa 								; put X into A
-.1366	c8		iny				iny 								; skip over the float marker
-.1367	a2 12		ldx #$12		ldx	#18
-.1369	20 2b 17	jsr $172b		jsr	floatingpointHandler
-.136c	aa		tax				tax 								; restore X
-.136d	4c 86 13	jmp $1386			jmp 	_ELHasTerm
-.1370					_ELIsString:
-.1370	98		tya				tya 								; address of string is codePtr+y+1
-.1371	38		sec				sec
-.1372	65 02		adc $02				adc 	codePtr
-.1374	95 48		sta $48,x			sta 	esInt0,x
-.1376	a5 03		lda $03				lda 	codePtr+1
-.1378	69 00		adc #$00			adc 	#0
-.137a	95 50		sta $50,x			sta 	esInt1,x
-.137c	a9 40		lda #$40			lda 	#$40 						; set type to string value
-.137e	95 40		sta $40,x			sta 	esType,x
-.1380	c8		iny				iny 								; skip over string.
-.1381	98		tya				tya
-.1382	38		sec				sec									; +1 for the length itself.
-.1383	71 02		adc ($02),y			adc 	(codePtr),y
-.1385	a8		tay				tay 								; and fall through to term loop code.
-.1386					_ELHasTerm:
-.1386	b1 02		lda ($02),y			lda 	(codePtr),y
-.1388	c9 86		cmp #$86			cmp 	#TOK_BINARYST 				; check in the correct range for binary tokens.
-.138a	90 04		bcc $1390			bcc 	_ELPopExit
-.138c	c9 9d		cmp #$9d			cmp 	#TOK_STRUCTST
-.138e	90 02		bcc $1392			bcc 	_ELHasBinaryTerm
-.1390					_ELPopExit:
-.1390	68		pla				pla
-.1391					_ELExit:
-.1391	60		rts				rts
-.1392					_ELHasBinaryTerm:
-.1392	84 0a		sty $0a				sty 	tempShort 					; save position
-.1394	a8		tay				tay 								; use token as an index and get the precedence.
-.1395	b9 6f 13	lda $136f,y			lda 	ELBinaryOperatorInfo-TOK_BINARYST,y
-.1398	a4 0a		ldy $0a				ldy 	tempShort 					; restore Y
-.139a	85 0a		sta $0a				sta 	tempShort 					; save precedence in memory.
-.139c	68		pla				pla 								; restore current level.
-.139d	c5 0a		cmp $0a				cmp 	tempShort 					; if current >= operator then exit
-.139f	b0 f0		bcs $1391			bcs 	_ELExit
-.13a1	48		pha				pha 								; save current level back on the stack.
-.13a2	b1 02		lda ($02),y			lda 	(codePtr),y 				; save the binary operator on the stack and skip it.
-.13a4	48		pha				pha
-.13a5	c8		iny				iny
-.13a6	e8		inx				inx 								; calculate the RHS at the operator precedence.
-.13a7	a5 0a		lda $0a				lda 	tempShort
-.13a9	20 2b 13	jsr $132b			jsr 	EvaluateLevel
-.13ac	ca		dex				dex
-.13ad	68		pla				pla 								; get the operator back out.
-.13ae	86 0a		stx $0a				stx 	tempShort 					; upload the vectors. Would be nice to use jmp (aaaa,x)
-.13b0	0a		asl a				asl 	a 							; but not practical. May use push/rts later.
-.13b1	aa		tax				tax
-.13b2	bd 21 10	lda $1021,x			lda 	Group0Vectors,x
-.13b5	85 04		sta $04				sta 	temp0
-.13b7	bd 22 10	lda $1022,x			lda 	Group0Vectors+1,x
-.13ba	85 05		sta $05				sta 	temp0+1
-.13bc	a6 0a		ldx $0a				ldx 	tempShort
-.13be	20 c4 13	jsr $13c4			jsr 	_ELCallTemp0
-.13c1	4c 86 13	jmp $1386			jmp 	_ELHasTerm 					; and loop back round.
-.13c4					_ELCheckUnary:
-.13c4					_ELCallTemp0:
-.13c4	6c 04 00	jmp ($0004)			jmp 	(temp0)
-.13c7					ELShiftByteIn:
-.13c7	48		pha				pha 								; save bits to shift in.
-.13c8	b5 60		lda $60,x			lda 	esInt3,x 					; save top most byte
-.13ca	48		pha				pha
-.13cb	b5 58		lda $58,x			lda 	esInt2,x 					; shift everything left 8 bits
-.13cd	95 60		sta $60,x			sta 	esInt3,x
-.13cf	b5 50		lda $50,x			lda 	esInt1,x
-.13d1	95 58		sta $58,x			sta 	esInt2,x
-.13d3	b5 48		lda $48,x			lda 	esInt0,x
-.13d5	95 50		sta $50,x			sta 	esInt1,x
-.13d7	a9 00		lda #$00			lda 	#0
-.13d9	95 48		sta $48,x			sta 	esInt0,x
-.13db	68		pla				pla 								; now A:TOS is a 5 byte register, shift right twice.
-.13dc	29 03		and #$03			and 	#3 							; only want lower 2 bits
-.13de	09 04		ora #$04			ora 	#4  						; set bit 2 - when 1 we are done
-.13e0					_ELShiftLoop:
-.13e0	4a		lsr a				lsr 	a
-.13e1	76 60		ror $60,x			ror 	esInt3,x
-.13e3	76 58		ror $58,x			ror 	esInt2,x
-.13e5	76 50		ror $50,x			ror 	esInt1,x
-.13e7	76 48		ror $48,x			ror 	esInt0,x
-.13e9	c9 01		cmp #$01			cmp 	#1
-.13eb	d0 f3		bne $13e0			bne 	_ELShiftLoop
-.13ed	68		pla				pla 								; get original 6 bit value and OR in.
-.13ee	29 3f		and #$3f			and 	#$3F
-.13f0	15 48		ora $48,x			ora 	esInt0,x
-.13f2	95 48		sta $48,x			sta 	esInt0,x
-.13f4	60		rts				rts
-.13f5					ELBinaryOperatorInfo:
-
-;******  Processing file: ..\source\main/evaluate/../../generated/binarystructinfo.inc
-
->13f5	01					.byte	$01			; $86 and
->13f6	01					.byte	$01			; $87 or
->13f7	01					.byte	$01			; $88 xor
->13f8	02					.byte	$02			; $89 >=
->13f9	02					.byte	$02			; $8a <=
->13fa	02					.byte	$02			; $8b >
->13fb	02					.byte	$02			; $8c <
->13fc	02					.byte	$02			; $8d =
->13fd	02					.byte	$02			; $8e <>
->13fe	03					.byte	$03			; $8f +
->13ff	03					.byte	$03			; $90 -
->1400	04					.byte	$04			; $91 >>
->1401	04					.byte	$04			; $92 <<
->1402	04					.byte	$04			; $93 *
->1403	04					.byte	$04			; $94 /
->1404	04					.byte	$04			; $95 mod
->1405	05					.byte	$05			; $96 ^
->1406	06					.byte	$06			; $97 !
->1407	06					.byte	$06			; $98 ?
->1408	82					.byte	$82			; $99 repeat
->1409	82					.byte	$82			; $9a while
->140a	82					.byte	$82			; $9b for
->140b	82					.byte	$82			; $9c if
->140c	80					.byte	$80			; $9d until
->140d	80					.byte	$80			; $9e wend
->140e	80					.byte	$80			; $9f next
->140f	80					.byte	$80			; $a0 then
->1410	80					.byte	$80			; $a1 endif
-
-;******  Return to file: ..\source\main/evaluate/evaluate.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Return to file: ..\source\main/main.asm
+;******  Processing file: ../source/main/evaluate/dereference.asm
+
+.12e0					DereferenceTwo:
+.12e0	e8		inx				inx
+.12e1	20 e5 12	jsr $12e5			jsr 	DereferenceOne
+.12e4	ca		dex				dex
+.12e5					DereferenceOne:
+.12e5	b5 40		lda $40,x			lda 	esType,x
+.12e7	10 3d		bpl $1326			bpl 	_DRNotReference 			; is it a reference ?
+.12e9	4a		lsr a				lsr 	a 							; do float dereference if bit 0 set.
+.12ea	b0 3b		bcs $1327			bcs 	_DRFloatDeReference
+.12ec	98		tya				tya
+.12ed	48		pha				pha
+.12ee	b5 48		lda $48,x			lda 	esInt0,x 					; copy address to temp0
+.12f0	85 04		sta $04				sta 	temp0
+.12f2	b5 50		lda $50,x			lda 	esInt1,x
+.12f4	85 05		sta $05				sta 	temp0+1
+.12f6	a9 00		lda #$00			lda 	#0 							; clear esInt1..3
+.12f8	95 50		sta $50,x			sta 	esInt1,x
+.12fa	95 58		sta $58,x			sta 	esInt2,x
+.12fc	95 60		sta $60,x			sta 	esInt3,x
+.12fe	b5 40		lda $40,x			lda 	esType,x 					; get the type byte.
+.1300	29 60		and #$60			and 	#$60 						; get string flag ($40) and byte flag ($20)
+.1302	0a		asl a				asl 	a 							; now string ($80) byte ($40)
+.1303	30 0d		bmi $1312			bmi 	_DeRefString 				; string, 2 bytes only
+.1305	d0 11		bne $1318			bne 	_DeRefByte 					; byte 1 byte only
+.1307					_DeRefLong:
+.1307	a0 03		ldy #$03			ldy 	#3
+.1309	b1 04		lda ($04),y			lda 	(temp0),y
+.130b	95 60		sta $60,x			sta 	esInt3,x
+.130d	88		dey				dey
+.130e	b1 04		lda ($04),y			lda 	(temp0),y
+.1310	95 58		sta $58,x			sta 	esInt2,x
+.1312					_DeRefString:
+.1312	a0 01		ldy #$01			ldy 	#1
+.1314	b1 04		lda ($04),y			lda 	(temp0),y
+.1316	95 50		sta $50,x			sta 	esInt1,x
+.1318					_DeRefByte:
+.1318	a0 00		ldy #$00			ldy 	#0
+.131a	b1 04		lda ($04),y			lda 	(temp0),y
+.131c	95 48		sta $48,x			sta 	esInt0,x
+.131e	b5 40		lda $40,x			lda 	esType,x 					; clear byte and deref bits.
+.1320	29 40		and #$40			and 	#$40
+.1322	95 40		sta $40,x			sta 	esType,x
+.1324	68		pla				pla
+.1325	a8		tay				tay
+.1326					_DRNotReference
+.1326	60		rts				rts
+.1327					_DRFloatDereference:
+.1327	8a		txa				txa
+.1328	a2 00		ldx #$00		ldx	#0
+.132a	20 33 17	jsr $1733		jsr	floatingpointHandler
+.132d	aa		tax				tax
+.132e	a9 01		lda #$01			lda 	#$01 						; type to FP (float)
+.1330	95 40		sta $40,x			sta 	esType,x
+.1332	60		rts				rts
+
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/imath/int32binary.asm
+;******  Processing file: ../source/main/evaluate/evaluate.asm
 
-.1411					MInt32And:
-.1411	b5 48		lda $48,x			lda 	esInt0,x
-.1413	35 49		and $49,x			and 	esInt0+1,x
-.1415	95 48		sta $48,x			sta 	esInt0,x
-.1417	b5 50		lda $50,x			lda 	esInt1,x
-.1419	35 51		and $51,x			and 	esInt1+1,x
-.141b	95 50		sta $50,x			sta 	esInt1,x
-.141d	b5 58		lda $58,x			lda 	esInt2,x
-.141f	35 59		and $59,x			and 	esInt2+1,x
-.1421	95 58		sta $58,x			sta 	esInt2,x
-.1423	b5 60		lda $60,x			lda 	esInt3,x
-.1425	35 61		and $61,x			and 	esInt3+1,x
-.1427	95 60		sta $60,x			sta 	esInt3,x
-.1429	60		rts				rts
-.142a					MInt32Or:
-.142a	b5 48		lda $48,x			lda 	esInt0,x
-.142c	15 49		ora $49,x			ora 	esInt0+1,x
-.142e	95 48		sta $48,x			sta 	esInt0,x
-.1430	b5 50		lda $50,x			lda 	esInt1,x
-.1432	15 51		ora $51,x			ora 	esInt1+1,x
-.1434	95 50		sta $50,x			sta 	esInt1,x
-.1436	b5 58		lda $58,x			lda 	esInt2,x
-.1438	15 59		ora $59,x			ora 	esInt2+1,x
-.143a	95 58		sta $58,x			sta 	esInt2,x
-.143c	b5 60		lda $60,x			lda 	esInt3,x
-.143e	15 61		ora $61,x			ora 	esInt3+1,x
-.1440	95 60		sta $60,x			sta 	esInt3,x
-.1442	60		rts				rts
-.1443					MInt32Xor:
-.1443	b5 48		lda $48,x			lda 	esInt0,x
-.1445	55 49		eor $49,x			eor 	esInt0+1,x
-.1447	95 48		sta $48,x			sta 	esInt0,x
-.1449	b5 50		lda $50,x			lda 	esInt1,x
-.144b	55 51		eor $51,x			eor 	esInt1+1,x
-.144d	95 50		sta $50,x			sta 	esInt1,x
-.144f	b5 58		lda $58,x			lda 	esInt2,x
-.1451	55 59		eor $59,x			eor 	esInt2+1,x
-.1453	95 58		sta $58,x			sta 	esInt2,x
-.1455	b5 60		lda $60,x			lda 	esInt3,x
-.1457	55 61		eor $61,x			eor 	esInt3+1,x
-.1459	95 60		sta $60,x			sta 	esInt3,x
-.145b	60		rts				rts
+.1333					EvaluateLevel:
+.1333	48		pha				pha 								; save precedence level.
+.1334	a9 00		lda #$00			lda 	#0 							; zero the current stack level.
+.1336	95 48		sta $48,x			sta 	esInt0,x
+.1338	95 50		sta $50,x			sta 	esInt1,x
+.133a	95 58		sta $58,x			sta 	esInt2,x
+.133c	95 60		sta $60,x			sta 	esInt3,x
+.133e	95 40		sta $40,x			sta 	esType,x 					; zero the type (integer value)
+.1340	b1 02		lda ($02),y			lda 	(codePtr),y	 				; look at first token/character
+.1342	30 21		bmi $1365			bmi 	_ELIsToken 					; if -ve could be string, float, or unary function.
+.1344	0a		asl a				asl 	a 							; if 00-3F then will now be PL and it's a variable.
+.1345	30 0a		bmi $1351			bmi 	_ELIsConstant 				; 40-7F will be -ve and that's an integer constant.
+.1347	8a		txa				txa 								; stack level in X
+.1348	a2 00		ldx #$00		ldx	#0
+.134a	20 81 17	jsr $1781		jsr	variableHandler
+.134d	aa		tax				tax
+.134e	4c 8e 13	jmp $138e			jmp		_ELHasTerm
+.1351					_ELIsConstant:
+.1351	4a		lsr a				lsr 	a 							; get the value back
+.1352	29 3f		and #$3f			and 	#$3F 						; force into range 0-63
+.1354	95 48		sta $48,x			sta 	esInt0,x 					; and put in LSB.
+.1356					_ELCheckNext:
+.1356	c8		iny				iny 								; look at next
+.1357	b1 02		lda ($02),y			lda 	(codePtr),y
+.1359	49 40		eor #$40			eor 	#$40 						; shift around so 40-7F => 00-3F
+.135b	c9 40		cmp #$40			cmp 	#$40 						; out of range ?
+.135d	b0 2f		bcs $138e			bcs 	_ELHasTerm 					; done getting the constant.
+.135f	20 cf 13	jsr $13cf			jsr 	ELShiftByteIn 				; shift byte into position.
+.1362	4c 56 13	jmp $1356			jmp 	_ELCheckNext
+.1365					_ELIsToken:
+.1365	c9 85		cmp #$85			cmp 	#TOK_STR 					; handle strings.
+.1367	f0 0f		beq $1378			beq 	_ELIsString
+.1369	c9 84		cmp #$84			cmp 	#TOK_FPC 					; if no, then check unary.
+.136b	d0 5f		bne $13cc			bne 	_ELCheckUnary
+.136d	8a		txa				txa 								; put X into A
+.136e	c8		iny				iny 								; skip over the float marker
+.136f	a2 12		ldx #$12		ldx	#18
+.1371	20 33 17	jsr $1733		jsr	floatingpointHandler
+.1374	aa		tax				tax 								; restore X
+.1375	4c 8e 13	jmp $138e			jmp 	_ELHasTerm
+.1378					_ELIsString:
+.1378	98		tya				tya 								; address of string is codePtr+y+1
+.1379	38		sec				sec
+.137a	65 02		adc $02				adc 	codePtr
+.137c	95 48		sta $48,x			sta 	esInt0,x
+.137e	a5 03		lda $03				lda 	codePtr+1
+.1380	69 00		adc #$00			adc 	#0
+.1382	95 50		sta $50,x			sta 	esInt1,x
+.1384	a9 40		lda #$40			lda 	#$40 						; set type to string value
+.1386	95 40		sta $40,x			sta 	esType,x
+.1388	c8		iny				iny 								; skip over string.
+.1389	98		tya				tya
+.138a	38		sec				sec									; +1 for the length itself.
+.138b	71 02		adc ($02),y			adc 	(codePtr),y
+.138d	a8		tay				tay 								; and fall through to term loop code.
+.138e					_ELHasTerm:
+.138e	b1 02		lda ($02),y			lda 	(codePtr),y
+.1390	c9 86		cmp #$86			cmp 	#TOK_BINARYST 				; check in the correct range for binary tokens.
+.1392	90 04		bcc $1398			bcc 	_ELPopExit
+.1394	c9 9d		cmp #$9d			cmp 	#TOK_STRUCTST
+.1396	90 02		bcc $139a			bcc 	_ELHasBinaryTerm
+.1398					_ELPopExit:
+.1398	68		pla				pla
+.1399					_ELExit:
+.1399	60		rts				rts
+.139a					_ELHasBinaryTerm:
+.139a	84 0a		sty $0a				sty 	tempShort 					; save position
+.139c	a8		tay				tay 								; use token as an index and get the precedence.
+.139d	b9 77 13	lda $1377,y			lda 	ELBinaryOperatorInfo-TOK_BINARYST,y
+.13a0	a4 0a		ldy $0a				ldy 	tempShort 					; restore Y
+.13a2	85 0a		sta $0a				sta 	tempShort 					; save precedence in memory.
+.13a4	68		pla				pla 								; restore current level.
+.13a5	c5 0a		cmp $0a				cmp 	tempShort 					; if current >= operator then exit
+.13a7	b0 f0		bcs $1399			bcs 	_ELExit
+.13a9	48		pha				pha 								; save current level back on the stack.
+.13aa	b1 02		lda ($02),y			lda 	(codePtr),y 				; save the binary operator on the stack and skip it.
+.13ac	48		pha				pha
+.13ad	c8		iny				iny
+.13ae	e8		inx				inx 								; calculate the RHS at the operator precedence.
+.13af	a5 0a		lda $0a				lda 	tempShort
+.13b1	20 33 13	jsr $1333			jsr 	EvaluateLevel
+.13b4	ca		dex				dex
+.13b5	68		pla				pla 								; get the operator back out.
+.13b6	86 0a		stx $0a				stx 	tempShort 					; upload the vectors. Would be nice to use jmp (aaaa,x)
+.13b8	0a		asl a				asl 	a 							; but not practical. May use push/rts later.
+.13b9	aa		tax				tax
+.13ba	bd 29 10	lda $1029,x			lda 	Group0Vectors,x
+.13bd	85 04		sta $04				sta 	temp0
+.13bf	bd 2a 10	lda $102a,x			lda 	Group0Vectors+1,x
+.13c2	85 05		sta $05				sta 	temp0+1
+.13c4	a6 0a		ldx $0a				ldx 	tempShort
+.13c6	20 cc 13	jsr $13cc			jsr 	_ELCallTemp0
+.13c9	4c 8e 13	jmp $138e			jmp 	_ELHasTerm 					; and loop back round.
+.13cc					_ELCheckUnary:
+.13cc					_ELCallTemp0:
+.13cc	6c 04 00	jmp ($0004)			jmp 	(temp0)
+.13cf					ELShiftByteIn:
+.13cf	48		pha				pha 								; save bits to shift in.
+.13d0	b5 60		lda $60,x			lda 	esInt3,x 					; save top most byte
+.13d2	48		pha				pha
+.13d3	b5 58		lda $58,x			lda 	esInt2,x 					; shift everything left 8 bits
+.13d5	95 60		sta $60,x			sta 	esInt3,x
+.13d7	b5 50		lda $50,x			lda 	esInt1,x
+.13d9	95 58		sta $58,x			sta 	esInt2,x
+.13db	b5 48		lda $48,x			lda 	esInt0,x
+.13dd	95 50		sta $50,x			sta 	esInt1,x
+.13df	a9 00		lda #$00			lda 	#0
+.13e1	95 48		sta $48,x			sta 	esInt0,x
+.13e3	68		pla				pla 								; now A:TOS is a 5 byte register, shift right twice.
+.13e4	29 03		and #$03			and 	#3 							; only want lower 2 bits
+.13e6	09 04		ora #$04			ora 	#4  						; set bit 2 - when 1 we are done
+.13e8					_ELShiftLoop:
+.13e8	4a		lsr a				lsr 	a
+.13e9	76 60		ror $60,x			ror 	esInt3,x
+.13eb	76 58		ror $58,x			ror 	esInt2,x
+.13ed	76 50		ror $50,x			ror 	esInt1,x
+.13ef	76 48		ror $48,x			ror 	esInt0,x
+.13f1	c9 01		cmp #$01			cmp 	#1
+.13f3	d0 f3		bne $13e8			bne 	_ELShiftLoop
+.13f5	68		pla				pla 								; get original 6 bit value and OR in.
+.13f6	29 3f		and #$3f			and 	#$3F
+.13f8	15 48		ora $48,x			ora 	esInt0,x
+.13fa	95 48		sta $48,x			sta 	esInt0,x
+.13fc	60		rts				rts
+.13fd					ELBinaryOperatorInfo:
 
-;******  Return to file: ..\source\main/main.asm
+;******  Processing file: ../source/main/evaluate/../../generated/binarystructinfo.inc
+
+>13fd	01					.byte	$01			; $86 and
+>13fe	01					.byte	$01			; $87 or
+>13ff	01					.byte	$01			; $88 xor
+>1400	02					.byte	$02			; $89 >=
+>1401	02					.byte	$02			; $8a <=
+>1402	02					.byte	$02			; $8b >
+>1403	02					.byte	$02			; $8c <
+>1404	02					.byte	$02			; $8d =
+>1405	02					.byte	$02			; $8e <>
+>1406	03					.byte	$03			; $8f +
+>1407	03					.byte	$03			; $90 -
+>1408	04					.byte	$04			; $91 >>
+>1409	04					.byte	$04			; $92 <<
+>140a	04					.byte	$04			; $93 *
+>140b	04					.byte	$04			; $94 /
+>140c	04					.byte	$04			; $95 mod
+>140d	05					.byte	$05			; $96 ^
+>140e	06					.byte	$06			; $97 !
+>140f	06					.byte	$06			; $98 ?
+>1410	82					.byte	$82			; $99 repeat
+>1411	82					.byte	$82			; $9a while
+>1412	82					.byte	$82			; $9b for
+>1413	82					.byte	$82			; $9c if
+>1414	80					.byte	$80			; $9d until
+>1415	80					.byte	$80			; $9e wend
+>1416	80					.byte	$80			; $9f next
+>1417	80					.byte	$80			; $a0 then
+>1418	80					.byte	$80			; $a1 endif
+
+;******  Return to file: ../source/main/evaluate/evaluate.asm
 
 
-;******  Processing file: ..\source\main/imath/int32compare.asm
-
-.145c					MInt32Compare:
-.145c	b5 48		lda $48,x			lda 	esInt0,x 					; equality check.
-.145e	d5 49		cmp $49,x			cmp 	esInt0+1,x
-.1460	d0 13		bne $1475			bne 	MInt32Compare2
-.1462	b5 50		lda $50,x			lda 	esInt1,x
-.1464	d5 51		cmp $51,x			cmp 	esInt1+1,x
-.1466	d0 0d		bne $1475			bne 	MInt32Compare2
-.1468	b5 58		lda $58,x			lda 	esInt2,x
-.146a	d5 59		cmp $59,x			cmp 	esInt2+1,x
-.146c	d0 07		bne $1475			bne 	MInt32Compare2
-.146e	b5 60		lda $60,x			lda 	esInt3,x
-.1470	55 61		eor $61,x			eor 	esInt3+1,x 					; will return 0 if the same.
-.1472	d0 01		bne $1475			bne 	MInt32Compare2
-.1474	60		rts				rts
-.1475					MInt32Compare2:
-.1475	b5 48		lda $48,x			lda		esInt0,x 					; unsigned 32 bit comparison.
-.1477	d5 49		cmp $49,x			cmp 	esInt0+1,x
-.1479	b5 50		lda $50,x			lda		esInt1,x
-.147b	f5 51		sbc $51,x			sbc 	esInt1+1,x
-.147d	b5 58		lda $58,x			lda		esInt2,x
-.147f	f5 59		sbc $59,x			sbc 	esInt2+1,x
-.1481	b5 60		lda $60,x			lda		esInt3,x
-.1483	f5 61		sbc $61,x			sbc 	esInt3+1,x
-.1485	50 02		bvc $1489			bvc 	_I32LNoOverflow 			; make it signed 32 bi comparison
-.1487	49 80		eor #$80			eor 	#$80
-.1489					_I32LNoOverflow
-.1489	30 03		bmi $148e			bmi 	MInt32CLess					; if -ve then return $FF
-.148b	a9 01		lda #$01			lda 	#$01						; else return $01
-.148d	60		rts				rts
-.148e					MInt32CLess:
-.148e	a9 ff		lda #$ff			lda 	#$FF
-.1490	60		rts				rts
-
-;******  Return to file: ..\source\main/main.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/imath/int32divide.asm
+;******  Processing file: ../source/main/imath/int32binary.asm
 
-.1491					MInt32SDivide:
-.1491	98		tya				tya  								; save Y, which is the count of negations
-.1492	48		pha				pha
-.1493	a0 00		ldy #$00			ldy 	#0 							; zero count
-.1495	20 ad 14	jsr $14ad			jsr 	_MInt32SRemSign 			; unsign TOS
-.1498	e8		inx				inx 								; unsign TOS+1
-.1499	20 ad 14	jsr $14ad			jsr 	_MInt32SRemSign
-.149c	ca		dex				dex
-.149d	98		tya				tya 								; save sign count on stack
-.149e	48		pha				pha
-.149f	20 b6 14	jsr $14b6			jsr 	MInt32UDivide 				; unsigned division
-.14a2	68		pla				pla 								; get sign count back
-.14a3	29 01		and #$01			and 	#1 							; if it is odd, then negate result
-.14a5	f0 03		beq $14aa			beq 	_I32SNoNeg
-.14a7	20 4b 16	jsr $164b			jsr 	MInt32Negate
-.14aa					_I32SNoNeg:
-.14aa	68		pla				pla 								; restoe Y and exit
-.14ab	a8		tay				tay
-.14ac	60		rts				rts
-.14ad					_MInt32SRemSign:
-.14ad	b5 60		lda $60,x			lda 	esInt3,x 					; is it -ve
-.14af	10 04		bpl $14b5			bpl 	_MInt32SRSExit
-.14b1	c8		iny				iny 								; increment the sign count
-.14b2	20 4b 16	jsr $164b			jsr 	MInt32Negate 				; negate the value.
-.14b5					_MInt32SRSExit:
-.14b5	60		rts				rts
-.14b6					MInt32UDivide:
-.14b6	b5 49		lda $49,x			lda 	esInt0+1,x 					; check for division by zero
-.14b8	15 51		ora $51,x			ora 	esInt1+1,x
-.14ba	15 52		ora $52,x			ora 	esInt1+2,x
-.14bc	15 53		ora $53,x			ora 	esInt1+3,x
-.14be	f0 4a		beq $150a			beq 	_MInt32DZero
-.14c0	e8		inx				inx 								; clear A
-.14c1	e8		inx				inx
-.14c2	20 91 16	jsr $1691			jsr 	MInt32False
-.14c5	ca		dex				dex
-.14c6	ca		dex				dex
-.14c7	98		tya				tya 								; save Y on the stack
-.14c8	48		pha				pha
-.14c9	a0 20		ldy #$20			ldy 	#32 						; number of division passes
-.14cb					_MInt32UDLoop:
-.14cb	16 48		asl $48,x			asl 	esInt0,x					; shift QA left. First Q
-.14cd	36 50		rol $50,x			rol 	esInt1,x
-.14cf	36 58		rol $58,x			rol 	esInt2,x
-.14d1	36 60		rol $60,x			rol 	esInt3,x
-.14d3	36 4a		rol $4a,x			rol 	esInt0+2,x 					; then A.
-.14d5	36 52		rol $52,x			rol 	esInt1+2,x
-.14d7	36 5a		rol $5a,x			rol 	esInt2+2,x
-.14d9	36 62		rol $62,x			rol 	esInt3+2,x
-.14db	38		sec				sec 								; calculate A-M saving result on the stack
-.14dc	b5 4a		lda $4a,x			lda 	esInt0+2,x
-.14de	f5 49		sbc $49,x			sbc 	esInt0+1,x
-.14e0	48		pha				pha
-.14e1	b5 52		lda $52,x			lda 	esInt1+2,x
-.14e3	f5 51		sbc $51,x			sbc 	esInt1+1,x
-.14e5	48		pha				pha
-.14e6	b5 5a		lda $5a,x			lda 	esInt2+2,x
-.14e8	f5 59		sbc $59,x			sbc 	esInt2+1,x
-.14ea	48		pha				pha
-.14eb	b5 62		lda $62,x			lda 	esInt3+2,x
-.14ed	f5 61		sbc $61,x			sbc 	esInt3+1,x
-.14ef	90 10		bcc $1501			bcc		_MInt32NoSubtract 			; if A < M (e.g. carry clear) then reject this.
-.14f1	95 62		sta $62,x			sta 	esInt3+2,x 					; write result back to A
-.14f3	68		pla				pla
-.14f4	95 5a		sta $5a,x			sta 	esInt2+2,x
-.14f6	68		pla				pla
-.14f7	95 52		sta $52,x			sta 	esInt1+2,x
-.14f9	68		pla				pla
-.14fa	95 4a		sta $4a,x			sta 	esInt0+2,x
-.14fc	f6 48		inc $48,x			inc 	esInt0,x 					; sets bit 0 of Q - it was shifted left previously.
-.14fe	4c 04 15	jmp $1504			jmp 	_MInt32Next 					; do the next iteration
-.1501					_MInt32NoSubtract:
+.1419					MInt32And:
+.1419	b5 48		lda $48,x			lda 	esInt0,x
+.141b	35 49		and $49,x			and 	esInt0+1,x
+.141d	95 48		sta $48,x			sta 	esInt0,x
+.141f	b5 50		lda $50,x			lda 	esInt1,x
+.1421	35 51		and $51,x			and 	esInt1+1,x
+.1423	95 50		sta $50,x			sta 	esInt1,x
+.1425	b5 58		lda $58,x			lda 	esInt2,x
+.1427	35 59		and $59,x			and 	esInt2+1,x
+.1429	95 58		sta $58,x			sta 	esInt2,x
+.142b	b5 60		lda $60,x			lda 	esInt3,x
+.142d	35 61		and $61,x			and 	esInt3+1,x
+.142f	95 60		sta $60,x			sta 	esInt3,x
+.1431	60		rts				rts
+.1432					MInt32Or:
+.1432	b5 48		lda $48,x			lda 	esInt0,x
+.1434	15 49		ora $49,x			ora 	esInt0+1,x
+.1436	95 48		sta $48,x			sta 	esInt0,x
+.1438	b5 50		lda $50,x			lda 	esInt1,x
+.143a	15 51		ora $51,x			ora 	esInt1+1,x
+.143c	95 50		sta $50,x			sta 	esInt1,x
+.143e	b5 58		lda $58,x			lda 	esInt2,x
+.1440	15 59		ora $59,x			ora 	esInt2+1,x
+.1442	95 58		sta $58,x			sta 	esInt2,x
+.1444	b5 60		lda $60,x			lda 	esInt3,x
+.1446	15 61		ora $61,x			ora 	esInt3+1,x
+.1448	95 60		sta $60,x			sta 	esInt3,x
+.144a	60		rts				rts
+.144b					MInt32Xor:
+.144b	b5 48		lda $48,x			lda 	esInt0,x
+.144d	55 49		eor $49,x			eor 	esInt0+1,x
+.144f	95 48		sta $48,x			sta 	esInt0,x
+.1451	b5 50		lda $50,x			lda 	esInt1,x
+.1453	55 51		eor $51,x			eor 	esInt1+1,x
+.1455	95 50		sta $50,x			sta 	esInt1,x
+.1457	b5 58		lda $58,x			lda 	esInt2,x
+.1459	55 59		eor $59,x			eor 	esInt2+1,x
+.145b	95 58		sta $58,x			sta 	esInt2,x
+.145d	b5 60		lda $60,x			lda 	esInt3,x
+.145f	55 61		eor $61,x			eor 	esInt3+1,x
+.1461	95 60		sta $60,x			sta 	esInt3,x
+.1463	60		rts				rts
+
+;******  Return to file: ../source/main/main.asm
+
+
+;******  Processing file: ../source/main/imath/int32compare.asm
+
+.1464					MInt32Compare:
+.1464	b5 48		lda $48,x			lda 	esInt0,x 					; equality check.
+.1466	d5 49		cmp $49,x			cmp 	esInt0+1,x
+.1468	d0 13		bne $147d			bne 	MInt32Compare2
+.146a	b5 50		lda $50,x			lda 	esInt1,x
+.146c	d5 51		cmp $51,x			cmp 	esInt1+1,x
+.146e	d0 0d		bne $147d			bne 	MInt32Compare2
+.1470	b5 58		lda $58,x			lda 	esInt2,x
+.1472	d5 59		cmp $59,x			cmp 	esInt2+1,x
+.1474	d0 07		bne $147d			bne 	MInt32Compare2
+.1476	b5 60		lda $60,x			lda 	esInt3,x
+.1478	55 61		eor $61,x			eor 	esInt3+1,x 					; will return 0 if the same.
+.147a	d0 01		bne $147d			bne 	MInt32Compare2
+.147c	60		rts				rts
+.147d					MInt32Compare2:
+.147d	b5 48		lda $48,x			lda		esInt0,x 					; unsigned 32 bit comparison.
+.147f	d5 49		cmp $49,x			cmp 	esInt0+1,x
+.1481	b5 50		lda $50,x			lda		esInt1,x
+.1483	f5 51		sbc $51,x			sbc 	esInt1+1,x
+.1485	b5 58		lda $58,x			lda		esInt2,x
+.1487	f5 59		sbc $59,x			sbc 	esInt2+1,x
+.1489	b5 60		lda $60,x			lda		esInt3,x
+.148b	f5 61		sbc $61,x			sbc 	esInt3+1,x
+.148d	50 02		bvc $1491			bvc 	_I32LNoOverflow 			; make it signed 32 bi comparison
+.148f	49 80		eor #$80			eor 	#$80
+.1491					_I32LNoOverflow
+.1491	30 03		bmi $1496			bmi 	MInt32CLess					; if -ve then return $FF
+.1493	a9 01		lda #$01			lda 	#$01						; else return $01
+.1495	60		rts				rts
+.1496					MInt32CLess:
+.1496	a9 ff		lda #$ff			lda 	#$FF
+.1498	60		rts				rts
+
+;******  Return to file: ../source/main/main.asm
+
+
+;******  Processing file: ../source/main/imath/int32divide.asm
+
+.1499					MInt32SDivide:
+.1499	98		tya				tya  								; save Y, which is the count of negations
+.149a	48		pha				pha
+.149b	a0 00		ldy #$00			ldy 	#0 							; zero count
+.149d	20 b5 14	jsr $14b5			jsr 	_MInt32SRemSign 			; unsign TOS
+.14a0	e8		inx				inx 								; unsign TOS+1
+.14a1	20 b5 14	jsr $14b5			jsr 	_MInt32SRemSign
+.14a4	ca		dex				dex
+.14a5	98		tya				tya 								; save sign count on stack
+.14a6	48		pha				pha
+.14a7	20 be 14	jsr $14be			jsr 	MInt32UDivide 				; unsigned division
+.14aa	68		pla				pla 								; get sign count back
+.14ab	29 01		and #$01			and 	#1 							; if it is odd, then negate result
+.14ad	f0 03		beq $14b2			beq 	_I32SNoNeg
+.14af	20 53 16	jsr $1653			jsr 	MInt32Negate
+.14b2					_I32SNoNeg:
+.14b2	68		pla				pla 								; restoe Y and exit
+.14b3	a8		tay				tay
+.14b4	60		rts				rts
+.14b5					_MInt32SRemSign:
+.14b5	b5 60		lda $60,x			lda 	esInt3,x 					; is it -ve
+.14b7	10 04		bpl $14bd			bpl 	_MInt32SRSExit
+.14b9	c8		iny				iny 								; increment the sign count
+.14ba	20 53 16	jsr $1653			jsr 	MInt32Negate 				; negate the value.
+.14bd					_MInt32SRSExit:
+.14bd	60		rts				rts
+.14be					MInt32UDivide:
+.14be	b5 49		lda $49,x			lda 	esInt0+1,x 					; check for division by zero
+.14c0	15 51		ora $51,x			ora 	esInt1+1,x
+.14c2	15 52		ora $52,x			ora 	esInt1+2,x
+.14c4	15 53		ora $53,x			ora 	esInt1+3,x
+.14c6	f0 4a		beq $1512			beq 	_MInt32DZero
+.14c8	e8		inx				inx 								; clear A
+.14c9	e8		inx				inx
+.14ca	20 99 16	jsr $1699			jsr 	MInt32False
+.14cd	ca		dex				dex
+.14ce	ca		dex				dex
+.14cf	98		tya				tya 								; save Y on the stack
+.14d0	48		pha				pha
+.14d1	a0 20		ldy #$20			ldy 	#32 						; number of division passes
+.14d3					_MInt32UDLoop:
+.14d3	16 48		asl $48,x			asl 	esInt0,x					; shift QA left. First Q
+.14d5	36 50		rol $50,x			rol 	esInt1,x
+.14d7	36 58		rol $58,x			rol 	esInt2,x
+.14d9	36 60		rol $60,x			rol 	esInt3,x
+.14db	36 4a		rol $4a,x			rol 	esInt0+2,x 					; then A.
+.14dd	36 52		rol $52,x			rol 	esInt1+2,x
+.14df	36 5a		rol $5a,x			rol 	esInt2+2,x
+.14e1	36 62		rol $62,x			rol 	esInt3+2,x
+.14e3	38		sec				sec 								; calculate A-M saving result on the stack
+.14e4	b5 4a		lda $4a,x			lda 	esInt0+2,x
+.14e6	f5 49		sbc $49,x			sbc 	esInt0+1,x
+.14e8	48		pha				pha
+.14e9	b5 52		lda $52,x			lda 	esInt1+2,x
+.14eb	f5 51		sbc $51,x			sbc 	esInt1+1,x
+.14ed	48		pha				pha
+.14ee	b5 5a		lda $5a,x			lda 	esInt2+2,x
+.14f0	f5 59		sbc $59,x			sbc 	esInt2+1,x
+.14f2	48		pha				pha
+.14f3	b5 62		lda $62,x			lda 	esInt3+2,x
+.14f5	f5 61		sbc $61,x			sbc 	esInt3+1,x
+.14f7	90 10		bcc $1509			bcc		_MInt32NoSubtract 			; if A < M (e.g. carry clear) then reject this.
+.14f9	95 62		sta $62,x			sta 	esInt3+2,x 					; write result back to A
+.14fb	68		pla				pla
+.14fc	95 5a		sta $5a,x			sta 	esInt2+2,x
+.14fe	68		pla				pla
+.14ff	95 52		sta $52,x			sta 	esInt1+2,x
 .1501	68		pla				pla
-.1502	68		pla				pla
-.1503	68		pla				pla
-.1504					_MInt32Next:
-.1504	88		dey				dey 								; do this 32 times.
-.1505	d0 c4		bne $14cb			bne 	_MInt32UDLoop
-.1507	68		pla				pla 								; restore Y and exit
-.1508	a8		tay				tay
-.1509	60		rts				rts
-.150a					_MInt32DZero:
-.150a	a2 02		ldx #$02			ldx 	#ErrorID_DivZero
-.150c	20 df 10	jsr $10df			jsr 	ErrorHandler
-.150f					MInt32Modulus:
-.150f	20 b6 14	jsr $14b6			jsr 	MInt32UDivide 				; do the division.
-.1512	b5 62		lda $62,x			lda 	esInt3+2,x 					; copy 2nd on stack (the remainder) to the top.
-.1514	95 60		sta $60,x			sta 	esInt3,x
-.1516	b5 5a		lda $5a,x			lda 	esInt2+2,x
-.1518	95 58		sta $58,x			sta 	esInt2,x
-.151a	b5 52		lda $52,x			lda 	esInt1+2,x
-.151c	95 50		sta $50,x			sta 	esInt1,x
-.151e	b5 4a		lda $4a,x			lda 	esInt0+2,x
-.1520	95 48		sta $48,x			sta 	esInt0,x
-.1522	60		rts				rts
+.1502	95 4a		sta $4a,x			sta 	esInt0+2,x
+.1504	f6 48		inc $48,x			inc 	esInt0,x 					; sets bit 0 of Q - it was shifted left previously.
+.1506	4c 0c 15	jmp $150c			jmp 	_MInt32Next 					; do the next iteration
+.1509					_MInt32NoSubtract:
+.1509	68		pla				pla
+.150a	68		pla				pla
+.150b	68		pla				pla
+.150c					_MInt32Next:
+.150c	88		dey				dey 								; do this 32 times.
+.150d	d0 c4		bne $14d3			bne 	_MInt32UDLoop
+.150f	68		pla				pla 								; restore Y and exit
+.1510	a8		tay				tay
+.1511	60		rts				rts
+.1512					_MInt32DZero:
+.1512	a2 02		ldx #$02			ldx 	#ErrorID_DivZero
+.1514	20 e7 10	jsr $10e7			jsr 	ErrorHandler
+.1517					MInt32Modulus:
+.1517	20 be 14	jsr $14be			jsr 	MInt32UDivide 				; do the division.
+.151a	b5 62		lda $62,x			lda 	esInt3+2,x 					; copy 2nd on stack (the remainder) to the top.
+.151c	95 60		sta $60,x			sta 	esInt3,x
+.151e	b5 5a		lda $5a,x			lda 	esInt2+2,x
+.1520	95 58		sta $58,x			sta 	esInt2,x
+.1522	b5 52		lda $52,x			lda 	esInt1+2,x
+.1524	95 50		sta $50,x			sta 	esInt1,x
+.1526	b5 4a		lda $4a,x			lda 	esInt0+2,x
+.1528	95 48		sta $48,x			sta 	esInt0,x
+.152a	60		rts				rts
 
-;******  Return to file: ..\source\main/main.asm
-
-
-;******  Processing file: ..\source\main/imath/int32fromstr.asm
-
-.1523					MInt32FromString:
-.1523	85 0a		sta $0a				sta 	tempShort 					; save base
-.1525	98		tya				tya
-.1526	48		pha				pha
-.1527	a0 00		ldy #$00			ldy 	#0 							; set index into string being read
-.1529	b1 04		lda ($04),y			lda 	(temp0),y 					; look at first character
-.152b	c9 2d		cmp #$2d			cmp 	#"-"						; is it a - character
-.152d	d0 01		bne $1530			bne 	_I32FSNotNegative
-.152f	c8		iny				iny 								; if so consume it.
-.1530					_I32FSNotNegative:
-.1530	a5 0a		lda $0a				lda 	tempShort 					; get the base back.
-.1532	c0 00		cpy #$00			cpy 	#0 							; if we read a -ve (e.g. Y != 0)
-.1534	f0 02		beq $1538			beq 	_I32FSNN2
-.1536	09 80		ora #$80			ora 	#$80						; set bit 7, this indicates a negated result.
-.1538					_I32FSNN2:
-.1538	48		pha				pha 								; save base + final sign on stack.
-.1539	20 91 16	jsr $1691			jsr 	MInt32False 					; zero the return value.
-.153c					I32FSMainLoop:
-.153c	68		pla				pla 								; get the base back into tempshort
-.153d	48		pha				pha
-.153e	29 7f		and #$7f			and 	#$7F
-.1540	85 0a		sta $0a				sta 	tempShort
-.1542	b1 04		lda ($04),y			lda 	(temp0),y 					; look at next character.
-.1544	c9 61		cmp #$61			cmp 	#"a" 						; fix up case.
-.1546	90 02		bcc $154a			bcc 	_I32FSNotLC
-.1548	e9 20		sbc #$20			sbc 	#32
-.154a					_I32FSNotLC:
-.154a	38		sec				sec 								; subtract 48 (ASCII "0")
-.154b	e9 30		sbc #$30			sbc 	#"0"
-.154d	90 26		bcc $1575			bcc 	_I32FSDone 					; nothing more to do.
-.154f	c9 0a		cmp #$0a			cmp 	#9+1 						; if it is 0-9 validate vs base.
-.1551	90 06		bcc $1559			bcc 	_I32FSValidate
-.1553	c9 11		cmp #$11			cmp 	#17 						; is it between 58 and 64 ? if so bad.
-.1555	90 1e		bcc $1575			bcc 	_I32FSDone
-.1557	e9 07		sbc #$07			sbc 	#7 							; adjust into range so now character is 0->nnn
-.1559					_I32FSValidate:
-.1559	c5 0a		cmp $0a				cmp 	tempShort 					; compare against the base.
-.155b	b0 18		bcs $1575			bcs 	_I32FSDone 					; sorry, too large for this base.
-.155d	48		pha				pha 								; save the new digit value.
-.155e	e8		inx				inx 								; put base into next slot.
-.155f	a5 0a		lda $0a				lda 	tempShort
-.1561	20 a0 16	jsr $16a0			jsr 	MInt32Set8Bit
-.1564	ca		dex				dex
-.1565	20 b7 15	jsr $15b7			jsr 	MInt32Multiply 				; multiply current by the base
-.1568	e8		inx				inx
-.1569	68		pla				pla  								; put additive into next slot
-.156a	20 a0 16	jsr $16a0			jsr 	MInt32Set8Bit
-.156d	ca		dex				dex
-.156e	20 83 15	jsr $1583			jsr 	MInt32Add 					; and add it
-.1571	c8		iny				iny 								; look at next character
-.1572	4c 3c 15	jmp $153c			jmp 	I32FSMainLoop 				; and go round again.
-.1575					_I32FSDone:
-.1575	68		pla				pla 								; get base/final sign back
-.1576	10 04		bpl $157c			bpl 	_I32FSNN3
-.1578	88		dey				dey 								; one fewer character to allow for the - prefix.
-.1579	20 4b 16	jsr $164b			jsr 	MInt32Negate 				; negate the result.
-.157c					_I32FSNN3:
-.157c	84 0a		sty $0a				sty 	tempShort 					; save the count of characters read
-.157e	68		pla				pla
-.157f	a8		tay				tay
-.1580	a5 0a		lda $0a				lda 	tempShort 					; get the count of characters read into A and exit
-.1582	60		rts				rts
-
-;******  Return to file: ..\source\main/main.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/imath/int32math.asm
+;******  Processing file: ../source/main/imath/int32fromstr.asm
 
-.1583					MInt32Add:
-.1583	18		clc				clc
-.1584	b5 48		lda $48,x			lda 	esInt0,x
-.1586	75 49		adc $49,x			adc 	esInt0+1,x
-.1588	95 48		sta $48,x			sta 	esInt0,x
-.158a	b5 50		lda $50,x			lda 	esInt1,x
-.158c	75 51		adc $51,x			adc 	esInt1+1,x
-.158e	95 50		sta $50,x			sta 	esInt1,x
-.1590	b5 58		lda $58,x			lda 	esInt2,x
-.1592	75 59		adc $59,x			adc 	esInt2+1,x
-.1594	95 58		sta $58,x			sta 	esInt2,x
-.1596	b5 60		lda $60,x			lda 	esInt3,x
-.1598	75 61		adc $61,x			adc 	esInt3+1,x
-.159a	95 60		sta $60,x			sta 	esInt3,x
-.159c	60		rts				rts
-.159d					MInt32Sub:
-.159d	38		sec				sec
-.159e	b5 48		lda $48,x			lda 	esInt0,x
-.15a0	f5 49		sbc $49,x			sbc 	esInt0+1,x
-.15a2	95 48		sta $48,x			sta 	esInt0,x
-.15a4	b5 50		lda $50,x			lda 	esInt1,x
-.15a6	f5 51		sbc $51,x			sbc 	esInt1+1,x
-.15a8	95 50		sta $50,x			sta 	esInt1,x
-.15aa	b5 58		lda $58,x			lda 	esInt2,x
-.15ac	f5 59		sbc $59,x			sbc 	esInt2+1,x
-.15ae	95 58		sta $58,x			sta 	esInt2,x
-.15b0	b5 60		lda $60,x			lda 	esInt3,x
-.15b2	f5 61		sbc $61,x			sbc 	esInt3+1,x
-.15b4	95 60		sta $60,x			sta 	esInt3,x
-.15b6	60		rts				rts
+.152b					MInt32FromString:
+.152b	85 0a		sta $0a				sta 	tempShort 					; save base
+.152d	98		tya				tya
+.152e	48		pha				pha
+.152f	a0 00		ldy #$00			ldy 	#0 							; set index into string being read
+.1531	b1 04		lda ($04),y			lda 	(temp0),y 					; look at first character
+.1533	c9 2d		cmp #$2d			cmp 	#"-"						; is it a - character
+.1535	d0 01		bne $1538			bne 	_I32FSNotNegative
+.1537	c8		iny				iny 								; if so consume it.
+.1538					_I32FSNotNegative:
+.1538	a5 0a		lda $0a				lda 	tempShort 					; get the base back.
+.153a	c0 00		cpy #$00			cpy 	#0 							; if we read a -ve (e.g. Y != 0)
+.153c	f0 02		beq $1540			beq 	_I32FSNN2
+.153e	09 80		ora #$80			ora 	#$80						; set bit 7, this indicates a negated result.
+.1540					_I32FSNN2:
+.1540	48		pha				pha 								; save base + final sign on stack.
+.1541	20 99 16	jsr $1699			jsr 	MInt32False 					; zero the return value.
+.1544					I32FSMainLoop:
+.1544	68		pla				pla 								; get the base back into tempshort
+.1545	48		pha				pha
+.1546	29 7f		and #$7f			and 	#$7F
+.1548	85 0a		sta $0a				sta 	tempShort
+.154a	b1 04		lda ($04),y			lda 	(temp0),y 					; look at next character.
+.154c	c9 61		cmp #$61			cmp 	#"a" 						; fix up case.
+.154e	90 02		bcc $1552			bcc 	_I32FSNotLC
+.1550	e9 20		sbc #$20			sbc 	#32
+.1552					_I32FSNotLC:
+.1552	38		sec				sec 								; subtract 48 (ASCII "0")
+.1553	e9 30		sbc #$30			sbc 	#"0"
+.1555	90 26		bcc $157d			bcc 	_I32FSDone 					; nothing more to do.
+.1557	c9 0a		cmp #$0a			cmp 	#9+1 						; if it is 0-9 validate vs base.
+.1559	90 06		bcc $1561			bcc 	_I32FSValidate
+.155b	c9 11		cmp #$11			cmp 	#17 						; is it between 58 and 64 ? if so bad.
+.155d	90 1e		bcc $157d			bcc 	_I32FSDone
+.155f	e9 07		sbc #$07			sbc 	#7 							; adjust into range so now character is 0->nnn
+.1561					_I32FSValidate:
+.1561	c5 0a		cmp $0a				cmp 	tempShort 					; compare against the base.
+.1563	b0 18		bcs $157d			bcs 	_I32FSDone 					; sorry, too large for this base.
+.1565	48		pha				pha 								; save the new digit value.
+.1566	e8		inx				inx 								; put base into next slot.
+.1567	a5 0a		lda $0a				lda 	tempShort
+.1569	20 a8 16	jsr $16a8			jsr 	MInt32Set8Bit
+.156c	ca		dex				dex
+.156d	20 bf 15	jsr $15bf			jsr 	MInt32Multiply 				; multiply current by the base
+.1570	e8		inx				inx
+.1571	68		pla				pla  								; put additive into next slot
+.1572	20 a8 16	jsr $16a8			jsr 	MInt32Set8Bit
+.1575	ca		dex				dex
+.1576	20 8b 15	jsr $158b			jsr 	MInt32Add 					; and add it
+.1579	c8		iny				iny 								; look at next character
+.157a	4c 44 15	jmp $1544			jmp 	I32FSMainLoop 				; and go round again.
+.157d					_I32FSDone:
+.157d	68		pla				pla 								; get base/final sign back
+.157e	10 04		bpl $1584			bpl 	_I32FSNN3
+.1580	88		dey				dey 								; one fewer character to allow for the - prefix.
+.1581	20 53 16	jsr $1653			jsr 	MInt32Negate 				; negate the result.
+.1584					_I32FSNN3:
+.1584	84 0a		sty $0a				sty 	tempShort 					; save the count of characters read
+.1586	68		pla				pla
+.1587	a8		tay				tay
+.1588	a5 0a		lda $0a				lda 	tempShort 					; get the count of characters read into A and exit
+.158a	60		rts				rts
 
-;******  Return to file: ..\source\main/main.asm
-
-
-;******  Processing file: ..\source\main/imath/int32multiply.asm
-
-.15b7					MInt32Multiply:
-.15b7	e8		inx				inx 								; copy 2nd -> 3rd
-.15b8	20 dd 15	jsr $15dd			jsr 	MInt32CopyUp
-.15bb	ca		dex				dex
-.15bc	20 dd 15	jsr $15dd			jsr 	MInt32CopyUp 				; copy 1st -> 2nd
-.15bf	20 91 16	jsr $1691			jsr 	MInt32False 					; zero 1st.
-.15c2					_I32Loop:
-.15c2	b5 4a		lda $4a,x			lda 	esInt0+2,x 					; get low bit of 3rd
-.15c4	29 01		and #$01			and 	#1
-.15c6	f0 03		beq $15cb			beq 	_I32NoAdd 					; if set
-.15c8	20 83 15	jsr $1583			jsr 	MInt32Add 					; add 2nd to 1st.
-.15cb					_I32NoAdd:
-.15cb	e8		inx				inx 								; shift 2nd left
-.15cc	20 a6 16	jsr $16a6			jsr 	MInt32ShiftLeft
-.15cf	e8		inx				inx  								; shift 3rd right
-.15d0	20 af 16	jsr $16af			jsr 	MInt32ShiftRight
-.15d3	20 b8 16	jsr $16b8			jsr 	MInt32Zero 					; check if zero.
-.15d6	08		php				php 								; save status bits
-.15d7	ca		dex				dex 	 							; point back to 1st
-.15d8	ca		dex				dex
-.15d9	28		plp				plp 								; get status bits
-.15da	d0 e6		bne $15c2			bne 	_I32Loop 					; if non-zero keep going.
-.15dc	60		rts				rts
-.15dd					MInt32CopyUp:
-.15dd	b5 48		lda $48,x			lda 	esInt0,x
-.15df	95 49		sta $49,x			sta 	esInt0+1,x
-.15e1	b5 50		lda $50,x			lda 	esInt1,x
-.15e3	95 51		sta $51,x			sta 	esInt1+1,x
-.15e5	b5 58		lda $58,x			lda 	esInt2,x
-.15e7	95 59		sta $59,x			sta 	esInt2+1,x
-.15e9	b5 60		lda $60,x			lda 	esInt3,x
-.15eb	95 61		sta $61,x			sta 	esInt3+1,x
-.15ed	60		rts				rts
-
-;******  Return to file: ..\source\main/main.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/imath/int32tostr.asm
+;******  Processing file: ../source/main/imath/int32math.asm
 
->0800					MCharCount:	.fill 	1						; count of converted characters
-.15ee					MInt32ToString:
-.15ee	48		pha				pha 								; save base
-.15ef	85 0a		sta $0a				sta 	tempShort 					; save target base.
-.15f1	a9 00		lda #$00			lda 	#0
-.15f3	8d 00 08	sta $0800			sta 	MCharCount 					; clear character count.
-.15f6	98		tya				tya
-.15f7	48		pha				pha
-.15f8	a5 0a		lda $0a				lda 	tempShort 					; check if we are signed conversion
-.15fa	10 10		bpl $160c			bpl 	_I32TSUnsigned
-.15fc	48		pha				pha 								; save base on stack.
-.15fd	b5 60		lda $60,x			lda 	esInt3,x 					; is it actually negative
-.15ff	10 08		bpl $1609			bpl 	_I32TSNoFlip
-.1601	a9 2d		lda #$2d			lda 	#"-" 						; write a '-' prefix out.
-.1603	20 38 16	jsr $1638			jsr 	MI32WriteCharacter
-.1606	20 4b 16	jsr $164b			jsr 	MInt32Negate 				; negate the value.
-.1609					_I32TSNoFlip:
-.1609	68		pla				pla 								; get the base back
-.160a	29 7f		and #$7f			and 	#$7F 						; clear the sign flag so it's just a base now.
-.160c					_I32TSUnsigned:
-.160c	20 13 16	jsr $1613			jsr 	MI32DivideWrite 				; recursive code to output string.
-.160f	68		pla				pla
-.1610	a8		tay				tay
-.1611	68		pla				pla
-.1612	60		rts				rts
-.1613					MI32DivideWrite:
-.1613	48		pha				pha 								; save the divisor/base
-.1614	e8		inx				inx 								; write in the dividing position.
-.1615	20 a0 16	jsr $16a0			jsr 	MInt32Set8Bit
-.1618	ca		dex				dex
-.1619	20 b6 14	jsr $14b6			jsr 	MInt32UDivide 				; divide number by base.
-.161c	68		pla				pla 								; get the base into Y
-.161d	a8		tay				tay
-.161e	b5 4a		lda $4a,x			lda 	esInt0+2,x 					; get the remainder and push on the stack.
-.1620	48		pha				pha
-.1621	20 b8 16	jsr $16b8			jsr 	MInt32Zero 					; is the result zero ?
-.1624	f0 04		beq $162a			beq 	_I32NoRecurse 				; if so, don't recurse.
-.1626	98		tya				tya 								; put base into A
-.1627	20 13 16	jsr $1613			jsr 	MI32DivideWrite 				; and jsr the dividor recursively.
-.162a					_I32NoRecurse:
-.162a	68		pla				pla 								; get the remainder back
-.162b	c9 0a		cmp #$0a			cmp 	#10  						; handle hexadecimals.
-.162d	90 02		bcc $1631			bcc 	_I32NotHex
-.162f	69 06		adc #$06			adc 	#7-1
-.1631					_I32NotHex:
-.1631	18		clc				clc 								; make it ASCII
-.1632	69 30		adc #$30			adc 	#48
-.1634	20 38 16	jsr $1638			jsr 	MI32WriteCharacter 			; write the character out
-.1637	60		rts				rts 								; and exit.
-.1638					MI32WriteCharacter:
-.1638	ac 00 08	ldy $0800			ldy 	MCharCount 					; get position
-.163b	91 04		sta ($04),y			sta 	(temp0),y 					; write out with trailing 0
-.163d	c8		iny				iny
-.163e	a9 00		lda #$00			lda 	#0
-.1640	91 04		sta ($04),y			sta 	(temp0),y
-.1642	ee 00 08	inc $0800			inc 	MCharCount 					; bump count
-.1645	60		rts				rts
+.158b					MInt32Add:
+.158b	18		clc				clc
+.158c	b5 48		lda $48,x			lda 	esInt0,x
+.158e	75 49		adc $49,x			adc 	esInt0+1,x
+.1590	95 48		sta $48,x			sta 	esInt0,x
+.1592	b5 50		lda $50,x			lda 	esInt1,x
+.1594	75 51		adc $51,x			adc 	esInt1+1,x
+.1596	95 50		sta $50,x			sta 	esInt1,x
+.1598	b5 58		lda $58,x			lda 	esInt2,x
+.159a	75 59		adc $59,x			adc 	esInt2+1,x
+.159c	95 58		sta $58,x			sta 	esInt2,x
+.159e	b5 60		lda $60,x			lda 	esInt3,x
+.15a0	75 61		adc $61,x			adc 	esInt3+1,x
+.15a2	95 60		sta $60,x			sta 	esInt3,x
+.15a4	60		rts				rts
+.15a5					MInt32Sub:
+.15a5	38		sec				sec
+.15a6	b5 48		lda $48,x			lda 	esInt0,x
+.15a8	f5 49		sbc $49,x			sbc 	esInt0+1,x
+.15aa	95 48		sta $48,x			sta 	esInt0,x
+.15ac	b5 50		lda $50,x			lda 	esInt1,x
+.15ae	f5 51		sbc $51,x			sbc 	esInt1+1,x
+.15b0	95 50		sta $50,x			sta 	esInt1,x
+.15b2	b5 58		lda $58,x			lda 	esInt2,x
+.15b4	f5 59		sbc $59,x			sbc 	esInt2+1,x
+.15b6	95 58		sta $58,x			sta 	esInt2,x
+.15b8	b5 60		lda $60,x			lda 	esInt3,x
+.15ba	f5 61		sbc $61,x			sbc 	esInt3+1,x
+.15bc	95 60		sta $60,x			sta 	esInt3,x
+.15be	60		rts				rts
 
-;******  Return to file: ..\source\main/main.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\main/imath/int32unary.asm
+;******  Processing file: ../source/main/imath/int32multiply.asm
 
->0801					MSeed32:	.fill 	4							; random number seed.
-.1646					MInt32Absolute:
-.1646	b5 60		lda $60,x			lda 	esInt3,x 					; use negate code if -ve.
-.1648	30 01		bmi $164b			bmi 	MInt32Negate
-.164a	60		rts				rts
-.164b					MInt32Negate:
-.164b	38		sec				sec
-.164c	a9 00		lda #$00			lda 	#0
-.164e	f5 48		sbc $48,x			sbc 	esInt0,x
-.1650	95 48		sta $48,x			sta 	esInt0,x
-.1652	a9 00		lda #$00			lda 	#0
-.1654	f5 50		sbc $50,x			sbc 	esInt1,x
-.1656	95 50		sta $50,x			sta 	esInt1,x
-.1658	a9 00		lda #$00			lda 	#0
-.165a	f5 58		sbc $58,x			sbc 	esInt2,x
-.165c	95 58		sta $58,x			sta 	esInt2,x
-.165e	a9 00		lda #$00			lda 	#0
-.1660	f5 60		sbc $60,x			sbc 	esInt3,x
-.1662	95 60		sta $60,x			sta 	esInt3,x
-.1664	60		rts				rts
-.1665					MInt32Not:
-.1665	b5 48		lda $48,x			lda 	esInt0,x
-.1667	49 ff		eor #$ff			eor 	#$FF
-.1669	95 48		sta $48,x			sta 	esInt0,x
-.166b	b5 50		lda $50,x			lda 	esInt1,x
-.166d	49 ff		eor #$ff			eor 	#$FF
-.166f	95 50		sta $50,x			sta 	esInt1,x
-.1671	b5 58		lda $58,x			lda 	esInt2,x
-.1673	49 ff		eor #$ff			eor 	#$FF
-.1675	95 58		sta $58,x			sta 	esInt2,x
-.1677	b5 60		lda $60,x			lda 	esInt3,x
-.1679	49 ff		eor #$ff			eor 	#$FF
-.167b	95 60		sta $60,x			sta 	esInt3,x
-.167d	60		rts				rts
-.167e					MInt32Sign:
-.167e	b5 60		lda $60,x			lda 	esInt3,x					; look at MSB
-.1680	30 0b		bmi $168d			bmi 	MInt32True 					; if set return -1 (true)
-.1682	20 b8 16	jsr $16b8			jsr 	MInt32Zero 					; is it zero ?
-.1685	f0 0a		beq $1691			beq 	MInt32False 					; if zero return 0 (false)
-.1687	20 91 16	jsr $1691			jsr 	MInt32False 					; > 0 return 1
-.168a	f6 48		inc $48,x			inc 	esInt0,x
-.168c	60		rts				rts
-.168d					MInt32True:
-.168d	a9 ff		lda #$ff			lda 	#$FF 						; set to $FFFFFFFF
-.168f	d0 02		bne $1693			bne 	MInt32WriteAll
-.1691					MInt32False:
-.1691	a9 00		lda #$00			lda 	#0
-.1693					MInt32WriteAll:
-.1693	95 48		sta $48,x			sta 	esInt0,x
-.1695					MInt32Write123:
-.1695	95 50		sta $50,x			sta 	esInt1,x
-.1697	95 58		sta $58,x			sta 	esInt2,x
-.1699	95 60		sta $60,x			sta 	esInt3,x
-.169b	a9 00		lda #$00			lda 	#$00						; and make it an integer
-.169d	95 40		sta $40,x			sta 	esType,x
-.169f	60		rts				rts
-.16a0					MInt32Set8Bit:
-.16a0	95 48		sta $48,x			sta 	esInt0,x
-.16a2	a9 00		lda #$00			lda 	#0
-.16a4	f0 ef		beq $1695			beq		MInt32Write123
-.16a6					MInt32ShiftLeft:
-.16a6	16 48		asl $48,x			asl 	esInt0,x
-.16a8	36 50		rol $50,x			rol	 	esInt1,x
-.16aa	36 58		rol $58,x			rol	 	esInt2,x
-.16ac	36 60		rol $60,x			rol	 	esInt3,x
-.16ae	60		rts				rts
-.16af					MInt32ShiftRight:
-.16af	56 60		lsr $60,x			lsr 	esInt3,x
-.16b1	76 58		ror $58,x			ror 	esInt2,x
-.16b3	76 50		ror $50,x			ror 	esInt1,x
-.16b5	76 48		ror $48,x			ror 	esInt0,x
-.16b7	60		rts				rts
-.16b8					MInt32Zero:
-.16b8	b5 48		lda $48,x			lda 	esInt0,x
-.16ba	15 50		ora $50,x			ora 	esInt1,x
-.16bc	15 58		ora $58,x			ora 	esInt2,x
-.16be	15 60		ora $60,x			ora 	esInt3,x
-.16c0	60		rts				rts
-.16c1					MInt32Random:
-.16c1	98		tya				tya
-.16c2	48		pha				pha
-.16c3	a0 07		ldy #$07			ldy 	#7
-.16c5	ad 01 08	lda $0801			lda 	MSeed32+0
-.16c8	d0 03		bne $16cd			bne 	_Random1
-.16ca	a8		tay				tay
-.16cb	a9 aa		lda #$aa			lda		#$AA
-.16cd					_Random1:
-.16cd	0a		asl a				asl 	a
-.16ce	2e 02 08	rol $0802			rol 	MSeed32+1
-.16d1	2e 03 08	rol $0803			rol 	MSeed32+2
-.16d4	2e 04 08	rol $0804			rol 	MSeed32+3
-.16d7	90 02		bcc $16db			bcc 	_Random2
-.16d9	49 c5		eor #$c5			eor 	#$C5
-.16db					_Random2:
-.16db	88		dey				dey
-.16dc	d0 ef		bne $16cd			bne 	_Random1
-.16de	8d 01 08	sta $0801			sta 	MSeed32+0
-.16e1	95 48		sta $48,x			sta 	esInt0,x
-.16e3	ad 02 08	lda $0802			lda 	MSeed32+1
-.16e6	95 50		sta $50,x			sta 	esInt1,x
-.16e8	ad 03 08	lda $0803			lda 	MSeed32+2
-.16eb	95 58		sta $58,x			sta 	esInt2,x
-.16ed	ad 04 08	lda $0804			lda 	MSeed32+3
-.16f0	95 60		sta $60,x			sta 	esInt3,x
-.16f2	68		pla				pla
-.16f3	a8		tay				tay
-.16f4	60		rts				rts
+.15bf					MInt32Multiply:
+.15bf	e8		inx				inx 								; copy 2nd -> 3rd
+.15c0	20 e5 15	jsr $15e5			jsr 	MInt32CopyUp
+.15c3	ca		dex				dex
+.15c4	20 e5 15	jsr $15e5			jsr 	MInt32CopyUp 				; copy 1st -> 2nd
+.15c7	20 99 16	jsr $1699			jsr 	MInt32False 					; zero 1st.
+.15ca					_I32Loop:
+.15ca	b5 4a		lda $4a,x			lda 	esInt0+2,x 					; get low bit of 3rd
+.15cc	29 01		and #$01			and 	#1
+.15ce	f0 03		beq $15d3			beq 	_I32NoAdd 					; if set
+.15d0	20 8b 15	jsr $158b			jsr 	MInt32Add 					; add 2nd to 1st.
+.15d3					_I32NoAdd:
+.15d3	e8		inx				inx 								; shift 2nd left
+.15d4	20 ae 16	jsr $16ae			jsr 	MInt32ShiftLeft
+.15d7	e8		inx				inx  								; shift 3rd right
+.15d8	20 b7 16	jsr $16b7			jsr 	MInt32ShiftRight
+.15db	20 c0 16	jsr $16c0			jsr 	MInt32Zero 					; check if zero.
+.15de	08		php				php 								; save status bits
+.15df	ca		dex				dex 	 							; point back to 1st
+.15e0	ca		dex				dex
+.15e1	28		plp				plp 								; get status bits
+.15e2	d0 e6		bne $15ca			bne 	_I32Loop 					; if non-zero keep going.
+.15e4	60		rts				rts
+.15e5					MInt32CopyUp:
+.15e5	b5 48		lda $48,x			lda 	esInt0,x
+.15e7	95 49		sta $49,x			sta 	esInt0+1,x
+.15e9	b5 50		lda $50,x			lda 	esInt1,x
+.15eb	95 51		sta $51,x			sta 	esInt1+1,x
+.15ed	b5 58		lda $58,x			lda 	esInt2,x
+.15ef	95 59		sta $59,x			sta 	esInt2+1,x
+.15f1	b5 60		lda $60,x			lda 	esInt3,x
+.15f3	95 61		sta $61,x			sta 	esInt3+1,x
+.15f5	60		rts				rts
 
-;******  Return to file: ..\source\main/main.asm
-
-.16f5					mainHandler:
-.16f5	7c f8 16	jmp ($16f8,x)			jmp 	(mainVectors,x)
-.16f8					mainVectors:
-
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\assembler/assembler.asm
+;******  Processing file: ../source/main/imath/int32tostr.asm
 
-.16f8					assemblerHandler:
-.16f8	7c fb 16	jmp ($16fb,x)			jmp 	(assemblerVectors,x)
-.16fb					assemblerVectors:
+>0868					MCharCount:	.fill 	1						; count of converted characters
+.15f6					MInt32ToString:
+.15f6	48		pha				pha 								; save base
+.15f7	85 0a		sta $0a				sta 	tempShort 					; save target base.
+.15f9	a9 00		lda #$00			lda 	#0
+.15fb	8d 68 08	sta $0868			sta 	MCharCount 					; clear character count.
+.15fe	98		tya				tya
+.15ff	48		pha				pha
+.1600	a5 0a		lda $0a				lda 	tempShort 					; check if we are signed conversion
+.1602	10 10		bpl $1614			bpl 	_I32TSUnsigned
+.1604	48		pha				pha 								; save base on stack.
+.1605	b5 60		lda $60,x			lda 	esInt3,x 					; is it actually negative
+.1607	10 08		bpl $1611			bpl 	_I32TSNoFlip
+.1609	a9 2d		lda #$2d			lda 	#"-" 						; write a '-' prefix out.
+.160b	20 40 16	jsr $1640			jsr 	MI32WriteCharacter
+.160e	20 53 16	jsr $1653			jsr 	MInt32Negate 				; negate the value.
+.1611					_I32TSNoFlip:
+.1611	68		pla				pla 								; get the base back
+.1612	29 7f		and #$7f			and 	#$7F 						; clear the sign flag so it's just a base now.
+.1614					_I32TSUnsigned:
+.1614	20 1b 16	jsr $161b			jsr 	MI32DivideWrite 				; recursive code to output string.
+.1617	68		pla				pla
+.1618	a8		tay				tay
+.1619	68		pla				pla
+.161a	60		rts				rts
+.161b					MI32DivideWrite:
+.161b	48		pha				pha 								; save the divisor/base
+.161c	e8		inx				inx 								; write in the dividing position.
+.161d	20 a8 16	jsr $16a8			jsr 	MInt32Set8Bit
+.1620	ca		dex				dex
+.1621	20 be 14	jsr $14be			jsr 	MInt32UDivide 				; divide number by base.
+.1624	68		pla				pla 								; get the base into Y
+.1625	a8		tay				tay
+.1626	b5 4a		lda $4a,x			lda 	esInt0+2,x 					; get the remainder and push on the stack.
+.1628	48		pha				pha
+.1629	20 c0 16	jsr $16c0			jsr 	MInt32Zero 					; is the result zero ?
+.162c	f0 04		beq $1632			beq 	_I32NoRecurse 				; if so, don't recurse.
+.162e	98		tya				tya 								; put base into A
+.162f	20 1b 16	jsr $161b			jsr 	MI32DivideWrite 				; and jsr the dividor recursively.
+.1632					_I32NoRecurse:
+.1632	68		pla				pla 								; get the remainder back
+.1633	c9 0a		cmp #$0a			cmp 	#10  						; handle hexadecimals.
+.1635	90 02		bcc $1639			bcc 	_I32NotHex
+.1637	69 06		adc #$06			adc 	#7-1
+.1639					_I32NotHex:
+.1639	18		clc				clc 								; make it ASCII
+.163a	69 30		adc #$30			adc 	#48
+.163c	20 40 16	jsr $1640			jsr 	MI32WriteCharacter 			; write the character out
+.163f	60		rts				rts 								; and exit.
+.1640					MI32WriteCharacter:
+.1640	ac 68 08	ldy $0868			ldy 	MCharCount 					; get position
+.1643	91 04		sta ($04),y			sta 	(temp0),y 					; write out with trailing 0
+.1645	c8		iny				iny
+.1646	a9 00		lda #$00			lda 	#0
+.1648	91 04		sta ($04),y			sta 	(temp0),y
+.164a	ee 68 08	inc $0868			inc 	MCharCount 					; bump count
+.164d	60		rts				rts
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/main/main.asm
 
 
-;******  Processing file: ..\source\device/device.asm
+;******  Processing file: ../source/main/imath/int32unary.asm
 
-.16fb					deviceHandler:
-.16fb	7c fe 16	jmp ($16fe,x)			jmp 	(deviceVectors,x)
-.16fe					deviceVectors:
+>0869					MSeed32:	.fill 	4							; random number seed.
+.164e					MInt32Absolute:
+.164e	b5 60		lda $60,x			lda 	esInt3,x 					; use negate code if -ve.
+.1650	30 01		bmi $1653			bmi 	MInt32Negate
+.1652	60		rts				rts
+.1653					MInt32Negate:
+.1653	38		sec				sec
+.1654	a9 00		lda #$00			lda 	#0
+.1656	f5 48		sbc $48,x			sbc 	esInt0,x
+.1658	95 48		sta $48,x			sta 	esInt0,x
+.165a	a9 00		lda #$00			lda 	#0
+.165c	f5 50		sbc $50,x			sbc 	esInt1,x
+.165e	95 50		sta $50,x			sta 	esInt1,x
+.1660	a9 00		lda #$00			lda 	#0
+.1662	f5 58		sbc $58,x			sbc 	esInt2,x
+.1664	95 58		sta $58,x			sta 	esInt2,x
+.1666	a9 00		lda #$00			lda 	#0
+.1668	f5 60		sbc $60,x			sbc 	esInt3,x
+.166a	95 60		sta $60,x			sta 	esInt3,x
+.166c	60		rts				rts
+.166d					MInt32Not:
+.166d	b5 48		lda $48,x			lda 	esInt0,x
+.166f	49 ff		eor #$ff			eor 	#$FF
+.1671	95 48		sta $48,x			sta 	esInt0,x
+.1673	b5 50		lda $50,x			lda 	esInt1,x
+.1675	49 ff		eor #$ff			eor 	#$FF
+.1677	95 50		sta $50,x			sta 	esInt1,x
+.1679	b5 58		lda $58,x			lda 	esInt2,x
+.167b	49 ff		eor #$ff			eor 	#$FF
+.167d	95 58		sta $58,x			sta 	esInt2,x
+.167f	b5 60		lda $60,x			lda 	esInt3,x
+.1681	49 ff		eor #$ff			eor 	#$FF
+.1683	95 60		sta $60,x			sta 	esInt3,x
+.1685	60		rts				rts
+.1686					MInt32Sign:
+.1686	b5 60		lda $60,x			lda 	esInt3,x					; look at MSB
+.1688	30 0b		bmi $1695			bmi 	MInt32True 					; if set return -1 (true)
+.168a	20 c0 16	jsr $16c0			jsr 	MInt32Zero 					; is it zero ?
+.168d	f0 0a		beq $1699			beq 	MInt32False 					; if zero return 0 (false)
+.168f	20 99 16	jsr $1699			jsr 	MInt32False 					; > 0 return 1
+.1692	f6 48		inc $48,x			inc 	esInt0,x
+.1694	60		rts				rts
+.1695					MInt32True:
+.1695	a9 ff		lda #$ff			lda 	#$FF 						; set to $FFFFFFFF
+.1697	d0 02		bne $169b			bne 	MInt32WriteAll
+.1699					MInt32False:
+.1699	a9 00		lda #$00			lda 	#0
+.169b					MInt32WriteAll:
+.169b	95 48		sta $48,x			sta 	esInt0,x
+.169d					MInt32Write123:
+.169d	95 50		sta $50,x			sta 	esInt1,x
+.169f	95 58		sta $58,x			sta 	esInt2,x
+.16a1	95 60		sta $60,x			sta 	esInt3,x
+.16a3	a9 00		lda #$00			lda 	#$00						; and make it an integer
+.16a5	95 40		sta $40,x			sta 	esType,x
+.16a7	60		rts				rts
+.16a8					MInt32Set8Bit:
+.16a8	95 48		sta $48,x			sta 	esInt0,x
+.16aa	a9 00		lda #$00			lda 	#0
+.16ac	f0 ef		beq $169d			beq		MInt32Write123
+.16ae					MInt32ShiftLeft:
+.16ae	16 48		asl $48,x			asl 	esInt0,x
+.16b0	36 50		rol $50,x			rol	 	esInt1,x
+.16b2	36 58		rol $58,x			rol	 	esInt2,x
+.16b4	36 60		rol $60,x			rol	 	esInt3,x
+.16b6	60		rts				rts
+.16b7					MInt32ShiftRight:
+.16b7	56 60		lsr $60,x			lsr 	esInt3,x
+.16b9	76 58		ror $58,x			ror 	esInt2,x
+.16bb	76 50		ror $50,x			ror 	esInt1,x
+.16bd	76 48		ror $48,x			ror 	esInt0,x
+.16bf	60		rts				rts
+.16c0					MInt32Zero:
+.16c0	b5 48		lda $48,x			lda 	esInt0,x
+.16c2	15 50		ora $50,x			ora 	esInt1,x
+.16c4	15 58		ora $58,x			ora 	esInt2,x
+.16c6	15 60		ora $60,x			ora 	esInt3,x
+.16c8	60		rts				rts
+.16c9					MInt32Random:
+.16c9	98		tya				tya
+.16ca	48		pha				pha
+.16cb	a0 07		ldy #$07			ldy 	#7
+.16cd	ad 69 08	lda $0869			lda 	MSeed32+0
+.16d0	d0 03		bne $16d5			bne 	_Random1
+.16d2	a8		tay				tay
+.16d3	a9 aa		lda #$aa			lda		#$AA
+.16d5					_Random1:
+.16d5	0a		asl a				asl 	a
+.16d6	2e 6a 08	rol $086a			rol 	MSeed32+1
+.16d9	2e 6b 08	rol $086b			rol 	MSeed32+2
+.16dc	2e 6c 08	rol $086c			rol 	MSeed32+3
+.16df	90 02		bcc $16e3			bcc 	_Random2
+.16e1	49 c5		eor #$c5			eor 	#$C5
+.16e3					_Random2:
+.16e3	88		dey				dey
+.16e4	d0 ef		bne $16d5			bne 	_Random1
+.16e6	8d 69 08	sta $0869			sta 	MSeed32+0
+.16e9	95 48		sta $48,x			sta 	esInt0,x
+.16eb	ad 6a 08	lda $086a			lda 	MSeed32+1
+.16ee	95 50		sta $50,x			sta 	esInt1,x
+.16f0	ad 6b 08	lda $086b			lda 	MSeed32+2
+.16f3	95 58		sta $58,x			sta 	esInt2,x
+.16f5	ad 6c 08	lda $086c			lda 	MSeed32+3
+.16f8	95 60		sta $60,x			sta 	esInt3,x
+.16fa	68		pla				pla
+.16fb	a8		tay				tay
+.16fc	60		rts				rts
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/main/main.asm
+
+.16fd					mainHandler:
+.16fd	7c 00 17	jmp ($1700,x)			jmp 	(mainVectors,x)
+.1700					mainVectors:
+
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\error/error.asm
+;******  Processing file: ../source/assembler/assembler.asm
+
+.1700					assemblerHandler:
+.1700	7c 03 17	jmp ($1703,x)			jmp 	(assemblerVectors,x)
+.1703					assemblerVectors:
+
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\error/errorhandler.asm
+;******  Processing file: ../source/device/device.asm
 
-.10df					ErrorHandler:
-.10df	a9 ee		lda #$ee			lda 	#$EE
-.10e1	a8		tay				tay
->10e2	db						.byte 	$DB
-.10e3	4c e3 10	jmp $10e3	_EHHalt:jmp 	_EHHalt
+.1703					deviceHandler:
+.1703	7c 06 17	jmp ($1706,x)			jmp 	(deviceVectors,x)
+.1706					deviceVectors:
 
-;******  Return to file: ..\source\error/error.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Return to file: ..\source\basic.asm
+;******  Processing file: ../source/error/error.asm
 
 
-;******  Processing file: ..\source\floatingpoint/floatingpoint.asm
+;******  Processing file: ../source/error/errorhandler.asm
+
+.10e7					ErrorHandler:
+.10e7	a9 ee		lda #$ee			lda 	#$EE
+.10e9	a8		tay				tay
+>10ea	db						.byte 	$DB
+.10eb	4c eb 10	jmp $10eb	_EHHalt:jmp 	_EHHalt
+
+;******  Return to file: ../source/error/error.asm
 
 
-;******  Processing file: ..\source\floatingpoint/addsub.asm
-
-.16fe					FPAdd:
->16fe	db						.byte 	$DB
-.16ff	4c fe 16	jmp $16fe			jmp 	FPAdd
-.1702					FPSubtract:
->1702	db						.byte 	$DB
-.1703	4c 02 17	jmp $1702			jmp 	FPSubtract
-
-;******  Return to file: ..\source\floatingpoint/floatingpoint.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\floatingpoint/compare.asm
+;******  Processing file: ../source/floatingpoint/floatingpoint.asm
 
-.1706					FLTCompare:
+
+;******  Processing file: ../source/floatingpoint/addsub.asm
+
+.1706					FPAdd:
 >1706	db						.byte 	$DB
-.1707	4c 06 17	jmp $1706			jmp 	FLTCompare
-
-;******  Return to file: ..\source\floatingpoint/floatingpoint.asm
-
-
-;******  Processing file: ..\source\floatingpoint/convert.asm
-
-.170a					FPItoF:
+.1707	4c 06 17	jmp $1706			jmp 	FPAdd
+.170a					FPSubtract:
 >170a	db						.byte 	$DB
-.170b	4c 0a 17	jmp $170a			jmp 	FPItoF
-.170e					FPFtoI:
+.170b	4c 0a 17	jmp $170a			jmp 	FPSubtract
+
+;******  Return to file: ../source/floatingpoint/floatingpoint.asm
+
+
+;******  Processing file: ../source/floatingpoint/compare.asm
+
+.170e					FLTCompare:
 >170e	db						.byte 	$DB
-.170f	4c 0e 17	jmp $170e			jmp 	FPFtoI
+.170f	4c 0e 17	jmp $170e			jmp 	FLTCompare
 
-;******  Return to file: ..\source\floatingpoint/floatingpoint.asm
+;******  Return to file: ../source/floatingpoint/floatingpoint.asm
 
 
-;******  Processing file: ..\source\floatingpoint/importexport.asm
+;******  Processing file: ../source/floatingpoint/convert.asm
 
-.1712					FPImport:
+.1712					FPItoF:
 >1712	db						.byte 	$DB
-.1713	4c 12 17	jmp $1712			jmp 	FPImport
-
-;******  Return to file: ..\source\floatingpoint/floatingpoint.asm
-
-
-;******  Processing file: ..\source\floatingpoint/loadstore.asm
-
-.1716					FPLoad:
+.1713	4c 12 17	jmp $1712			jmp 	FPItoF
+.1716					FPFtoI:
 >1716	db						.byte 	$DB
-.1717	4c 16 17	jmp $1716			jmp 	FPLoad
+.1717	4c 16 17	jmp $1716			jmp 	FPFtoI
 
-;******  Return to file: ..\source\floatingpoint/floatingpoint.asm
+;******  Return to file: ../source/floatingpoint/floatingpoint.asm
 
 
-;******  Processing file: ..\source\floatingpoint/muldiv.asm
+;******  Processing file: ../source/floatingpoint/importexport.asm
 
-.171a					FPMultiply:
+.171a					FPImport:
 >171a	db						.byte 	$DB
-.171b	4c 1a 17	jmp $171a			jmp 	FPMultiply
-.171e					FPDivide:
+.171b	4c 1a 17	jmp $171a			jmp 	FPImport
+
+;******  Return to file: ../source/floatingpoint/floatingpoint.asm
+
+
+;******  Processing file: ../source/floatingpoint/loadstore.asm
+
+.171e					FPLoad:
 >171e	db						.byte 	$DB
-.171f	4c 1e 17	jmp $171e			jmp 	FPDivide
-.1722					FPImpossible:
-.1722	a2 04		ldx #$04			ldx 	#ErrorID_BadType
-.1724	20 df 10	jsr $10df			jsr 	ErrorHandler
-.1727					FPPower:
->1727	db						.byte 	$DB
-.1728	4c 27 17	jmp $1727			jmp 	FPPower
+.171f	4c 1e 17	jmp $171e			jmp 	FPLoad
 
-;******  Return to file: ..\source\floatingpoint/floatingpoint.asm
-
-.172b					floatingpointHandler:
-.172b	7c 2e 17	jmp ($172e,x)			jmp 	(floatingpointVectors,x)
-.172e					floatingpointVectors:
->172e	16 17					.word FPLoad               ; index 0
->1730	fe 16					.word FPAdd                ; index 2
->1732	06 17					.word FLTCompare           ; index 4
->1734	1e 17					.word FPDivide             ; index 6
->1736	22 17					.word FPImpossible         ; index 8
->1738	1a 17					.word FPMultiply           ; index 10
->173a	02 17					.word FPSubtract           ; index 12
->173c	0e 17					.word FPFtoI               ; index 14
->173e	27 17					.word FPPower              ; index 16
->1740	12 17					.word FPImport             ; index 18
->1742	0a 17					.word FPItoF               ; index 20
-
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/floatingpoint/floatingpoint.asm
 
 
-;******  Processing file: ..\source\interaction/interaction.asm
+;******  Processing file: ../source/floatingpoint/muldiv.asm
 
-.1744					interactionHandler:
-.1744	7c 47 17	jmp ($1747,x)			jmp 	(interactionVectors,x)
-.1747					interactionVectors:
+.1722					FPMultiply:
+>1722	db						.byte 	$DB
+.1723	4c 22 17	jmp $1722			jmp 	FPMultiply
+.1726					FPDivide:
+>1726	db						.byte 	$DB
+.1727	4c 26 17	jmp $1726			jmp 	FPDivide
+.172a					FPImpossible:
+.172a	a2 04		ldx #$04			ldx 	#ErrorID_BadType
+.172c	20 e7 10	jsr $10e7			jsr 	ErrorHandler
+.172f					FPPower:
+>172f	db						.byte 	$DB
+.1730	4c 2f 17	jmp $172f			jmp 	FPPower
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/floatingpoint/floatingpoint.asm
 
+.1733					floatingpointHandler:
+.1733	7c 36 17	jmp ($1736,x)			jmp 	(floatingpointVectors,x)
+.1736					floatingpointVectors:
+>1736	1e 17					.word FPLoad               ; index 0
+>1738	06 17					.word FPAdd                ; index 2
+>173a	0e 17					.word FLTCompare           ; index 4
+>173c	26 17					.word FPDivide             ; index 6
+>173e	2a 17					.word FPImpossible         ; index 8
+>1740	22 17					.word FPMultiply           ; index 10
+>1742	0a 17					.word FPSubtract           ; index 12
+>1744	16 17					.word FPFtoI               ; index 14
+>1746	2f 17					.word FPPower              ; index 16
+>1748	1a 17					.word FPImport             ; index 18
+>174a	12 17					.word FPItoF               ; index 20
 
-;******  Processing file: ..\source\string/string.asm
-
-
-;******  Processing file: ..\source\string/compare.asm
-
-.1747					STRCompare:
->1747	db						.byte 	$DB
-.1748	4c 47 17	jmp $1747			jmp 	STRCompare
-
-;******  Return to file: ..\source\string/string.asm
-
-
-;******  Processing file: ..\source\string/concat.asm
-
-.174b					StringConcat:
->174b	db						.byte 	$DB
-.174c	80 fd		bra $174b			bra 	StringConcat
-
-;******  Return to file: ..\source\string/string.asm
-
-.174e					stringHandler:
-.174e	7c 51 17	jmp ($1751,x)			jmp 	(stringVectors,x)
-.1751					stringVectors:
->1751	4b 17					.word StringConcat         ; index 0
->1753	47 17					.word STRCompare           ; index 2
-
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\tokeniser/tokeniser.asm
+;******  Processing file: ../source/interaction/interaction.asm
 
-.1755					tokeniserHandler:
-.1755	7c 58 17	jmp ($1758,x)			jmp 	(tokeniserVectors,x)
-.1758					tokeniserVectors:
+.174c					interactionHandler:
+.174c	7c 4f 17	jmp ($174f,x)			jmp 	(interactionVectors,x)
+.174f					interactionVectors:
 
-;******  Return to file: ..\source\basic.asm
-
-
-;******  Processing file: ..\source\variable/variable.asm
+;******  Return to file: ../source/basic.asm
 
 
-;******  Processing file: ..\source\variable/access.asm
+;******  Processing file: ../source/string/string.asm
 
-.1758					AccessVariable:
->1758	db						.byte 	$DB
-.1759	80 fd		bra $1758			bra 	AccessVariable
 
-;******  Return to file: ..\source\variable/variable.asm
+;******  Processing file: ../source/string/compare.asm
 
-.175b					variableHandler:
-.175b	7c 5e 17	jmp ($175e,x)			jmp 	(variableVectors,x)
-.175e					variableVectors:
->175e	58 17					.word AccessVariable       ; index 0
+.174f					STRCompare:
+>174f	db						.byte 	$DB
+.1750	4c 4f 17	jmp $174f			jmp 	STRCompare
 
-;******  Return to file: ..\source\basic.asm
+;******  Return to file: ../source/string/string.asm
+
+
+;******  Processing file: ../source/string/concat.asm
+
+.1753					StringConcat:
+>1753	db						.byte 	$DB
+.1754	80 fd		bra $1753			bra 	StringConcat
+
+;******  Return to file: ../source/string/string.asm
+
+.1756					stringHandler:
+.1756	7c 59 17	jmp ($1759,x)			jmp 	(stringVectors,x)
+.1759					stringVectors:
+>1759	53 17					.word StringConcat         ; index 0
+>175b	4f 17					.word STRCompare           ; index 2
+
+;******  Return to file: ../source/basic.asm
+
+
+;******  Processing file: ../source/tokeniser/tokeniser.asm
+
+.175d					tokeniserHandler:
+.175d	7c 60 17	jmp ($1760,x)			jmp 	(tokeniserVectors,x)
+.1760					tokeniserVectors:
+
+;******  Return to file: ../source/basic.asm
+
+
+;******  Processing file: ../source/variable/variable.asm
+
+
+;******  Processing file: ../source/variable/access.asm
+
+.1760					AccessVariable:
+.1760	aa		tax				tax 								; stack in X
+.1761	c8		iny				iny
+.1762	b1 02		lda ($02),y			lda 	(codePtr),y
+.1764	88		dey				dey
+.1765	c9 3a		cmp #$3a			cmp 	#TYPE_INT 					; is it one of the end markers ?
+.1767	d0 16		bne $177f			bne 	_AVLong
+.1769	b1 02		lda ($02),y			lda 	(codePtr),y 				; this is the 6 bit ASCII of A-Z 1-26
+.176b	38		sec				sec 	 							; make it 0-25
+.176c	e9 01		sbc #$01			sbc 	#1
+.176e	0a		asl a				asl 	a 							; x 4 is LSB of address
+.176f	0a		asl a				asl 	a
+.1770	95 48		sta $48,x			sta 	esInt0,x
+.1772	a9 08		lda #$08			lda 	#SingleLetterVar >> 8 		; make it an address
+.1774	95 50		sta $50,x			sta 	esInt1,x
+.1776	a9 80		lda #$80			lda 	#$80 						; type is integer reference.
+.1778	95 40		sta $40,x			sta 	esType,x
+.177a	c8		iny				iny 								; skip over the variable reference in the code.
+.177b	c8		iny				iny
+.177c	8a		txa				txa 								; stack in A to return.
+>177d	db						.byte 	$DB
+.177e	60		rts				rts
+.177f					_AVLong:
+.177f	80 fe		bra $177f			bra 	_AVLong
+
+;******  Return to file: ../source/variable/variable.asm
+
+.1781					variableHandler:
+.1781	7c 84 17	jmp ($1784,x)			jmp 	(variableVectors,x)
+.1784					variableVectors:
+>1784	60 17					.word AccessVariable       ; index 0
+
+;******  Return to file: ../source/basic.asm
 
 
 ;******  End of listing
