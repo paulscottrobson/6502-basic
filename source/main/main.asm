@@ -14,6 +14,7 @@
 	.include "imath/int32multiply.asm"
 	.include "imath/int32tostr.asm"
 	.include "imath/int32unary.asm"
+	.include "utility/check.asm"
 
 mainHandler:
 	dispatch mainVectors

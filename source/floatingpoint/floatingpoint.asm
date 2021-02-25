@@ -7,6 +7,7 @@
 	.include "importexport.asm"
 	.include "loadstore.asm"
 	.include "muldiv.asm"
+	.include "unary.asm"
 
 floatingpointHandler:
 	dispatch floatingpointVectors
@@ -18,8 +19,9 @@ floatingpointVectors:
 	.word FPDivide             ; index 6
 	.word FPImpossible         ; index 8
 	.word FPMultiply           ; index 10
-	.word FPSubtract           ; index 12
-	.word FPFtoI               ; index 14
-	.word FPPower              ; index 16
-	.word FPImport             ; index 18
-	.word FPItoF               ; index 20
+	.word FNegate              ; index 12
+	.word FPSubtract           ; index 14
+	.word FPFtoI               ; index 16
+	.word FPPower              ; index 18
+	.word FPImport             ; index 20
+	.word FPItoF               ; index 22

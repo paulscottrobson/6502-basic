@@ -32,28 +32,33 @@ floatingpoint_fMultiply .macro
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fSubtract .macro
+floatingpoint_fNegate .macro
 	ldx	#12
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_floatToInt .macro
+floatingpoint_fSubtract .macro
 	ldx	#14
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fpower .macro
+floatingpoint_floatToInt .macro
 	ldx	#16
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_importtoken .macro
+floatingpoint_fpower .macro
 	ldx	#18
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_intToFloat .macro
+floatingpoint_importtoken .macro
 	ldx	#20
+	jsr	floatingpointHandler
+	.endm
+
+floatingpoint_intToFloat .macro
+	ldx	#22
 	jsr	floatingpointHandler
 	.endm
 

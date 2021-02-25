@@ -48,7 +48,7 @@ class Tokeniser(object):
 		if m is not None:
 			self.tokeniseInteger(int(m.group(1)))
 			return m.group(2)
-		m = re.match("^\\$([0-9a-fA-F]+)(.*)$",s)
+		m = re.match("^\\&([0-9a-fA-F]+)(.*)$",s)
 		if m is not None:
 			self.appendToken("&")
 			self.tokeniseInteger(int(m.group(1),16))
@@ -114,13 +114,13 @@ class Tokeniser(object):
 if __name__ == "__main__":
 	tw = Tokeniser()
 	if False:
-		tw.test("42 67 $2A $43")		
+		tw.test("42 67 &2A &43")		
 		tw.test('"" "Hello"')
 		tw.test("a a% a%( a$ a$( a# a#(")
 		tw.test("az.09$ input inputd len( left$(")
 		tw.test("=<=< > >=")
 	else:
-		code = tw.tokenise('C')+[0x80]
+		code = tw.tokenise('5*(3+3)')+[0x80]
 		header= ";\n;\tAutomatically generated\n;\n"							# header used.
 		genDir = "../source/generated/".replace("/",os.sep)			
 		h = open(genDir+"testcode.inc","w")

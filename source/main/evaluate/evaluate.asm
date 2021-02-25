@@ -126,6 +126,7 @@ _ELHasBinaryTerm:
 		;
 		;		Now execute the operation at A
 		;
+_ELExecuteA:		
 		stx 	tempShort 					; upload the vectors. Would be nice to use jmp (aaaa,x)
 		asl 	a 							; but not practical. May use push/rts later.
 		tax
@@ -139,14 +140,123 @@ _ELHasBinaryTerm:
 		;
 		jmp 	_ELHasTerm 					; and loop back round.
 		;
-		;		Could be a unary function, or ! ? - which are dual purpose.
+		;		Could be a unary function, or ! ? - & @ ~
 		;
 _ELCheckUnary:		
-
-
-
+		iny 								; skip over token.
+		cmp 	#TKW_MINUS 					; is it - term
+		beq 	_ELMinus
+		cmp 	#TKW_WAVY 					; is it ~ tern
+		beq 	_ELComplement
+		cmp 	#TKW_AT 					; is it @ term
+		beq 	_ELReference
+		cmp 	#TKW_AMP 					; is it & term
+		beq 	_ELAmpersand
+		cmp 	#TKW_PLING 					; is it ! or ? term
+		beq 	_ELIndirect
+		cmp 	#TKW_QMARK
+		beq 	_ELIndirect
+		cmp 	#TOK_UNARYST 				; must be TOK_UNARYST ... TOK_TOKENS
+		bcc 	_ELUSyntax
+		cmp 	#TOK_TOKENS
+		bcc 	_ELExecuteA 				; if so do that token.
+_ELUSyntax:		
+		error 	Syntax 						; we've no idea.
+		;
+		;		Handle -term.
+		;
+_ELMinus:		
+		jsr 	EvaluateNumericTerm 		; get a number to negate.
+		lda 	esType,x 					; is it integer
+		beq 	_ELMinusInteger
+		floatingpoint_fnegate 				; do fp negate
+		jmp 	_ELHasTerm
+_ELMinusInteger:
+		jsr 	MInt32Negate 				; do int negate
+		jmp 	_ELHasTerm		
+		;
+		;		One's complement integer
+		;
+_ELComplement:
+		jsr 	EvaluateIntegerTerm
+		jsr 	MInt32Not
+		jmp 	_ELHasTerm
+		;
+		;		@ - expects a reference, and provides that as an integer.
+		;
+_ELReference:
+		lda 	#15
+		jsr 	EvaluateLevel 				; evaluate term and don't deference.
+		lda 	esType,x 					; check it's a reference.
+		bpl 	ENTType		
+		lda 	#0 							; make it an integer
+		sta 	esType,x
+		jmp 	_ELHasTerm
+		;
+		;		&term expects an integer, and is just a hexadecimal list marker
+		;
+_ELAmpersand:
+		jsr 	EvaluateIntegerTerm
+		jmp 	_ELHasTerm
+		;
+		;		Reference ?term or !term, expects integer.
+		;
+_ELIndirect:
+		pha 								; save what we want (TKW_QMARK TWK_PLING)		
+		jsr 	EvaluateIntegerTerm 		; integer address
+		pla
+		eor 	#TKW_PLING 					; now $00 if ! 
+		beq 	_ELHaveModifier
+		lda 	#$20 						; now $00 if !, $20 if ?
+_ELHaveModifier:
+		ora 	#$80						; make it the appropriate reference.
+		sta 	esType,x
+		jmp 	_ELHasTerm
+		;
+		;		Indirect call (temp0)
+		;
 _ELCallTemp0:
 		jmp 	(temp0)
+
+; ************************************************************************************************
+;
+;											( handler
+;
+; ************************************************************************************************
+
+UnaryParenthesis:	;; [(]
+		lda 	#0 							; ( is a unary function ....
+		jsr 	EvaluateLevel
+		jsr 	CheckRightParen 			; check for )
+		rts
+
+; ************************************************************************************************
+;
+;									Evaluate various terms
+;
+; ************************************************************************************************
+
+EvaluateTerm:
+		lda 	#15
+		jsr 	EvaluateLevel
+		jsr 	DereferenceOne
+		rts
+
+EvaluateNumericTerm:
+		jsr 	EvaluateTerm
+		lda 	esType,x
+		asl 	a 							; see if it's a string.
+		bmi 	ENTType
+		rts
+
+EvaluateIntegerTerm:
+		jsr 	EvaluateTerm
+		lda 	esType,x
+		bne 	ENTType
+		rts
+
+ENTType:
+		error 	BadType
 
 ; ************************************************************************************************
 ;
@@ -186,7 +296,6 @@ _ELShiftLoop:
 		ora 	esInt0,x
 		sta 	esInt0,x
 		rts
-
 
 ELBinaryOperatorInfo:
 		.include "../../generated/binarystructinfo.inc"

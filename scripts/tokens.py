@@ -112,17 +112,18 @@ class Tokens(object):
 		#		Then unary functions follow (not floating point ones.)
 		#
 		[unary]
-			~		(		&		@
+			(
 			len( 	sgn( 	abs( 	random(	page	
 			true	false	min( 	max( 	sys(
 			timer(	event(	get( 	inkey(	alloc( 	
 			chr$(	left$(	mid$(	right$(	str$(
-			val(	peek( 	deek(	leek(
+			val(	peek( 	deek(	leek( 	asc(
 			int(	float(
 		#
 		#		Then command and syntax and so on.
 		#
 		[command]
+			@  		~ 		&
 			) 		: 		, 		; 		]
 			to 		step 	proc 	endproc	local
 			rem 	let 	'		[ 		input
@@ -178,7 +179,3 @@ if __name__ == "__main__":
 	print(t.getFromID(1,134))
 	print(t.getFromToken("optionx"))
 	print(t.getFromID(5,134))
-
-
-
-

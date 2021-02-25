@@ -19,7 +19,8 @@ errorDef = """
 	Syntax:Syntax Error
 	DivZero:Divide By Zero 
 	Stop
-	BadType
+	BadType:Type Mismatch
+	MissingRP:Missing right bracket
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

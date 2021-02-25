@@ -36,36 +36,36 @@ Group0Vectors:
 	.word	Unimplemented            ; $9f next
 	.word	Unimplemented            ; $a0 then
 	.word	Unimplemented            ; $a1 endif
-	.word	Unimplemented            ; $a2 ~
-	.word	Unimplemented            ; $a3 (
-	.word	Unimplemented            ; $a4 &
-	.word	Unimplemented            ; $a5 @
-	.word	Unimplemented            ; $a6 len(
-	.word	Unimplemented            ; $a7 sgn(
-	.word	Unimplemented            ; $a8 abs(
-	.word	Unimplemented            ; $a9 random(
-	.word	Unimplemented            ; $aa page
-	.word	Unimplemented            ; $ab true
-	.word	Unimplemented            ; $ac false
-	.word	Unimplemented            ; $ad min(
-	.word	Unimplemented            ; $ae max(
-	.word	Unimplemented            ; $af sys(
-	.word	Unimplemented            ; $b0 timer(
-	.word	Unimplemented            ; $b1 event(
-	.word	Unimplemented            ; $b2 get(
-	.word	Unimplemented            ; $b3 inkey(
-	.word	Unimplemented            ; $b4 alloc(
-	.word	Unimplemented            ; $b5 chr$(
-	.word	Unimplemented            ; $b6 left$(
-	.word	Unimplemented            ; $b7 mid$(
-	.word	Unimplemented            ; $b8 right$(
-	.word	Unimplemented            ; $b9 str$(
-	.word	Unimplemented            ; $ba val(
-	.word	Unimplemented            ; $bb peek(
-	.word	Unimplemented            ; $bc deek(
-	.word	Unimplemented            ; $bd leek(
-	.word	Unimplemented            ; $be int(
-	.word	Unimplemented            ; $bf float(
+	.word	UnaryParenthesis         ; $a2 (
+	.word	Unimplemented            ; $a3 len(
+	.word	Unimplemented            ; $a4 sgn(
+	.word	Unimplemented            ; $a5 abs(
+	.word	Unimplemented            ; $a6 random(
+	.word	Unimplemented            ; $a7 page
+	.word	Unimplemented            ; $a8 true
+	.word	Unimplemented            ; $a9 false
+	.word	Unimplemented            ; $aa min(
+	.word	Unimplemented            ; $ab max(
+	.word	Unimplemented            ; $ac sys(
+	.word	Unimplemented            ; $ad timer(
+	.word	Unimplemented            ; $ae event(
+	.word	Unimplemented            ; $af get(
+	.word	Unimplemented            ; $b0 inkey(
+	.word	Unimplemented            ; $b1 alloc(
+	.word	Unimplemented            ; $b2 chr$(
+	.word	Unimplemented            ; $b3 left$(
+	.word	Unimplemented            ; $b4 mid$(
+	.word	Unimplemented            ; $b5 right$(
+	.word	Unimplemented            ; $b6 str$(
+	.word	Unimplemented            ; $b7 val(
+	.word	Unimplemented            ; $b8 peek(
+	.word	Unimplemented            ; $b9 deek(
+	.word	Unimplemented            ; $ba leek(
+	.word	Unimplemented            ; $bb int(
+	.word	Unimplemented            ; $bc float(
+	.word	Unimplemented            ; $bd @
+	.word	Unimplemented            ; $be ~
+	.word	Unimplemented            ; $bf &
 	.word	Unimplemented            ; $c0 )
 	.word	Unimplemented            ; $c1 :
 	.word	Unimplemented            ; $c2 ,
