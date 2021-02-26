@@ -9,6 +9,8 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+		.section code		
+		
 ; ************************************************************************************************
 ;
 ;					Evaluate at stack level 'X', from precedence level 'A'
@@ -140,18 +142,12 @@ _ELExecuteA:
 		;
 		jmp 	_ELHasTerm 					; and loop back round.
 		;
-		;		Could be a unary function, or ! ? - & @ ~
+		;		Could be a unary function, or ! ? - & ~
 		;
 _ELCheckUnary:		
 		iny 								; skip over token.
 		cmp 	#TKW_MINUS 					; is it - term
 		beq 	_ELMinus
-		cmp 	#TKW_WAVY 					; is it ~ tern
-		beq 	_ELComplement
-		cmp 	#TKW_AT 					; is it @ term
-		beq 	_ELReference
-		cmp 	#TKW_AMP 					; is it & term
-		beq 	_ELAmpersand
 		cmp 	#TKW_PLING 					; is it ! or ? term
 		beq 	_ELIndirect
 		cmp 	#TKW_QMARK
@@ -176,30 +172,6 @@ _ELMinus:
 _ELMinusInteger:
 		jsr 	MInt32Negate 				; do int negate
 		jmp 	_ELHasTerm		
-		;
-		;		One's complement integer
-		;
-_ELComplement:
-		jsr 	EvaluateIntegerTerm
-		jsr 	MInt32Not
-		jmp 	_ELHasTerm
-		;
-		;		@ - expects a reference, and provides that as an integer.
-		;
-_ELReference:
-		lda 	#15
-		jsr 	EvaluateLevel 				; evaluate term and don't deference.
-		lda 	esType,x 					; check it's a reference.
-		bpl 	ENTType		
-		lda 	#0 							; make it an integer
-		sta 	esType,x
-		jmp 	_ELHasTerm
-		;
-		;		&term expects an integer, and is just a hexadecimal list marker
-		;
-_ELAmpersand:
-		jsr 	EvaluateIntegerTerm
-		jmp 	_ELHasTerm
 		;
 		;		Reference ?term or !term, expects integer.
 		;
@@ -266,6 +238,8 @@ ENTType:
 ;
 ; ************************************************************************************************
 
+EvaluateRoot: 								; evaluate at bottom stack level
+		ldx 	#0
 Evaluate:
 		lda 	#0
 		jsr 	EvaluateLevel
@@ -347,3 +321,6 @@ _ELShiftLoop:
 
 ELBinaryOperatorInfo:
 		.include "../../generated/binarystructinfo.inc"
+
+		.send code		
+		

@@ -1,26 +1,29 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		compare.asm
-;		Purpose:	Comparison for floats
-;		Created:	22nd February 2021
+;		Name:		assert.asm
+;		Purpose:	Assert command
+;		Created:	26th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		.section code		
-		
+		.section code
+
 ; ************************************************************************************************
 ;
-;							Compare two floats TOS, return $FF,$00,$01
-;									(non destructive of values)
+;										Assert command
 ;
 ; ************************************************************************************************
 
-FLTCompare:	;; <fCompare>
+Command_Assert: ;; [assert]
+		jsr 	EvaluateRoot 				; what is being asserted.
 		debug
-		jmp 	FLTCompare
+		jsr 	MInt32Zero 					; is it true ?
+		beq 	_CAError
+		rts
+_CAError:
+		error 	Assert		
 
-		.send code		
-		
+		.send code

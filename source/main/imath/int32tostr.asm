@@ -22,6 +22,8 @@ MCharCount:	.fill 	1						; count of converted characters
 ;
 ; *****************************************************************************
 
+		.section code		
+		
 MInt32ToString:
 		pha 								; save base
 		sta 	tempShort 					; save target base.
@@ -88,4 +90,5 @@ MI32WriteCharacter:
 		inc 	MCharCount 					; bump count
 		rts
 
-		
+		.send code		
+				

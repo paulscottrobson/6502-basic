@@ -10,6 +10,8 @@
 ..\source\floatingpoint\muldiv.asm
 ..\source\floatingpoint\unary.asm
 ..\source\main\00start.asm
+..\source\main\commands\assert.asm
+..\source\main\commands\run.asm
 ..\source\main\evaluate\binary.asm
 ..\source\main\evaluate\compare.asm
 ..\source\main\evaluate\dereference.asm

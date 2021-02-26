@@ -10,7 +10,7 @@ TOK_STR=$85
 TOK_BINARYST=$86
 TOK_STRUCTST=$9d
 TOK_UNARYST=$a2
-TOK_TOKENS=$be
+TOK_TOKENS=$c1
 
 TKW_AND                      = $86 ; and
 TKW_OR                       = $87 ; or

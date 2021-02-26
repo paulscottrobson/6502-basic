@@ -41,7 +41,7 @@ Group0Vectors:
 	.word	UnarySgn                 ; $a4 sgn(
 	.word	UnaryAbs                 ; $a5 abs(
 	.word	Unary_Random             ; $a6 random(
-	.word	Unimplemented            ; $a7 page
+	.word	Unary_Page               ; $a7 page
 	.word	MInt32True               ; $a8 true
 	.word	MInt32False              ; $a9 false
 	.word	Unary_Min                ; $aa min(
@@ -64,11 +64,11 @@ Group0Vectors:
 	.word	UnaryAsc                 ; $bb asc(
 	.word	Unimplemented            ; $bc int(
 	.word	Unimplemented            ; $bd float(
-	.word	Unimplemented            ; $be @
-	.word	Unimplemented            ; $bf ~
-	.word	Unimplemented            ; $c0 &
+	.word	UnaryReference           ; $be @
+	.word	UnaryComplement          ; $bf ~
+	.word	UnaryHexMarker           ; $c0 &
 	.word	Unimplemented            ; $c1 )
-	.word	Unimplemented            ; $c2 :
+	.word	CommandColon             ; $c2 :
 	.word	Unimplemented            ; $c3 ,
 	.word	Unimplemented            ; $c4 ;
 	.word	Unimplemented            ; $c5 ]
@@ -91,7 +91,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $d6 goto
 	.word	Unimplemented            ; $d7 gosub
 	.word	Unimplemented            ; $d8 return
-	.word	Unimplemented            ; $d9 assert
+	.word	Command_Assert           ; $d9 assert
 	.word	Unimplemented            ; $da stop
 	.word	Unimplemented            ; $db end
 	.word	Unimplemented            ; $dc dim

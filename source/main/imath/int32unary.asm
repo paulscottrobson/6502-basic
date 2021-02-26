@@ -13,6 +13,8 @@
 MSeed32:	.fill 	4							; random number seed.
 		.send storage
 
+		.section code		
+		
 ; *****************************************************************************
 ;
 ;							Absolute value of TOS
@@ -188,3 +190,6 @@ _Random2:
 		lda 	#0
 		sta 	esType,x
 		rts
+
+		.send code		
+		

@@ -78,6 +78,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	for i in comFiles:
 		h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
 	if createDispatcher:												# dispatcher here ??
+		h.write(".section code\n")
 		h.write("\n{0}Handler:\n".format(section))
 		h.write("\tdispatch {0}Vectors\n\n".format(section))
 		h.write("{0}Vectors:\n".format(section))
@@ -85,6 +86,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 		for k in vectorKeys:
 			h.write("\t.word {0:20} ; index {1}\n".format(vectors[k],ix))
 			ix += 2
+		h.write(".send code\n")
 	h.close()
 	#
 	h = open(localDir+os.sep+section+".inc","w")						# create the include file for this level.

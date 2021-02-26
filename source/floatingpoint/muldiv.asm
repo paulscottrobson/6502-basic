@@ -9,6 +9,8 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+		.section code		
+
 FPMultiply:	;; <fMultiply>
 		debug
 		jmp 	FPMultiply
@@ -23,3 +25,5 @@ FPImpossible:	;; <fImpossible>
 FPPower:	;; <fpower>		
 		debug
 		jmp 	FPPower
+
+		.send code		

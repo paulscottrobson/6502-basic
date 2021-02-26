@@ -5,11 +5,12 @@
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
 ;		Purpose:	32 bit unsigned/signed divide
-;					(these do not check for zero)
 ;
 ; *****************************************************************************
 ; *****************************************************************************
 
+		.section code		
+		
 ; *****************************************************************************
 ;
 ;							 32 bit signed divide
@@ -137,3 +138,6 @@ MInt32Modulus:
 		lda 	esInt0+2,x
 		sta 	esInt0,x		
 		rts
+
+		.send code		
+		

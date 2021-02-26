@@ -9,6 +9,8 @@
 ; *****************************************************************************
 ; *****************************************************************************
 
+		.section code		
+		
 ; *****************************************************************************
 ;
 ;					Convert string at (temp0) to integer base A
@@ -84,3 +86,6 @@ _I32FSNN3:
 		puly 								; restore Y
 		lda 	tempShort 					; get the count of characters read into A and exit		
 		rts
+
+		.send code		
+		

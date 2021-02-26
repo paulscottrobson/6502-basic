@@ -2,6 +2,8 @@
 ;	Automatically generated
 ;
 	.include "00start.asm"
+	.include "commands/assert.asm"
+	.include "commands/run.asm"
 	.include "evaluate/binary.asm"
 	.include "evaluate/compare.asm"
 	.include "evaluate/dereference.asm"
@@ -16,8 +18,10 @@
 	.include "imath/int32tostr.asm"
 	.include "imath/int32unary.asm"
 	.include "utility/check.asm"
+.section code
 
 mainHandler:
 	dispatch mainVectors
 
 mainVectors:
+.send code

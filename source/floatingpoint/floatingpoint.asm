@@ -8,6 +8,7 @@
 	.include "loadstore.asm"
 	.include "muldiv.asm"
 	.include "unary.asm"
+.section code
 
 floatingpointHandler:
 	dispatch floatingpointVectors
@@ -27,3 +28,4 @@ floatingpointVectors:
 	.word FPPower              ; index 22
 	.word FPImport             ; index 24
 	.word FPItoF               ; index 26
+.send code

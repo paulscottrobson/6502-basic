@@ -120,12 +120,11 @@ if __name__ == "__main__":
 		tw.test("az.09$ input inputd len( left$(")
 		tw.test("=<=< > >=")
 	else:
-		code = tw.tokenise('max(6,-2,52)')+[0x80]
+		code = tw.tokenise('::assert ~&2A')+[0x80]
 		header= ";\n;\tAutomatically generated\n;\n"							# header used.
 		genDir = "../source/generated/".replace("/",os.sep)			
 		h = open(genDir+"testcode.inc","w")
 		h.write(header)
-		h.write("TestCode:\n")
 		h.write("\t.byte {0}\n\n".format(",".join([str(x) for x in code])))
 		h.close()
 

@@ -72,6 +72,9 @@ esMant3 = esInt3
 SingleLetterVar:
  		.fill 	26*4 						; storage for variable A-Z.
 
+basePage: 									; start of program space.
+		.fill 	2
+
 		.send storage
 
 		.include "../generated/tokenconst.inc"

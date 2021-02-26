@@ -1,16 +1,16 @@
 Todo
 ====
-Make @ ~ and & into unary functions rather than direct tests.
 Proper disability of modules (e.g. floatingpoint disabled)
-Write basic runner, and start. Page word.
-Assert and testing framework.
+Testing framework, and test what we already have.
 String unary and support (concat, compare etc.) when testing framework up
+Reset of flag/pointer for allocating soft string memory.
 Complete functions, operators.
 Assignment.
 
 Incomplete but hooked in for write and test
 ===========================================
-	Variable Access
+	Variable Access (long variables)
+	Unimplemented keywords causes break.
 	String Concatenation, Compare
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate
 	Miscellaneous unary funcs.

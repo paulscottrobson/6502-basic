@@ -118,12 +118,11 @@ class Tokens(object):
 			timer(	event(	get( 	inkey(	alloc( 	
 			chr$(	left$(	mid$(	right$(	str$(
 			val(	peek( 	deek(	leek( 	asc(
-			int(	float(
+			int(	float( 	@		~ 		&
 		#
 		#		Then command and syntax and so on.
 		#
 		[command]
-			@  		~ 		&
 			) 		: 		, 		; 		]
 			to 		step 	proc 	endproc	local
 			rem 	let 	'		[ 		input
