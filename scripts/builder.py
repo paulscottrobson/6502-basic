@@ -29,7 +29,7 @@ groups = """
 	error			*
 	string 			
 	device 			
-	floatingpoint 	
+	floatingpoint	- 	
 	interaction
 	tokeniser
 """
@@ -43,9 +43,13 @@ header = ";\n;\tAutomatically generated\n;\n"							# header used.
 for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() != ""]:
 	section = s 														# check if dispatched manually.
 	createDispatcher = True
+	enableCode = True
 	if s.endswith("*"):
 		section = section[:-1].strip()
 		createDispatcher = False
+	if s.endswith("-"):
+		section = section[:-1].strip()
+		enableCode = False
 	#
 	compositeFile = "{0}{1}{0}.asm".format(section,os.sep) 				# the grouping file at this level.	
 	mainIncludes.append(compositeFile)									# add in header/include
@@ -75,17 +79,21 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	#
 	h = open(localDir+os.sep+section+".asm","w")						# create the file for this level.
 	h.write(header)
-	for i in comFiles:
-		h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
+	if enableCode:
+		for i in comFiles:
+			h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
 	if createDispatcher:												# dispatcher here ??
-		h.write(".section code\n")
+		h.write("\n.section code\n")
 		h.write("\n{0}Handler:\n".format(section))
-		h.write("\tdispatch {0}Vectors\n\n".format(section))
-		h.write("{0}Vectors:\n".format(section))
-		ix = 0
-		for k in vectorKeys:
-			h.write("\t.word {0:20} ; index {1}\n".format(vectors[k],ix))
-			ix += 2
+		if enableCode:
+			h.write("\tdispatch {0}Vectors\n\n".format(section))
+			h.write("{0}Vectors:\n".format(section))
+			ix = 0
+			for k in vectorKeys:
+				h.write("\t.word {0:20} ; index {1}\n".format(vectors[k],ix))
+				ix += 2
+		else:
+			h.write("\terror NoModule\n")
 		h.write(".send code\n")
 	h.close()
 	#

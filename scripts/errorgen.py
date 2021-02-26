@@ -17,6 +17,7 @@ import re,os,sys
 #
 errorDef = """
 	Syntax:Syntax Error
+	NoModule:Module disabled
 	Assert
 	DivZero:Divide By Zero 
 	Stop

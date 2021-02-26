@@ -92,8 +92,8 @@ Group0Vectors:
 	.word	Unimplemented            ; $d7 gosub
 	.word	Unimplemented            ; $d8 return
 	.word	Command_Assert           ; $d9 assert
-	.word	Unimplemented            ; $da stop
-	.word	Unimplemented            ; $db end
+	.word	CommandStop              ; $da stop
+	.word	CommandEnd               ; $db end
 	.word	Unimplemented            ; $dc dim
 	.word	Unimplemented            ; $dd poke
 	.word	Unimplemented            ; $de doke

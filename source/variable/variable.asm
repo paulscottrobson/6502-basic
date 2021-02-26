@@ -2,6 +2,7 @@
 ;	Automatically generated
 ;
 	.include "access.asm"
+
 .section code
 
 variableHandler:

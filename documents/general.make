@@ -31,7 +31,7 @@ ROOTDIR = ..$(S)
 #
 #		Script to run emulator, expecting parameter to follow
 #
-EMULATOR = $(ROOTDIR)bin$(S)x16emu -debug  -run -scale 2 -prg
+EMULATOR = $(ROOTDIR)bin$(S)x16emu -dump CR -debug  -run -scale 2 -prg
 #
 #		Current assembler
 # 

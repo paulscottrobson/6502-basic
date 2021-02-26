@@ -2,10 +2,11 @@
 ;	Automatically generated
 ;
 ErrorID_Syntax = 1 ; Syntax Error
-ErrorID_Assert = 2 ; Assert
-ErrorID_DivZero = 3 ; Divide By Zero
-ErrorID_Stop = 4 ; Stop
-ErrorID_BadType = 5 ; Type Mismatch
-ErrorID_BadValue = 6 ; Illegal Value
-ErrorID_MissingRP = 7 ; Missing right bracket
-ErrorID_MissingComma = 8 ; Missing comma
+ErrorID_NoModule = 2 ; Module disabled
+ErrorID_Assert = 3 ; Assert
+ErrorID_DivZero = 4 ; Divide By Zero
+ErrorID_Stop = 5 ; Stop
+ErrorID_BadType = 6 ; Type Mismatch
+ErrorID_BadValue = 7 ; Illegal Value
+ErrorID_MissingRP = 8 ; Missing right bracket
+ErrorID_MissingComma = 9 ; Missing comma

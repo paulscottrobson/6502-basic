@@ -1,14 +1,16 @@
-Todo
+TODO
 ====
-Proper disability of modules (e.g. floatingpoint disabled)
+Implement EOL command $80.
 Testing framework, and test what we already have.
 String unary and support (concat, compare etc.) when testing framework up
 Reset of flag/pointer for allocating soft string memory.
 Complete functions, operators.
-Assignment.
+L-Expr routine & Assignment.
 
 Incomplete but hooked in for write and test
 ===========================================
+	Default Let on run
+	How handle !<term> ?<term> on LHS.
 	Variable Access (long variables)
 	Unimplemented keywords causes break.
 	String Concatenation, Compare

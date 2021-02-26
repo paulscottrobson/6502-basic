@@ -3,6 +3,7 @@
 ;
 ErrorTextList:
 	.byte Syntax Error,"12"
+	.byte Module disabled,"15"
 	.byte Assert,"6"
 	.byte Divide By Zero,"14"
 	.byte Stop,"4"

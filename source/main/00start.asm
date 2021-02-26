@@ -17,8 +17,11 @@ Start:	ldx 	#$FF
 	
 		.send code
 
+;
+;		Hack to load code in.
+;
 ReturnPos:
-		* = $9000
+		* = $5000
 testBaseAddress:		
 		.byte 0
 		.word 100

@@ -3,6 +3,7 @@
 ;
 	.include "compare.asm"
 	.include "concat.asm"
+
 .section code
 
 stringHandler:

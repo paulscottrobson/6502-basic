@@ -17,11 +17,13 @@ endif
 
 APPNAME = basic.prg
 ASMOPTS = -Wall -q -c -L basic.lst -l basic.lbl -Wall
+
 .PHONY: all run
 
 all : $(APPNAME)
 
 run : $(APPNAME)
+	$(CDEL) dump.bin $(CDELQ)
 	$(EMULATOR) $<
 
 $(APPNAME) : $(SOURCEDIR)basic.asm 
