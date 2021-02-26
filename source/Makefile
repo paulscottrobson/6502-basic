@@ -28,7 +28,7 @@ run : $(APPNAME)
 
 $(APPNAME) : $(SOURCEDIR)basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)
-	python ..$(S)scripts$(S)tests$(S)testcore.py >$(BASICDIR)test.bas
+	python ..$(S)scripts$(S)tests$(S)testbin.py >$(BASICDIR)test.bas
 	python ..$(S)/scripts$(S)makepgm.py $(BASICDIR)test.bas
 	python ..$(S)scripts$(S)errorgen.py
 	python ..$(S)scripts$(S)builder.py

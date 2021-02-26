@@ -1,6 +1,9 @@
 TODO
 ====
-Test what we already have.
+Test what we already have
+	binary 		(done)
+	unary 
+	precedence 
 String unary and support (concat, compare etc.) when testing framework up
 Reset of flag/pointer for allocating soft string memory.
 Complete functions, operators.
