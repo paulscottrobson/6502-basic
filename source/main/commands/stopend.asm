@@ -30,5 +30,25 @@ CommandStop:	;; [stop]
 CommandEnd:		;; [end]
 		jmp 	$FFFF 						; fudge to crash out of emulator				
 
+; ************************************************************************************************
+;
+;									  End of line handler
+;
+; ************************************************************************************************
+		
+AdvanceNextLine:	;; [[[EOL]]]		
+		ldy 	#0 							; get offset
+		lda 	(codePtr),y
+		clc 								; add to codePtr
+		adc 	codePtr
+		sta 	codePtr
+		bcc 	_ANLNoCarry
+		inc 	codePtr+1
+_ANLNoCarry:
+		lda 	(codePtr),y 				; if end of program (or was just stand alone.
+		beq 	CommandEnd 					; execute END
+		ldy 	#3 							; start of tokens on line.
+		rts
+
 		.send 	code
 		

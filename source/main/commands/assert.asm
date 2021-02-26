@@ -19,7 +19,6 @@
 
 Command_Assert: ;; [assert]
 		jsr 	EvaluateRoot 				; what is being asserted.
-		debug
 		jsr 	MInt32Zero 					; is it true ?
 		beq 	_CAError
 		rts

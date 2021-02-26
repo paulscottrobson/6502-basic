@@ -23,7 +23,5 @@ Start:	ldx 	#$FF
 ReturnPos:
 		* = $5000
 testBaseAddress:		
-		.byte 0
-		.word 100
 		.include "../generated/testcode.inc"
 		* = ReturnPos

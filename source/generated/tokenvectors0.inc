@@ -2,7 +2,7 @@
 ;	Automatically generated
 ;
 Group0Vectors:
-	.word	Unimplemented            ; $80 [[eol]]
+	.word	AdvanceNextLine          ; $80 [[eol]]
 	.word	Unimplemented            ; $81 [[sh1]]
 	.word	Unimplemented            ; $82 [[sh2]]
 	.word	Unimplemented            ; $83 [[sh3]]

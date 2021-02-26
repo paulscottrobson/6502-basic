@@ -40,4 +40,7 @@ ASM = 64tass
 #		Source directory
 #
 SOURCEDIR = $(ROOTDIR)source$(S)
-
+#
+#		BASIC program directory
+#
+BASICDIR = $(ROOTDIR)basic$(S)

@@ -43,7 +43,7 @@ class ProgramBuilder(object):
 		else:
 			assert lineNumber >= self.nextLineNumber,"Line number sequence"
 		self.nextLineNumber = lineNumber+10
-		print(lineNumber,lineText)
+		#print(lineNumber,lineText)
 		self.code += self.makeLine(lineNumber,lineText)
 	#
 	#		Load source file.
@@ -74,7 +74,8 @@ class ProgramBuilder(object):
 		h.close()
 
 if __name__ == "__main__":
-	pb = ProgramBuilder()
-	pb.load("../basic/demo.bas")
-	pb.exportAsm("../source/generated/testcode.inc".replace("/",os.sep))
-	pb.exportBin("../source/generated/testcode.bin".replace("/",os.sep))
+	for f in sys.argv[1:]:
+		pb = ProgramBuilder()
+		pb.load(f)
+		pb.exportAsm("../source/generated/testcode.inc".replace("/",os.sep))
+		pb.exportBin("../source/generated/testcode.bin".replace("/",os.sep))

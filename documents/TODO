@@ -1,7 +1,6 @@
 TODO
 ====
-Implement EOL command $80.
-Testing framework, and test what we already have.
+Test what we already have.
 String unary and support (concat, compare etc.) when testing framework up
 Reset of flag/pointer for allocating soft string memory.
 Complete functions, operators.
