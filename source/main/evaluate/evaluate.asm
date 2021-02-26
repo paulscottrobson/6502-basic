@@ -169,7 +169,9 @@ _ELMinus:
 		jsr 	EvaluateNumericTerm 		; get a number to negate.
 		lda 	esType,x 					; is it integer
 		beq 	_ELMinusInteger
+		txa
 		floatingpoint_fnegate 				; do fp negate
+		tax
 		jmp 	_ELHasTerm
 _ELMinusInteger:
 		jsr 	MInt32Negate 				; do int negate
@@ -260,6 +262,40 @@ ENTType:
 
 ; ************************************************************************************************
 ;
+;									Evaluate various expressions
+;
+; ************************************************************************************************
+
+Evaluate:
+		lda 	#0
+		jsr 	EvaluateLevel
+		jsr 	DereferenceOne
+		rts
+
+EvaluateNumeric:
+		jsr 	Evaluate
+		lda 	esType,x
+		asl 	a 							; see if it's a string.
+		bmi 	ENTType
+		lsr 	a 							; shift float flag into carry.
+		lsr 	a
+		rts
+
+EvaluateString:
+		jsr 	Evaluate
+		lda 	esType,x
+		asl 	a 							; see if it's a string.
+		bpl 	ENTType
+		rts
+
+EvaluateInteger:
+		jsr 	Evaluate
+		lda 	esType,x
+		bne 	ENTType
+		rts
+
+; ************************************************************************************************
+;
 ;					Shift a 6 bit value into the current stack level.
 ;
 ; ************************************************************************************************
@@ -299,4 +335,3 @@ _ELShiftLoop:
 
 ELBinaryOperatorInfo:
 		.include "../../generated/binarystructinfo.inc"
-

@@ -16,7 +16,7 @@ include ../documents/general.make
 endif
 
 APPNAME = basic.prg
-ASMOPTS = -q -c -L basic.lst -l basic.lbl -Wall
+ASMOPTS = -Wall -q -c -L basic.lst -l basic.lbl -Wall
 .PHONY: all run
 
 all : $(APPNAME)

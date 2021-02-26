@@ -20,7 +20,9 @@ errorDef = """
 	DivZero:Divide By Zero 
 	Stop
 	BadType:Type Mismatch
+	BadValue:Illegal Value
 	MissingRP:Missing right bracket
+	MissingComma:Missing comma
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

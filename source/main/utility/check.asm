@@ -23,3 +23,19 @@ CheckRightParen:
 		rts
 _CRPError:
 		error 	MissingRP
+
+; ************************************************************************************************
+;
+;								Check and consume comma
+;	
+; ************************************************************************************************
+
+CheckComma:
+		lda 	(codePtr),y
+		iny
+		cmp 	#TKW_COMMA
+		bne 	_CCError
+		rts
+_CCError:
+		error 	MissingComma
+

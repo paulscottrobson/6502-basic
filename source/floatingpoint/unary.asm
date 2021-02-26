@@ -13,3 +13,11 @@ FNegate:	;; <fNegate>
 		debug
 		jmp 	FNegate
 
+FAbs:	;; <fAbs>
+		debug
+		jmp 	FAbs
+
+FSgn:	;; <fSgn>
+		debug
+		jmp 	FSgn
+

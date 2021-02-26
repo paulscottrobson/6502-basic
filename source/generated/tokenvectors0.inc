@@ -37,13 +37,13 @@ Group0Vectors:
 	.word	Unimplemented            ; $a0 then
 	.word	Unimplemented            ; $a1 endif
 	.word	UnaryParenthesis         ; $a2 (
-	.word	Unimplemented            ; $a3 len(
-	.word	Unimplemented            ; $a4 sgn(
-	.word	Unimplemented            ; $a5 abs(
-	.word	Unimplemented            ; $a6 random(
+	.word	UnaryLen                 ; $a3 len(
+	.word	UnarySgn                 ; $a4 sgn(
+	.word	UnaryAbs                 ; $a5 abs(
+	.word	Unary_Random             ; $a6 random(
 	.word	Unimplemented            ; $a7 page
-	.word	Unimplemented            ; $a8 true
-	.word	Unimplemented            ; $a9 false
+	.word	MInt32True               ; $a8 true
+	.word	MInt32False              ; $a9 false
 	.word	Unimplemented            ; $aa min(
 	.word	Unimplemented            ; $ab max(
 	.word	Unimplemented            ; $ac sys(
@@ -58,42 +58,43 @@ Group0Vectors:
 	.word	Unimplemented            ; $b5 right$(
 	.word	Unimplemented            ; $b6 str$(
 	.word	Unimplemented            ; $b7 val(
-	.word	Unimplemented            ; $b8 peek(
-	.word	Unimplemented            ; $b9 deek(
-	.word	Unimplemented            ; $ba leek(
-	.word	Unimplemented            ; $bb int(
-	.word	Unimplemented            ; $bc float(
-	.word	Unimplemented            ; $bd @
-	.word	Unimplemented            ; $be ~
-	.word	Unimplemented            ; $bf &
-	.word	Unimplemented            ; $c0 )
-	.word	Unimplemented            ; $c1 :
-	.word	Unimplemented            ; $c2 ,
-	.word	Unimplemented            ; $c3 ;
-	.word	Unimplemented            ; $c4 ]
-	.word	Unimplemented            ; $c5 to
-	.word	Unimplemented            ; $c6 step
-	.word	Unimplemented            ; $c7 proc
-	.word	Unimplemented            ; $c8 endproc
-	.word	Unimplemented            ; $c9 local
-	.word	Unimplemented            ; $ca rem
-	.word	Unimplemented            ; $cb let
-	.word	Unimplemented            ; $cc '
-	.word	Unimplemented            ; $cd [
-	.word	Unimplemented            ; $ce input
-	.word	Unimplemented            ; $cf else
-	.word	Unimplemented            ; $d0 vdu
-	.word	Unimplemented            ; $d1 read
-	.word	Unimplemented            ; $d2 data
-	.word	Unimplemented            ; $d3 restore
-	.word	Unimplemented            ; $d4 print
-	.word	Unimplemented            ; $d5 goto
-	.word	Unimplemented            ; $d6 gosub
-	.word	Unimplemented            ; $d7 return
-	.word	Unimplemented            ; $d8 assert
-	.word	Unimplemented            ; $d9 stop
-	.word	Unimplemented            ; $da end
-	.word	Unimplemented            ; $db dim
-	.word	Unimplemented            ; $dc poke
-	.word	Unimplemented            ; $dd doke
-	.word	Unimplemented            ; $de loke
+	.word	UnaryPeek                ; $b8 peek(
+	.word	UnaryDeek                ; $b9 deek(
+	.word	UnaryLeek                ; $ba leek(
+	.word	UnaryAsc                 ; $bb asc(
+	.word	Unimplemented            ; $bc int(
+	.word	Unimplemented            ; $bd float(
+	.word	Unimplemented            ; $be @
+	.word	Unimplemented            ; $bf ~
+	.word	Unimplemented            ; $c0 &
+	.word	Unimplemented            ; $c1 )
+	.word	Unimplemented            ; $c2 :
+	.word	Unimplemented            ; $c3 ,
+	.word	Unimplemented            ; $c4 ;
+	.word	Unimplemented            ; $c5 ]
+	.word	Unimplemented            ; $c6 to
+	.word	Unimplemented            ; $c7 step
+	.word	Unimplemented            ; $c8 proc
+	.word	Unimplemented            ; $c9 endproc
+	.word	Unimplemented            ; $ca local
+	.word	Unimplemented            ; $cb rem
+	.word	Unimplemented            ; $cc let
+	.word	Unimplemented            ; $cd '
+	.word	Unimplemented            ; $ce [
+	.word	Unimplemented            ; $cf input
+	.word	Unimplemented            ; $d0 else
+	.word	Unimplemented            ; $d1 vdu
+	.word	Unimplemented            ; $d2 read
+	.word	Unimplemented            ; $d3 data
+	.word	Unimplemented            ; $d4 restore
+	.word	Unimplemented            ; $d5 print
+	.word	Unimplemented            ; $d6 goto
+	.word	Unimplemented            ; $d7 gosub
+	.word	Unimplemented            ; $d8 return
+	.word	Unimplemented            ; $d9 assert
+	.word	Unimplemented            ; $da stop
+	.word	Unimplemented            ; $db end
+	.word	Unimplemented            ; $dc dim
+	.word	Unimplemented            ; $dd poke
+	.word	Unimplemented            ; $de doke
+	.word	Unimplemented            ; $df loke

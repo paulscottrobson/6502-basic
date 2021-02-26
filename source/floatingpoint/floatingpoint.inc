@@ -7,58 +7,68 @@ floatingpoint_deref .macro
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fAdd .macro
+floatingpoint_fAbs .macro
 	ldx	#2
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fCompare .macro
+floatingpoint_fAdd .macro
 	ldx	#4
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fDivide .macro
+floatingpoint_fCompare .macro
 	ldx	#6
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fImpossible .macro
+floatingpoint_fDivide .macro
 	ldx	#8
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fMultiply .macro
+floatingpoint_fImpossible .macro
 	ldx	#10
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fNegate .macro
+floatingpoint_fMultiply .macro
 	ldx	#12
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fSubtract .macro
+floatingpoint_fNegate .macro
 	ldx	#14
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_floatToInt .macro
+floatingpoint_fSgn .macro
 	ldx	#16
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fpower .macro
+floatingpoint_fSubtract .macro
 	ldx	#18
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_importtoken .macro
+floatingpoint_floatToInt .macro
 	ldx	#20
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_intToFloat .macro
+floatingpoint_fpower .macro
 	ldx	#22
+	jsr	floatingpointHandler
+	.endm
+
+floatingpoint_importtoken .macro
+	ldx	#24
+	jsr	floatingpointHandler
+	.endm
+
+floatingpoint_intToFloat .macro
+	ldx	#26
 	jsr	floatingpointHandler
 	.endm
 

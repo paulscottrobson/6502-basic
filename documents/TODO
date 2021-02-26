@@ -1,12 +1,7 @@
 Todo
 ====
 
-Add len( unary function (can take string or integer)
-
 Complete unary functions (return integer/float only)
-	sgn	abs 
-	asc 
-	random true false peek deek leek
 	min/max (all types)
 
 Write basic runner, and start 

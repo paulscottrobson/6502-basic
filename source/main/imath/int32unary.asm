@@ -88,10 +88,10 @@ MInt32Sign:
 ;
 ; *****************************************************************************
 
-MInt32True:
+MInt32True: ;; [true]
 		lda 	#$FF 						; set to $FFFFFFFF
 		bne 	MInt32WriteAll
-MInt32False:									; set to 0
+MInt32False:;; [false]
 		lda 	#0
 MInt32WriteAll:								; fill all integer fields with A
 		sta 	esInt0,x
@@ -185,4 +185,6 @@ _Random2:
 		lda 	MSeed32+3
 		sta 	esInt3,x
 		puly
+		lda 	#0
+		sta 	esType,x
 		rts

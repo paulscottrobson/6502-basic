@@ -6,6 +6,7 @@
 	.include "evaluate/compare.asm"
 	.include "evaluate/dereference.asm"
 	.include "evaluate/evaluate.asm"
+	.include "evaluate/unary.asm"
 	.include "imath/int32binary.asm"
 	.include "imath/int32compare.asm"
 	.include "imath/int32divide.asm"

@@ -14,6 +14,7 @@
 ..\source\main\evaluate\compare.asm
 ..\source\main\evaluate\dereference.asm
 ..\source\main\evaluate\evaluate.asm
+..\source\main\evaluate\unary.asm
 ..\source\main\imath\int32binary.asm
 ..\source\main\imath\int32compare.asm
 ..\source\main\imath\int32divide.asm
