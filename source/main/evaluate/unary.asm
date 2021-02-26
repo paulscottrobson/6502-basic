@@ -152,3 +152,47 @@ Unary_Random:	;; [random(]
 _URExit:
 		jsr 	CheckRightParen 			; check right and return
 		rts
+
+; ************************************************************************************************
+;
+;										min() and max()
+;
+; ************************************************************************************************
+
+Unary_Min:	;; [min(]
+		lda 	#1 							; c1 cmp c2 needs to be > e.g. c1 > c2
+		bne 	UnaryMBody
+Unary_Max: ;; [max(]
+		lda 	#$FF 						; c1 cmp c2 needs to be < e.g. c1 < c2
+UnaryMBody:
+		pha 								; save comparator on stack.
+		jsr 	Evaluate 					; get the first thing to check
+		;
+_UnaryMLoop:
+		lda 	(codePtr),y 				; found ), indicates end.
+		iny
+		cmp 	#TKW_RPAREN 				
+		beq 	_UnaryMExit 
+		cmp 	#TKW_COMMA 					; found , indicates more.
+		beq 	_UnaryMCompare
+		error 	Syntax 						; syntax error.
+		;
+_UnaryMExit:
+		pla 								; throw comparator and return.
+		rts
+		;
+_UnaryMCompare:
+		inx 								; get the 2nd thing to evaluate
+		jsr 	Evaluate
+		dex
+		;
+		jsr 	PerformComparison 			; this is part of evaluate/compare.asm
+		sta 	tempShort 					; save result
+		pla 								; get what we need
+		pha		
+		cmp 	tempShort 					; did we get it
+		bne 	_UnaryMLoop 				; no, try another value.
+		jsr 	MInt32False 				; promote 2nd to 1st.
+		jsr 	MInt32Add
+		jmp 	_UnaryMLoop
+

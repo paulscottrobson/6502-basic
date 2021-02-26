@@ -44,8 +44,8 @@ Group0Vectors:
 	.word	Unimplemented            ; $a7 page
 	.word	MInt32True               ; $a8 true
 	.word	MInt32False              ; $a9 false
-	.word	Unimplemented            ; $aa min(
-	.word	Unimplemented            ; $ab max(
+	.word	Unary_Min                ; $aa min(
+	.word	Unary_Max                ; $ab max(
 	.word	Unimplemented            ; $ac sys(
 	.word	Unimplemented            ; $ad timer(
 	.word	Unimplemented            ; $ae event(

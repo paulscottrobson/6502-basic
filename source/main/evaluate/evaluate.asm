@@ -294,6 +294,18 @@ EvaluateInteger:
 		bne 	ENTType
 		rts
 
+EvaluateSmallInteger:
+		jsr 	EvaluateInteger
+		lda 	esType+1,x
+		ora 	esType+2,x
+		ora 	esType+3,x
+		bne 	_ESIValue
+		lda 	esType,x
+		rts
+
+_ESIValue:
+		error 	BadValue
+				
 ; ************************************************************************************************
 ;
 ;					Shift a 6 bit value into the current stack level.

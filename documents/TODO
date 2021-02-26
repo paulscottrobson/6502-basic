@@ -1,13 +1,12 @@
 Todo
 ====
-
-Complete unary functions (return integer/float only)
-	min/max (all types)
-
-Write basic runner, and start 
+Make @ ~ and & into unary functions rather than direct tests.
+Proper disability of modules (e.g. floatingpoint disabled)
+Write basic runner, and start. Page word.
 Assert and testing framework.
-String unary and support (concat, compare etc.) when testing frameowork up
-Complete functions.
+String unary and support (concat, compare etc.) when testing framework up
+Complete functions, operators.
+Assignment.
 
 Incomplete but hooked in for write and test
 ===========================================
