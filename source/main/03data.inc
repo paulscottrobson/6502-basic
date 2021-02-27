@@ -25,6 +25,7 @@ temp2: 	.fill 	2
 
 tempShort:	
 		.fill 	1
+
 		.send zeropage
 
 ; ************************************************************************************************
@@ -69,10 +70,20 @@ esMant3 = esInt3
 		.section storage
 
 		.align	256
+
 SingleLetterVar:
  		.fill 	26*4 						; storage for variable A-Z.
 
 basePage: 									; start of program space.
+		.fill 	2
+
+endMemory: 									; end of memory.
+		.fill 	2
+
+highMemory: 								; top of program memory available.
+		.fill 	2		
+
+lowMemory:									; bottom of memory available.
 		.fill 	2
 
 		.send storage

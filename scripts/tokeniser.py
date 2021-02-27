@@ -108,7 +108,7 @@ class Tokeniser(object):
 		t = self.tokens.getFromToken(token)
 		assert t is not None,"Do not recognise '"+token+"'"
 		if t["group"] != 0:
-			self.code.append(self.getShiftToken(t["group"]))
+			self.code.append(self.tokens.getShiftToken(t["group"]))
 		self.code.append(t["id"])
 
 if __name__ == "__main__":

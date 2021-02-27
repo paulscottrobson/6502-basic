@@ -11,6 +11,7 @@
 ../source/floatingpoint/unary.asm
 ../source/main/00start.asm
 ../source/main/commands/assert.asm
+../source/main/commands/clear.asm
 ../source/main/commands/run.asm
 ../source/main/commands/stopend.asm
 ../source/main/evaluate/binary.asm
@@ -29,4 +30,5 @@
 ../source/main/utility/check.asm
 ../source/string/compare.asm
 ../source/string/concat.asm
+../source/string/memory.asm
 ../source/variable/access.asm

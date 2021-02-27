@@ -1,20 +1,22 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		01common.inc
-;		Purpose:	Common includes/defines/setups
-;		Created:	21st February 2021
+;		Name:		memory.asm
+;		Purpose:	String memory handler
+;		Created:	27th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		* = $02
-		.dsection zeropage
-		* = $800
-		.dsection storage
+		.section zeroPage
 
-		* = $1000
-		.dsection code
+softMemAlloc: 								; memory allocated for temporary strings
+		.fill 	2  							; if MSB is zero needs resetting on allocation.
+
+		.send 	zeroPage
+
+		.section code		
 		
-StackSize = 8
+		.send code		
+		

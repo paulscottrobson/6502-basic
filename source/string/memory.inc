@@ -1,20 +1,21 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		01common.inc
-;		Purpose:	Common includes/defines/setups
-;		Created:	21st February 2021
+;		Name:		memory.inc
+;		Purpose:	String memory reset macro
+;		Created:	27th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		* = $02
-		.dsection zeropage
-		* = $800
-		.dsection storage
+; ************************************************************************************************
+;
+;		Zero the MSB of the soft memory pointer, will force it being correctly set on soft
+;		allocation.
+;
+; ************************************************************************************************
 
-		* = $1000
-		.dsection code
-		
-StackSize = 8
+StringSoftReset .macro
+		stz 	softMemAlloc+1
+		.endm		

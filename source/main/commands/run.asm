@@ -20,12 +20,14 @@
 Command_Run: 	;; [run]
 		ldx 	#$FF
 		txs
+		jsr 	CommandClear 				; clear everything.
 		jsr 	ResetCodeAddress
 		ldy 	#3
 		;
 		;		Come here to do next instruction.
 		;
 CRNextInstruction:
+		StringSoftReset 					; reset the soft string pointer.
 		lda 	(codePtr),y 				; get next token.
 		bpl 	_CRNotToken
 		cmp 	#TOK_TOKENS 				; if in the tokens then do that token.
@@ -48,6 +50,30 @@ _CRRunRoutine:
 		;
 _CRNotToken:
 		debug		
+
+; ************************************************************************************************
+;
+;								   Handle $81 and $82 shifts
+;
+; ************************************************************************************************
+
+shifter .macro
+		lda 	(codePtr),y 				; get shifted value		
+		bpl 	Unimplemented 				; we have an error as this should not happen.
+		asl 	a 							; double into X
+		tax
+		iny 								; advance over it.
+		jsr 	_RunIt 						; we have no jsr (aaaa,X)
+		jmp 	CRNextInstruction
+_RunIt:		
+		jmp 	(\1-6*2,x) 					; and do the code.	
+		.endm
+
+CommandShift1:	;; [[[SH1]]]
+		shifter Group1Vectors			
+
+CommandShift2:	;; [[[SH2]]]
+		shifter Group2Vectors	
 
 ; ************************************************************************************************
 ;
@@ -83,5 +109,7 @@ Unimplemented:
 		jmp 	Unimplemented
 
 		.include "../../generated/tokenvectors0.inc"
+		.include "../../generated/tokenvectors1.inc"
+		.include "../../generated/tokenvectors2.inc"
 
 		.send code

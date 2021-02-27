@@ -3,6 +3,7 @@
 ;
 	.include "compare.asm"
 	.include "concat.asm"
+	.include "memory.asm"
 
 .section code
 

@@ -3,8 +3,8 @@
 ;
 Group0Vectors:
 	.word	AdvanceNextLine          ; $80 [[eol]]
-	.word	Unimplemented            ; $81 [[sh1]]
-	.word	Unimplemented            ; $82 [[sh2]]
+	.word	CommandShift1            ; $81 [[sh1]]
+	.word	CommandShift2            ; $82 [[sh2]]
 	.word	Unimplemented            ; $83 [[sh3]]
 	.word	Unimplemented            ; $84 [[fpc]]
 	.word	Unimplemented            ; $85 [[str]]

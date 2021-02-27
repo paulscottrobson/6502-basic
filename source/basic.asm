@@ -12,6 +12,7 @@
 	.include "error/errorhandler.inc"
 	.include "floatingpoint/floatingpoint.inc"
 	.include "interaction/interaction.inc"
+	.include "string/memory.inc"
 	.include "string/string.inc"
 	.include "tokeniser/tokeniser.inc"
 	.include "variable/variable.inc"

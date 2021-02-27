@@ -1,25 +1,24 @@
 TODO
 ====
-Test what we already have
-	binary 		(done)
-	unary 
-	precedence 
 String unary and support (concat, compare etc.) when testing framework up
-Reset of flag/pointer for allocating soft string memory.
 Complete functions, operators.
-L-Expr routine & Assignment.
+
+L-Expr routine & Assignment, and implement GOTO at some point, so we can get a rough speed test :)
 
 Incomplete but hooked in for write and test
 ===========================================
 	Default Let on run
-	How handle !<term> ?<term> on LHS.
+	How handle !<term> ?<term> on LHS (require LET)
 	Variable Access (long variables)
 	Unimplemented keywords causes break.
 	String Concatenation, Compare
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate
 	Miscellaneous unary funcs.
 	Token handler for $83 in unary.
+	Out of memory in pointer advance in clear.asm
 
 Notes
 =====
 	Stack position fudged for readability.
+
+	

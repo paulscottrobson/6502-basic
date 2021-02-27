@@ -12,7 +12,10 @@
 		.section code
 Start:	ldx 	#$FF
 		txs
+		
 		set16 	basePage,testBaseAddress
+		set16  	endMemory,$9800
+
 		jmp 	Command_Run
 	
 		.send code

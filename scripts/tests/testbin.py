@@ -11,9 +11,14 @@
 
 import random,sys
 from testcore import *
+
 # *****************************************************************************
 #
-#		Binary operator test
+#		Integer Binary operator test
+#
+#		+ - * / mod
+#		and or xor << >>
+#		comparisons
 #
 # *****************************************************************************
 
@@ -21,11 +26,12 @@ class BinopTest(Test):
 	def getTest(self,n):
 		ok = False
 		while not ok:
-			op = "+ - * / % & | ^ < = > <= >= <>".split(" ")
+			op = "+ - * / % & | ^ < = > <= >= <> >> <<".split(" ")
 			op = op[random.randint(0,len(op)-1)]
 			opn = op
 			n1 = random.randint(-10000000,10000000)
 			n2 = random.randint(-10000000,10000000)
+			n3 = 0
 			if "%".find(op) >= 0:
 				n1 = abs(n1)
 				n2 = abs(n2)
@@ -51,6 +57,14 @@ class BinopTest(Test):
 			if op == "^":
 				opn = "xor"
 				n3 = n1 ^ n2
+			if op == ">>":
+				n1 = abs(n1)
+				n2 = n2 & 31
+				n3 = n1 >> n2
+			if op == "<<":
+				n1 = abs(n1)
+				n2 = n2 & 31
+				n3 = n1 << n2
 			if op == ">":
 				n3 = -1 if n1 > n2 else 0
 			if op == "<":
