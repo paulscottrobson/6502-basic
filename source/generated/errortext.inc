@@ -11,5 +11,6 @@ ErrorTextList:
 	.byte Illegal Value,"13"
 	.byte Missing right bracket,"21"
 	.byte Missing comma,"13"
+	.byte Missing reference,"17"
 	.byte 0
 

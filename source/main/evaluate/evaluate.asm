@@ -279,7 +279,27 @@ EvaluateSmallInteger:
 
 _ESIValue:
 		error 	BadValue
+
+; ************************************************************************************************
+;
+;									Evaluate a reference
+;
+; ************************************************************************************************
 				
+EvaluateReference:
+		;
+		;		Get the precedence level of !, also ?, to evaluate a refrence
+		;
+		lda 	ELBinaryOperatorInfo+TKW_PLING-TOK_BINARYST
+		sec 								; sub 1 to allow a!x b?x to work.
+		sbc 	#1
+		jsr 	EvaluateLevel
+		lda 	esType,x
+		bpl 	_ERFail
+		rts
+_ERFail:
+		error 	NoReference		
+
 ; ************************************************************************************************
 ;
 ;					Shift a 6 bit value into the current stack level.

@@ -25,6 +25,7 @@ errorDef = """
 	BadValue:Illegal Value
 	MissingRP:Missing right bracket
 	MissingComma:Missing comma
+	NoReference:Missing reference
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

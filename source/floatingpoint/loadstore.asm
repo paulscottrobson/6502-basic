@@ -11,9 +11,14 @@
 
 		.section code		
 
-FPLoad:	;; <deref>
+FPLoad:	;; <loadfp>
 		debug
 		jmp 	FPLoad
 
+
+FPStore: ;; <storefp>		
+		debug
+		jmp 	FPStore
+
+
 		.send code		
-		

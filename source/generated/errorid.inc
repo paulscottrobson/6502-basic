@@ -10,3 +10,4 @@ ErrorID_BadType = 6 ; Type Mismatch
 ErrorID_BadValue = 7 ; Illegal Value
 ErrorID_MissingRP = 8 ; Missing right bracket
 ErrorID_MissingComma = 9 ; Missing comma
+ErrorID_NoReference = 10 ; Missing reference

@@ -12,6 +12,7 @@
 ../source/main/00start.asm
 ../source/main/commands/assert.asm
 ../source/main/commands/clear.asm
+../source/main/commands/let.asm
 ../source/main/commands/run.asm
 ../source/main/commands/stopend.asm
 ../source/main/evaluate/binary.asm

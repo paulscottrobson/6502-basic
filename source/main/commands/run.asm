@@ -33,7 +33,7 @@ CRNextInstruction:
 		cmp 	#TOK_TOKENS 				; if in the tokens then do that token.
 		bcs 	_CRExecute
 		cmp 	#TOK_BINARYST 				; if one of the system tokens $80-$85 do that
-		bcs 	Unimplemented 				; else not implemented.
+		bcs 	_CRCheckIndirect 			; if in that unused range check for ! or ?
 		;
 		;		Execute token A
 		;
@@ -49,8 +49,21 @@ _CRRunRoutine:
 		;		First element is an integer or an identifier.
 		;
 _CRNotToken:
-		debug		
-
+		cmp 	#$40 						; if 0-3F then it is a letter
+		bcs 	Unimplemented
+_CRDefaultLet:
+		jsr 	CommandLet 					; do the default, LET
+		jmp 	CRNextInstruction
+		;
+		;		Bad command, but there are two extra defaults ! and ?
+		;				
+_CRCheckIndirect:
+		cmp 	#TKW_PLING 					; !<term> = 
+		beq 	_CRDefaultLet
+		cmp 	#TKW_QMARK 					; ?<term> =
+		beq 	_CRDefaultLet
+		bne 	Unimplemented
+		
 ; ************************************************************************************************
 ;
 ;								   Handle $81 and $82 shifts

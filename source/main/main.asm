@@ -4,6 +4,7 @@
 	.include "00start.asm"
 	.include "commands/assert.asm"
 	.include "commands/clear.asm"
+	.include "commands/let.asm"
 	.include "commands/run.asm"
 	.include "commands/stopend.asm"
 	.include "evaluate/binary.asm"
