@@ -26,6 +26,7 @@ errorDef = """
 	MissingRP:Missing right bracket
 	MissingComma:Missing comma
 	NoReference:Missing reference
+	LineNumber:Line Number not found
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

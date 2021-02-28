@@ -36,7 +36,8 @@ class Tokens(object):
 				if t[1] >= '1' and t[1] <= '9':								# binary 1-9
 					currentMode = Tokens.BINARY + int(t[1])
 				if t == "[+]" or t == "[-]":								# structure in/out
-					self.firstStructureMod = tokenID[groupID]
+					if t == "[+]":
+						self.firstStructureMod = tokenID[groupID]
 					currentMode = Tokens.INCDEPTH if t == "[+]" else Tokens.DECDEPTH
 				if t == "[UNARY]":											# unary functions
 					self.firstUnary = tokenID[groupID]

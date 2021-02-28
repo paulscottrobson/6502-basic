@@ -1,14 +1,9 @@
 ;
 ;	Test program.
 ;
-D = -2
-E = 42
-A = 0
-A = A + 1
-!&900 = &98765432
-F = &900
-F!4 = -1
-?F = 1
-F?2 = 3
-stop
-end
+20 LET k=0 
+30 LET k=k+1
+40 LET a=k/2*3+4-5
+50 IF k<10000 THEN GOTO 30
+60 STOP
+

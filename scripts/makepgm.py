@@ -24,7 +24,7 @@ class ProgramBuilder(object):
 		self.tokens = Tokens()									
 		self.tokeniser = Tokeniser()
 		self.code = [] 											
-		self.nextLineNumber = 100
+		self.nextLineNumber = 10
 	#
 	#		Convert line number + line text to byte sequence.
 	#
@@ -53,7 +53,7 @@ class ProgramBuilder(object):
 			if not l.startswith(";"):
 				m = re.match("^(\\d+)(.*)$",l)
 				if m is not None:
-					self.add(int(m.group(1),m.group(2).strip()))
+					self.add(int(m.group(1)),m.group(2).strip())
 				else:
 					self.add(l.strip())
 	#

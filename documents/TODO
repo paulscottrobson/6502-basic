@@ -1,9 +1,9 @@
 TODO
 ====
-Implement GOTO at some point, so we can get a rough speed test :)
 String unary and support (concat, compare etc.) when testing framework up
+Stack, GOSUB/RETURN and BM5.
 Complete functions, operators.
-
+Complete keywords.
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -11,7 +11,9 @@ Incomplete but hooked in for write and test
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
 	Token handler for $83 in unary.
 	Out of memory in pointer advance in clear.asm
-
+	Multiline IF.
+	Long variables (implicitly, array access)
+	
 Notes
 =====
 	Stack position fudged for readability.

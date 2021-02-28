@@ -17,7 +17,7 @@
 ;
 ; ************************************************************************************************
 
-CommandLet:
+CommandLet: ;; [let]
 		ldx 	#0  						; get address to write.
 		jsr 	EvaluateReference
 		lda 	#TKW_EQUAL 					; check for equals

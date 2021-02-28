@@ -32,6 +32,10 @@ CRNextInstruction:
 		bpl 	_CRNotToken
 		cmp 	#TOK_TOKENS 				; if in the tokens then do that token.
 		bcs 	_CRExecute
+		cmp 	#TOK_UNARYST 				; unary is ignored.
+		bcs 	Unimplemented
+		cmp 	#TOK_STRUCTST 				; execute structures.
+		bcs 	_CRExecute
 		cmp 	#TOK_BINARYST 				; if one of the system tokens $80-$85 do that
 		bcs 	_CRCheckIndirect 			; if in that unused range check for ! or ?
 		;
@@ -55,7 +59,7 @@ _CRDefaultLet:
 		jsr 	CommandLet 					; do the default, LET
 		jmp 	CRNextInstruction
 		;
-		;		Bad command, but there are two extra defaults ! and ?
+		;		Bad but there are two extra defaults ! and ?
 		;				
 _CRCheckIndirect:
 		cmp 	#TKW_PLING 					; !<term> = 

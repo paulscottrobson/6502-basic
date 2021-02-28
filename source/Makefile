@@ -18,7 +18,7 @@ endif
 APPNAME = basic.prg
 ASMOPTS = -Wall -q -c -L basic.lst -l basic.lbl -Wall
 
-.PHONY: all run
+.PHONY: all run analyse
 
 all : $(APPNAME)
 
@@ -26,10 +26,13 @@ run : $(APPNAME)
 	$(CDEL) dump.bin $(CDELQ)
 	$(EMULATOR) $<
 
+analyse: $(APPNAME)
+	python ..$(S)scripts$(S)analyse.py basic.lst
+
 $(APPNAME) : $(SOURCEDIR)basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)
 #	python ..$(S)scripts$(S)tests$(S)testprec.py >$(BASICDIR)test.bas
-	python ..$(S)/scripts$(S)makepgm.py $(BASICDIR)demo.bas
+	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)demo.bas
 	python ..$(S)scripts$(S)errorgen.py
 	python ..$(S)scripts$(S)builder.py
 	python ..$(S)scripts$(S)tables.py

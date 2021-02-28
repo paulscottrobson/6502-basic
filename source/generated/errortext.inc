@@ -12,5 +12,6 @@ ErrorTextList:
 	.byte Missing right bracket,"21"
 	.byte Missing comma,"13"
 	.byte Missing reference,"17"
+	.byte Line Number not found,"21"
 	.byte 0
 

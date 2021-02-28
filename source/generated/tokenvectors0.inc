@@ -30,7 +30,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $99 repeat
 	.word	Unimplemented            ; $9a while
 	.word	Unimplemented            ; $9b for
-	.word	Unimplemented            ; $9c if
+	.word	CommandIf                ; $9c if
 	.word	Unimplemented            ; $9d until
 	.word	Unimplemented            ; $9e wend
 	.word	Unimplemented            ; $9f next
@@ -78,7 +78,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $c9 endproc
 	.word	Unimplemented            ; $ca local
 	.word	Unimplemented            ; $cb rem
-	.word	Unimplemented            ; $cc let
+	.word	CommandLet               ; $cc let
 	.word	Unimplemented            ; $cd '
 	.word	Unimplemented            ; $ce [
 	.word	Unimplemented            ; $cf input
@@ -88,7 +88,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $d3 data
 	.word	Unimplemented            ; $d4 restore
 	.word	Unimplemented            ; $d5 print
-	.word	Unimplemented            ; $d6 goto
+	.word	CommandGOTO              ; $d6 goto
 	.word	Unimplemented            ; $d7 gosub
 	.word	Unimplemented            ; $d8 return
 	.word	Command_Assert           ; $d9 assert

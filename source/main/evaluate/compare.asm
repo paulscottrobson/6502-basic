@@ -34,6 +34,7 @@ comparer 	.macro
 ; ************************************************************************************************
 
 PerformComparison:
+		jsr 	DereferenceTwo 				; make both values.
 		lda 	esType,x 					; check for two strings.
 		and 	esType+1,x
 		asl 	a
@@ -102,4 +103,4 @@ CompareFalse:
 		jmp 	MInt32False		
 
 		.send code		
-		
+			
