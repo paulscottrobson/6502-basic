@@ -22,7 +22,7 @@ from testcore import *
 
 class UnaryOpTest(Test):
 	def getTest(self,n):
-		s = random.randint(0,6)
+		s = random.randint(0,10)
 		#
 		n = random.randint(-10000,10000)
 		if random.randint(0,10) == 0:
@@ -54,7 +54,33 @@ class UnaryOpTest(Test):
 			n = random.randint(35,126)
 			return 'chr$({0}) = "{1}"'.format(n,chr(n))
 		#
+		if s == 7:
+			s = self.getString()
+			c = random.randint(0,8)
+			return 'left$("{0}",{1}) = "{2}"'.format(s.strip(),c,s[:c].strip())			
+		#
+		if s == 8:
+			s = self.getString().strip()			
+			c = random.randint(0,8)
+			s1 = s[-c:] if c < len(s) else s
+			s1 = s1 if c != 0 else ""
+			return 'right$("{0}",{1}) = "{2}"'.format(s.strip(),c,s1)			
+		#
+		if s == 9:
+			s = self.getString()
+			c1 = random.randint(1,6)
+			c2 = random.randint(0,6)
+			return 'mid$("{0}",{1},{2}) = "{3}"'.format(s.strip(),c1,c2,s[c1-1:][:c2].strip())			
+		#
+		if s == 10:
+			s = self.getString()
+			c1 = random.randint(1,6)
+			return 'mid$("{0}",{1}) = "{2}"'.format(s.strip(),c1,s[c1-1:].strip())			
+		#
 		assert False,str(s)
+
+	def getString(self):
+		return "".join([chr(random.randint(97,117)) for x in range(0,random.randint(1,6))])+(" "*128)
 
 if __name__ == "__main__":		
 	t = UnaryOpTest(50)

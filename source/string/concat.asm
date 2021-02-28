@@ -28,12 +28,7 @@ StringConcat:	;; <concat>
 		adc 	(temp1),y
 		bcs 	_SCError 					; just too many characters here.
 		jsr 	AllocateSoftString 			; allocate soft string memory, set pointer.
-
-		lda 	SoftMemAlloc 				; copy the memory allocation pointer to the stack.
-		sta 	esInt0,x 					; type is already string.
-		lda 	SoftMemAlloc+1
-		sta 	esInt1,x
-
+		jsr 	CopySoftToStack 			; copy that to the stack.
 		jsr 	_SCCopyTemp0 				; copy temp0
 		lda 	temp1 						; copy temp1 to temp0
 		sta 	temp0
@@ -64,6 +59,15 @@ _SCCopyLoop:
 		jsr 	WriteSoftString 			; write to soft string.
 		jmp 	_SCCopyLoop
 _SCCopyExit:
+		rts
+;
+;		Copy soft mem pointer to stack.
+;
+CopySoftToStack:
+		lda 	SoftMemAlloc 				; copy the memory allocation pointer to the stack.
+		sta 	esInt0,x 					; type is already string.
+		lda 	SoftMemAlloc+1
+		sta 	esInt1,x
 		rts
 
 		.send code		

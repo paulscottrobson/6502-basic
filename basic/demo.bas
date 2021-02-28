@@ -1,2 +1,2 @@
-assert mid$("abcde",2,5)
+assert mid$("abcde",3,255) = "cde"
 end

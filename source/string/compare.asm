@@ -73,14 +73,15 @@ _SCExit:
 ; ************************************************************************************************
 
 CopyStringPair:
-		lda 	esInt0,x
-		sta 	temp0
-		lda 	esInt1,x
-		sta 	temp0+1
 		lda 	esInt0+1,x
 		sta 	temp1
 		lda 	esInt1+1,x
 		sta 	temp1+1
+CopyStringTop:		
+		lda 	esInt0,x		
+		sta 	temp0
+		lda 	esInt1,x
+		sta 	temp0+1
 		rts
 
 		.send code		

@@ -113,6 +113,8 @@ _EROkay:
 		inx
 		lda 	#255 						; 255 default for 3nd parameter.
 		jsr 	MInt32Set8Bit 	
+
+		puly
 		jmp 	ExecSubString 				; do the substring code.
 
 		.send 	code
