@@ -1,6 +1,6 @@
 TODO
 ====
-device/x16 , print character and VDU
+device/x16 , print character and PRINT
 REPEAT UNTIL
 
 Complete functions, operators that are still there.

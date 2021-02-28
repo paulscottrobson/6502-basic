@@ -272,15 +272,39 @@ EvaluateInteger:
 
 EvaluateSmallInteger:
 		jsr 	EvaluateInteger
-		lda 	esType+1,x
-		ora 	esType+2,x
-		ora 	esType+3,x
+		lda 	esInt1,x
+		ora 	esInt2,x
+		ora 	esInt3,x
 		bne 	_ESIValue
-		lda 	esType,x
+		lda 	esInt0,x
 		rts
 
 _ESIValue:
 		error 	BadValue
+
+; ************************************************************************************************
+;
+;											Links
+;
+; ************************************************************************************************
+
+LinkEvaluate: 	;; <evaluate>
+		tax
+		jsr 	Evaluate
+		txa
+		rts
+
+LinkEvaluateInteger: 	;; <evaluateint>
+		tax
+		jsr 	EvaluateInteger
+		txa
+		rts
+
+LinkEvaluateSmallInt: 	;; <evaluatesmall>
+		tax
+		jsr 	EvaluateSmallInteger
+		txa
+		rts
 
 ; ************************************************************************************************
 ;

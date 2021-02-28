@@ -1,28 +1,30 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		new.asm
-;		Purpose:	New program
+;		Name:		substring.asm
+;		Purpose:	Substring code for mid$ left$ right$
 ;		Created:	28th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		.section code
+		.section code		
 
 ; ************************************************************************************************
 ;
-;										New command
+;					Create substring of (p1,p2,p3) MID$ format for stack A
 ;
 ; ************************************************************************************************
 
-Command_New: ;; [new]
-		jsr 	ResetCodeAddress 			; point to first line
-		ldy 	#0 							; and zap it.
-		tya
-		sta 	(codePtr),y
-		jsr 	CommandClear 				; clear everything down.
-		jmp 	CommandEND 					; do END code, as there's nothing to run.
+StringSubstring:	;; <substring>
+		pha
+		tax 								; access stack.
+		debug
+		nop
+		
 
-		.send code
+		pla
+		rts
+
+		.send 	code

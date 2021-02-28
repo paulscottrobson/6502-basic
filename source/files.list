@@ -25,6 +25,7 @@
 ../source/main/evaluate/dereference.asm
 ../source/main/evaluate/evaluate.asm
 ../source/main/evaluate/unary.asm
+../source/main/evaluate/unarystr.asm
 ../source/main/imath/int32binary.asm
 ../source/main/imath/int32compare.asm
 ../source/main/imath/int32divide.asm
@@ -35,7 +36,9 @@
 ../source/main/imath/int32unary.asm
 ../source/main/stack.asm
 ../source/main/utility/check.asm
+../source/string/chr.asm
 ../source/string/compare.asm
 ../source/string/concat.asm
 ../source/string/memory.asm
+../source/string/substring.asm
 ../source/variable/access.asm

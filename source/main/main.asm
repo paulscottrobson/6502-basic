@@ -17,6 +17,7 @@
 	.include "evaluate/dereference.asm"
 	.include "evaluate/evaluate.asm"
 	.include "evaluate/unary.asm"
+	.include "evaluate/unarystr.asm"
 	.include "imath/int32binary.asm"
 	.include "imath/int32compare.asm"
 	.include "imath/int32divide.asm"
@@ -34,4 +35,7 @@ mainHandler:
 	dispatch mainVectors
 
 mainVectors:
+	.word LinkEvaluate         ; index 0
+	.word LinkEvaluateInteger  ; index 2
+	.word LinkEvaluateSmallInt ; index 4
 .send code

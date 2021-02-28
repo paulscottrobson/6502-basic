@@ -52,10 +52,10 @@ Group0Vectors:
 	.word	Unimplemented            ; $af get(
 	.word	Unimplemented            ; $b0 inkey(
 	.word	Unimplemented            ; $b1 alloc(
-	.word	Unimplemented            ; $b2 chr$(
-	.word	Unimplemented            ; $b3 left$(
-	.word	Unimplemented            ; $b4 mid$(
-	.word	Unimplemented            ; $b5 right$(
+	.word	ExecChr                  ; $b2 chr$(
+	.word	ExecLeft                 ; $b3 left$(
+	.word	ExecMid                  ; $b4 mid$(
+	.word	ExecRight                ; $b5 right$(
 	.word	Unimplemented            ; $b6 str$(
 	.word	Unimplemented            ; $b7 val(
 	.word	UnaryPeek                ; $b8 peek(
