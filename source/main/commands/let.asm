@@ -36,7 +36,7 @@ CommandLet: ;; [let]
 
 WriteValue:
 		pshy
-		jsr 	_WVSetTemp0 				; set temp0 to point to target address.
+		jsr 	WVSetTemp0 					; set temp0 to point to target address.
 		;
 		;		Check not assigning string to number or vice versa.
 		;
@@ -70,7 +70,7 @@ WriteValue:
 		inx 								; force the value being written to be a float.
 		jsr 	BPMakeFloat
 		dex
-		jsr 	_WVSetTemp0 				; set Temp0 to write address
+		jsr 	WVSetTemp0 					; set Temp0 to write address
 		inx
 		txa 							
 		floatingpoint_storefp 				; write using FP pack & write function.
@@ -102,13 +102,15 @@ _WVCopyExit:
 		puly
 		rts
 
-_WVSetTemp0:
+
+_WVType:
+		error 	BadType		
+
+WVSetTemp0:
 		lda 	esInt0,x
 		sta 	temp0
 		lda 	esInt1,x
 		sta 	temp0+1
 		rts
 
-_WVType:
-		error 	BadType		
 		.send code

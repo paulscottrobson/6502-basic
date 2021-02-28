@@ -16,5 +16,16 @@
 
 		* = $1000
 		.dsection code
-		
+
+;
+;		Size of evaluation stack
+;		
 StackSize = 8
+;
+;		Size of return stack.
+;
+retStackSize = 512
+;
+;		Structure markers.
+;
+markerGOSUB = 'G'

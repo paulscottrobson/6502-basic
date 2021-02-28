@@ -262,6 +262,8 @@ EvaluateString:
 		bpl 	ENTType
 		rts
 
+EvaluateRootInteger:
+		ldx 	#0
 EvaluateInteger:
 		jsr 	Evaluate
 		lda 	esType,x

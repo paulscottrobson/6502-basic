@@ -3,7 +3,7 @@
 ;
 ;		Name:		transfer.asm
 ;		Purpose:	GOTO GOSUB and RETURN (compatibility only)
-;		Created:	28h February 2021
+;		Created:	28th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -13,12 +13,43 @@
 
 ; ************************************************************************************************
 ;
+;									GOSUB command
+;
+; ************************************************************************************************
+
+CommandGOSUB:	;; [gosub]
+		jsr 	EvaluateRootInteger			; get GOSUB line on stack top.
+		ldx 	#4 							; allocate 4 bytes on stack for GOSUB
+		lda 	#markerGOSUB  				; <marker> <return addr/offset>
+		jsr 	RSClaim
+
+		lda 	#1 							; save position at offset 1.
+		jsr 	RSSavePosition
+		ldx 	#0 							; point back at GOSUB line
+		beq 	GotoTOS 					; and do a GOTO there.
+
+; ************************************************************************************************
+;
+;										RETURN command
+;
+; ************************************************************************************************
+
+CommandRETURN:	;; [return]
+		rscheck markerGOSUB,returnErr 		; check TOS is a GOSUB
+		lda 	#1
+		jsr 	RSLoadPosition 				; reload the position from offset 1.
+		lda 	#4 							; throw 4 bytes from stack.
+		jsr 	RSFree 
+		rts
+
+; ************************************************************************************************
+;
 ;										GOTO command
 ;
 ; ************************************************************************************************
 
 CommandGOTO:	;; [goto]
-		jsr 	EvaluateRoot 				; get GOTO line from stack top.
+		jsr 	EvaluateRootInteger 		; get GOTO line on stack top.
 		;
 		;		GOTO tos
 		;

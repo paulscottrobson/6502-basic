@@ -1,9 +1,9 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		assert.asm
-;		Purpose:	Assert command
-;		Created:	26th February 2021
+;		Name:		rem.asm
+;		Purpose:	Comment command
+;		Created:	28th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -13,16 +13,22 @@
 
 ; ************************************************************************************************
 ;
-;										Assert command
+;										Remark command
 ;
 ; ************************************************************************************************
 
-Command_Assert: ;; [assert]
-		jsr 	EvaluateRootInteger 		; what is being asserted.
-		jsr 	MInt32Zero 					; is it true ?
-		beq 	_CAError
-		rts
-_CAError:
-		error 	Assert		
+Command_Rem: ;; [rem]
+Command_Rem2: ;; [']
+		lda 	(codePtr),y 				; what follows
+		cmp 	#TOK_STR 					; if it is a string then skip it.
+		bne 	_CRNotString
+		;
+		iny
+		tya
+		sec
+		adc 	(codePtr),y 				; get string size, add to Y, +1 for the length
+		tay
+_CRNotString:
+		rts		
 
 		.send code

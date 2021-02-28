@@ -14,5 +14,6 @@ ErrorTextList:
 	.byte Missing reference,"17"
 	.byte Line Number not found,"21"
 	.byte String too long.,"16"
+	.byte RETURN without GOSUB,"20"
 	.byte 0
 

@@ -6,6 +6,9 @@
 	.include "commands/clear.asm"
 	.include "commands/if.asm"
 	.include "commands/let.asm"
+	.include "commands/new.asm"
+	.include "commands/poke.asm"
+	.include "commands/rem.asm"
 	.include "commands/run.asm"
 	.include "commands/stopend.asm"
 	.include "commands/transfer.asm"
@@ -22,6 +25,7 @@
 	.include "imath/int32multiply.asm"
 	.include "imath/int32tostr.asm"
 	.include "imath/int32unary.asm"
+	.include "stack.asm"
 	.include "utility/check.asm"
 
 .section code

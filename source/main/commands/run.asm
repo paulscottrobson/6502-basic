@@ -125,6 +125,22 @@ Unimplemented:
 		debug
 		jmp 	Unimplemented
 
+; ************************************************************************************************
+;
+;							Syntax error tokens for non commands
+;
+; ************************************************************************************************
+
+TKErr01:	;; [)]
+TKErr02:	;; [,]
+TKErr03:	;; [;]
+TKErr04:	;; [PROC]
+TKErr05:	;; [STEP]
+TKErr06:	;; [THEN]
+TKErr07:	;; [TO]
+TKErr08:	;; [[[STR]]]
+		error 	Syntax
+
 		.include "../../generated/tokenvectors0.inc"
 		.include "../../generated/tokenvectors1.inc"
 		.include "../../generated/tokenvectors2.inc"

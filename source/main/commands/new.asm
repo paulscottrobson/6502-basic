@@ -1,9 +1,9 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		assert.asm
-;		Purpose:	Assert command
-;		Created:	26th February 2021
+;		Name:		new.asm
+;		Purpose:	New program
+;		Created:	28th February 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -13,16 +13,16 @@
 
 ; ************************************************************************************************
 ;
-;										Assert command
+;										New command
 ;
 ; ************************************************************************************************
 
-Command_Assert: ;; [assert]
-		jsr 	EvaluateRootInteger 		; what is being asserted.
-		jsr 	MInt32Zero 					; is it true ?
-		beq 	_CAError
-		rts
-_CAError:
-		error 	Assert		
+Command_New:
+		jsr 	ResetCodeAddress 			; point to first line
+		ldy 	#0 							; and zap it.
+		tya
+		sta 	(codePtr),y
+		jsr 	CommandClear 				; clear everything down.
+		jmp 	CommandEND 					; do END code, as there's nothing to run.
 
 		.send code

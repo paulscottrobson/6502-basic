@@ -13,3 +13,4 @@ ErrorID_MissingComma = 9 ; Missing comma
 ErrorID_NoReference = 10 ; Missing reference
 ErrorID_LineNumber = 11 ; Line Number not found
 ErrorID_StrLen = 12 ; String too long.
+ErrorID_ReturnErr = 13 ; RETURN without GOSUB

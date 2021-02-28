@@ -28,6 +28,7 @@ errorDef = """
 	NoReference:Missing reference
 	LineNumber:Line Number not found
 	StrLen:String too long.
+	ReturnErr:RETURN without GOSUB
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

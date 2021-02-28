@@ -67,6 +67,7 @@ for f in [x for x in fileList if x != ""]:								# read through each file
 #		Output the vector tables. Build the lists of tokens as well.
 #
 tokenText = [ [],[],[],[] ] 											# text list goes in here.
+undefined = []
 for group in range(0,4):
 	done = False
 	n = t.getBinaryStart() if group > 0 else t.getEOLToken() 			# start at different places
@@ -80,7 +81,11 @@ for group in range(0,4):
 			tt = token["token"].upper()
 			if not tt.startswith("[["):									# add to name list if not special
 				tokenText[group].append(tt)
-			handler=handlers[tt] if tt in handlers else "Unimplemented"	# what to run, then output table.
+			if tt in handlers: 
+				handler = handlers[tt] 										# what to run, then output table.
+			else:
+				handler = "Unimplemented"
+				undefined.append(tt.lower())				
 			h.write("\t.word\t{0:24} ; ${1:02x} {2}\n".format(handler,token["id"],tt.lower()))
 		n += 1
 #
@@ -112,3 +117,8 @@ for group in range(0,4):												# for each group
 		bList = ",".join(["${0:02x}".format(c) for c in bList])			# reformat and write out.
 		h.write("\t.byte {0:32} ; ${1:02x} {2}\n".format(bList,n,token.lower()))
 	h.write("\t.byte $00\n\n")											# marks end of list.
+#
+#		List undefined keywords
+#
+undefined.sort()
+print("Undefined keywords {0}".format(len(undefined))+" ".join(undefined))

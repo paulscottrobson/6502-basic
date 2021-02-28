@@ -42,7 +42,7 @@ class ProgramBuilder(object):
 			lineNumber = self.nextLineNumber
 		else:
 			assert lineNumber >= self.nextLineNumber,"Line number sequence"
-		self.nextLineNumber = lineNumber+10
+		self.nextLineNumber = lineNumber+1
 		#print(lineNumber,lineText)
 		self.code += self.makeLine(lineNumber,lineText)
 	#

@@ -50,6 +50,8 @@ _CCFoundEnd:
 		lda 	#4 							; skip low free memory clear, leave a gap.
 		jsr 	AdvanceLowMemoryByte		; need at least one here, to skip the end of program zero offset.
 
+		jsr 	RSReset 					; reset the return stack.
+		
 		puly
 		rts
 

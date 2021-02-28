@@ -18,7 +18,7 @@
 ; ************************************************************************************************
 
 CommandIf: ;; [if]
-		jsr 	EvaluateRoot 				; if what ?
+		jsr 	EvaluateRootInteger 		; if what ?
 		;
 		lda 	(codePtr),y 				; check for IF .. THEN or IF .. GOTO which are single lines.
 		cmp 	#TKW_GOTO

@@ -1,8 +1,10 @@
 TODO
 ====
-Stack, GOSUB/RETURN and BM5.
+device/x16 , print character and VDU
+REPEAT UNTIL
+
 Complete functions, operators that are still there.
-Complete keywords.
+Complete keywords. structures etc.
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -11,9 +13,10 @@ Incomplete but hooked in for write and test
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
 	Token handler for $83 in unary.
 	Out of memory in pointer advance in clear.asm, soft memory allocation.
+	Error checking on return stack.
 	Multiline IF.
 	Long variables (implicitly, array access)
-	
+
 Notes
 =====
 	Stack position fudged for readability.

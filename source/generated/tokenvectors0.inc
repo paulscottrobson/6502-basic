@@ -7,7 +7,7 @@ Group0Vectors:
 	.word	CommandShift2            ; $82 [[sh2]]
 	.word	Unimplemented            ; $83 [[sh3]]
 	.word	Unimplemented            ; $84 [[fpc]]
-	.word	Unimplemented            ; $85 [[str]]
+	.word	TKErr08                  ; $85 [[str]]
 	.word	AndHandler               ; $86 and
 	.word	OrHandler                ; $87 or
 	.word	XorHandler               ; $88 xor
@@ -34,7 +34,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $9d until
 	.word	Unimplemented            ; $9e wend
 	.word	Unimplemented            ; $9f next
-	.word	Unimplemented            ; $a0 then
+	.word	TKErr06                  ; $a0 then
 	.word	Unimplemented            ; $a1 endif
 	.word	UnaryParenthesis         ; $a2 (
 	.word	UnaryLen                 ; $a3 len(
@@ -62,24 +62,24 @@ Group0Vectors:
 	.word	UnaryDeek                ; $b9 deek(
 	.word	UnaryLeek                ; $ba leek(
 	.word	UnaryAsc                 ; $bb asc(
-	.word	Unimplemented            ; $bc int(
-	.word	Unimplemented            ; $bd float(
+	.word	UnaryIntToFloat          ; $bc int(
+	.word	UnaryFloatToInt          ; $bd float(
 	.word	UnaryReference           ; $be @
 	.word	UnaryComplement          ; $bf ~
 	.word	UnaryHexMarker           ; $c0 &
-	.word	Unimplemented            ; $c1 )
+	.word	TKErr01                  ; $c1 )
 	.word	CommandColon             ; $c2 :
-	.word	Unimplemented            ; $c3 ,
-	.word	Unimplemented            ; $c4 ;
+	.word	TKErr02                  ; $c3 ,
+	.word	TKErr03                  ; $c4 ;
 	.word	Unimplemented            ; $c5 ]
-	.word	Unimplemented            ; $c6 to
-	.word	Unimplemented            ; $c7 step
-	.word	Unimplemented            ; $c8 proc
+	.word	TKErr07                  ; $c6 to
+	.word	TKErr05                  ; $c7 step
+	.word	TKErr04                  ; $c8 proc
 	.word	Unimplemented            ; $c9 endproc
 	.word	Unimplemented            ; $ca local
-	.word	Unimplemented            ; $cb rem
+	.word	Command_Rem              ; $cb rem
 	.word	CommandLet               ; $cc let
-	.word	Unimplemented            ; $cd '
+	.word	Command_Rem2             ; $cd '
 	.word	Unimplemented            ; $ce [
 	.word	Unimplemented            ; $cf input
 	.word	Unimplemented            ; $d0 else
@@ -89,12 +89,12 @@ Group0Vectors:
 	.word	Unimplemented            ; $d4 restore
 	.word	Unimplemented            ; $d5 print
 	.word	CommandGOTO              ; $d6 goto
-	.word	Unimplemented            ; $d7 gosub
-	.word	Unimplemented            ; $d8 return
+	.word	CommandGOSUB             ; $d7 gosub
+	.word	CommandRETURN            ; $d8 return
 	.word	Command_Assert           ; $d9 assert
 	.word	CommandStop              ; $da stop
 	.word	CommandEnd               ; $db end
 	.word	Unimplemented            ; $dc dim
-	.word	Unimplemented            ; $dd poke
-	.word	Unimplemented            ; $de doke
-	.word	Unimplemented            ; $df loke
+	.word	Command_Poke             ; $dd poke
+	.word	Command_Doke             ; $de doke
+	.word	Command_Loke             ; $df loke

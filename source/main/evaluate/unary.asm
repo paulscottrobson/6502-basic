@@ -249,5 +249,32 @@ UnaryComplement: ;; [~]
 		jsr 	MInt32Not
 		rts
 
-		.send code		
-		
+; ************************************************************************************************
+;
+;								Float->Int, Int->Float conversion
+;
+; ************************************************************************************************
+
+UnaryIntToFloat: ;; [int(]
+		jsr 	EvaluateNumeric
+		lda 	esType,x
+		bne 	_UIFExit
+		txa
+		floatingpoint_intToFloat
+		tax
+		lda 	#1
+		sta 	esType,x
+_UIFExit:		
+		rts
+
+UnaryFloatToInt: ;; [float(]
+		jsr 	EvaluateNumeric
+		lda 	esType,x
+		beq 	_UFIExit
+		txa
+		floatingpoint_floatToInt
+		tax
+_UFIExit:
+		rts
+
+		.send code

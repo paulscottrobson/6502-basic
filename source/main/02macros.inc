@@ -43,3 +43,12 @@ set16 	.macro
 		lda 	#(\2) >> 8
 		sta 	1+(\1)
 		.endm
+
+rsCheck .macro 
+		ldx 	#0 							; get TOS return stack
+		lda 	(rsPointer,x) 		
+		cmp 	#\1 						; does it match
+		beq 	_isok
+		error 	\2 							; no report error.
+_isok:		
+		.endm
