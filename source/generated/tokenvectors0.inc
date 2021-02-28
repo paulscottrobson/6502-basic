@@ -83,7 +83,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $ce [
 	.word	Unimplemented            ; $cf input
 	.word	Unimplemented            ; $d0 else
-	.word	Unimplemented            ; $d1 vdu
+	.word	Command_VDU              ; $d1 vdu
 	.word	Unimplemented            ; $d2 read
 	.word	Unimplemented            ; $d3 data
 	.word	Unimplemented            ; $d4 restore

@@ -12,6 +12,7 @@
 	.include "commands/run.asm"
 	.include "commands/stopend.asm"
 	.include "commands/transfer.asm"
+	.include "commands/vdu.asm"
 	.include "evaluate/binary.asm"
 	.include "evaluate/compare.asm"
 	.include "evaluate/dereference.asm"

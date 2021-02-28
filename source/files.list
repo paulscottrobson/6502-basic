@@ -1,6 +1,7 @@
 ;
 ;	Automatically generated
 ;
+../source/device/x16/x16io.asm
 ../source/error/errorhandler.asm
 ../source/floatingpoint/addsub.asm
 ../source/floatingpoint/compare.asm
@@ -20,6 +21,7 @@
 ../source/main/commands/run.asm
 ../source/main/commands/stopend.asm
 ../source/main/commands/transfer.asm
+../source/main/commands/vdu.asm
 ../source/main/evaluate/binary.asm
 ../source/main/evaluate/compare.asm
 ../source/main/evaluate/dereference.asm

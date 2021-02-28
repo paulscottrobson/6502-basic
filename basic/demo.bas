@@ -1,2 +1,2 @@
-assert mid$("abcde",3,255) = "cde"
-end
+100 vdu 42,&4142;
+110 goto 100

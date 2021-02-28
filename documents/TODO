@@ -1,8 +1,12 @@
 TODO
 ====
-device/x16 , print character and PRINT and VDU
+PRINT
 REPEAT UNTIL
+WHILE WEND
+Multiline IF ELSE ENDIF
+Add FOR NEXT
 
+Add long variables
 Complete functions, operators that are still there.
 Complete keywords. structures etc.
 
