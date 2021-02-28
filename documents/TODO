@@ -1,16 +1,16 @@
 TODO
 ====
-String unary and support (concat, compare etc.) when testing framework up
 Stack, GOSUB/RETURN and BM5.
-Complete functions, operators.
+Complete functions, operators that are still there.
 Complete keywords.
 
 Incomplete but hooked in for write and test
 ===========================================
+
 	Unimplemented keywords causes break.
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
 	Token handler for $83 in unary.
-	Out of memory in pointer advance in clear.asm
+	Out of memory in pointer advance in clear.asm, soft memory allocation.
 	Multiline IF.
 	Long variables (implicitly, array access)
 	

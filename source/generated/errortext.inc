@@ -13,5 +13,6 @@ ErrorTextList:
 	.byte Missing comma,"13"
 	.byte Missing reference,"17"
 	.byte Line Number not found,"21"
+	.byte String too long.,"16"
 	.byte 0
 

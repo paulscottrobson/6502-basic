@@ -27,6 +27,7 @@ errorDef = """
 	MissingComma:Missing comma
 	NoReference:Missing reference
 	LineNumber:Line Number not found
+	StrLen:String too long.
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

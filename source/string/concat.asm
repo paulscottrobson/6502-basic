@@ -11,12 +11,60 @@
 
 		.section code		
 		
+; ************************************************************************************************
 ;
-;		Join top two strings on stack
+;					Join top two strings on stack in soft string memory
 ;
+; ************************************************************************************************
+
 StringConcat:	;; <concat>
-		debug
-		bra 	StringConcat
+		tax									; stack pos in X
+		pshy 								; save Y on stack.
+		jsr 	CopyStringPair 				; temp0 and temp1 point to strings to concat.
+		;
+		sec 								; calculate alloc strings. lengths added + 1 for size.
+		ldy 	#0
+		lda 	(temp0),y
+		adc 	(temp1),y
+		bcs 	_SCError 					; just too many characters here.
+		jsr 	AllocateSoftString 			; allocate soft string memory, set pointer.
+
+		lda 	SoftMemAlloc 				; copy the memory allocation pointer to the stack.
+		sta 	esInt0,x 					; type is already string.
+		lda 	SoftMemAlloc+1
+		sta 	esInt1,x
+
+		jsr 	_SCCopyTemp0 				; copy temp0
+		lda 	temp1 						; copy temp1 to temp0
+		sta 	temp0
+		lda 	temp1+1
+		sta 	temp0+1
+		jsr 	_SCCopyTemp0 				; copy temp0 e.g. what was temp1.
+
+		puly 								; restore Y
+		txa 								; and A
+		rts
+
+_SCError:
+		error 	StrLen		
+
+;
+;		Copy string at temp0 to current soft string
+;
+_SCCopyTemp0:
+		ldy 	#0 							; put count in temp2
+		lda 	(temp0),y
+		sta 	temp2
+_SCCopyLoop:
+		lda 	temp2 						; done the lot		
+		beq 	_SCCopyExit
+		dec 	temp2
+		iny 								; get next char
+		lda 	(temp0),y
+		jsr 	WriteSoftString 			; write to soft string.
+		jmp 	_SCCopyLoop
+_SCCopyExit:
+		rts
 
 		.send code		
 				

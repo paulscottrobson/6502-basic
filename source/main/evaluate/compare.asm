@@ -49,16 +49,20 @@ PerformComparison:
 		jsr 	BPMakeBothFloat 			; make both float
 		txa
 		floatingpoint_fCompare 				; and compare them.
+		stx 	tempShort 					; save result
 		tax
+		lda 	tempShort
 		rts
 
 _PCIsInteger:
 		jmp 	MInt32Compare
 
 _PCIsString:
-		txa
-		string_sCompare
-		tax
+		txa 								; A has SP
+		string_sCompare 					; compare strings
+		stx 	tempShort 					; save result
+		tax 								; put SP back in X and get result.
+		lda 	tempShort
 		rts
 
 _PCError:									; mixed types
