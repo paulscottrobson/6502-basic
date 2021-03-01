@@ -1,11 +1,10 @@
 TODO
 ====
-Add long variables
-	- find old
 
 Strings need concreting on assignment.
 	- reuse of old space.
 	- null concreting, single character concreting.
+	- only concrete if in soft memory space.
 
 Complete missing keywords in core.
 Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.

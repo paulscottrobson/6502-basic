@@ -79,7 +79,7 @@ class BinopTest(Test):
 				n3 = -1 if n1 != n2 else 0
 
 			ok = n3 >= -0x80000000 and n3 < 0x7FFFFFFF
-		return "({0} {1} {2}) = {3}".format(n1,opn,n2,n3)
+		return "assert ({0} {1} {2}) = {3}".format(n1,opn,n2,n3)
 
 if __name__ == "__main__":		
 	t = BinopTest(500)

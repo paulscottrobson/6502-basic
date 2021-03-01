@@ -77,8 +77,8 @@ _AVFound:
 		pulx
 		;
 		clc 								; copy temp0 (variable record address)
-		lda 	temp0 						; +4 (to point to the data)
-		adc 	#4
+		lda 	temp0 						; +5 (to point to the data)
+		adc 	#5
 		sta 	esInt0,x
 		lda 	temp0+1
 		adc 	#0
@@ -122,6 +122,9 @@ _ASLoop:lda 	(codePtr),y					; get next identifier character
 		bcs 	_ASComplete
 		clc 								; add to the hash. Might improve this.
 		adc 	varHash
+
+		lda 	#0
+		
 		sta 	varHash
 		iny 								; next character
 		jmp 	_ASLoop

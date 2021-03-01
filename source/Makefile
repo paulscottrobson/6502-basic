@@ -31,8 +31,8 @@ analyse: $(APPNAME)
 
 $(APPNAME) : $(SOURCEDIR)basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)
-#	python ..$(S)scripts$(S)tests$(S)testun.py >$(BASICDIR)test.bas
-	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)demo.bas
+	python ..$(S)scripts$(S)tests$(S)testvar.py >$(BASICDIR)test.bas
+	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)test.bas
 	python ..$(S)scripts$(S)errorgen.py
 	python ..$(S)scripts$(S)builder.py
 	python ..$(S)scripts$(S)tables.py

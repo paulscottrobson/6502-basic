@@ -42,7 +42,7 @@ class Dumper(object):
 			tLink = te * 2 + hashBase
 			ptr = self.deek(tLink)
 			if ptr != 0:
-				h.write("\tHashtable {0:2} link ptr at ${1:04x} first ${2:04x}\n".format(te,tLink,ptr))
+				h.write("\tHashtable {0:2} link ptr at ${1:04x} (first ${2:04x})\n".format(te,tLink,ptr))
 				while ptr != 0:
 					self.dumpVar(h,ptr,t)
 					ptr = self.deek(ptr)
@@ -51,10 +51,12 @@ class Dumper(object):
 		s = self.getName(self.deek(p+2))+self.tails[t]
 		v = "."
 		if t == 0:
-			n = self.leek(p+4)
+			n = self.leek(p+5)
 			v = str(n if n <= 0x7FFFFFFF else n-0x100000000)
+		if t == 2:
+			v = self.getString(self.deek(p+5))
 
-		h.write("\t\tRecord @${0:04x} : {1:8} = {2}\n".format(p,s,v))
+		h.write("\t\tRecord @${0:04x} : [${3:02x}] {1:10} = {2}\n".format(p,s,v,self.peek(p+4)))
 	#
 	def getName(self,a):
 		s = ""
@@ -62,6 +64,10 @@ class Dumper(object):
 			c = self.peek(a)
 			s = s + (chr(c) if c >= 0x20 else chr(c+96))
 			a = a + 1
-		return s
+		return s.replace("-","_")
+	#
+	def getString(self,a):
+		return '"'+("".join([chr(self.peek(a+i+1)) for i in range(0,self.peek(a))]))+'"'
+
 Dumper().dump(sys.stdout)
 

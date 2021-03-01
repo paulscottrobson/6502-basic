@@ -21,7 +21,7 @@ from testcore import *
 class PrecedenceTest(Test):
 	def getTest(self,n):
 		expr = self.term(4)
-		return "({0}) = {1}".format(expr,eval(expr))		
+		return "assert ({0}) = {1}".format(expr,eval(expr))		
 	#
 	def term(self,n):
 		if n == 0 or random.randint(0,4) == 0:

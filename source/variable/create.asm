@@ -13,6 +13,13 @@
 
 ; ************************************************************************************************
 ;
+;		+0,+1 		Link to next variable or $0000
+;		+2,+3 		Address of variable name in code
+;		+4 			Hash value for this
+;		+5 ....		Data
+;
+; ************************************************************************************************
+;
 ;					(codePtr),y points to the variable and it is already setup
 ;
 ; ************************************************************************************************
@@ -22,12 +29,8 @@ CreateVariable:
 		pha
 		pha
 
-		lda 	varType 					; get var type 0-5
-		sec
-		sbc 	#$3A
-		lsr 	a 							; 0 (int) 1 (string) 2 (float)
-		tax 								; and get the length of the 
-		lda		_CVSize,x 					; the bytes for this new variable.
+		ldx 	varType 					; get var type 0-5
+		lda		_CVSize-$3A,x 				; the bytes for this new variable.
 		pha 								; save length
 		tay 								; put into Y.
 		;
@@ -44,6 +47,9 @@ _CVClear: 									; zero the allocated memory.
 		sta 	(temp0),y
 		cpy 	#4
 		bne 	_CVClear		
+
+		lda 	varHash 					; store hash at offset 4.
+		sta 	(temp0),y
 
 		pla 								; offset, work out where the variable name is.
 		clc
@@ -73,8 +79,8 @@ _CVClear: 									; zero the allocated memory.
 ;
 ;		Size look up table.
 ;
-_CVSize:.byte 	4+4 						; <storage for integer>
-		.byte 	4+2 						; <storage for string>
-		.byte 	4+6 						; <storage for float>
+_CVSize:.byte 	5+4,5+4 					; <storage for integer>
+		.byte 	5+2,5+2 					; <storage for string>
+		.byte 	5+6,5+6 					; <storage for float>
 		.send 	code
 		

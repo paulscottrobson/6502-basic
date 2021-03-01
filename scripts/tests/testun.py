@@ -29,53 +29,53 @@ class UnaryOpTest(Test):
 			n = random.randint(-10,10)
 		#
 		if s == 0:
-			return "abs({0}) = {1}".format(n,abs(n))
+			return "assert abs({0}) = {1}".format(n,abs(n))
 		#
 		if s == 1:			
 			sg = -1 if n < 0 else 1
 			sg = 0 if n == 0 else sg
-			return "sgn({0}) = {1}".format(n,sg)
+			return "assert sgn({0}) = {1}".format(n,sg)
 		#
 		if s == 2:			
 			n = random.randint(0,9)
 			st = "".join([chr(random.randint(97,107)) for x in range(0,n)])
-			return "len(\"{0}\") = {1}".format(st,len(st))
+			return "assert len(\"{0}\") = {1}".format(st,len(st))
 		#
 		if s == 3 or s == 4:
 			s = [random.randint(-1000,1000) for n in range(0,random.randint(1,5))]
 			st = ",".join([str(n) for n in s])
-			return "{0}({1}) = {2}".format("max" if s == 3 else "min",st,max(s) if s == 3 else min(s))
+			return "assert {0}({1}) = {2}".format("max" if s == 3 else "min",st,max(s) if s == 3 else min(s))
 		#
 		if s == 5:
 			n = random.randint(35,126)
-			return 'asc("{1}") = {0}'.format(n,chr(n))
+			return 'assert asc("{1}") = {0}'.format(n,chr(n))
 		#
 		if s == 6:
 			n = random.randint(35,126)
-			return 'chr$({0}) = "{1}"'.format(n,chr(n))
+			return 'assert chr$({0}) = "{1}"'.format(n,chr(n))
 		#
 		if s == 7:
 			s = self.getString()
 			c = random.randint(0,8)
-			return 'left$("{0}",{1}) = "{2}"'.format(s.strip(),c,s[:c].strip())			
+			return 'assert left$("{0}",{1}) = "{2}"'.format(s.strip(),c,s[:c].strip())			
 		#
 		if s == 8:
 			s = self.getString().strip()			
 			c = random.randint(0,8)
 			s1 = s[-c:] if c < len(s) else s
 			s1 = s1 if c != 0 else ""
-			return 'right$("{0}",{1}) = "{2}"'.format(s.strip(),c,s1)			
+			return 'assert right$("{0}",{1}) = "{2}"'.format(s.strip(),c,s1)			
 		#
 		if s == 9:
 			s = self.getString()
 			c1 = random.randint(1,6)
 			c2 = random.randint(0,6)
-			return 'mid$("{0}",{1},{2}) = "{3}"'.format(s.strip(),c1,c2,s[c1-1:][:c2].strip())			
+			return 'assert mid$("{0}",{1},{2}) = "{3}"'.format(s.strip(),c1,c2,s[c1-1:][:c2].strip())			
 		#
 		if s == 10:
 			s = self.getString()
 			c1 = random.randint(1,6)
-			return 'mid$("{0}",{1}) = "{2}"'.format(s.strip(),c1,s[c1-1:].strip())			
+			return 'assert mid$("{0}",{1}) = "{2}"'.format(s.strip(),c1,s[c1-1:].strip())			
 		#
 		assert False,str(s)
 

@@ -66,7 +66,7 @@ class Tokeniser(object):
 		#
 		#		Alphanumeric identifier, may also be a token.
 		#
-		m = re.match("^([A-Za-z][A-Za-z0-9\\.]*)([\\#\\$\\%]?)(\\(?)(.*)$",s)
+		m = re.match("^([A-Za-z][A-Za-z0-9\\.\\_]*)([\\#\\$\\%]?)(\\(?)(.*)$",s)
 		if m is not None:
 			fullToken = m.group(1)+m.group(2)+m.group(3) 					# full text version
 			checkToken = self.tokens.getFromToken(fullToken)				# is it a token ?
@@ -77,7 +77,7 @@ class Tokeniser(object):
 				nType = 0x3A + 2 * "%$#".find(iType) 						# base type number.
 				if m.group(3) == "(":										# adjustment if array.
 					nType += 1
-				ident = m.group(1).upper()+chr(nType)						# the full identifier
+				ident = m.group(1).upper().replace("_","-")+chr(nType)		# the full identifier
 				self.code += [ord(c) & 0x3F for c in ident]					# add it on.			
 			return m.group(4)
 		#
