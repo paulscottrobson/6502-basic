@@ -9,6 +9,19 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+		.section storage
+
+varHash:									; hash total
+		.fill	1
+varType: 									; type byte
+		.fill 	1
+varEnd:										; Y value of byte after identifier.
+		.fill 	1
+hashList: 									; address of start of hash table list.
+		.fill 	2
+
+		.send 	storage
+
 		.section code		
 		
 ; ************************************************************************************************
@@ -18,7 +31,6 @@
 ; ************************************************************************************************
 
 AccessVariable:	;; <access>
-
 		tax 								; stack in X
 		iny							
 		lda 	(codePtr),y
@@ -45,8 +57,84 @@ AccessVariable:	;; <access>
 		;
 		;		The second character isn't integer variable, so it can't be a default integer
 		;
-_AVLong:
-		bra 	_AVLong
+_AVLong:pshx 								; save X on the stack.
+		jsr 	AccessSetup 				; set up the basic stuff.
+		jsr 	FindVariable 				; does the variable exist already
+		bcs 	_AVFound
+		lda 	varType 					; is the variable type an array
+		lsr 	a
+		bcc 	_AVCanCreate
+		error 	noauto 						; we do not autocreate arrays.
+		;
+_AVCanCreate:		
+		jsr 	CreateVariable 				; no, create it.
+_AVFound:		
+		pulx
+		;
+		; TODO: Copy address of variable to stack / set type etc.
+		;
+		ldy 	varEnd 						; restore Y
+		pulx 								; restore X
+		;
+		; TODO: Array stuff.
+		;
+		txa 								; return stack in A and return
+		rts
+
+
+; ************************************************************************************************
+;
+;		Setup : hashList 	to point to the head of the relevant hash table.
+;				varHash 	contains the current hash for this variable.
+;				varType		contains the type of the variable ($3A-$3F)
+;				varEnd 		contains the Y value after the variable identifier
+;
+; ************************************************************************************************
+
+AccessSetup:
+		lda 	#0 							; zero the hash byte.
+		sta 	varHash
+		pshy 								; save Y position.
+
+_ASLoop:lda 	(codePtr),y					; get next identifier character
+		cmp 	#$3A 						; is it 3A-3F which end all identifiers ?
+		bcs 	_ASComplete
+		clc 								; add to the hash. Might improve this.
+		adc 	varHash
+		sta 	varHash
+		iny 								; next character
+		jmp 	_ASLoop
+
+_ASComplete:
+		sta 	varType 					; save variable type byte
+		iny
+		sty 	varEnd 						; save the ending position.
+		;
+		sec 								; convert type byte from $3A-$3F to 0..5
+		sbc 	#$3A
+		debug
+		;
+		;
+		asl 	a 							; multiply by hashTableSize (8 in this case)
+		asl 	a
+		asl 	a
+		;
+		asl 	a 							; 2 bytes/word
+		sta 	temp0 						; this is the offset to the start of the table.
+		;
+		lda 	varHash 					; get hash
+		and 	#(hashTableSize-1)			; force into range
+		asl  	a 							; x 2 (for word) and CC
+		adc 	temp0 						; now offset from the start of the hash table.
+		;
+		adc 	#hashTables & $FF 			; add to hash table base address
+		sta 	hashList
+		lda 	#hashTables >> 8
+		adc 	#0
+		sta 	hashList+1
+
+		puly
+		rts
 
 		.send code		
 		

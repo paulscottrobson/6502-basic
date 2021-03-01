@@ -20,5 +20,6 @@ ErrorTextList:
 	.byte WEND without WHILE,"18"
 	.byte Bad NEXT index,"14"
 	.byte Structures nested wrong,"23"
+	.byte Cannot create variable,"22"
 	.byte 0
 

@@ -34,6 +34,7 @@ errorDef = """
 	WendErr:WEND without WHILE
 	BadIndex:Bad NEXT index
 	Struct:Structures nested wrong
+	NoAuto:Cannot create variable
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

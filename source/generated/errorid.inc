@@ -19,3 +19,4 @@ ErrorID_NextErr = 15 ; NEXT without FOR
 ErrorID_WendErr = 16 ; WEND without WHILE
 ErrorID_BadIndex = 17 ; Bad NEXT index
 ErrorID_Struct = 18 ; Structures nested wrong
+ErrorID_NoAuto = 19 ; Cannot create variable

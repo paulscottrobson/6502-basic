@@ -49,3 +49,6 @@
 ../source/string/memory.asm
 ../source/string/substring.asm
 ../source/variable/access.asm
+../source/variable/create.asm
+../source/variable/find.asm
+../source/variable/reset.asm

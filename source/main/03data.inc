@@ -71,8 +71,16 @@ esMant3 = esInt3
 
 		.align	256
 
-SingleLetterVar:
- 		.fill 	26*4 						; storage for variable A-Z.
+returnStack: 								; return stack, starts on a page boundary 
+		.fill 	retStackSize
+
+		.align	256 					
+
+SingleLetterVar:							; storage for variable A-Z. starts on page boundary.
+ 		.fill 	26*4 	
+
+hashTables:									; hash tables 6 x hashTableSize words.
+		.fill 	6*2*hashTableSize 		
 
 basePage: 									; start of program space.
 		.fill 	2

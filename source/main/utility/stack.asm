@@ -10,15 +10,9 @@
 ; *****************************************************************************
 
 		.section zeropage
-
 rsPointer: 									; return stack pointer, works down so always points
 		.fill 	2							; to TOS, which is the current top-token.
 		.send zeropage
-
-		.section storage
-returnStack:
-		.fill 	retStackSize
-		.send storage
 
 		.section code	
 

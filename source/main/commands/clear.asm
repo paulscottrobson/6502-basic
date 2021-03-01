@@ -51,6 +51,8 @@ _CCFoundEnd:
 		jsr 	AdvanceLowMemoryByte		; need at least one here, to skip the end of program zero offset.
 
 		jsr 	RSReset 					; reset the return stack.
+
+		variable_reset 						; reset the variable hash table pointers.
 		
 		puly
 		rts

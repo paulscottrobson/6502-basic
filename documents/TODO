@@ -18,4 +18,6 @@ Notes
 	Stack position fudged for readability.
 	Single character concreting may reduce G/C with a predefined set.
 	
+Strings need concreting on assignment.
+	
 	

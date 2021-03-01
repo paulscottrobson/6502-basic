@@ -7,4 +7,9 @@ variable_access .macro
 	jsr	variableHandler
 	.endm
 
+variable_reset .macro
+	ldx	#2
+	jsr	variableHandler
+	.endm
+
 .send code
