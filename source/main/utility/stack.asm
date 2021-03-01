@@ -47,12 +47,18 @@ RSClaim:
 		adc 	#$FF
 		sta 	rsPointer+1
 		;
+		cmp 	#returnStack>>8 			; overflow. underflow actually :)
+		bcc 	_RSCOverflow
+		;
 		pla 								; get marker back
 		ldy 	#0 							; write marker out.
 		sta 	(rsPointer),y
 		ldy 	tempShort 					; restore Y and exit
 		rts
 
+_RSCOverflow:
+		error 	RetStack
+		
 ; *****************************************************************************
 ;
 ;						Free A bytes off returns stack

@@ -2,6 +2,7 @@
 ;	Automatically generated
 ;
 ErrorTextList:
+	.byte Feature not Present,"19"
 	.byte Syntax Error,"12"
 	.byte Module disabled,"15"
 	.byte Assertion failed,"16"
@@ -21,5 +22,6 @@ ErrorTextList:
 	.byte Bad NEXT index,"14"
 	.byte Structures nested wrong,"23"
 	.byte Cannot create variable,"22"
+	.byte Return stack out of space.,"26"
 	.byte 0
 

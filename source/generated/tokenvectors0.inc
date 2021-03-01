@@ -51,7 +51,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $ae event(
 	.word	Unimplemented            ; $af get(
 	.word	Unimplemented            ; $b0 inkey(
-	.word	Unimplemented            ; $b1 alloc(
+	.word	UnaryAlloc               ; $b1 alloc(
 	.word	ExecChr                  ; $b2 chr$(
 	.word	ExecLeft                 ; $b3 left$(
 	.word	ExecMid                  ; $b4 mid$(

@@ -277,4 +277,37 @@ UnaryFloatToInt: ;; [float(]
 _UFIExit:
 		rts
 
+; ************************************************************************************************
+;
+;										String allocate
+;
+; ************************************************************************************************
+
+UnaryAlloc: ;; [alloc(]
+		inx 								; evaluate memory required 
+		jsr 	EvaluateInteger
+		jsr 	CheckRightParen
+		dex
+		lda 	esInt2+1,x 					; check at least in 64k range.
+		ora 	esInt3+1,x
+		bne 	_UABadValue
+		;
+		jsr 	MInt32False					; zero return.
+		lda 	lowMemory+1 				; copy low memory in
+		sta 	esInt1,x
+		lda 	lowMemory
+		sta 	esInt0,x
+		;
+		clc 								; add alloc required.
+		adc 	esInt0+1,x
+		sta 	lowMemory
+		;
+		lda 	lowMemory+1
+		adc 	esInt1+1,x
+		sta 	lowMemory+1
+		bcs		_UABadValue 				; overflow definitely bad.
+		rts
+
+_UABadValue:
+		error	BadValue		
 		.send code

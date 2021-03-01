@@ -16,6 +16,7 @@ import re,os,sys
 #		Called with Error macro e.g. Error BadType
 #
 errorDef = """
+	Missing:Feature not Present
 	Syntax:Syntax Error
 	NoModule:Module disabled
 	Assert:Assertion failed
@@ -35,6 +36,7 @@ errorDef = """
 	BadIndex:Bad NEXT index
 	Struct:Structures nested wrong
 	NoAuto:Cannot create variable
+	RetStack:Return stack out of space.
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					
