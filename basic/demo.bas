@@ -1,3 +1,4 @@
 ab = 42
-ab = -2
+abc = -2
+def = &2A
 end

@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Wall -q -c -L basic.lst -l basic.lbl -Wall -o basic.prg ../source/basic.asm
-; Mon Mar  1 17:21:08 2021
+; Mon Mar  1 18:03:21 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -313,9 +313,9 @@
 
 ;******  Processing file: ../source/main/../generated/testcode.inc
 
->5000	09 0a 00 01 02 3a 8d 6a			.byte 9,10,0,1,2,58,141,106,128,10,11,0,1,2,58,141,144,66,128,5,12,0,219,128,0
->5008	80 0a 0b 00 01 02 3a 8d 90 42 80 05 0c 00 db 80
->5018	00
+>5000	09 0a 00 01 02 3a 8d 6a			.byte 9,10,0,1,2,58,141,106,128,11,11,0,1,2,3,58,141,144,66,128,11,12,0,4,5,6,58,141,192,106,128,5,13,0,219,128,0
+>5008	80 0b 0b 00 01 02 03 3a 8d 90 42 80 0b 0c 00 04
+>5018	05 06 3a 8d c0 6a 80 05 0d 00 db 80 00
 
 ;******  Return to file: ../source/main/00start.asm
 
