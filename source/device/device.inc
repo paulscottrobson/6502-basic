@@ -12,4 +12,9 @@ device_print .macro
 	jsr	deviceHandler
 	.endm
 
+device_tab .macro
+	ldx	#4
+	jsr	deviceHandler
+	.endm
+
 .send code

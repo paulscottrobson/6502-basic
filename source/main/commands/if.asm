@@ -34,8 +34,14 @@ _IfSimple:
 
 		lda 	(codePtr),y 				; get and skip token.
 		iny
-		cmp 	#TKW_GOTO 					; is it GOTO ?
+		cmp 	#TKW_GOTO 					; was it if GOTO ?
 		beq 	_IfGoto 					; do the Goto code
+		;
+		lda 	(codePtr),y 				; what follows the THEN ?
+		and 	#$C0 						; check $40-$7F
+		cmp 	#$40 						; e.g. number IF x = 0 THEN 170
+		beq 	_IfGoto 					
+		;
 		rts 								; else continue on this line.
 
 _IfEOL:	

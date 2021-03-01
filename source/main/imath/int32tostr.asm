@@ -16,7 +16,7 @@ MCharCount:	.fill 	1						; count of converted characters
 ; *****************************************************************************
 ;
 ;	 Convert integer on TOS to string at (temp0). A is Base. Bit 7 is sign.
-;							String is stored in ASCIIZ
+;				String is stored in ASCIIZ with leading count
 ;
 ;	  Note: with base 1 or 2 34 or 18 bytes may be required for the buffer
 ;
@@ -28,7 +28,7 @@ MInt32ToString:
 		pha 								; save base
 		sta 	tempShort 					; save target base.
 		lda 	#0
-		sta 	MCharCount 					; clear character count.
+		sta 	MCharCount 					; clear character count to 0
 		pshy 								; save Y on the stack.
 		;
 		lda 	tempShort 					; check if we are signed conversion
@@ -44,7 +44,10 @@ _I32TSNoFlip:
 		pla 								; get the base back
 		and 	#$7F 						; clear the sign flag so it's just a base now.		
 _I32TSUnsigned:		
-		jsr 	MI32DivideWrite 				; recursive code to output string.
+		jsr 	MI32DivideWrite 			; recursive code to output string.
+		ldy 	#0 							; write charcount to first character.
+		lda 	MCharCount 
+		sta 	(temp0),y	
 		puly 								; restore YA
 		pla
 		rts
@@ -82,12 +85,12 @@ _I32NotHex:
 ;		Write character A out to the target string (breaks Y)
 ;
 MI32WriteCharacter:
+		inc 	MCharCount 					; bump count (space for leading count)
 		ldy 	MCharCount 					; get position
 		sta 	(temp0),y 					; write out with trailing 0
 		iny
 		lda 	#0
 		sta 	(temp0),y
-		inc 	MCharCount 					; bump count
 		rts
 
 		.send code		

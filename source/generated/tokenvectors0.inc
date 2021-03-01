@@ -87,7 +87,7 @@ Group0Vectors:
 	.word	Unimplemented            ; $d2 read
 	.word	Unimplemented            ; $d3 data
 	.word	Unimplemented            ; $d4 restore
-	.word	Unimplemented            ; $d5 print
+	.word	Command_Print            ; $d5 print
 	.word	CommandGOTO              ; $d6 goto
 	.word	CommandGOSUB             ; $d7 gosub
 	.word	CommandRETURN            ; $d8 return

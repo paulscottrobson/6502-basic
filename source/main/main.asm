@@ -8,6 +8,7 @@
 	.include "commands/let.asm"
 	.include "commands/new.asm"
 	.include "commands/poke.asm"
+	.include "commands/print.asm"
 	.include "commands/rem.asm"
 	.include "commands/run.asm"
 	.include "commands/stopend.asm"

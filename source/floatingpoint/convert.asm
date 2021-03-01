@@ -19,4 +19,8 @@ FPFtoI:	;; <floatToInt>
 		debug
 		jmp 	FPFtoI
 
+FPFToS: ;; <floatToString>
+		debug
+		jmp 	FPFtoS
+		
 		.send code		

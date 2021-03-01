@@ -52,28 +52,33 @@ floatingpoint_floatToInt .macro
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_fpower .macro
+floatingpoint_floatToString .macro
 	ldx	#20
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_importtoken .macro
+floatingpoint_fpower .macro
 	ldx	#22
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_intToFloat .macro
+floatingpoint_importtoken .macro
 	ldx	#24
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_loadfp .macro
+floatingpoint_intToFloat .macro
 	ldx	#26
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_storefp .macro
+floatingpoint_loadfp .macro
 	ldx	#28
+	jsr	floatingpointHandler
+	.endm
+
+floatingpoint_storefp .macro
+	ldx	#30
 	jsr	floatingpointHandler
 	.endm
 

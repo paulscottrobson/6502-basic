@@ -17,6 +17,7 @@
 ../source/main/commands/let.asm
 ../source/main/commands/new.asm
 ../source/main/commands/poke.asm
+../source/main/commands/print.asm
 ../source/main/commands/rem.asm
 ../source/main/commands/run.asm
 ../source/main/commands/stopend.asm
