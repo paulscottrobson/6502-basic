@@ -86,6 +86,9 @@ highMemory: 								; top of program memory available.
 lowMemory:									; bottom of memory available.
 		.fill 	2
 
+convertBuffer:								; buffer for numeric conversions
+		.fill 	35
+
 		.send storage
 
 		.include "../generated/tokenconst.inc"

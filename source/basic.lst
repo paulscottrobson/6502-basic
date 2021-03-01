@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Wall -q -c -L basic.lst -l basic.lbl -Wall -o basic.prg ../source/basic.asm
-; Mon Mar  1 07:36:42 2021
+; Mon Mar  1 07:40:02 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -53,6 +53,8 @@
 >086c							.fill 	2
 .086e					lowMemory:
 >086e							.fill 	2
+.0870					convertBuffer:
+>0870							.fill 	35
 
 ;******  Processing file: ../source/main/../generated/tokenconst.inc
 
@@ -529,13 +531,11 @@
 
 ;******  Processing file: ../source/main/commands/print.asm
 
-.0870					lastPrintToken:
->0870							.fill 	1
-.0871					convertBuffer:
->0871							.fill 	18
+.0893					lastPrintToken:
+>0893							.fill 	1
 .115f					Command_Print:
 .115f	a9 00		lda #$00			lda 	#0 							; clear LPT flag
-.1161	8d 70 08	sta $0870			sta 	lastPrintToken
+.1161	8d 93 08	sta $0893			sta 	lastPrintToken
 .1164	88		dey				dey
 .1165					_PrintLoopSkip:
 .1165	c8		iny				iny
@@ -545,7 +545,7 @@
 .116a	f0 5b		beq $11c7			beq 	_PrintExit
 .116c	c9 c2		cmp #$c2			cmp 	#TKW_COLON
 .116e	f0 57		beq $11c7			beq 	_PrintExit
-.1170	8d 70 08	sta $0870			sta 	lastPrintToken 				; update LPT
+.1170	8d 93 08	sta $0893			sta 	lastPrintToken 				; update LPT
 .1173	c9 c4		cmp #$c4			cmp 	#TKW_SEMICOLON 				; ignore semicolon
 .1175	f0 ee		beq $1165			beq 	_PrintLoopSkip
 .1177	c9 cd		cmp #$cd			cmp 	#TKW_QUOTE 					; ' is new line
@@ -553,7 +553,7 @@
 .117b	c9 c3		cmp #$c3			cmp 	#TKW_COMMA 					; , is print tab
 .117d	f0 40		beq $11bf			beq 	_PrintTab
 .117f	20 3d 17	jsr $173d			jsr 	EvaluateRoot 				; evaluate something at the root
-.1182	a9 71		lda #$71			lda 	#(convertBuffer) & $FF
+.1182	a9 70		lda #$70			lda 	#(convertBuffer) & $FF
 .1184	85 04		sta $04				sta 	temp0
 .1186	a9 08		lda #$08			lda 	#(convertBuffer) >> 8
 .1188	85 05		sta $05				sta 	1+(temp0)
@@ -590,7 +590,7 @@
 .11c1	20 33 1d	jsr $1d33		jsr	deviceHandler
 .11c4	4c 65 11	jmp $1165			jmp 	_PrintLoopSkip
 .11c7					_PrintExit:
-.11c7	ad 70 08	lda $0870			lda		lastPrintToken 				; check last token
+.11c7	ad 93 08	lda $0893			lda		lastPrintToken 				; check last token
 .11ca	c9 c4		cmp #$c4			cmp 	#TKW_SEMICOLON 				; if , or ; do not print NL
 .11cc	f0 09		beq $11d7			beq 	_PrintExit2
 .11ce	c9 c3		cmp #$c3			cmp 	#TKW_COMMA
@@ -2235,12 +2235,12 @@
 
 ;******  Processing file: ../source/main/imath/int32tostr.asm
 
->0883					MCharCount:	.fill 	1						; count of converted characters
+>0894					MCharCount:	.fill 	1						; count of converted characters
 .1b85					MInt32ToString:
 .1b85	48		pha				pha 								; save base
 .1b86	85 0a		sta $0a				sta 	tempShort 					; save target base.
 .1b88	a9 00		lda #$00			lda 	#0
-.1b8a	8d 83 08	sta $0883			sta 	MCharCount 					; clear character count to 0
+.1b8a	8d 94 08	sta $0894			sta 	MCharCount 					; clear character count to 0
 .1b8d	98		tya				tya
 .1b8e	48		pha				pha
 .1b8f	a5 0a		lda $0a				lda 	tempShort 					; check if we are signed conversion
@@ -2257,7 +2257,7 @@
 .1ba3					_I32TSUnsigned:
 .1ba3	20 b1 1b	jsr $1bb1			jsr 	MI32DivideWrite 			; recursive code to output string.
 .1ba6	a0 00		ldy #$00			ldy 	#0 							; write charcount to first character.
-.1ba8	ad 83 08	lda $0883			lda 	MCharCount
+.1ba8	ad 94 08	lda $0894			lda 	MCharCount
 .1bab	91 04		sta ($04),y			sta 	(temp0),y
 .1bad	68		pla				pla
 .1bae	a8		tay				tay
@@ -2288,8 +2288,8 @@
 .1bd2	20 d6 1b	jsr $1bd6			jsr 	MI32WriteCharacter 			; write the character out
 .1bd5	60		rts				rts 								; and exit.
 .1bd6					MI32WriteCharacter:
-.1bd6	ee 83 08	inc $0883			inc 	MCharCount 					; bump count (space for leading count)
-.1bd9	ac 83 08	ldy $0883			ldy 	MCharCount 					; get position
+.1bd6	ee 94 08	inc $0894			inc 	MCharCount 					; bump count (space for leading count)
+.1bd9	ac 94 08	ldy $0894			ldy 	MCharCount 					; get position
 .1bdc	91 04		sta ($04),y			sta 	(temp0),y 					; write out with trailing 0
 .1bde	c8		iny				iny
 .1bdf	a9 00		lda #$00			lda 	#0
@@ -2301,7 +2301,7 @@
 
 ;******  Processing file: ../source/main/imath/int32unary.asm
 
->0884					MSeed32:	.fill 	4							; random number seed.
+>0895					MSeed32:	.fill 	4							; random number seed.
 .1be4					MInt32Absolute:
 .1be4	b5 60		lda $60,x			lda 	esInt3,x 					; use negate code if -ve.
 .1be6	30 01		bmi $1be9			bmi 	MInt32Negate
@@ -2383,27 +2383,27 @@
 .1c5f	98		tya				tya
 .1c60	48		pha				pha
 .1c61	a0 07		ldy #$07			ldy 	#7
-.1c63	ad 84 08	lda $0884			lda 	MSeed32+0
+.1c63	ad 95 08	lda $0895			lda 	MSeed32+0
 .1c66	d0 03		bne $1c6b			bne 	_Random1
 .1c68	a8		tay				tay
 .1c69	a9 aa		lda #$aa			lda		#$AA
 .1c6b					_Random1:
 .1c6b	0a		asl a				asl 	a
-.1c6c	2e 85 08	rol $0885			rol 	MSeed32+1
-.1c6f	2e 86 08	rol $0886			rol 	MSeed32+2
-.1c72	2e 87 08	rol $0887			rol 	MSeed32+3
+.1c6c	2e 96 08	rol $0896			rol 	MSeed32+1
+.1c6f	2e 97 08	rol $0897			rol 	MSeed32+2
+.1c72	2e 98 08	rol $0898			rol 	MSeed32+3
 .1c75	90 02		bcc $1c79			bcc 	_Random2
 .1c77	49 c5		eor #$c5			eor 	#$C5
 .1c79					_Random2:
 .1c79	88		dey				dey
 .1c7a	d0 ef		bne $1c6b			bne 	_Random1
-.1c7c	8d 84 08	sta $0884			sta 	MSeed32+0
+.1c7c	8d 95 08	sta $0895			sta 	MSeed32+0
 .1c7f	95 48		sta $48,x			sta 	esInt0,x
-.1c81	ad 85 08	lda $0885			lda 	MSeed32+1
+.1c81	ad 96 08	lda $0896			lda 	MSeed32+1
 .1c84	95 50		sta $50,x			sta 	esInt1,x
-.1c86	ad 86 08	lda $0886			lda 	MSeed32+2
+.1c86	ad 97 08	lda $0897			lda 	MSeed32+2
 .1c89	95 58		sta $58,x			sta 	esInt2,x
-.1c8b	ad 87 08	lda $0887			lda 	MSeed32+3
+.1c8b	ad 98 08	lda $0898			lda 	MSeed32+3
 .1c8e	95 60		sta $60,x			sta 	esInt3,x
 .1c90	68		pla				pla
 .1c91	a8		tay				tay
@@ -2418,15 +2418,15 @@
 
 .0078					rsPointer:
 >0078							.fill 	2							; to TOS, which is the current top-token.
-.0888					returnStack:
->0888							.fill 	retStackSize
+.0899					returnStack:
+>0899							.fill 	retStackSize
 .1c97					RSReset:
-.1c97	a9 87		lda #$87			lda 	#(returnStack+retStackSize-1) & $FF
+.1c97	a9 98		lda #$98			lda 	#(returnStack+retStackSize-1) & $FF
 .1c99	85 78		sta $78				sta 	rsPointer
 .1c9b	a9 0a		lda #$0a			lda 	#(returnStack+retStackSize-1) >> 8
 .1c9d	85 79		sta $79				sta 	1+(rsPointer)
 .1c9f	a9 ff		lda #$ff			lda 	#$FF 						; put a duff marker on TOS, so nothing will pop
-.1ca1	8d 87 0a	sta $0a87			sta 	returnStack+retStackSize-1
+.1ca1	8d 98 0a	sta $0a98			sta 	returnStack+retStackSize-1
 .1ca4	60		rts				rts
 .1ca5					RSClaim:
 .1ca5	84 0a		sty $0a				sty 	tempShort 					; preserve Y
@@ -2788,8 +2788,8 @@
 
 ;******  Processing file: ../source/string/substring.asm
 
-.0a88					NullString:
->0a88							.fill 	1							; don't waste memory concreting null strings.
+.0a99					NullString:
+>0a99							.fill 	1							; don't waste memory concreting null strings.
 .1e3c					StringSubstring:
 .1e3c	48		pha				pha
 .1e3d	aa		tax				tax 								; access stack.
@@ -2836,8 +2836,8 @@
 .1e81	60		rts				rts
 .1e82					ReturnNull:
 .1e82	a9 00		lda #$00			lda 	#0 							; clear null string
-.1e84	8d 88 0a	sta $0a88			sta 	NullString
-.1e87	a9 88		lda #$88			lda 	#NullString & $FF 			; set a pointer to it
+.1e84	8d 99 0a	sta $0a99			sta 	NullString
+.1e87	a9 99		lda #$99			lda 	#NullString & $FF 			; set a pointer to it
 .1e89	95 48		sta $48,x			sta 	esInt0,x
 .1e8b	a9 0a		lda #$0a			lda 	#NullString >> 8
 .1e8d	95 50		sta $50,x			sta 	esInt1,x

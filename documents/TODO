@@ -15,14 +15,12 @@ Incomplete but hooked in for write and test
 	Unimplemented keywords causes break.
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
 	Token handler for $83 in unary.
-	Out of memory in pointer advance in clear.asm, soft memory allocation.
-	Error checking on return stack out of memory.
-	Multiline IF.
-	Long variables (implicitly, array access)
+	Out of memory in pointer advance in clear.asm, soft memory allocation return stack out of memory.
+	Array access added to variables.
 
 Notes
 =====
 	Stack position fudged for readability.
-	Single character concreting ?
+	Single character concreting may reduce G/C with a predefined set.
 	
 	

@@ -14,9 +14,6 @@
 lastPrintToken: 							; last token before : or EOL
 		.fill 	1	
 
-convertBuffer:								; buffer for numeric conversion
-		.fill 	18
-
 		.send storage
 
 		.section code
