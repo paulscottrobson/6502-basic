@@ -17,6 +17,8 @@ ErrorTextList:
 	.byte RETURN without GOSUB,"20"
 	.byte UNTIL without REPEAT,"20"
 	.byte NEXT without FOR,"16"
+	.byte WEND without WHILE,"18"
 	.byte Bad NEXT index,"14"
+	.byte Structures nested wrong,"23"
 	.byte 0
 

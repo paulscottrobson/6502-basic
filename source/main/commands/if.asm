@@ -56,6 +56,27 @@ _IfGoto:
 ; ************************************************************************************************
 
 _IfComplex:
-		jmp 	Unimplemented
+		jsr 	MInt32Zero 					; is it true ?
+		beq 	_IFSkip 					; if non-zero then skip to ELSE/ENDIF
+		rts 								; else continue.
+
+_IFSkip:
+		lda	 	#TKW_ELSE 					; test failed, go to ELSE or ENDIF whichever comes first.
+		ldx 	#TKW_ENDIF	
+		jmp		ScanForward
+
+;
+;		Else is executed after passing a test, and skip forward to ENDIF
+;
+Command_ELSE:	;; [else]	
+		ldx 	#TKW_ENDIF		
+		txa
+		jmp		ScanForward
+	
+;
+;		ENDIF is just a No-op, it's a marker for the structure end.
+;
+Command_ENDIF:	;; [endif]
+		rts			
 
 		.send code

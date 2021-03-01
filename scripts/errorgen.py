@@ -31,7 +31,9 @@ errorDef = """
 	ReturnErr:RETURN without GOSUB
 	UntilErr:UNTIL without REPEAT
 	NextErr:NEXT without FOR
+	WendErr:WEND without WHILE
 	BadIndex:Bad NEXT index
+	Struct:Structures nested wrong
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

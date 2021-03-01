@@ -16,4 +16,6 @@ ErrorID_StrLen = 12 ; String too long.
 ErrorID_ReturnErr = 13 ; RETURN without GOSUB
 ErrorID_UntilErr = 14 ; UNTIL without REPEAT
 ErrorID_NextErr = 15 ; NEXT without FOR
-ErrorID_BadIndex = 16 ; Bad NEXT index
+ErrorID_WendErr = 16 ; WEND without WHILE
+ErrorID_BadIndex = 17 ; Bad NEXT index
+ErrorID_Struct = 18 ; Structures nested wrong

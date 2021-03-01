@@ -28,14 +28,14 @@ Group0Vectors:
 	.word	WordRefHandler           ; $97 !
 	.word	ByteRefHandler           ; $98 ?
 	.word	Command_Repeat           ; $99 repeat
-	.word	Unimplemented            ; $9a while
+	.word	Command_While            ; $9a while
 	.word	Command_FOR              ; $9b for
 	.word	CommandIf                ; $9c if
 	.word	Command_Until            ; $9d until
-	.word	Unimplemented            ; $9e wend
+	.word	Command_Wend             ; $9e wend
 	.word	Command_NEXT             ; $9f next
 	.word	TKErr06                  ; $a0 then
-	.word	Unimplemented            ; $a1 endif
+	.word	Command_ENDIF            ; $a1 endif
 	.word	UnaryParenthesis         ; $a2 (
 	.word	UnaryLen                 ; $a3 len(
 	.word	UnarySgn                 ; $a4 sgn(
@@ -82,7 +82,7 @@ Group0Vectors:
 	.word	Command_Rem2             ; $cd '
 	.word	Unimplemented            ; $ce [
 	.word	Unimplemented            ; $cf input
-	.word	Unimplemented            ; $d0 else
+	.word	Command_ELSE             ; $d0 else
 	.word	Command_VDU              ; $d1 vdu
 	.word	Unimplemented            ; $d2 read
 	.word	Unimplemented            ; $d3 data

@@ -25,6 +25,7 @@
 ../source/main/commands/stopend.asm
 ../source/main/commands/transfer.asm
 ../source/main/commands/vdu.asm
+../source/main/commands/while.asm
 ../source/main/evaluate/binary.asm
 ../source/main/evaluate/compare.asm
 ../source/main/evaluate/dereference.asm
@@ -40,6 +41,7 @@
 ../source/main/imath/int32tostr.asm
 ../source/main/imath/int32unary.asm
 ../source/main/utility/check.asm
+../source/main/utility/scanner.asm
 ../source/main/utility/stack.asm
 ../source/string/chr.asm
 ../source/string/compare.asm

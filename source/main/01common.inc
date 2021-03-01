@@ -31,3 +31,4 @@ retStackSize = 512
 markerGOSUB = 'G'
 markerREPEAT = 'R'
 markerFOR = 'F'
+markerWHILE = 'W'

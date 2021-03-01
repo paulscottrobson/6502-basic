@@ -1,20 +1,17 @@
 TODO
 ====
-WHILE WEND
-Multiline IF ELSE ENDIF
-
 Add long variables
-Complete functions, operators that are still there.
-Complete keywords. structures etc.
+Complete missing keywords in core.
+Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.
+Add arrays.
+Add procedures and locals (no arrays)
 
 Incomplete but hooked in for write and test
 ===========================================
 
 	Unimplemented keywords causes break.
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
-	Token handler for $83 in unary.
 	Out of memory in pointer advance in clear.asm, soft memory allocation return stack out of memory.
-	Array access added to variables.
 
 Notes
 =====
