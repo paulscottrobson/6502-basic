@@ -1,9 +1,9 @@
 TODO
 ====
 Add long variables
-	- create new
 	- find old
-
+	- write dumper
+	
 Strings need concreting on assignment.
 	- reuse of old space.
 	- null concreting, single character concreting.

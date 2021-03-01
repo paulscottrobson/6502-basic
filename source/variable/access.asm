@@ -17,10 +17,15 @@ varType: 									; type byte
 		.fill 	1
 varEnd:										; Y value of byte after identifier.
 		.fill 	1
+
+		.send 	storage
+
+		.section zeropage
+
 hashList: 									; address of start of hash table list.
 		.fill 	2
 
-		.send 	storage
+		.send 	 zeropage
 
 		.section code		
 		
@@ -71,16 +76,32 @@ _AVCanCreate:
 _AVFound:		
 		pulx
 		;
-		; TODO: Copy address of variable to stack / set type etc.
+		clc 								; copy temp0 (variable record address)
+		lda 	temp0 						; +4 (to point to the data)
+		adc 	#4
+		sta 	esInt0,x
+		lda 	temp0+1
+		adc 	#0
+		sta 	esInt1,x
+		lda 	#0
+		sta 	esInt2,x
+		sta 	esInt3,x
+		;
+		ldy 	varType 					; get the type ID from the type.
+		lda 	_AVTypeTable-$3A,y
+		sta 	esType,x
 		;
 		ldy 	varEnd 						; restore Y
-		pulx 								; restore X
 		;
 		; TODO: Array stuff.
 		;
 		txa 								; return stack in A and return
 		rts
 
+_AVTypeTable:
+		.byte 	$80,$80						; integer
+		.byte 	$C0,$C0 					; string
+		.byte 	$81,$81 					; float
 
 ; ************************************************************************************************
 ;
@@ -112,8 +133,6 @@ _ASComplete:
 		;
 		sec 								; convert type byte from $3A-$3F to 0..5
 		sbc 	#$3A
-		debug
-		;
 		;
 		asl 	a 							; multiply by hashTableSize (8 in this case)
 		asl 	a

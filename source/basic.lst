@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Wall -q -c -L basic.lst -l basic.lbl -Wall -o basic.prg ../source/basic.asm
-; Mon Mar  1 15:57:42 2021
+; Mon Mar  1 17:21:08 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -308,16 +308,14 @@
 .1012	a9 98		lda #$98			lda 	#($9800) >> 8
 .1014	8d cb 0a	sta $0acb			sta 	1+(endMemory)
 .1017	4c 1d 12	jmp $121d			jmp 	Command_Run
-.1f83					ReturnPos:
+.1fee					ReturnPos:
 .5000					testBaseAddress:
 
 ;******  Processing file: ../source/main/../generated/testcode.inc
 
->5000	0f 0a 00 cd 85 08 61 62			.byte 15,10,0,205,133,8,97,98,35,32,61,32,52,50,128,11,11,0,155,9,58,141,65,198,74,128,17,12,0,213,9,58,195,177,79,104,143,9,58,147,66,193,128,7,13,0,159,9,58,128,8,14,0,153,194,157,169,128,0
->5008	23 20 3d 20 34 32 80 0b 0b 00 9b 09 3a 8d 41 c6
->5018	4a 80 11 0c 00 d5 09 3a c3 b1 4f 68 8f 09 3a 93
->5028	42 c1 80 07 0d 00 9f 09 3a 80 08 0e 00 99 c2 9d
->5038	a9 80 00
+>5000	09 0a 00 01 02 3a 8d 6a			.byte 9,10,0,1,2,58,141,106,128,10,11,0,1,2,58,141,144,66,128,5,12,0,219,128,0
+>5008	80 0a 0b 00 01 02 3a 8d 90 42 80 05 0c 00 db 80
+>5018	00
 
 ;******  Return to file: ../source/main/00start.asm
 
@@ -371,7 +369,7 @@
 .105e	20 6c 10	jsr $106c			jsr 	AdvanceLowMemoryByte		; need at least one here, to skip the end of program zero offset.
 .1061	20 04 1d	jsr $1d04			jsr 	RSReset 					; reset the return stack.
 .1064	a2 02		ldx #$02		ldx	#2
-.1066	20 7c 1f	jsr $1f7c		jsr	variableHandler
+.1066	20 e7 1f	jsr $1fe7		jsr	variableHandler
 .1069	68		pla				pla
 .106a	a8		tay				tay
 .106b	60		rts				rts
@@ -389,169 +387,169 @@
 
 ;******  Processing file: ../source/main/commands/for.asm
 
-.1f83					Command_FOR:
-.1f83	a9 46		lda #$46			lda 	#markerFOR 					; allocate the space.
-.1f85	a2 0b		ldx #$0b			ldx 	#11
-.1f87	20 12 1d	jsr $1d12			jsr 	RSClaim
-.1f8a	20 b5 10	jsr $10b5			jsr 	CommandLET 					; do the same as LET.
-.1f8d	a5 40		lda $40				lda 	esType 						; check type should be integer reference.
-.1f8f	c9 80		cmp #$80			cmp 	#$80
-.1f91	d0 4c		bne $1fdf			bne 	_CFType
-.1f93	a9 c6		lda #$c6			lda 	#TKW_TO 					; check TO present.
-.1f95	20 df 1c	jsr $1cdf			jsr 	CheckToken
-.1f98	a2 01		ldx #$01			ldx 	#1 							; keep the variable address in stack 0
-.1f9a	20 75 17	jsr $1775			jsr 	EvaluateInteger				; get terminal value in stack 1
-.1f9d	98		tya				tya
-.1f9e	48		pha				pha
-.1f9f	a0 04		ldy #$04			ldy 	#4
-.1fa1	a5 48		lda $48				lda		esInt0 						; the address of the index into 4 and 5
-.1fa3	91 78		sta ($78),y			sta 	(rsPointer),y
-.1fa5	c8		iny				iny
-.1fa6	a5 50		lda $50				lda		esInt1
-.1fa8	91 78		sta ($78),y			sta 	(rsPointer),y
-.1faa	c8		iny				iny
-.1fab	a9 01		lda #$01			lda 	#1  						; the default step in 6
-.1fad	91 78		sta ($78),y			sta 	(rsPointer),y
-.1faf	c8		iny				iny
-.1fb0	a5 49		lda $49				lda		esInt0+1 					; terminal value in 7 to 11.
-.1fb2	91 78		sta ($78),y			sta 	(rsPointer),y
-.1fb4	c8		iny				iny
-.1fb5	a5 51		lda $51				lda		esInt1+1
-.1fb7	91 78		sta ($78),y			sta 	(rsPointer),y
-.1fb9	c8		iny				iny
-.1fba	a5 59		lda $59				lda		esInt2+1
-.1fbc	91 78		sta ($78),y			sta 	(rsPointer),y
-.1fbe	c8		iny				iny
-.1fbf	a5 61		lda $61				lda		esInt3+1
-.1fc1	91 78		sta ($78),y			sta 	(rsPointer),y
-.1fc3	68		pla				pla
-.1fc4	a8		tay				tay
-.1fc5	b1 02		lda ($02),y			lda 	(codePtr),y 				; followed by STEP.
-.1fc7	c9 c7		cmp #$c7			cmp 	#TKW_STEP
-.1fc9	d0 0e		bne $1fd9			bne 	_CFDone
-.1fcb	c8		iny				iny									; skip over step.
-.1fcc	20 75 17	jsr $1775			jsr 	EvaluateInteger 			; get step
-.1fcf	98		tya				tya
-.1fd0	48		pha				pha
-.1fd1	b5 48		lda $48,x			lda 	esInt0,x 					; copy it into step (bit lazy here)
-.1fd3	a0 06		ldy #$06			ldy 	#6
-.1fd5	91 78		sta ($78),y			sta 	(rsPointer),y
-.1fd7	68		pla				pla
-.1fd8	a8		tay				tay
-.1fd9					_CFDone:
-.1fd9	a9 01		lda #$01			lda 	#1
-.1fdb	20 3e 1d	jsr $1d3e			jsr 	RSSavePosition 				; save position.
-.1fde	60		rts				rts
-.1fdf					_CFType:
-.1fdf	a2 07		ldx #$07			ldx 	#ErrorID_BadType
-.1fe1	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
-.1fe4					Command_NEXT:
-.1fe4	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
-.1fe6	a1 78		lda ($78,x)			lda 	(rsPointer,x)
-.1fe8	c9 46		cmp #$46			cmp 	#markerFOR 						; does it match
-.1fea	f0 05		beq $1ff1			beq 	_isok
-.1fec	a2 10		ldx #$10			ldx 	#ErrorID_nextErr
-.1fee	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
-.1ff1					_isok:
-.1ff1	b1 02		lda ($02),y			lda 	(codePtr),y 				; is it NEXT <index>
-.1ff3	c9 40		cmp #$40			cmp 	#$40 						; e.g. a variable follows 00-3F
-.1ff5	b0 18		bcs $200f			bcs 	_CNNoIndex
-.1ff7	a2 00		ldx #$00			ldx 	#0 							; start on stack
-.1ff9	20 a2 17	jsr $17a2			jsr 	EvaluateReference 			; this is the variable/parameter to localise.
-.1ffc	98		tya				tya
-.1ffd	48		pha				pha
-.1ffe	a0 04		ldy #$04			ldy 	#4 							; check same variable
-.2000	b1 78		lda ($78),y			lda 	(rsPointer),y
-.2002	d5 48		cmp $48,x			cmp 	esInt0,x
-.2004	d0 76		bne $207c			bne 	_CNBadIndex
-.2006	c8		iny				iny
-.2007	b1 78		lda ($78),y			lda 	(rsPointer),y
-.2009	d5 50		cmp $50,x			cmp 	esInt1,x
-.200b	d0 6f		bne $207c			bne 	_CNBadIndex
-.200d	68		pla				pla
-.200e	a8		tay				tay
-.200f					_CNNoIndex:
-.200f	98		tya				tya
-.2010	48		pha				pha
-.2011	a0 04		ldy #$04			ldy 	#4 							; make temp0 point to the index
-.2013	b1 78		lda ($78),y			lda 	(rsPointer),y
-.2015	85 04		sta $04				sta 	temp0
-.2017	c8		iny				iny
-.2018	b1 78		lda ($78),y			lda 	(rsPointer),y
-.201a	85 05		sta $05				sta 	temp0+1
-.201c	c8		iny				iny
-.201d	a2 00		ldx #$00			ldx 	#0 							; X is the sign extend part of the step.
-.201f	b1 78		lda ($78),y			lda 	(rsPointer),y 				; get the step.
-.2021	85 09		sta $09				sta 	temp2+1 					; save for later.
-.2023	10 01		bpl $2026			bpl 	_CNSignX
-.2025	ca		dex				dex  								; X = $FF
-.2026					_CNSignX:
-.2026	18		clc				clc 								; add to the LSB
-.2027	a0 00		ldy #$00			ldy 	#0
-.2029	71 04		adc ($04),y			adc 	(temp0),y
-.202b	91 04		sta ($04),y			sta 	(temp0),y
-.202d					_CNPropogate:
-.202d	c8		iny				iny  								; add the sign extended in X to the rest.
-.202e	8a		txa				txa
-.202f	71 04		adc ($04),y			adc 	(temp0),y
-.2031	91 04		sta ($04),y			sta 	(temp0),y
-.2033	c8		iny				iny
-.2034	8a		txa				txa
-.2035	71 04		adc ($04),y			adc 	(temp0),y
-.2037	91 04		sta ($04),y			sta 	(temp0),y
-.2039	c8		iny				iny
-.203a	8a		txa				txa
-.203b	71 04		adc ($04),y			adc 	(temp0),y
-.203d	91 04		sta ($04),y			sta 	(temp0),y
-.203f	18		clc				clc 								; point temp1 to the terminal value stored in the stack.
-.2040	a5 78		lda $78				lda 	rsPointer
-.2042	69 07		adc #$07			adc 	#7
-.2044	85 06		sta $06				sta 	temp1
-.2046	a9 00		lda #$00			lda 	#0
-.2048	85 08		sta $08				sta 	temp2 						; clear temp2, which is the OR of all the subtractions.
-.204a	a8		tay				tay 								; and clear the Y register again.
-.204b	65 79		adc $79				adc 	rsPointer+1
-.204d	85 07		sta $07				sta 	temp1+1
-.204f	38		sec				sec 								; calculate current - limit oring interim values.
-.2050	20 88 20	jsr $2088			jsr 	_CNCompare
-.2053	20 88 20	jsr $2088			jsr 	_CNCompare
-.2056	20 88 20	jsr $2088			jsr 	_CNCompare
-.2059	20 88 20	jsr $2088			jsr 	_CNCompare
-.205c	50 02		bvc $2060			bvc 	_CNNoOverflow 				; converts to a signed comparison on the sign bit.
-.205e	49 80		eor #$80			eor 	#$80
-.2060					_CNNoOverflow:
-.2060	a4 09		ldy $09				ldy 	temp2+1						; get step back
-.2062	30 1d		bmi $2081			bmi 	_CNCheckDownto
-.2064	c9 00		cmp #$00			cmp 	#0
-.2066	30 0c		bmi $2074			bmi 	_CNLoopRound 				; loop round if < =
-.2068	a5 08		lda $08				lda 	temp2
-.206a	f0 08		beq $2074			beq 	_CNLoopRound
-.206c					_CNLoopExit:
-.206c	68		pla				pla
-.206d	a8		tay				tay
-.206e	a9 0b		lda #$0b			lda 	#11
-.2070	20 34 1d	jsr $1d34			jsr 	RSFree
-.2073	60		rts				rts
-.2074					_CNLoopRound:
-.2074	68		pla				pla
-.2075	a8		tay				tay
-.2076	a9 01		lda #$01			lda 	#1
-.2078	20 51 1d	jsr $1d51			jsr 	RSLoadPosition				; go back to the loop top
-.207b	60		rts				rts
-.207c					_CNBadIndex:
-.207c	a2 12		ldx #$12			ldx 	#ErrorID_BadIndex
-.207e	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
-.2081					_CNCheckDownto:
-.2081	c9 00		cmp #$00			cmp 	#0
-.2083	10 ef		bpl $2074			bpl 	_CNLoopRound
-.2085	4c 6c 20	jmp $206c			jmp 	_CNLoopExit
-.2088					_CNCompare:
-.2088	b1 04		lda ($04),y			lda 	(temp0),y 					; do the subtraction - compare don't care about answer
-.208a	f1 06		sbc ($06),y			sbc 	(temp1),y
-.208c	05 08		ora $08				ora 	temp2 						; Or into temp2 (does not affect carry)
-.208e	85 08		sta $08				sta 	temp2
-.2090	c8		iny				iny
-.2091	60		rts				rts
+.1fee					Command_FOR:
+.1fee	a9 46		lda #$46			lda 	#markerFOR 					; allocate the space.
+.1ff0	a2 0b		ldx #$0b			ldx 	#11
+.1ff2	20 12 1d	jsr $1d12			jsr 	RSClaim
+.1ff5	20 b5 10	jsr $10b5			jsr 	CommandLET 					; do the same as LET.
+.1ff8	a5 40		lda $40				lda 	esType 						; check type should be integer reference.
+.1ffa	c9 80		cmp #$80			cmp 	#$80
+.1ffc	d0 4c		bne $204a			bne 	_CFType
+.1ffe	a9 c6		lda #$c6			lda 	#TKW_TO 					; check TO present.
+.2000	20 df 1c	jsr $1cdf			jsr 	CheckToken
+.2003	a2 01		ldx #$01			ldx 	#1 							; keep the variable address in stack 0
+.2005	20 75 17	jsr $1775			jsr 	EvaluateInteger				; get terminal value in stack 1
+.2008	98		tya				tya
+.2009	48		pha				pha
+.200a	a0 04		ldy #$04			ldy 	#4
+.200c	a5 48		lda $48				lda		esInt0 						; the address of the index into 4 and 5
+.200e	91 78		sta ($78),y			sta 	(rsPointer),y
+.2010	c8		iny				iny
+.2011	a5 50		lda $50				lda		esInt1
+.2013	91 78		sta ($78),y			sta 	(rsPointer),y
+.2015	c8		iny				iny
+.2016	a9 01		lda #$01			lda 	#1  						; the default step in 6
+.2018	91 78		sta ($78),y			sta 	(rsPointer),y
+.201a	c8		iny				iny
+.201b	a5 49		lda $49				lda		esInt0+1 					; terminal value in 7 to 11.
+.201d	91 78		sta ($78),y			sta 	(rsPointer),y
+.201f	c8		iny				iny
+.2020	a5 51		lda $51				lda		esInt1+1
+.2022	91 78		sta ($78),y			sta 	(rsPointer),y
+.2024	c8		iny				iny
+.2025	a5 59		lda $59				lda		esInt2+1
+.2027	91 78		sta ($78),y			sta 	(rsPointer),y
+.2029	c8		iny				iny
+.202a	a5 61		lda $61				lda		esInt3+1
+.202c	91 78		sta ($78),y			sta 	(rsPointer),y
+.202e	68		pla				pla
+.202f	a8		tay				tay
+.2030	b1 02		lda ($02),y			lda 	(codePtr),y 				; followed by STEP.
+.2032	c9 c7		cmp #$c7			cmp 	#TKW_STEP
+.2034	d0 0e		bne $2044			bne 	_CFDone
+.2036	c8		iny				iny									; skip over step.
+.2037	20 75 17	jsr $1775			jsr 	EvaluateInteger 			; get step
+.203a	98		tya				tya
+.203b	48		pha				pha
+.203c	b5 48		lda $48,x			lda 	esInt0,x 					; copy it into step (bit lazy here)
+.203e	a0 06		ldy #$06			ldy 	#6
+.2040	91 78		sta ($78),y			sta 	(rsPointer),y
+.2042	68		pla				pla
+.2043	a8		tay				tay
+.2044					_CFDone:
+.2044	a9 01		lda #$01			lda 	#1
+.2046	20 3e 1d	jsr $1d3e			jsr 	RSSavePosition 				; save position.
+.2049	60		rts				rts
+.204a					_CFType:
+.204a	a2 07		ldx #$07			ldx 	#ErrorID_BadType
+.204c	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
+.204f					Command_NEXT:
+.204f	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
+.2051	a1 78		lda ($78,x)			lda 	(rsPointer,x)
+.2053	c9 46		cmp #$46			cmp 	#markerFOR 						; does it match
+.2055	f0 05		beq $205c			beq 	_isok
+.2057	a2 10		ldx #$10			ldx 	#ErrorID_nextErr
+.2059	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
+.205c					_isok:
+.205c	b1 02		lda ($02),y			lda 	(codePtr),y 				; is it NEXT <index>
+.205e	c9 40		cmp #$40			cmp 	#$40 						; e.g. a variable follows 00-3F
+.2060	b0 18		bcs $207a			bcs 	_CNNoIndex
+.2062	a2 00		ldx #$00			ldx 	#0 							; start on stack
+.2064	20 a2 17	jsr $17a2			jsr 	EvaluateReference 			; this is the variable/parameter to localise.
+.2067	98		tya				tya
+.2068	48		pha				pha
+.2069	a0 04		ldy #$04			ldy 	#4 							; check same variable
+.206b	b1 78		lda ($78),y			lda 	(rsPointer),y
+.206d	d5 48		cmp $48,x			cmp 	esInt0,x
+.206f	d0 76		bne $20e7			bne 	_CNBadIndex
+.2071	c8		iny				iny
+.2072	b1 78		lda ($78),y			lda 	(rsPointer),y
+.2074	d5 50		cmp $50,x			cmp 	esInt1,x
+.2076	d0 6f		bne $20e7			bne 	_CNBadIndex
+.2078	68		pla				pla
+.2079	a8		tay				tay
+.207a					_CNNoIndex:
+.207a	98		tya				tya
+.207b	48		pha				pha
+.207c	a0 04		ldy #$04			ldy 	#4 							; make temp0 point to the index
+.207e	b1 78		lda ($78),y			lda 	(rsPointer),y
+.2080	85 04		sta $04				sta 	temp0
+.2082	c8		iny				iny
+.2083	b1 78		lda ($78),y			lda 	(rsPointer),y
+.2085	85 05		sta $05				sta 	temp0+1
+.2087	c8		iny				iny
+.2088	a2 00		ldx #$00			ldx 	#0 							; X is the sign extend part of the step.
+.208a	b1 78		lda ($78),y			lda 	(rsPointer),y 				; get the step.
+.208c	85 09		sta $09				sta 	temp2+1 					; save for later.
+.208e	10 01		bpl $2091			bpl 	_CNSignX
+.2090	ca		dex				dex  								; X = $FF
+.2091					_CNSignX:
+.2091	18		clc				clc 								; add to the LSB
+.2092	a0 00		ldy #$00			ldy 	#0
+.2094	71 04		adc ($04),y			adc 	(temp0),y
+.2096	91 04		sta ($04),y			sta 	(temp0),y
+.2098					_CNPropogate:
+.2098	c8		iny				iny  								; add the sign extended in X to the rest.
+.2099	8a		txa				txa
+.209a	71 04		adc ($04),y			adc 	(temp0),y
+.209c	91 04		sta ($04),y			sta 	(temp0),y
+.209e	c8		iny				iny
+.209f	8a		txa				txa
+.20a0	71 04		adc ($04),y			adc 	(temp0),y
+.20a2	91 04		sta ($04),y			sta 	(temp0),y
+.20a4	c8		iny				iny
+.20a5	8a		txa				txa
+.20a6	71 04		adc ($04),y			adc 	(temp0),y
+.20a8	91 04		sta ($04),y			sta 	(temp0),y
+.20aa	18		clc				clc 								; point temp1 to the terminal value stored in the stack.
+.20ab	a5 78		lda $78				lda 	rsPointer
+.20ad	69 07		adc #$07			adc 	#7
+.20af	85 06		sta $06				sta 	temp1
+.20b1	a9 00		lda #$00			lda 	#0
+.20b3	85 08		sta $08				sta 	temp2 						; clear temp2, which is the OR of all the subtractions.
+.20b5	a8		tay				tay 								; and clear the Y register again.
+.20b6	65 79		adc $79				adc 	rsPointer+1
+.20b8	85 07		sta $07				sta 	temp1+1
+.20ba	38		sec				sec 								; calculate current - limit oring interim values.
+.20bb	20 f3 20	jsr $20f3			jsr 	_CNCompare
+.20be	20 f3 20	jsr $20f3			jsr 	_CNCompare
+.20c1	20 f3 20	jsr $20f3			jsr 	_CNCompare
+.20c4	20 f3 20	jsr $20f3			jsr 	_CNCompare
+.20c7	50 02		bvc $20cb			bvc 	_CNNoOverflow 				; converts to a signed comparison on the sign bit.
+.20c9	49 80		eor #$80			eor 	#$80
+.20cb					_CNNoOverflow:
+.20cb	a4 09		ldy $09				ldy 	temp2+1						; get step back
+.20cd	30 1d		bmi $20ec			bmi 	_CNCheckDownto
+.20cf	c9 00		cmp #$00			cmp 	#0
+.20d1	30 0c		bmi $20df			bmi 	_CNLoopRound 				; loop round if < =
+.20d3	a5 08		lda $08				lda 	temp2
+.20d5	f0 08		beq $20df			beq 	_CNLoopRound
+.20d7					_CNLoopExit:
+.20d7	68		pla				pla
+.20d8	a8		tay				tay
+.20d9	a9 0b		lda #$0b			lda 	#11
+.20db	20 34 1d	jsr $1d34			jsr 	RSFree
+.20de	60		rts				rts
+.20df					_CNLoopRound:
+.20df	68		pla				pla
+.20e0	a8		tay				tay
+.20e1	a9 01		lda #$01			lda 	#1
+.20e3	20 51 1d	jsr $1d51			jsr 	RSLoadPosition				; go back to the loop top
+.20e6	60		rts				rts
+.20e7					_CNBadIndex:
+.20e7	a2 12		ldx #$12			ldx 	#ErrorID_BadIndex
+.20e9	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
+.20ec					_CNCheckDownto:
+.20ec	c9 00		cmp #$00			cmp 	#0
+.20ee	10 ef		bpl $20df			bpl 	_CNLoopRound
+.20f0	4c d7 20	jmp $20d7			jmp 	_CNLoopExit
+.20f3					_CNCompare:
+.20f3	b1 04		lda ($04),y			lda 	(temp0),y 					; do the subtraction - compare don't care about answer
+.20f5	f1 06		sbc ($06),y			sbc 	(temp1),y
+.20f7	05 08		ora $08				ora 	temp2 						; Or into temp2 (does not affect carry)
+.20f9	85 08		sta $08				sta 	temp2
+.20fb	c8		iny				iny
+.20fc	60		rts				rts
 
 ;******  Return to file: ../source/main/main.asm
 
@@ -588,11 +586,11 @@
 .10a7					_IFSkip:
 .10a7	a9 d0		lda #$d0			lda	 	#TKW_ELSE 					; test failed, go to ELSE or ENDIF whichever comes first.
 .10a9	a2 a1		ldx #$a1			ldx 	#TKW_ENDIF
-.10ab	4c fb 20	jmp $20fb			jmp		ScanForward
+.10ab	4c 66 21	jmp $2166			jmp		ScanForward
 .10ae					Command_ELSE:
 .10ae	a2 a1		ldx #$a1			ldx 	#TKW_ENDIF
 .10b0	8a		txa				txa
-.10b1	4c fb 20	jmp $20fb			jmp		ScanForward
+.10b1	4c 66 21	jmp $2166			jmp		ScanForward
 .10b4					Command_ENDIF:
 .10b4	60		rts				rts
 
@@ -853,31 +851,31 @@
 
 ;******  Processing file: ../source/main/commands/repeat.asm
 
-.2092					Command_Repeat:
-.2092	a2 04		ldx #$04			ldx 	#4 							; allocate 4 bytes on stack for REPEAT
-.2094	a9 52		lda #$52			lda 	#markerREPEAT 				; repeat marker allocate 4 bytes
-.2096	20 12 1d	jsr $1d12			jsr 	RSClaim
-.2099	a9 01		lda #$01			lda 	#1 							; save position at offset 1.
-.209b	20 3e 1d	jsr $1d3e			jsr 	RSSavePosition
-.209e	60		rts				rts
-.209f					Command_Until:
-.209f	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
-.20a1	a1 78		lda ($78,x)			lda 	(rsPointer,x)
-.20a3	c9 52		cmp #$52			cmp 	#markerREPEAT 						; does it match
-.20a5	f0 05		beq $20ac			beq 	_isok
-.20a7	a2 0f		ldx #$0f			ldx 	#ErrorID_untilErr
-.20a9	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
-.20ac					_isok:
-.20ac	20 73 17	jsr $1773			jsr 	EvaluateRootInteger 		; at the bottom.
-.20af	20 9e 1c	jsr $1c9e			jsr 	MInt32Zero					; check if TOS zero
-.20b2	d0 06		bne $20ba			bne 	_CUExit
-.20b4	a9 01		lda #$01			lda 	#1
-.20b6	20 51 1d	jsr $1d51			jsr 	RSLoadPosition 				; reload the position from offset 1.
-.20b9	60		rts				rts
-.20ba					_CUExit:
-.20ba	a9 04		lda #$04			lda 	#4 							; throw 4 bytes from stack.
-.20bc	20 34 1d	jsr $1d34			jsr 	RSFree
-.20bf	60		rts				rts
+.20fd					Command_Repeat:
+.20fd	a2 04		ldx #$04			ldx 	#4 							; allocate 4 bytes on stack for REPEAT
+.20ff	a9 52		lda #$52			lda 	#markerREPEAT 				; repeat marker allocate 4 bytes
+.2101	20 12 1d	jsr $1d12			jsr 	RSClaim
+.2104	a9 01		lda #$01			lda 	#1 							; save position at offset 1.
+.2106	20 3e 1d	jsr $1d3e			jsr 	RSSavePosition
+.2109	60		rts				rts
+.210a					Command_Until:
+.210a	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
+.210c	a1 78		lda ($78,x)			lda 	(rsPointer,x)
+.210e	c9 52		cmp #$52			cmp 	#markerREPEAT 						; does it match
+.2110	f0 05		beq $2117			beq 	_isok
+.2112	a2 0f		ldx #$0f			ldx 	#ErrorID_untilErr
+.2114	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
+.2117					_isok:
+.2117	20 73 17	jsr $1773			jsr 	EvaluateRootInteger 		; at the bottom.
+.211a	20 9e 1c	jsr $1c9e			jsr 	MInt32Zero					; check if TOS zero
+.211d	d0 06		bne $2125			bne 	_CUExit
+.211f	a9 01		lda #$01			lda 	#1
+.2121	20 51 1d	jsr $1d51			jsr 	RSLoadPosition 				; reload the position from offset 1.
+.2124	60		rts				rts
+.2125					_CUExit:
+.2125	a9 04		lda #$04			lda 	#4 							; throw 4 bytes from stack.
+.2127	20 34 1d	jsr $1d34			jsr 	RSFree
+.212a	60		rts				rts
 
 ;******  Return to file: ../source/main/main.asm
 
@@ -993,13 +991,13 @@
 >12c2	22 15					.word	PowerHandler             ; $96 ^
 >12c4	fc 14					.word	WordRefHandler           ; $97 !
 >12c6	0f 15					.word	ByteRefHandler           ; $98 ?
->12c8	92 20					.word	Command_Repeat           ; $99 repeat
->12ca	c0 20					.word	Command_While            ; $9a while
->12cc	83 1f					.word	Command_FOR              ; $9b for
+>12c8	fd 20					.word	Command_Repeat           ; $99 repeat
+>12ca	2b 21					.word	Command_While            ; $9a while
+>12cc	ee 1f					.word	Command_FOR              ; $9b for
 >12ce	79 10					.word	CommandIf                ; $9c if
->12d0	9f 20					.word	Command_Until            ; $9d until
->12d2	e3 20					.word	Command_Wend             ; $9e wend
->12d4	e4 1f					.word	Command_NEXT             ; $9f next
+>12d0	0a 21					.word	Command_Until            ; $9d until
+>12d2	4e 21					.word	Command_Wend             ; $9e wend
+>12d4	4f 20					.word	Command_NEXT             ; $9f next
 >12d6	91 12					.word	TKErr06                  ; $a0 then
 >12d8	b4 10					.word	Command_ENDIF            ; $a1 endif
 >12da	2c 17					.word	UnaryParenthesis         ; $a2 (
@@ -1203,38 +1201,38 @@
 
 ;******  Processing file: ../source/main/commands/while.asm
 
-.20c0					Command_While:
-.20c0	a9 57		lda #$57			lda 	#markerWhile 				; gosub marker allocate 4 bytes.
-.20c2	a2 04		ldx #$04			ldx 	#4
-.20c4	20 12 1d	jsr $1d12			jsr 	RSClaim 					; create on stack.
-.20c7	88		dey				dey
-.20c8	a9 01		lda #$01			lda 	#1
-.20ca	20 3e 1d	jsr $1d3e			jsr 	RSSavePosition 				; save position before the WHILE keyword.
-.20cd	c8		iny				iny
-.20ce	20 75 17	jsr $1775			jsr 	EvaluateInteger				; get the conditional
-.20d1	20 9e 1c	jsr $1c9e			jsr 	MInt32Zero 	 				; if zero, skip forward.
-.20d4	f0 01		beq $20d7			beq 	_CWFail
-.20d6	60		rts				rts
-.20d7					_CWFail:
-.20d7	a9 04		lda #$04			lda 	#4
-.20d9	20 34 1d	jsr $1d34			jsr 	RSFree 						; close the just opened position.
-.20dc	a9 9e		lda #$9e			lda 	#TKW_WEND 					; scan forward past WEND.
-.20de	aa		tax				tax
-.20df	20 fb 20	jsr $20fb			jsr 	ScanForward
-.20e2	60		rts				rts
-.20e3					Command_Wend:
-.20e3	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
-.20e5	a1 78		lda ($78,x)			lda 	(rsPointer,x)
-.20e7	c9 57		cmp #$57			cmp 	#markerWHILE 						; does it match
-.20e9	f0 05		beq $20f0			beq 	_isok
-.20eb	a2 11		ldx #$11			ldx 	#ErrorID_wendErr
-.20ed	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
-.20f0					_isok:
-.20f0	a9 01		lda #$01			lda 	#1
-.20f2	20 51 1d	jsr $1d51			jsr 	RSLoadPosition				; go back until true
-.20f5	a9 04		lda #$04			lda 	#4
-.20f7	20 34 1d	jsr $1d34			jsr 	RSFree 						; close the loop
-.20fa	60		rts				rts
+.212b					Command_While:
+.212b	a9 57		lda #$57			lda 	#markerWhile 				; gosub marker allocate 4 bytes.
+.212d	a2 04		ldx #$04			ldx 	#4
+.212f	20 12 1d	jsr $1d12			jsr 	RSClaim 					; create on stack.
+.2132	88		dey				dey
+.2133	a9 01		lda #$01			lda 	#1
+.2135	20 3e 1d	jsr $1d3e			jsr 	RSSavePosition 				; save position before the WHILE keyword.
+.2138	c8		iny				iny
+.2139	20 75 17	jsr $1775			jsr 	EvaluateInteger				; get the conditional
+.213c	20 9e 1c	jsr $1c9e			jsr 	MInt32Zero 	 				; if zero, skip forward.
+.213f	f0 01		beq $2142			beq 	_CWFail
+.2141	60		rts				rts
+.2142					_CWFail:
+.2142	a9 04		lda #$04			lda 	#4
+.2144	20 34 1d	jsr $1d34			jsr 	RSFree 						; close the just opened position.
+.2147	a9 9e		lda #$9e			lda 	#TKW_WEND 					; scan forward past WEND.
+.2149	aa		tax				tax
+.214a	20 66 21	jsr $2166			jsr 	ScanForward
+.214d	60		rts				rts
+.214e					Command_Wend:
+.214e	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
+.2150	a1 78		lda ($78,x)			lda 	(rsPointer,x)
+.2152	c9 57		cmp #$57			cmp 	#markerWHILE 						; does it match
+.2154	f0 05		beq $215b			beq 	_isok
+.2156	a2 11		ldx #$11			ldx 	#ErrorID_wendErr
+.2158	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
+.215b					_isok:
+.215b	a9 01		lda #$01			lda 	#1
+.215d	20 51 1d	jsr $1d51			jsr 	RSLoadPosition				; go back until true
+.2160	a9 04		lda #$04			lda 	#4
+.2162	20 34 1d	jsr $1d34			jsr 	RSFree 						; close the loop
+.2165	60		rts				rts
 
 ;******  Return to file: ../source/main/main.asm
 
@@ -1630,7 +1628,7 @@
 .165f	30 0a		bmi $166b			bmi 	_ELIsConstant 				; 40-7F will be -ve and that's an integer constant.
 .1661	8a		txa				txa 								; stack level in X
 .1662	a2 00		ldx #$00		ldx	#0
-.1664	20 7c 1f	jsr $1f7c		jsr	variableHandler
+.1664	20 e7 1f	jsr $1fe7		jsr	variableHandler
 .1667	aa		tax				tax
 .1668	4c a8 16	jmp $16a8			jmp		_ELHasTerm
 .166b					_ELIsConstant:
@@ -2745,69 +2743,69 @@
 
 ;******  Processing file: ../source/main/utility/scanner.asm
 
-.20fb					ScanForward:
-.20fb	85 06		sta $06				sta 	temp1 						; save tokens to search in temp1/temp1+1
-.20fd	86 07		stx $07				stx 	temp1+1
-.20ff	a9 00		lda #$00			lda 	#0 							; temp2 counts structure levels.
-.2101	85 08		sta $08				sta 	temp2
-.2103	b1 02		lda ($02),y	_SFLoop:lda 	(codePtr),y 				; look at the next token.
-.2105	c8		iny				iny
-.2106	a6 08		ldx $08				ldx 	temp2 						; check structure levels are zero.
-.2108	d0 08		bne $2112			bne 	_SFNoCheck 					; if so, check token against entered values.
-.210a	c5 06		cmp $06				cmp 	temp1
-.210c	f0 24		beq $2132			beq 	_SFExit
-.210e	c5 07		cmp $07				cmp 	temp1+1
-.2110	f0 20		beq $2132			beq 	_SFExit
-.2112					_SFNoCheck:
-.2112	c9 80		cmp #$80			cmp 	#$80 						; if it is 00-7F (variable/number) just skip it.
-.2114	90 ed		bcc $2103			bcc 	_SFLoop
-.2116	c9 86		cmp #$86			cmp 	#TOK_BINARYST 				; $80-$85 is various specials.
-.2118	90 19		bcc $2133			bcc 	_SFSpecials
-.211a	c9 99		cmp #$99			cmp 	#TOK_STRUCTST 				; if < structure start then continue
-.211c	90 e5		bcc $2103			bcc 	_SFLoop
-.211e	c9 a2		cmp #$a2			cmp 	#TOK_UNARYST 				; if >= unary start (after structure) then continue.
-.2120	b0 e1		bcs $2103			bcs 	_SFLoop
-.2122	aa		tax				tax  								; token in X, and look up the adjuster.
-.2123	bd 5d 17	lda $175d,x			lda 	ELBinaryOperatorInfo-TOK_BINARYST,x
-.2126	38		sec				sec 								; convert to an offset
-.2127	e9 81		sbc #$81			sbc 	#$81
-.2129	18		clc				clc 								; add to depth
-.212a	65 08		adc $08				adc 	temp2
-.212c	85 08		sta $08				sta 	temp2
-.212e	10 d3		bpl $2103			bpl 	_SFLoop 					; +ve okay to continue
-.2130	30 2a		bmi $215c			bmi 	_SFError 					; if gone -ve then we have a nesting error
-.2132	60		rts		_SFExit:rts
-.2133					_SFSpecials:
-.2133	c9 80		cmp #$80			cmp 	#TOK_EOL 					; $80, advance to next line.
-.2135	f0 14		beq $214b			beq 	_SFNextLine
-.2137	c9 84		cmp #$84			cmp 	#TOK_FPC					; $84, skip embedded float
-.2139	f0 26		beq $2161			beq 	_SFFloatSkip
-.213b	c9 85		cmp #$85			cmp 	#TOK_STR 					; $85, skip string
-.213d	f0 04		beq $2143			beq 	_SFSkipString
-.213f	c8		iny				iny									; $81,$82,$83 shift, so just advance over the shifted
-.2140	4c 03 21	jmp $2103			jmp 	_SFLoop 					; token.
-.2143					_SFSkipString:
-.2143	98		tya				tya
-.2144	38		sec				sec
-.2145	71 02		adc ($02),y			adc 	(codePtr),y
-.2147	a8		tay				tay
-.2148	4c 03 21	jmp $2103			jmp 	_SFLoop
-.214b					_SFNextLine:
-.214b	a0 00		ldy #$00			ldy 	#0 							; get offset
-.214d	b1 02		lda ($02),y			lda 	(codePtr),y
-.214f	18		clc				clc 								; add to code pointer.
-.2150	65 02		adc $02				adc 	codePtr
-.2152	85 02		sta $02				sta 	codePtr
-.2154	90 02		bcc $2158			bcc		_SFNLNoCarry
-.2156	e6 03		inc $03				inc 	codePtr+1
-.2158					_SFNLNoCarry:
-.2158	b1 02		lda ($02),y			lda 	(codePtr),y 				; reached the end of the program.
-.215a	d0 a7		bne $2103			bne		_SFLoop 					; no go round again
-.215c					_SFError:
-.215c	a2 13		ldx #$13			ldx 	#ErrorID_Struct
-.215e	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
-.2161					_SFFloatSkip:
-.2161	4c 8c 12	jmp $128c			jmp 	Unimplemented
+.2166					ScanForward:
+.2166	85 06		sta $06				sta 	temp1 						; save tokens to search in temp1/temp1+1
+.2168	86 07		stx $07				stx 	temp1+1
+.216a	a9 00		lda #$00			lda 	#0 							; temp2 counts structure levels.
+.216c	85 08		sta $08				sta 	temp2
+.216e	b1 02		lda ($02),y	_SFLoop:lda 	(codePtr),y 				; look at the next token.
+.2170	c8		iny				iny
+.2171	a6 08		ldx $08				ldx 	temp2 						; check structure levels are zero.
+.2173	d0 08		bne $217d			bne 	_SFNoCheck 					; if so, check token against entered values.
+.2175	c5 06		cmp $06				cmp 	temp1
+.2177	f0 24		beq $219d			beq 	_SFExit
+.2179	c5 07		cmp $07				cmp 	temp1+1
+.217b	f0 20		beq $219d			beq 	_SFExit
+.217d					_SFNoCheck:
+.217d	c9 80		cmp #$80			cmp 	#$80 						; if it is 00-7F (variable/number) just skip it.
+.217f	90 ed		bcc $216e			bcc 	_SFLoop
+.2181	c9 86		cmp #$86			cmp 	#TOK_BINARYST 				; $80-$85 is various specials.
+.2183	90 19		bcc $219e			bcc 	_SFSpecials
+.2185	c9 99		cmp #$99			cmp 	#TOK_STRUCTST 				; if < structure start then continue
+.2187	90 e5		bcc $216e			bcc 	_SFLoop
+.2189	c9 a2		cmp #$a2			cmp 	#TOK_UNARYST 				; if >= unary start (after structure) then continue.
+.218b	b0 e1		bcs $216e			bcs 	_SFLoop
+.218d	aa		tax				tax  								; token in X, and look up the adjuster.
+.218e	bd 5d 17	lda $175d,x			lda 	ELBinaryOperatorInfo-TOK_BINARYST,x
+.2191	38		sec				sec 								; convert to an offset
+.2192	e9 81		sbc #$81			sbc 	#$81
+.2194	18		clc				clc 								; add to depth
+.2195	65 08		adc $08				adc 	temp2
+.2197	85 08		sta $08				sta 	temp2
+.2199	10 d3		bpl $216e			bpl 	_SFLoop 					; +ve okay to continue
+.219b	30 2a		bmi $21c7			bmi 	_SFError 					; if gone -ve then we have a nesting error
+.219d	60		rts		_SFExit:rts
+.219e					_SFSpecials:
+.219e	c9 80		cmp #$80			cmp 	#TOK_EOL 					; $80, advance to next line.
+.21a0	f0 14		beq $21b6			beq 	_SFNextLine
+.21a2	c9 84		cmp #$84			cmp 	#TOK_FPC					; $84, skip embedded float
+.21a4	f0 26		beq $21cc			beq 	_SFFloatSkip
+.21a6	c9 85		cmp #$85			cmp 	#TOK_STR 					; $85, skip string
+.21a8	f0 04		beq $21ae			beq 	_SFSkipString
+.21aa	c8		iny				iny									; $81,$82,$83 shift, so just advance over the shifted
+.21ab	4c 6e 21	jmp $216e			jmp 	_SFLoop 					; token.
+.21ae					_SFSkipString:
+.21ae	98		tya				tya
+.21af	38		sec				sec
+.21b0	71 02		adc ($02),y			adc 	(codePtr),y
+.21b2	a8		tay				tay
+.21b3	4c 6e 21	jmp $216e			jmp 	_SFLoop
+.21b6					_SFNextLine:
+.21b6	a0 00		ldy #$00			ldy 	#0 							; get offset
+.21b8	b1 02		lda ($02),y			lda 	(codePtr),y
+.21ba	18		clc				clc 								; add to code pointer.
+.21bb	65 02		adc $02				adc 	codePtr
+.21bd	85 02		sta $02				sta 	codePtr
+.21bf	90 02		bcc $21c3			bcc		_SFNLNoCarry
+.21c1	e6 03		inc $03				inc 	codePtr+1
+.21c3					_SFNLNoCarry:
+.21c3	b1 02		lda ($02),y			lda 	(codePtr),y 				; reached the end of the program.
+.21c5	d0 a7		bne $216e			bne		_SFLoop 					; no go round again
+.21c7					_SFError:
+.21c7	a2 13		ldx #$13			ldx 	#ErrorID_Struct
+.21c9	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
+.21cc					_SFFloatSkip:
+.21cc	4c 8c 12	jmp $128c			jmp 	Unimplemented
 
 ;******  Return to file: ../source/main/main.asm
 
@@ -3245,8 +3243,8 @@
 >0afb							.fill 	1
 .0afc					varEnd:
 >0afc							.fill 	1
-.0afd					hashList:
->0afd							.fill 	2
+.007c					hashList:
+>007c							.fill 	2
 .1eef					AccessVariable:
 .1eef	aa		tax				tax 								; stack in X
 .1ef0	c8		iny				iny
@@ -3271,8 +3269,8 @@
 .1f0d					_AVLong:
 .1f0d	8a		txa				txa
 .1f0e	48		pha				pha
-.1f0f	20 2e 1f	jsr $1f2e			jsr 	AccessSetup 				; set up the basic stuff.
-.1f12	20 6f 1f	jsr $1f6f			jsr 	FindVariable 				; does the variable exist already
+.1f0f	20 4d 1f	jsr $1f4d			jsr 	AccessSetup 				; set up the basic stuff.
+.1f12	20 da 1f	jsr $1fda			jsr 	FindVariable 				; does the variable exist already
 .1f15	b0 0e		bcs $1f25			bcs 	_AVFound
 .1f17	ad fb 0a	lda $0afb			lda 	varType 					; is the variable type an array
 .1f1a	4a		lsr a				lsr 	a
@@ -3280,91 +3278,153 @@
 .1f1d	a2 14		ldx #$14			ldx 	#ErrorID_noauto
 .1f1f	20 8d 1d	jsr $1d8d			jsr 	ErrorHandler
 .1f22					_AVCanCreate:
-.1f22	20 6e 1f	jsr $1f6e			jsr 	CreateVariable 				; no, create it.
+.1f22	20 8a 1f	jsr $1f8a			jsr 	CreateVariable 				; no, create it.
 .1f25					_AVFound:
 .1f25	68		pla				pla
 .1f26	aa		tax				tax
-.1f27	ac fc 0a	ldy $0afc			ldy 	varEnd 						; restore Y
-.1f2a	68		pla				pla
-.1f2b	aa		tax				tax
-.1f2c	8a		txa				txa 								; return stack in A and return
-.1f2d	60		rts				rts
-.1f2e					AccessSetup:
-.1f2e	a9 00		lda #$00			lda 	#0 							; zero the hash byte.
-.1f30	8d fa 0a	sta $0afa			sta 	varHash
-.1f33	98		tya				tya
-.1f34	48		pha				pha
-.1f35	b1 02		lda ($02),y	_ASLoop:lda 	(codePtr),y					; get next identifier character
-.1f37	c9 3a		cmp #$3a			cmp 	#$3A 						; is it 3A-3F which end all identifiers ?
-.1f39	b0 0b		bcs $1f46			bcs 	_ASComplete
-.1f3b	18		clc				clc 								; add to the hash. Might improve this.
-.1f3c	6d fa 0a	adc $0afa			adc 	varHash
-.1f3f	8d fa 0a	sta $0afa			sta 	varHash
-.1f42	c8		iny				iny 								; next character
-.1f43	4c 35 1f	jmp $1f35			jmp 	_ASLoop
-.1f46					_ASComplete:
-.1f46	8d fb 0a	sta $0afb			sta 	varType 					; save variable type byte
-.1f49	c8		iny				iny
-.1f4a	8c fc 0a	sty $0afc			sty 	varEnd 						; save the ending position.
-.1f4d	38		sec				sec 								; convert type byte from $3A-$3F to 0..5
-.1f4e	e9 3a		sbc #$3a			sbc 	#$3A
->1f50	db						.byte 	$DB
-.1f51	0a		asl a				asl 	a 							; multiply by hashTableSize (8 in this case)
-.1f52	0a		asl a				asl 	a
-.1f53	0a		asl a				asl 	a
-.1f54	0a		asl a				asl 	a 							; 2 bytes/word
-.1f55	85 04		sta $04				sta 	temp0 						; this is the offset to the start of the table.
-.1f57	ad fa 0a	lda $0afa			lda 	varHash 					; get hash
-.1f5a	29 07		and #$07			and 	#(hashTableSize-1)			; force into range
-.1f5c	0a		asl a				asl  	a 							; x 2 (for word) and CC
-.1f5d	65 04		adc $04				adc 	temp0 						; now offset from the start of the hash table.
-.1f5f	69 68		adc #$68			adc 	#hashTables & $FF 			; add to hash table base address
-.1f61	8d fd 0a	sta $0afd			sta 	hashList
-.1f64	a9 0a		lda #$0a			lda 	#hashTables >> 8
-.1f66	69 00		adc #$00			adc 	#0
-.1f68	8d fe 0a	sta $0afe			sta 	hashList+1
-.1f6b	68		pla				pla
-.1f6c	a8		tay				tay
-.1f6d	60		rts				rts
+.1f27	18		clc				clc 								; copy temp0 (variable record address)
+.1f28	a5 04		lda $04				lda 	temp0 						; +4 (to point to the data)
+.1f2a	69 04		adc #$04			adc 	#4
+.1f2c	95 48		sta $48,x			sta 	esInt0,x
+.1f2e	a5 05		lda $05				lda 	temp0+1
+.1f30	69 00		adc #$00			adc 	#0
+.1f32	95 50		sta $50,x			sta 	esInt1,x
+.1f34	a9 00		lda #$00			lda 	#0
+.1f36	95 58		sta $58,x			sta 	esInt2,x
+.1f38	95 60		sta $60,x			sta 	esInt3,x
+.1f3a	ac fb 0a	ldy $0afb			ldy 	varType 					; get the type ID from the type.
+.1f3d	b9 0d 1f	lda $1f0d,y			lda 	_AVTypeTable-$3A,y
+.1f40	95 40		sta $40,x			sta 	esType,x
+.1f42	ac fc 0a	ldy $0afc			ldy 	varEnd 						; restore Y
+.1f45	8a		txa				txa 								; return stack in A and return
+.1f46	60		rts				rts
+.1f47					_AVTypeTable:
+>1f47	80 80						.byte 	$80,$80						; integer
+>1f49	c0 c0						.byte 	$C0,$C0 					; string
+>1f4b	81 81						.byte 	$81,$81 					; float
+.1f4d					AccessSetup:
+.1f4d	a9 00		lda #$00			lda 	#0 							; zero the hash byte.
+.1f4f	8d fa 0a	sta $0afa			sta 	varHash
+.1f52	98		tya				tya
+.1f53	48		pha				pha
+.1f54	b1 02		lda ($02),y	_ASLoop:lda 	(codePtr),y					; get next identifier character
+.1f56	c9 3a		cmp #$3a			cmp 	#$3A 						; is it 3A-3F which end all identifiers ?
+.1f58	b0 0b		bcs $1f65			bcs 	_ASComplete
+.1f5a	18		clc				clc 								; add to the hash. Might improve this.
+.1f5b	6d fa 0a	adc $0afa			adc 	varHash
+.1f5e	8d fa 0a	sta $0afa			sta 	varHash
+.1f61	c8		iny				iny 								; next character
+.1f62	4c 54 1f	jmp $1f54			jmp 	_ASLoop
+.1f65					_ASComplete:
+.1f65	8d fb 0a	sta $0afb			sta 	varType 					; save variable type byte
+.1f68	c8		iny				iny
+.1f69	8c fc 0a	sty $0afc			sty 	varEnd 						; save the ending position.
+.1f6c	38		sec				sec 								; convert type byte from $3A-$3F to 0..5
+.1f6d	e9 3a		sbc #$3a			sbc 	#$3A
+.1f6f	0a		asl a				asl 	a 							; multiply by hashTableSize (8 in this case)
+.1f70	0a		asl a				asl 	a
+.1f71	0a		asl a				asl 	a
+.1f72	0a		asl a				asl 	a 							; 2 bytes/word
+.1f73	85 04		sta $04				sta 	temp0 						; this is the offset to the start of the table.
+.1f75	ad fa 0a	lda $0afa			lda 	varHash 					; get hash
+.1f78	29 07		and #$07			and 	#(hashTableSize-1)			; force into range
+.1f7a	0a		asl a				asl  	a 							; x 2 (for word) and CC
+.1f7b	65 04		adc $04				adc 	temp0 						; now offset from the start of the hash table.
+.1f7d	69 68		adc #$68			adc 	#hashTables & $FF 			; add to hash table base address
+.1f7f	85 7c		sta $7c				sta 	hashList
+.1f81	a9 0a		lda #$0a			lda 	#hashTables >> 8
+.1f83	69 00		adc #$00			adc 	#0
+.1f85	85 7d		sta $7d				sta 	hashList+1
+.1f87	68		pla				pla
+.1f88	a8		tay				tay
+.1f89	60		rts				rts
 
 ;******  Return to file: ../source/variable/variable.asm
 
 
 ;******  Processing file: ../source/variable/create.asm
 
-.1f6e					CreateVariable:
->1f6e	db						.byte 	$DB
+.1f8a					CreateVariable:
+.1f8a	98		tya				tya 								; push Y on the stack twice.
+.1f8b	48		pha				pha
+.1f8c	48		pha				pha
+.1f8d	ad fb 0a	lda $0afb			lda 	varType 					; get var type 0-5
+.1f90	38		sec				sec
+.1f91	e9 3a		sbc #$3a			sbc 	#$3A
+.1f93	4a		lsr a				lsr 	a 							; 0 (int) 1 (string) 2 (float)
+.1f94	aa		tax				tax 								; and get the length of the
+.1f95	bd d7 1f	lda $1fd7,x			lda		_CVSize,x 					; the bytes for this new variable.
+.1f98	48		pha				pha 								; save length
+.1f99	a8		tay				tay 								; put into Y.
+.1f9a	ad ce 0a	lda $0ace			lda 	lowMemory 					; set low Memory ptr to temp0
+.1f9d	85 04		sta $04				sta 	temp0
+.1f9f	ad cf 0a	lda $0acf			lda 	lowMemory+1
+.1fa2	85 05		sta $05				sta 	temp0+1
+.1fa4	68		pla				pla 								; get length
+.1fa5	20 6c 10	jsr $106c			jsr 	AdvanceLowMemoryByte 		; shift alloc memory forward by the length.
+.1fa8					_CVClear:
+.1fa8	88		dey				dey
+.1fa9	a9 00		lda #$00			lda 	#0
+.1fab	91 04		sta ($04),y			sta 	(temp0),y
+.1fad	c0 04		cpy #$04			cpy 	#4
+.1faf	d0 f7		bne $1fa8			bne 	_CVClear
+.1fb1	68		pla				pla 								; offset, work out where the variable name is.
+.1fb2	18		clc				clc
+.1fb3	65 02		adc $02				adc 	codePtr
+.1fb5	a0 02		ldy #$02			ldy 	#2 							; copy that into slots 2 + 3.
+.1fb7	91 04		sta ($04),y			sta 	(temp0),y
+.1fb9	a5 03		lda $03				lda 	codePtr+1
+.1fbb	69 00		adc #$00			adc 	#0
+.1fbd	c8		iny				iny
+.1fbe	91 04		sta ($04),y			sta 	(temp0),y
+.1fc0	a0 00		ldy #$00			ldy 	#0 							; copy current hash pointer in link
+.1fc2	b1 7c		lda ($7c),y			lda 	(hashList),y
+.1fc4	91 04		sta ($04),y			sta 	(temp0),y
+.1fc6	c8		iny				iny
+.1fc7	b1 7c		lda ($7c),y			lda 	(hashList),y
+.1fc9	91 04		sta ($04),y			sta 	(temp0),y
+.1fcb	a5 05		lda $05				lda 	temp0+1 					; set new link
+.1fcd	91 7c		sta ($7c),y			sta 	(hashList),y
+.1fcf	88		dey				dey
+.1fd0	a5 04		lda $04				lda 	temp0
+.1fd2	91 7c		sta ($7c),y			sta 	(hashList),y
+.1fd4	68		pla				pla
+.1fd5	a8		tay				tay
+.1fd6	60		rts				rts
+>1fd7	08				_CVSize:.byte 	4+4 						; <storage for integer>
+>1fd8	06						.byte 	4+2 						; <storage for string>
+>1fd9	0a						.byte 	4+6 						; <storage for float>
 
 ;******  Return to file: ../source/variable/variable.asm
 
 
 ;******  Processing file: ../source/variable/find.asm
 
-.1f6f					FindVariable:
-.1f6f	18		clc				clc
-.1f70	60		rts				rts
+.1fda					FindVariable:
+.1fda	18		clc				clc
+.1fdb	60		rts				rts
 
 ;******  Return to file: ../source/variable/variable.asm
 
 
 ;******  Processing file: ../source/variable/reset.asm
 
-.1f71					HashTableReset:
-.1f71	a2 60		ldx #$60			ldx 	#6*2*hashTableSize
-.1f73	a9 00		lda #$00			lda 	#0
-.1f75					_HTRClear:
-.1f75	9d 67 0a	sta $0a67,x			sta 	hashTables-1,x
-.1f78	ca		dex				dex
-.1f79	d0 fa		bne $1f75			bne 	_HTRClear
-.1f7b	60		rts				rts
+.1fdc					HashTableReset:
+.1fdc	a2 60		ldx #$60			ldx 	#6*2*hashTableSize
+.1fde	a9 00		lda #$00			lda 	#0
+.1fe0					_HTRClear:
+.1fe0	9d 67 0a	sta $0a67,x			sta 	hashTables-1,x
+.1fe3	ca		dex				dex
+.1fe4	d0 fa		bne $1fe0			bne 	_HTRClear
+.1fe6	60		rts				rts
 
 ;******  Return to file: ../source/variable/variable.asm
 
-.1f7c					variableHandler:
-.1f7c	7c 7f 1f	jmp ($1f7f,x)			jmp 	(variableVectors,x)
-.1f7f					variableVectors:
->1f7f	ef 1e					.word AccessVariable       ; index 0
->1f81	71 1f					.word HashTableReset       ; index 2
+.1fe7					variableHandler:
+.1fe7	7c ea 1f	jmp ($1fea,x)			jmp 	(variableVectors,x)
+.1fea					variableVectors:
+>1fea	ef 1e					.word AccessVariable       ; index 0
+>1fec	dc 1f					.word HashTableReset       ; index 2
 
 ;******  Return to file: ../source/basic.asm
 
