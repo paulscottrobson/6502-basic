@@ -4,12 +4,14 @@
 	.include "00start.asm"
 	.include "commands/assert.asm"
 	.include "commands/clear.asm"
+	.include "commands/for.asm"
 	.include "commands/if.asm"
 	.include "commands/let.asm"
 	.include "commands/new.asm"
 	.include "commands/poke.asm"
 	.include "commands/print.asm"
 	.include "commands/rem.asm"
+	.include "commands/repeat.asm"
 	.include "commands/run.asm"
 	.include "commands/stopend.asm"
 	.include "commands/transfer.asm"
@@ -28,8 +30,8 @@
 	.include "imath/int32multiply.asm"
 	.include "imath/int32tostr.asm"
 	.include "imath/int32unary.asm"
-	.include "stack.asm"
 	.include "utility/check.asm"
+	.include "utility/stack.asm"
 
 .section code
 

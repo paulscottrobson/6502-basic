@@ -29,3 +29,5 @@ retStackSize = 512
 ;		Structure markers.
 ;
 markerGOSUB = 'G'
+markerREPEAT = 'R'
+markerFOR = 'F'

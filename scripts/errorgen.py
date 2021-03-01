@@ -18,7 +18,7 @@ import re,os,sys
 errorDef = """
 	Syntax:Syntax Error
 	NoModule:Module disabled
-	Assert
+	Assert:Assertion failed
 	DivZero:Divide By Zero 
 	Stop
 	BadType:Type Mismatch
@@ -29,6 +29,9 @@ errorDef = """
 	LineNumber:Line Number not found
 	StrLen:String too long.
 	ReturnErr:RETURN without GOSUB
+	UntilErr:UNTIL without REPEAT
+	NextErr:NEXT without FOR
+	BadIndex:Bad NEXT index
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

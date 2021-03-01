@@ -3,7 +3,7 @@
 ;
 ErrorID_Syntax = 1 ; Syntax Error
 ErrorID_NoModule = 2 ; Module disabled
-ErrorID_Assert = 3 ; Assert
+ErrorID_Assert = 3 ; Assertion failed
 ErrorID_DivZero = 4 ; Divide By Zero
 ErrorID_Stop = 5 ; Stop
 ErrorID_BadType = 6 ; Type Mismatch
@@ -14,3 +14,6 @@ ErrorID_NoReference = 10 ; Missing reference
 ErrorID_LineNumber = 11 ; Line Number not found
 ErrorID_StrLen = 12 ; String too long.
 ErrorID_ReturnErr = 13 ; RETURN without GOSUB
+ErrorID_UntilErr = 14 ; UNTIL without REPEAT
+ErrorID_NextErr = 15 ; NEXT without FOR
+ErrorID_BadIndex = 16 ; Bad NEXT index

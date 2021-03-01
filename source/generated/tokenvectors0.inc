@@ -27,13 +27,13 @@ Group0Vectors:
 	.word	PowerHandler             ; $96 ^
 	.word	WordRefHandler           ; $97 !
 	.word	ByteRefHandler           ; $98 ?
-	.word	Unimplemented            ; $99 repeat
+	.word	Command_Repeat           ; $99 repeat
 	.word	Unimplemented            ; $9a while
-	.word	Unimplemented            ; $9b for
+	.word	Command_FOR              ; $9b for
 	.word	CommandIf                ; $9c if
-	.word	Unimplemented            ; $9d until
+	.word	Command_Until            ; $9d until
 	.word	Unimplemented            ; $9e wend
-	.word	Unimplemented            ; $9f next
+	.word	Command_NEXT             ; $9f next
 	.word	TKErr06                  ; $a0 then
 	.word	Unimplemented            ; $a1 endif
 	.word	UnaryParenthesis         ; $a2 (

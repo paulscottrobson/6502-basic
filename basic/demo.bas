@@ -1,4 +1,5 @@
-100 C = 10
-110 PRINT C:C=c-1
-120 IF C > 0 THEN 110
-130 GOTO 130
+for a = 1 to 10
+for b = 1 to 3
+print a,b
+next a:next a
+repeat:until false
