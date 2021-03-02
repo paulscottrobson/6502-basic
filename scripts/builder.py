@@ -122,7 +122,7 @@ h.close()
 #
 #		Write out files
 #
-h = open(sourceDir+os.sep+"files.list","w")
+h = open(sourceDir+os.sep+"bin"+os.sep+"files.list","w")
 h.write(header)
 sourceList.sort()
 h.write("\n".join(sourceList))

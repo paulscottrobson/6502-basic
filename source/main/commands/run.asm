@@ -133,7 +133,7 @@ Unimplemented:
 TKErr01:	;; [)]
 TKErr02:	;; [,]
 TKErr03:	;; [;]
-TKErr04:	;; [PROC]
+TKErr04:	;; [DEFPROC]
 TKErr05:	;; [STEP]
 TKErr06:	;; [THEN]
 TKErr07:	;; [TO]

@@ -1,15 +1,21 @@
 TODO
 ====
 
-Strings need concreting on assignment.
+Strings need concrete assignment.
 	- reuse of old space.
-	- null concreting, single character concreting.
+	- null concreting
+	- single character concreting.
 	- only concrete if in soft memory space.
 
-Complete missing keywords in core.
+	Test using additives.
+
+Add str$() val() isval() with bases 2-16 for integer. isval() returns error on val()
+
+Add proc defproc endproc code. Design localisation for parameters and initialisation.
+
 Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.
+
 Add arrays.
-Add procedures and locals (no arrays)
 
 Incomplete but hooked in for write and test
 ===========================================

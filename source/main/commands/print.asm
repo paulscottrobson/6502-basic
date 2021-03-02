@@ -59,7 +59,7 @@ _PrintLoop:
 		;
 _PrintString:
 		ldx 	#0 							; bottom string to temp0
-		jsr 	WVSetTemp0 					
+		jsr 	TOSToTemp0 					
 		jmp 	_PrintTemp0 				; print no leading space.
 		;
 		;		Print Float

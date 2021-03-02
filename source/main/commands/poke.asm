@@ -33,7 +33,7 @@ PokeGeneral:
 		inx
 		jsr 	EvaluateInteger 			; what value to POKE ?
 		dex
-		jsr 	WVSetTemp0 					; temp0 points to the target address
+		jsr 	TOSToTemp0 					; temp0 points to the target address
 		sty 	tempShort 					; save Y
 
 		pla 								; get copy type and dispatch

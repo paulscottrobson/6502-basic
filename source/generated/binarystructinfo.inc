@@ -24,8 +24,10 @@
 	.byte	$82			; $9a while
 	.byte	$82			; $9b for
 	.byte	$82			; $9c if
-	.byte	$80			; $9d until
-	.byte	$80			; $9e wend
-	.byte	$80			; $9f next
-	.byte	$80			; $a0 then
-	.byte	$80			; $a1 endif
+	.byte	$82			; $9d defproc
+	.byte	$80			; $9e until
+	.byte	$80			; $9f wend
+	.byte	$80			; $a0 next
+	.byte	$80			; $a1 then
+	.byte	$80			; $a2 endif
+	.byte	$80			; $a3 endproc

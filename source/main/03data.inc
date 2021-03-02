@@ -57,8 +57,8 @@ esInt1:	.fill 	StackSize
 esInt2:	.fill 	StackSize
 esInt3:	.fill 	StackSize
 
-esExp:	.fill 	StackSize 					; exponent
-esSign: .fill 	StackSize 					; sign byte for floating point only
+esExp:	.fill 	StackSize 					; exponent ($80 = 0)
+esZSign:.fill 	StackSize 					; for floating point - sign (bit 7) isZero (bit 6)
 
 		.send zeropage
 

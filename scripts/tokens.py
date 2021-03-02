@@ -105,9 +105,9 @@ class Tokens(object):
 		#
 		#		Operators that effect the structure depth follow.
 		[+] 
-			repeat 	while 	for 	if
+			repeat 	while 	for 	if 		defproc
 		[-] 
-			until 	wend 	next 	then 	endif
+			until 	wend 	next 	then 	endif 	endproc
 		#
 		#
 		#		Then unary functions follow (not floating point ones.)
@@ -119,24 +119,23 @@ class Tokens(object):
 			timer(	event(	get( 	inkey(	alloc( 	
 			chr$(	left$(	mid$(	right$(	str$(
 			val(	peek( 	deek(	leek( 	asc(
-			int(	float( 	@		~ 		&
+			int(	float( 	isval(	
+			@		~ 		&
 		#
 		#		Then command and syntax and so on.
 		#
 		[command]
-			) 		: 		, 		; 		]
-			to 		step 	proc 	endproc	local
-			rem 	let 	'		[ 		input
-			else	vdu 	read 	data	restore
-			print	goto 	gosub 	return 	
-			assert 	stop 	end 	dim		
-			poke 	doke 	loke 	
+			) 		: 		, 		; 		'
+			to 		step 	proc 	local	dim		
+			rem 	let 	input	else	vdu 	
+			print	goto 	gosub 	return 	data	 	
+			assert 	poke 	doke 	loke 	
 		#
 		#		Put these in group 1.
 		#
 		[group1]
-			clear 	load	save 	list 	new 	run 	
-			code 	option 	
+			clear 	load	save 	list 	new 	
+			run 	read 	restore	end 	stop
 		#
 		#		System specific commands in group 2
 		#

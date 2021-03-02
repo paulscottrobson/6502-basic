@@ -15,8 +15,9 @@ else
 include ../documents/general.make
 endif
 
-APPNAME = basic.prg
-ASMOPTS = -Wall -q -c -L basic.lst -l basic.lbl -Wall
+OBJDIR = $(SOURCEDIR)bin$(S)
+ASMOPTS = -Wall -q -c -L $(OBJDIR)basic.lst -l $(OBJDIR)basic.lbl -Wall
+APPNAME = $(OBJDIR)basic.prg
 
 .PHONY: all run analyse
 
@@ -27,12 +28,12 @@ run : $(APPNAME)
 	$(EMULATOR) $<
 
 analyse: $(APPNAME)
-	python ..$(S)scripts$(S)analyse.py basic.lst
+	python ..$(S)scripts$(S)analyse.py $(OBJDIR)nbasic.lst
 
-$(APPNAME) : $(SOURCEDIR)basic.asm 
+$(APPNAME) : basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)
-	python ..$(S)scripts$(S)tests$(S)testvar.py >$(BASICDIR)test.bas
-	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)test.bas
+#	python ..$(S)scripts$(S)tests$(S)testvar.py >$(BASICDIR)test.bas
+	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)demo.bas
 	python ..$(S)scripts$(S)errorgen.py
 	python ..$(S)scripts$(S)builder.py
 	python ..$(S)scripts$(S)tables.py

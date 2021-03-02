@@ -22,6 +22,7 @@
 	.include "evaluate/dereference.asm"
 	.include "evaluate/evaluate.asm"
 	.include "evaluate/unary.asm"
+	.include "evaluate/unary2.asm"
 	.include "evaluate/unarystr.asm"
 	.include "imath/int32binary.asm"
 	.include "imath/int32compare.asm"

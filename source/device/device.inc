@@ -7,13 +7,23 @@ device_crlf .macro
 	jsr	deviceHandler
 	.endm
 
-device_print .macro
+device_inkey .macro
 	ldx	#2
 	jsr	deviceHandler
 	.endm
 
-device_tab .macro
+device_print .macro
 	ldx	#4
+	jsr	deviceHandler
+	.endm
+
+device_tab .macro
+	ldx	#6
+	jsr	deviceHandler
+	.endm
+
+device_timer .macro
+	ldx	#8
 	jsr	deviceHandler
 	.endm
 

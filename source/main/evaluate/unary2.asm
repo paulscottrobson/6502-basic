@@ -1,9 +1,9 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		x16io.asm
-;		Purpose:	Input/Output x16
-;		Created:	28th February 2021
+;		Name:		unary2.asm
+;		Purpose:	More Unary Routines
+;		Created:	2nd March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -13,57 +13,79 @@
 
 ; ************************************************************************************************
 ;
-;											Print CR/LF
+;							Read the timer , which is 16 bit
 ;
 ; ************************************************************************************************
 
-IONewLine: ;; <crlf>
-		pha
-		lda 	#13
-		jsr 	IOPrintChar
-		pla
-		rts
-
-; ************************************************************************************************
-;
-;											Print Tab
-;
-; ************************************************************************************************
-
-IOTab: ;; <tab>
-		pha
-		lda 	#32
-		jsr 	IOPrintChar
-		pla
-		rts
-
-; ************************************************************************************************
-;
-;											Print A
-;
-; ************************************************************************************************
-
-IOPrintChar: ;; <print>
-		tax
-		phy
-		txa
-		jsr 	$FFD2
-		ply
-		rts
-
-; ************************************************************************************************
-;
-;				Check key is pressed/in kbd buffer, returns key if so 0 otherwise
-;											(INKEY)
-;
-; ************************************************************************************************
-
-IOInkey: ;; <inkey>
+UnaryTimer:		;; [timer(]
+		jsr 	CheckRightParen
 		pshy
-		jsr 	$FFE4
-		sta 	tempShort
+		jsr 	MInt32Zero 					; zero result
+		stx 	temp0 						; returning in YA so can't use pshx
+		device_timer()						; get clock.
+		ldx 	temp0						; restore X and update 16 bit result
+		sta 	esInt0,x
+		sty 	esInt1,x
 		puly
-		lda 	tempShort
 		rts
+
+; ************************************************************************************************
+;
+;						Inkey() - read key if any pressed, 0 otherwise
+;
+; ************************************************************************************************
+
+UnaryInkey:		;; [inkey(]
+		jsr 	CheckRightParen
+		stx 	temp0
+		device_inkey()
+		ldx 	temp0
+		jsr 	MInt32Set8Bit
+		rts
+
+; ************************************************************************************************
+;
+;								Get() - get next key pressed
+;
+; ************************************************************************************************
+
+UnaryGet:		;; [get(]
+		jsr 	CheckRightParen
+		stx 	temp0
+_UGLoop:		
+		device_inkey()
+		cmp 	#0
+		beq 	_UGLoop
+		ldx 	temp0
+		jsr 	MInt32Set8Bit
+		rts
+
+; ************************************************************************************************
+;
+;								Sys() - call/return 6502 code
+;
+; ************************************************************************************************
+
+UnarySys: 		;; [sys(]
+		jsr 	EvaluateInteger 				; get the address
+		jsr 	CheckRightParen
+		jsr 	TOSToTemp0 						; copy to temp0
+		pshx 									; save XY
+		pshy
+		;
+		lda 	("A"-"A")*4+SingleLetterVar 	; load AXY
+		ldx 	("X"-"A")*4+SingleLetterVar
+		ldy 	("Y"-"A")*4+SingleLetterVar
+		jsr 	_CallTemp0
+		;
+		sta 	tempShort 						; restore YX
+		puly
+		pulx
+		lda 	tempShort
+		jsr 	MInt32Set8Bit 					; return result.
+		rts
+
+_CallTemp0:
+		jmp 	(temp0)
 
 		.send 	code

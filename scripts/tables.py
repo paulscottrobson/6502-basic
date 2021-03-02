@@ -53,7 +53,7 @@ h.close()
 #		Scan the sources in files.list for keyword markers.
 #
 handlers = {}
-fileList = open(".."+os.sep+"source"+os.sep+"files.list").readlines()	# read in file list.
+fileList = open(".."+os.sep+"source"+os.sep+"bin"+os.sep+"files.list").readlines()	# read in file list.
 fileList = [x.strip() for x in fileList if not x.startswith(";")]		# remove comments
 for f in [x for x in fileList if x != ""]:								# read through each file
 	for s in open(f).readlines():
