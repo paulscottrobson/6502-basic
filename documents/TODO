@@ -28,4 +28,16 @@ Notes
 	Stack position fudged for readability.
 	When calling parameters reset softalloc before every param, they might all be concreted strings.
 
+Bug
+===
+	String default value.
+
+
+Testing
+=======
+	CheckOverwriteCurrent:
+		Already is hard mem - fits, doesn't fit.
+	RequiresConcretion:
+		Soft or Hard string.
+
 		

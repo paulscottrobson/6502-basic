@@ -74,6 +74,20 @@ _CVClear: 									; zero the allocated memory.
 		lda 	temp0
 		sta 	(hashList),y
 
+		lda 	varType 					; is it a string ($3C)
+		cmp 	#$3C
+		bne 	_CVNoDefaultNull
+
+		lda 	#0 							; put a reference to null string as the default value.
+		sta 	NullString
+		ldy 	#5
+		lda 	#NullString & $FF
+		sta 	(temp0),y
+		lda 	#NullString >> 8
+		iny
+		sta 	(temp0),y
+
+_CVNoDefaultNull:		
 		puly 								; restore Y
 		rts
 ;

@@ -94,6 +94,9 @@ highMemory: 								; top of program memory available.
 lowMemory:									; bottom of memory available.
 		.fill 	2
 
+NullString:									; used for null string.
+		.fill 	1							; don't waste memory concreting null strings.
+
 convertBuffer:								; buffer for numeric conversions
 		.fill 	35
 
