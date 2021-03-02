@@ -19,7 +19,7 @@ OBJDIR = $(SOURCEDIR)bin$(S)
 ASMOPTS = -Wall -q -c -L $(OBJDIR)basic.lst -l $(OBJDIR)basic.lbl -Wall
 APPNAME = $(OBJDIR)basic.prg
 
-.PHONY: all run analyse
+.PHONY: all run analyse dump
 
 all : $(APPNAME)
 
@@ -29,6 +29,9 @@ run : $(APPNAME)
 
 analyse: $(APPNAME)
 	python ..$(S)scripts$(S)analyse.py $(OBJDIR)nbasic.lst
+
+dump : $(APPNAME)
+	python ..$(S)scripts$(S)dumpvar.py 
 
 $(APPNAME) : basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)

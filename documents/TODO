@@ -1,13 +1,7 @@
 TODO
 ====
 
-Strings need concrete assignment.
-	- reuse of old space.
-	- null concreting
-	- single character concreting.
-	- only concrete if in soft memory space.
-
-	Test using additives.
+Test using additives etc.
 
 Add str$() val() isval() with bases 2-16 for integer. isval() returns error on val()
 
@@ -21,23 +15,15 @@ Incomplete but hooked in for write and test
 ===========================================
 
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
-	Out of memory in pointer advance in clear.asm alloc, soft memory allocation alloc() function.
+	Out of memory in pointer advance in clear.asm alloc, soft/hard memory allocation alloc() function.
 
 Notes
 =====
 	Stack position fudged for readability.
 	When calling parameters reset softalloc before every param, they might all be concreted strings.
 
-Bug
-===
 	String default value.
 
 
-Testing
-=======
-	CheckOverwriteCurrent:
-		Already is hard mem - fits, doesn't fit.
-	RequiresConcretion:
-		Soft or Hard string.
 
-		
+

@@ -18,6 +18,8 @@ class AssignTest(Test):
 		self.current = {}
 		for i in range(1,40):
 			name = "".join([chr(random.randint(97,117)) for c in range(0,random.randint(1,5))])
+			if len(name) > 1:
+				name = name[0]+"0"+name[1:]
 			self.current[name] = None
 		self.names = [x for x in self.current.keys()]
 

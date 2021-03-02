@@ -23,8 +23,14 @@ temp0: 	.fill 	2							; working variables.
 temp1: 	.fill 	2
 temp2: 	.fill 	2
 
-tempShort:	
+tempShort:	 								; short term storage.
 		.fill 	1
+
+highMemory: 								; top of program memory available.
+		.fill 	2		
+
+lowMemory:									; bottom of memory available.
+		.fill 	2
 
 		.send zeropage
 
@@ -86,12 +92,6 @@ basePage: 									; start of program space.
 		.fill 	2
 
 endMemory: 									; end of memory.
-		.fill 	2
-
-highMemory: 								; top of program memory available.
-		.fill 	2		
-
-lowMemory:									; bottom of memory available.
 		.fill 	2
 
 NullString:									; used for null string.

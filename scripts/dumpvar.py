@@ -54,7 +54,8 @@ class Dumper(object):
 			n = self.leek(p+5)
 			v = str(n if n <= 0x7FFFFFFF else n-0x100000000)
 		if t == 2:
-			v = self.getString(self.deek(p+5))
+			a = self.deek(p+5)
+			v = self.getString(a)+" (${0:04x})".format(a)
 
 		h.write("\t\tRecord @${0:04x} : [${3:02x}] {1:10} = {2}\n".format(p,s,v,self.peek(p+4)))
 	#

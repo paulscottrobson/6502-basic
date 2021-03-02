@@ -123,7 +123,7 @@ _ASLoop:lda 	(codePtr),y					; get next identifier character
 		clc 								; add to the hash. Might improve this.
 		adc 	varHash
 
-		lda 	#0
+		;lda 	#0
 		
 		sta 	varHash
 		iny 								; next character

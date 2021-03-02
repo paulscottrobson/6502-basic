@@ -35,7 +35,7 @@ srcStrLen:									; length of source string.
 ;					either : soft Memory, in which case it needs concreting (a$ = str(42))
 ;							 hard Memory, in which case it needs duplicating (a$ = b$)
 ;
-;		Concretion is limited : (not yet implemented)
+;		Special Concretion (not yet implemented) where some values are converted to constants.
 ;
 ;		(i) 	"" null string is returned as a constant.
 ;		(ii) 	Single character strings 32-126 returned as a constant.
@@ -75,14 +75,15 @@ StringWrite: 	;; <write>
 		bcc 	_SWWriteReference
 		;
 		;		Yes, so allocate hard memory for it (e.g. drop highMemory)
+		; 		updating address in TOS for storage.
 		;
-		debug
 		jsr 	AllocateHardMemory 
 		;
 		;		Physically Copy string at TOS+1 into reference stored at TOS		
+		;		(do not used temp values)
 		;
 _SWCopyCurrent:
-		debug
+		jsr 	CopyStringToHardMemory
 		jmp 	_SWExit
 		;
 		;		Store address of string at TOS+1 at reference at TOS.
@@ -129,12 +130,28 @@ CheckOverwriteCurrent:
 		cmp 	highMemory+1 			; if < high memory then it cannot be something stored
 		bcc 	_COCFail 				; in hard memory.
 		;
-		; TODO: Check if it physically fits, if so return TRUE to copy over.
+		; 		Check if it physically fits, if so return TRUE (CS) to copy over.
 		;
-		debug
-
+		ldy 	#0 						; copy target address - 1 into temp2
+		lda 	(temp1),y
+		sbc 	#1
+		sta 	temp2
+		iny
+		lda 	(temp1),y
+		sbc 	#0
+		sta 	temp2+1
+		;
+		ldy 	#0 						; how large is this physical chunk.
+		lda 	(temp2),y
+		sec  							; maximum character capacity.
+		sbc 	#2
+		cmp 	srcStrLen 				; if >= the required length
+		bcs 	_COCCanReuse
 _COCFail:
 		clc
+		rts
+_COCCanReuse:
+		sec
 		rts
 
 ; ************************************************************************************************
@@ -144,12 +161,16 @@ _COCFail:
 ; ************************************************************************************************
 
 RequiresConcretion:
+		lda 	temp0+1 				; get MSB of address of string to be written
+		cmp 	highMemory+1 			; if >= high memory it is concreted
+		bcs 	_RCSucceed 				; so it needs concreting again - duplication.
+		;
 		lda 	softMemAlloc+1 			; have we allocated any soft memory yet ?
 		beq 	_RCFail 				; if not, this cannot be soft memory.
 		;
 		lda 	temp0+1 				; get MSB of address of string to be written
-		cmp 	softMemAlloc+1 			; if >= soft mem alloc it is either soft or hard.
-		bcc 	_RCFail 				; so either concreting or duplicating.
+		cmp 	softMemAlloc+1 			; if >= soft mem alloc it is either soft
+		bcc 	_RCFail 				; so concreting
 _RCSucceed:		
 		sec
 		rts
@@ -157,7 +178,69 @@ _RCFail:
 		clc
 		rts
 
+; ************************************************************************************************
+;
+;				Allocate Hard Memory to the current string, and put it at TOS target.
+;
+; ************************************************************************************************
+
 AllocateHardMemory:
+		pshy
+		lda 	srcStrLen 				; characters in string
+		adc 	#1+1+8 					; one for hard memory size, one for string size, extra for expansion
+		bcs 	_AHMSetMax 				; max out that amount.
+		cmp 	#MaxStringSize+2
+		bcc 	_AHMIsOkay
+_AHMSetMax:		
+		lda 	#MaxStringSize+2
+_AHMIsOkay:
+		pha	
+		eor 	#$FF 					; complement and add to high Memory
+		sec  							; and copy result to TOS as target address.
+		adc 	highMemory
+		sta 	highMemory
+		lda 	highMemory+1
+		adc 	#$FF
+		sta 	highMemory+1
+		ldy 	#0 						; Y = 0
+		pla 							; get the total size of the storage block
+		sta 	(highMemory),y
+		;
+		clc
+		lda		highMemory 				; point the target address to the byte after this.
+		adc 	#1
+		sta 	(temp1),y
+		lda 	highMemory+1
+		adc 	#0
+		iny 	
+		sta 	(temp1),y
+
+		puly
+		rts
+
+; ************************************************************************************************
+;
+;					Copy string at (temp0) to hard Memory as in variable record.
+;
+; ************************************************************************************************
+
+CopyStringToHardMemory:
+		pshy
+		ldy 	#0 						; copy target address to temp2
+		lda 	(temp1),y
+		sta 	temp2
+		iny
+		lda 	(temp1),y
+		sta 	temp2+1
+		;
+		ldy 	srcStrLen 				; copy this + 1 characters, (length too) hence $FF compare
+_CSTHMLoop:
+		lda 	(temp0),y
+		sta 	(temp2),y
+		dey
+		cpy 	#$FF
+		bne 	_CSTHMLoop
+		puly
 		rts
 
 		.send 	code
