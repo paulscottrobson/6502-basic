@@ -22,4 +22,9 @@ string_substring .macro
 	jsr	stringHandler
 	.endm
 
+string_write .macro
+	ldx	#8
+	jsr	stringHandler
+	.endm
+
 .send code

@@ -27,6 +27,9 @@ StringConcat:	;; <concat>
 		lda 	(temp0),y
 		adc 	(temp1),y
 		bcs 	_SCError 					; just too many characters here.
+		cmp 	#MaxStringSize
+		bcs 	_SCError
+		
 		jsr 	AllocateSoftString 			; allocate soft string memory, set pointer.
 		jsr 	CopySoftToStack 			; copy that to the stack.
 		jsr 	_SCCopyTemp0 				; copy temp0

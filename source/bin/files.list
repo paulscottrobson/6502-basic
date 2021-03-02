@@ -50,6 +50,7 @@
 ../source/string/concat.asm
 ../source/string/memory.asm
 ../source/string/substring.asm
+../source/string/write.asm
 ../source/variable/access.asm
 ../source/variable/create.asm
 ../source/variable/find.asm

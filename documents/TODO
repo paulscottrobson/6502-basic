@@ -26,6 +26,6 @@ Incomplete but hooked in for write and test
 Notes
 =====
 	Stack position fudged for readability.
-	
-	
-	
+	When calling parameters reset softalloc before every param, they might all be concreted strings.
+
+		

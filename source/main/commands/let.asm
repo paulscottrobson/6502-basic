@@ -50,7 +50,7 @@ WriteValue:
 		ldy 	#1 							; for string, copy 0 and 1.
 		lda 	esType,x 					; check for string assignment
 		and 	#$40
-		bne 	_WVCopyData2
+		bne 	_WVCopyString
 		;
 		;		Check for integer->integer
 		;
@@ -77,6 +77,14 @@ WriteValue:
 		tax
 		jmp 	_WVCopyExit
 		;
+		;		Copy string. This is done by the string library as may include concretion.
+		;
+_WVCopyString:	
+		txa
+		string_write
+		tax
+		jmp 	_WVCopyExit		
+		;
 		;		Copy 4,2 or 1
 		;
 _WVCopyData4:
@@ -90,8 +98,7 @@ _WVCopyData4:
 		dey		
 		lda 	esInt2+1,x
 		sta 	(temp0),y
-_WVCopyData2:
-		ldy 	#1
+		dey
 		lda 	esInt1+1,x
 		sta 	(temp0),y
 _WVCopyData1:		
