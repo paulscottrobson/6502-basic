@@ -11,32 +11,18 @@
 
 import os,re,sys
 
-currentPC = 0x0000
-
 segments = {}
-current = None
+total = 0
 
 if len(sys.argv) == 2:
 	for l in open(sys.argv[1]).readlines():
-		if l.startswith(";"):
-			m = re.search("Processing file\\:(.*?)\\/.*\\s*$",l)
-			if m is not None:
-				#print(m.groups(1),l.strip())
-				current = m.group(1).strip().lower()
-				if current not in segments:
-					segments[current] = { "name":current,"start":None,"end":currentPC }
-
-
-		if l.startswith(".") and current is not None:
-			m = re.match("^\\.([0-9a-fA-F]+)\\s+([0-9a-fA-F]+)",l)
-			if m is not None:
-				newPC = int(m.group(1),16)
-				currentPC = newPC				
-				if segments[current]["start"] is None:
-					segments[current]["start"] = newPC
-				segments[current]["end"] = newPC
-
+		if l.startswith("section_"):
+			m = re.match("^section_([a-z]+)_(.*?)\\s*\\=\\s*\\$([0-9a-f]+)\\s*$",l.lower())
+			segment = m.group(2)
+			if segment not in segments:
+				segments[segment] = {}
+			segments[segment][m.group(1).strip()] = int(m.group(3),16)
 	keys = [x for x in segments.keys()]
 	keys.sort(key = lambda x:segments[x]["start"])
 	for k in keys:
-		print("Section {0:16} ${1:04x}-${2:04x} ({3} bytes)".format('"'+k+'"',segments[k]["start"],segments[k]["end"],segments[k]["end"]-segments[k]["start"]))
+		print("Section {0:16} ${1:04x}-${2:04x} ({3} bytes)".format('"'+k+'"',segments[k]["start"],segments[k]["end"],segments[k]["end"]-segments[k]["start"]))		
