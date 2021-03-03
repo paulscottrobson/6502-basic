@@ -7,23 +7,28 @@ string_chrs .macro
 	jsr	stringHandler
 	.endm
 
-string_concat .macro
+string_clone .macro
 	ldx	#2
 	jsr	stringHandler
 	.endm
 
-string_sCompare .macro
+string_concat .macro
 	ldx	#4
 	jsr	stringHandler
 	.endm
 
-string_substring .macro
+string_sCompare .macro
 	ldx	#6
 	jsr	stringHandler
 	.endm
 
-string_write .macro
+string_substring .macro
 	ldx	#8
+	jsr	stringHandler
+	.endm
+
+string_write .macro
+	ldx	#10
 	jsr	stringHandler
 	.endm
 

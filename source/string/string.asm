@@ -15,8 +15,9 @@ stringHandler:
 
 stringVectors:
 	.word StringChrs           ; index 0
-	.word StringConcat         ; index 2
-	.word STRCompare           ; index 4
-	.word StringSubstring      ; index 6
-	.word StringWrite          ; index 8
+	.word StrClone             ; index 2
+	.word StringConcat         ; index 4
+	.word STRCompare           ; index 6
+	.word StringSubstring      ; index 8
+	.word StringWrite          ; index 10
 .send code

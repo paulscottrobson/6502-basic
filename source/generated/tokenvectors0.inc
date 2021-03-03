@@ -58,15 +58,15 @@ Group0Vectors:
 	.word	ExecLeft                 ; $b5 left$(
 	.word	ExecMid                  ; $b6 mid$(
 	.word	ExecRight                ; $b7 right$(
-	.word	Unimplemented            ; $b8 str$(
-	.word	Unimplemented            ; $b9 val(
+	.word	Event_Str                ; $b8 str$(
+	.word	UnaryVal                 ; $b9 val(
 	.word	UnaryPeek                ; $ba peek(
 	.word	UnaryDeek                ; $bb deek(
 	.word	UnaryLeek                ; $bc leek(
 	.word	UnaryAsc                 ; $bd asc(
 	.word	UnaryIntToFloat          ; $be int(
 	.word	UnaryFloatToInt          ; $bf float(
-	.word	Unimplemented            ; $c0 isval(
+	.word	UnaryIsVal               ; $c0 isval(
 	.word	UnaryReference           ; $c1 @
 	.word	UnaryComplement          ; $c2 ~
 	.word	UnaryHexMarker           ; $c3 &

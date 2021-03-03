@@ -32,12 +32,12 @@ StringConcat:	;; <concat>
 		
 		jsr 	AllocateSoftString 			; allocate soft string memory, set pointer.
 		jsr 	CopySoftToStack 			; copy that to the stack.
-		jsr 	_SCCopyTemp0 				; copy temp0
+		jsr 	SCCopyTemp0 				; copy temp0
 		lda 	temp1 						; copy temp1 to temp0
 		sta 	temp0
 		lda 	temp1+1
 		sta 	temp0+1
-		jsr 	_SCCopyTemp0 				; copy temp0 e.g. what was temp1.
+		jsr 	SCCopyTemp0 				; copy temp0 e.g. what was temp1.
 
 		puly 								; restore Y
 		txa 								; and A
@@ -49,7 +49,7 @@ _SCError:
 ;
 ;		Copy string at temp0 to current soft string
 ;
-_SCCopyTemp0:
+SCCopyTemp0:
 		ldy 	#0 							; put count in temp2
 		lda 	(temp0),y
 		sta 	temp2

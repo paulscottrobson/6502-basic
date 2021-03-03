@@ -1,0 +1,102 @@
+; ************************************************************************************************
+; ************************************************************************************************
+;
+;		Name:		convert.asm
+;		Purpose:	str$() val() isval() functions
+;		Created:	3rd March 2021
+;		Author:		Paul Robson (paul@robsons.org.uk)
+;
+; ************************************************************************************************
+; ************************************************************************************************
+
+		.section code	
+
+; ************************************************************************************************
+;
+;								STR$(<value>[,<base>])
+;
+; ************************************************************************************************
+
+Event_Str: 	;; [str$(]
+		jsr 	EvaluateNumeric 			; get a number.
+		lda 	esType,x 					; is it floating point
+		bne 	_ESFloat
+		jsr 	ConvertGetBase
+		set16 	temp0,convertBuffer 		; convert here.
+		lda 	esInt0+1,x 					; get the base
+		jsr 	MInt32ToString 				; convert to string.		
+		jmp 	_ESCloneExit 				; clone and exit.
+
+_ESFloat:
+		jsr 	CheckRightParen 			; check closing )
+		jsr 	TOSToTemp0 					; string address in temp0, goes here.
+		txa
+		floatingpoint_floatToString 		; convert to string at temp0.
+		tax
+
+_ESCloneExit:
+		txa
+		string_clone 						; clone string at temp0 to TOS.
+		tax
+		rts
+
+; ************************************************************************************************
+;
+;							VAL(<string>[,<base>]) ISVAL(same)
+;
+;		Base only for floats. ISVAL and VAL are identical except one returns the number
+;		and the other returns the value.
+;
+; ************************************************************************************************
+
+UnaryVal:		;; [val(]
+		sec
+		bcs 	ValueMain
+UnaryIsVal:		;; [isval(]
+		clc
+ValueMain:
+		php 								; save results (CS is value, CC is validation)
+		debug
+		jsr 	EvaluateString
+		jsr 	ConvertGetBase 				; get base, if any.
+		;
+		lda 	esInt0+1,x 					; is base the default
+		cmp 	#$80+10 					; if no, then it is integer only.
+		bne 	_VMTryInteger
+		;
+		txa
+		; TODO: Need some way of check if fp library is installed.
+		tax
+_VMTryInteger:
+
+
+
+
+; ************************************************************************************************
+;
+;		looks for ) or ,[base]), puts base in esInt0+1, defaulting to 10
+;
+; ************************************************************************************************
+
+ConvertGetBase:
+		lda 	#10+$80 					; default base 10 signed.	
+		sta 	esInt0+1,x
+		lda 	(codePtr),y
+		cmp 	#TKW_COMMA
+		bne 	_CGBDone
+		inx 								; next level
+		iny 								; skip comma.
+		jsr 	EvaluateSmallInteger		; evaluate the base.
+		dex
+		cmp 	#2
+		bcc 	_CGBValue
+		cmp 	#17
+		bcs 	_CGBValue
+_CGBDone:
+		jsr 	CheckRightParen
+		rts
+
+_CGBValue:
+		error 	BadValue
+
+		.send code

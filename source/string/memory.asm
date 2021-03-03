@@ -79,5 +79,35 @@ WriteSoftString:
 		ldy 	tempShort 					; restore Y and exit.
 		rts
 
+; ************************************************************************************************
+;
+;								Clone soft string at YA to TOS
+;
+; ************************************************************************************************
+
+StrClone: 	;; <clone>
+		tax 								; set up stack.
+		pshy
+		;
+		ldy 	#0 							; get length, add 1 for length
+		lda 	(temp0),y 	
+		clc
+		adc 	#1
+		jsr 	AllocateSoftString 			; allocate soft memory
+		;
+		lda 	softMemAlloc 				; copy that address to TOS
+		sta 	esInt0,x
+		lda 	softMemAlloc+1
+		sta 	esInt1,x
+		lda 	#0
+		sta 	esInt2,x
+		sta 	esInt3,x
+		lda 	#$40 						; set type to string.
+		sta 	esType,x
+		;
+		jsr 	SCCopyTemp0 				; copy temp0 string to soft memory copy (concat.asm)
+		puly
+		txa
+		rts
 		.send code		
 		

@@ -29,6 +29,7 @@
 ../source/main/commands/while.asm
 ../source/main/evaluate/binary.asm
 ../source/main/evaluate/compare.asm
+../source/main/evaluate/convert.asm
 ../source/main/evaluate/dereference.asm
 ../source/main/evaluate/evaluate.asm
 ../source/main/evaluate/event.asm

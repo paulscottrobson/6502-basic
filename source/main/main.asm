@@ -19,6 +19,7 @@
 	.include "commands/while.asm"
 	.include "evaluate/binary.asm"
 	.include "evaluate/compare.asm"
+	.include "evaluate/convert.asm"
 	.include "evaluate/dereference.asm"
 	.include "evaluate/evaluate.asm"
 	.include "evaluate/event.asm"
