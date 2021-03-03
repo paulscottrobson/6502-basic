@@ -31,6 +31,7 @@
 ../source/main/evaluate/compare.asm
 ../source/main/evaluate/dereference.asm
 ../source/main/evaluate/evaluate.asm
+../source/main/evaluate/event.asm
 ../source/main/evaluate/unary.asm
 ../source/main/evaluate/unary2.asm
 ../source/main/evaluate/unarystr.asm

@@ -21,6 +21,7 @@
 	.include "evaluate/compare.asm"
 	.include "evaluate/dereference.asm"
 	.include "evaluate/evaluate.asm"
+	.include "evaluate/event.asm"
 	.include "evaluate/unary.asm"
 	.include "evaluate/unary2.asm"
 	.include "evaluate/unarystr.asm"

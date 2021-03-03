@@ -50,7 +50,7 @@ Group0Vectors:
 	.word	Unary_Max                ; $ad max(
 	.word	UnarySys                 ; $ae sys(
 	.word	UnaryTimer               ; $af timer(
-	.word	Unimplemented            ; $b0 event(
+	.word	EventFunction            ; $b0 event(
 	.word	UnaryGet                 ; $b1 get(
 	.word	UnaryInkey               ; $b2 inkey(
 	.word	UnaryAlloc               ; $b3 alloc(

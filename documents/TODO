@@ -1,8 +1,6 @@
 TODO
 ====
 
-Add event()
-
 Add str$() val() isval() with bases 2-16 for integer. isval() returns error on val()
 
 Add proc defproc endproc code. Design localisation for parameters and initialisation.
