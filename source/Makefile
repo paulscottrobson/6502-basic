@@ -28,7 +28,7 @@ run : $(APPNAME)
 	$(EMULATOR) $<
 
 analyse: $(APPNAME)
-	python ..$(S)scripts$(S)analyse.py $(OBJDIR)nbasic.lst
+	python ..$(S)scripts$(S)analyse.py $(OBJDIR)basic.lst
 
 dump : $(APPNAME)
 	python ..$(S)scripts$(S)dumpvar.py 

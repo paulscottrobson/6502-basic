@@ -19,8 +19,9 @@ current = None
 if len(sys.argv) == 2:
 	for l in open(sys.argv[1]).readlines():
 		if l.startswith(";"):
-			m = re.match("^\\;.*Processing file\\:\\s+\\.\\.\\/source\\/(.*?)\\/.*\\.asm",l)
+			m = re.search("Processing file\\:(.*?)\\/.*\\s*$",l)
 			if m is not None:
+				print(m.groups(1),l.strip())
 				current = m.group(1).strip().lower()
 				if current not in segments:
 					segments[current] = { "name":current,"start":None,"end":currentPC }

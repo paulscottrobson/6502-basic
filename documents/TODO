@@ -1,7 +1,7 @@
 TODO
 ====
 
-Test using additives etc.
+Add event()
 
 Add str$() val() isval() with bases 2-16 for integer. isval() returns error on val()
 
@@ -16,6 +16,7 @@ Incomplete but hooked in for write and test
 
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
 	Out of memory in pointer advance in clear.asm alloc, soft/hard memory allocation alloc() function.
+	Special case 1 in concrete ???
 
 Notes
 =====

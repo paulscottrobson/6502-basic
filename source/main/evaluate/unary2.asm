@@ -25,7 +25,8 @@ UnaryTimer:		;; [timer(]
 		device_timer()						; get clock.
 		ldx 	temp0						; restore X and update 16 bit result
 		sta 	esInt0,x
-		sty 	esInt1,x
+		tya
+		sta 	esInt1,x
 		puly
 		rts
 
