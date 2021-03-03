@@ -74,6 +74,11 @@ StringWrite: 	;; <write>
 		jsr 	RequiresConcretion
 		bcc 	_SWWriteReference
 		;
+		;		Check for special cases
+		;
+		jsr 	CheckSpecialConcretion
+		bcs 	_SWWriteReference
+		;
 		;		Yes, so allocate hard memory for it (e.g. drop highMemory)
 		; 		updating address in TOS for storage.
 		;
@@ -241,6 +246,28 @@ _CSTHMLoop:
 		cpy 	#$FF
 		bne 	_CSTHMLoop
 		puly
+		rts
+
+; ************************************************************************************************
+;
+;		Check for special concretion of string at temp0 if true, return CS and non-concrete
+;		string in temp0
+;
+; ************************************************************************************************
+
+CheckSpecialConcretion:
+		lda 	srcStrLen 				; check string is null.
+		beq 	_CSCNullString
+		clc
+		rts
+		;
+		;		If concretable string is null, then return a fixed one.
+		;
+_CSCNullString:
+		lda 	#0
+		sta 	NullString		
+		set16 	temp0,NullString
+		sec
 		rts
 
 		.send 	code
