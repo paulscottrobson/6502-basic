@@ -9,35 +9,47 @@
 ; *****************************************************************************
 ; *****************************************************************************
 
+		.section storage
+fs32Length: 								; length of string being converted.
+		.fill 	1
+		.send storage
 		.section code		
 		
 ; *****************************************************************************
 ;
 ;					Convert string at (temp0) to integer base A
-;					  Returns A => Number of characters read
+;					  		Returns CS if successful.
 ;
 ; *****************************************************************************
 
 MInt32FromString:
 		sta 	tempShort 					; save base
 		pshy  								; save Y
-		ldy 	#0 							; set index into string being read
+		ldy 	#0 							; get length
+		lda 	(temp0),y
+		sta 	fs32Length 
+		beq 	_I32FSFail2					; fail if length zero.
+		;
+		ldy 	#1 							; set index into string being read
 		lda 	(temp0),y 					; look at first character
 		cmp 	#"-"						; is it a - character
 		bne 	_I32FSNotNegative 			
-		iny 								; if so consume it.
+		lda 	fs32Length 					; get length back.
+		cmp 	#1 							; if 1 it is just a '-; so fail.'
+		beq 	_I32FSFail2
+		ldy 	#2 							; first digit of the number. 								
 _I32FSNotNegative:
 		lda 	tempShort 					; get the base back.
-		cpy 	#0 							; if we read a -ve (e.g. Y != 0)
-		beq 	_I32FSNN2
+		cpy 	#2 							; if we read a -ve (e.g. Y == 2)
+		bne 	_I32FSNN2
 		ora 	#$80						; set bit 7, this indicates a negated result.
 _I32FSNN2:
 		pha 								; save base + final sign on stack.
-		jsr 	MInt32False 					; zero the return value.		
+		jsr 	MInt32False 				; zero the return value.		
 		;
 		;		Main loop - get and process one character.
 		;
-I32FSMainLoop:
+_I32FSMainLoop:
 		pla 								; get the base back into tempshort
 		pha
 		and 	#$7F
@@ -50,18 +62,18 @@ I32FSMainLoop:
 _I32FSNotLC:		
 		sec 								; subtract 48 (ASCII "0")
 		sbc 	#"0"
-		bcc 	_I32FSDone 					; nothing more to do.
+		bcc 	_I32FSFail 					; nothing more to do.
 		cmp 	#9+1 						; if it is 0-9 validate vs base.
 		bcc 	_I32FSValidate 			
 		;
 		cmp 	#17 						; is it between 58 and 64 ? if so bad.
-		bcc 	_I32FSDone
+		bcc 	_I32FSFail
 		sbc 	#7 							; adjust into range so now character is 0->nnn
 _I32FSValidate:
 		cmp 	tempShort 					; compare against the base.
-		bcs 	_I32FSDone 					; sorry, too large for this base.
-		pha 								; save the new digit value.
+		bcs 	_I32FSFail 					; sorry, too large for this base.
 
+		pha 								; save the new digit value.
 		inx 								; put base into next slot.
 		lda 	tempShort
 		jsr 	MInt32Set8Bit
@@ -73,18 +85,25 @@ _I32FSValidate:
 		dex
 		jsr 	MInt32Add 					; and add it
 		iny 								; look at next character
-		jmp 	I32FSMainLoop 				; and go round again.
+
+		cpy 	fs32Length 					; until > length.
+		beq 	_I32FSMainLoop 
+		bcc 	_I32FSMainLoop
 		;
 _I32FSDone:
 		pla 								; get base/final sign back
 		bpl 	_I32FSNN3 				
-		;
-		dey 								; one fewer character to allow for the - prefix.
 		jsr 	MInt32Negate 				; negate the result.
 _I32FSNN3:
-		sty 	tempShort 					; save the count of characters read
 		puly 								; restore Y
-		lda 	tempShort 					; get the count of characters read into A and exit		
+		sec
+		rts
+
+_I32FSFail:
+		pla
+_I32FSFail2:
+		puly
+		clc
 		rts
 
 		.send code		

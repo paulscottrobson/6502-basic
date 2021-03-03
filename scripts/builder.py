@@ -40,6 +40,8 @@ sourceDir = ".."+os.sep+"source"										# where the source is.
 mainIncludes = [] 														# includes for root assembler file
 header = ";\n;\tAutomatically generated\n;\n"							# header used.
 #
+isEnabled = {}															# modules enabled/not enabled
+#
 for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() != ""]:
 	section = s 														# check if dispatched manually.
 	createDispatcher = True
@@ -50,6 +52,8 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	if s.endswith("-"):
 		section = section[:-1].strip()
 		enableCode = False
+	#
+	isEnabled[section] = enableCode										# store if enabled.
 	#
 	compositeFile = "{0}{1}{0}.asm".format(section,os.sep) 				# the grouping file at this level.	
 	mainIncludes.append(compositeFile)									# add in header/include
@@ -111,13 +115,30 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 		h.write(".send code\n")
 	h.close()
 #
+#		Write out installed flags
+#
+h = open(sourceDir+os.sep+"generated"+os.sep+"installed.inc","w")
+h.write(header)
+for k in isEnabled.keys():
+	h.write("installed_{0} = {1}\n".format(k,1 if isEnabled[k] else 0)) 
+h.close()
+#
 #		Write out main program.
 #
 mainIncludes.sort(key = lambda x:sortFn(x))
 h = open(sourceDir+os.sep+"basic.asm","w")
 h.write(header)
 for i in mainIncludes:
+	if i.endswith(".asm"):
+		section = i.split(os.sep)[0]
+		h.write("\t.section code\n")
+		h.write("section_start_{0}:\n".format(section))
+		h.write("\t.send code\n")
 	h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
+	if i.endswith(".asm"):
+		h.write("\t.section code\n")
+		h.write("section_end_{0}:\n".format(section))
+		h.write("\t.send code\n")
 h.close()
 #
 #		Write out files

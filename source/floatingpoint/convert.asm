@@ -23,4 +23,8 @@ FPFToS: ;; <floatToString>
 		debug
 		jmp 	FPFtoS
 		
+FPSToF: ;; <stringToFloat>
+		clc
+		rts
+		
 		.send code		

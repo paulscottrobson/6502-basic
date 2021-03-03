@@ -82,4 +82,9 @@ floatingpoint_storefp .macro
 	jsr	floatingpointHandler
 	.endm
 
+floatingpoint_stringToFloat .macro
+	ldx	#32
+	jsr	floatingpointHandler
+	.endm
+
 .send code

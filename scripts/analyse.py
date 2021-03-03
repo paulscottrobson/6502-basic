@@ -21,7 +21,7 @@ if len(sys.argv) == 2:
 		if l.startswith(";"):
 			m = re.search("Processing file\\:(.*?)\\/.*\\s*$",l)
 			if m is not None:
-				print(m.groups(1),l.strip())
+				#print(m.groups(1),l.strip())
 				current = m.group(1).strip().lower()
 				if current not in segments:
 					segments[current] = { "name":current,"start":None,"end":currentPC }

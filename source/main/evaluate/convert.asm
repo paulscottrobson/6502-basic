@@ -56,19 +56,48 @@ UnaryIsVal:		;; [isval(]
 		clc
 ValueMain:
 		php 								; save results (CS is value, CC is validation)
-		debug
 		jsr 	EvaluateString
 		jsr 	ConvertGetBase 				; get base, if any.
+		pshy 								; save Y on stack
+		;
+		jsr 	TOSToTemp0 					; string address in temp0, goes here.
+		;
+		lda 	esInt0+1,x 					; get the base
+		and 	#$7F 						; ignore the sign bit.
+		;
+		jsr 	MInt32FromString 			; convert it back from a string.
+		bcs 	_VMSuccess 					; successfully converted.
 		;
 		lda 	esInt0+1,x 					; is base the default
 		cmp 	#$80+10 					; if no, then it is integer only.
-		bne 	_VMTryInteger
+		beq 	_VMFailed 	 				; so we failed.
+		; 
+		;		If fp installed check fp, else fail.
 		;
+		.if installed_floatingpoint == 1
 		txa
-		; TODO: Need some way of check if fp library is installed.
+		floatingpoint_stringToFloat 
+		clc
 		tax
-_VMTryInteger:
-
+		bcs 	_VMSuccess					; it converted okay.
+		.endif
+		;
+		;		Conversion worked
+		;
+_VMFailed:
+		puly
+		plp 				
+		jmp 	MInt32False 				; return 0 whatever.
+		;
+		;		Conversion succeeded
+		;
+_VMSuccess:				
+		puly
+		plp 								; if CS the it was val() so we want the value.
+		bcs 	_VMExit
+		jmp 	MInt32True 					; otherwise return true as successful.
+_VMExit:	
+		rts		
 
 
 
