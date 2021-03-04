@@ -1,18 +1,14 @@
-print "START"
-proc demo()
-print "END"
+a1 = -99
+x = -1
+c1$ = "SAVEME"
+print "START",a1,c1$,x
+proc demo(42,&12345678)
+print "END",a1,c1$,x
 repeat:until False
 
-defproc do1()
-print "DO1"
-endproc
-
-defproc demo()
-print a1,b2,c3,d4
-proc do1()
-proc xo2()
-print "RUNNING DEMO",42
-proc do1()
+defproc demo(a1,x)
+print "RUNNING DEMO",a1,c1$,"$";str$(x,16)
+repeat:until false
 endproc
 
 defproc xo2()

@@ -2,7 +2,9 @@ TODO
 ====
 
 LocaliseVariable. Push variable value on stack, pop it off. 
-String as *value* 
+
+Push string text.
+When string popped, use string write code.
 
 Implement LOCAL and give it a good bashing.
 
@@ -25,6 +27,8 @@ Incomplete but hooked in for write and test
 
 	Number stack overflow.
 
+	On create float what is the default.
+	
 Notes
 =====
 	Stack position fudged for readability.
