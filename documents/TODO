@@ -1,7 +1,7 @@
 TODO
 ====
 
-When string popped, use string write code.
+When string popped, use string write code, check that when it has a concreted value it uses that.
 
 Implement LOCAL and give it a good bashing.
 
