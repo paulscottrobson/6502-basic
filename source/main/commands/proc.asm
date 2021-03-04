@@ -122,5 +122,6 @@ ReturnProc:	;; [endproc]
 		jsr 	RSLoadPosition 				; reload the position from offset 1.
 		lda 	#4 							; throw 4 bytes from stack.
 		jsr 	RSFree 
-
+		rts
+		
 		.send 	code

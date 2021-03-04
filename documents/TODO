@@ -1,9 +1,6 @@
 TODO
 ====
 
-LocaliseVariable. Push variable value on stack, pop it off. 
-
-Push string text.
 When string popped, use string write code.
 
 Implement LOCAL and give it a good bashing.

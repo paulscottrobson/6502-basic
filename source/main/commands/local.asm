@@ -39,7 +39,17 @@ LocaliseVariable:
 		;
 		;		String code
 		;
-		ldx 	#2 							; save that address
+		ldy 	#0 							; put address of data in temp1
+		lda 	(temp0),y
+		iny
+		sta 	temp1
+		lda 	(temp0),y
+		sta 	temp1+1
+		;
+		ldy 	#0 	 						; get length
+		lda 	(temp1),y
+		tax 								; into X
+		inx 								; +1 for length.
 		lda 	#markerString
 		jmp 	_LVWriteFrame
 		;
@@ -100,11 +110,71 @@ _LVSyntax:
 ; ************************************************************************************************
 ;
 ;							Restore any locals on the return stack
+;							Stops when it hits a structure or top
 ;
 ; ************************************************************************************************
 
 RestoreLocals:
-		lda 	(rsPointer),y
+		ldx 	#0
+		lda 	(rsPointer,x)
+		cmp	 	#64
+		bcc 	_RLocal
 		rts
+_RLocal:
+		pshx
+		pshy
+
+		ldy 	#1 							; copy target address to temp0
+		lda 	(rsPointer),y
+		sta 	temp0
+		iny
+		lda 	(rsPointer),y
+		sta 	temp0+1
+ 
+		ldy 	#0 							; get type back.
+		lda 	(rsPointer),y
+		cmp 	#markerString 				; string is ... different :)
+		beq 	_RString
+
+		ldx		#VARISize 					; size integer	
+		cmp 	#markerInt
+		beq 	_RIsInteger
+		ldx 	#VARFSize 					; size float
+_RIsInteger:
+		pshx 								; save size on stack.
+		ldy 	#3							; start size to copy back from pointer.
+_RCopyBack:				
+		lda 	(rsPointer),y
+		dey
+		dey
+		dey
+		sta 	(temp0),y
+		iny
+		iny
+		iny
+		iny
+		dex 
+		bne 	_RCopyBack
+		pla 								; get size add 3
+		clc
+		adc 	#3 							; (2 for address one for marker)
+_RRestoreAAndLoop:		
+		jsr 	RSFree
+		puly
+		pulx
+		jmp 	RestoreLocals 				; go see if there are any more locals.
+		;
+		;		Handle strings.
+		;		
+_RString:
+		debug
+		;
+		;		Assign variable to string.
+		;
+		ldy 	#3 							; get string length
+		lda 	(rsPointer),y
+		clc
+		adc 	#4 							; add 4 (pointer, marker, length) to restore.
+		jmp 	_RRestoreAAndLoop
 
 		.send 	code
