@@ -1,12 +1,16 @@
 TODO
 ====
 
-LocaliseVariable. Push variable value on stack, pop it off. String as value or pointer ??
+LocaliseVariable. Push variable value on stack, pop it off. 
+String as *value* 
+
 Implement LOCAL and give it a good bashing.
 
 Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.
 
 Add arrays.
+
+Start Code Reading.
 
 Incomplete but hooked in for write and test
 ===========================================

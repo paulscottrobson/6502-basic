@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/basic.prg basic.asm
-; Thu Mar  4 07:54:47 2021
+; Thu Mar  4 12:08:07 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -36,6 +36,10 @@
 ="F"					markerFOR = 'F'
 ="W"					markerWHILE = 'W'
 ="P"					markerPROC = 'P'
+=5					VarHSize = 5 								; header (2 link, 2 name, 1 hash)
+=4					VarISize = 4 								; integer (32 bit)
+=6					VarFSize = 6 								; float (4 mantissa, 1 exponent 1 sign/zero)
+=2					VarSSize = 2 								; address (2 bytes)
 
 ;******  Return to file: basic.asm
 
@@ -4140,9 +4144,9 @@
 .23f6	68		pla				pla
 .23f7	a8		tay				tay
 .23f8	60		rts				rts
->23f9	09 09				_CVSize:.byte 	5+4,5+4 					; <storage for integer>
->23fb	07 07						.byte 	5+2,5+2 					; <storage for string>
->23fd	0b 0b						.byte 	5+6,5+6 					; <storage for float>
+>23f9	09 09				_CVSize:.byte 	VarHSize+VarISize,VarHSize+VarISize 					; <storage for integer>
+>23fb	07 07						.byte 	VarHSize+VarSSize,VarHSize+VarSSize 					; <storage for string>
+>23fd	0b 0b						.byte 	VarHSize+VarFSize,VarHSize+VarFSize 					; <storage for float>
 
 ;******  Return to file: variable/variable.asm
 

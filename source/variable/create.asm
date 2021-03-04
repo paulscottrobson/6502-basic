@@ -93,8 +93,8 @@ _CVNoDefaultNull:
 ;
 ;		Size look up table.
 ;
-_CVSize:.byte 	5+4,5+4 					; <storage for integer>
-		.byte 	5+2,5+2 					; <storage for string>
-		.byte 	5+6,5+6 					; <storage for float>
+_CVSize:.byte 	VarHSize+VarISize,VarHSize+VarISize 					; <storage for integer>
+		.byte 	VarHSize+VarSSize,VarHSize+VarSSize 					; <storage for string>
+		.byte 	VarHSize+VarFSize,VarHSize+VarFSize 					; <storage for float>
 		.send 	code
 		
