@@ -1,6 +1,8 @@
 TODO
 ====
-Add proc defproc endproc code. Design localisation for parameters and initialisation.
+
+LocaliseVariable. Push variable value on stack, pop it off. String as value or pointer ??
+Implement LOCAL and give it a good bashing.
 
 Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.
 
@@ -10,8 +12,14 @@ Incomplete but hooked in for write and test
 ===========================================
 
 	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
-	Out of memory in pointer advance in clear.asm alloc, soft/hard memory allocation alloc() function.
+
+	Out of memory in 
+		pointer advance in clear.asm alloc, soft/hard memory allocation alloc() function.
+		creating procedure table.
+		
 	Special case 1 in concrete ???
+
+	Number stack overflow.
 
 Notes
 =====

@@ -75,6 +75,7 @@ markerGOSUB = 'G'
 markerREPEAT = 'R'
 markerFOR = 'F'
 markerWHILE = 'W'
+markerPROC = 'P'
 
 ; ************************************************************************************************
 ;

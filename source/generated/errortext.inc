@@ -19,10 +19,12 @@ ErrorTextList:
 	.byte UNTIL without REPEAT,"20"
 	.byte NEXT without FOR,"16"
 	.byte WEND without WHILE,"18"
+	.byte ENDPROC without PROC,"20"
 	.byte Bad NEXT index,"14"
 	.byte Structures nested wrong,"23"
 	.byte Cannot create variable,"22"
 	.byte Return stack out of space.,"26"
 	.byte Unknown Procedure,"17"
+	.byte Parameters do not match.,"24"
 	.byte 0
 

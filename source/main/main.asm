@@ -7,6 +7,7 @@
 	.include "commands/for.asm"
 	.include "commands/if.asm"
 	.include "commands/let.asm"
+	.include "commands/local.asm"
 	.include "commands/new.asm"
 	.include "commands/poke.asm"
 	.include "commands/print.asm"

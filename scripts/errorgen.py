@@ -33,11 +33,13 @@ errorDef = """
 	UntilErr:UNTIL without REPEAT
 	NextErr:NEXT without FOR
 	WendErr:WEND without WHILE
+	endprocErr:ENDPROC without PROC
 	BadIndex:Bad NEXT index
 	Struct:Structures nested wrong
 	NoAuto:Cannot create variable
 	RetStack:Return stack out of space.
 	NoProc:Unknown Procedure
+	Params:Parameters do not match.
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

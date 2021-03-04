@@ -17,6 +17,7 @@
 ../source/main/commands/for.asm
 ../source/main/commands/if.asm
 ../source/main/commands/let.asm
+../source/main/commands/local.asm
 ../source/main/commands/new.asm
 ../source/main/commands/poke.asm
 ../source/main/commands/print.asm

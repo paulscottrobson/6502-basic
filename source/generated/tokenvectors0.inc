@@ -37,7 +37,7 @@ Group0Vectors:
 	.word	Command_NEXT             ; $a0 next
 	.word	TKErr06                  ; $a1 then
 	.word	Command_ENDIF            ; $a2 endif
-	.word	Unimplemented            ; $a3 endproc
+	.word	ReturnProc               ; $a3 endproc
 	.word	UnaryParenthesis         ; $a4 (
 	.word	UnaryLen                 ; $a5 len(
 	.word	UnarySgn                 ; $a6 sgn(
