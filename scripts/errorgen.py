@@ -37,6 +37,7 @@ errorDef = """
 	Struct:Structures nested wrong
 	NoAuto:Cannot create variable
 	RetStack:Return stack out of space.
+	NoProc:Unknown Procedure
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

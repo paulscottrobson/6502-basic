@@ -22,3 +22,4 @@ ErrorID_BadIndex = 18 ; Bad NEXT index
 ErrorID_Struct = 19 ; Structures nested wrong
 ErrorID_NoAuto = 20 ; Cannot create variable
 ErrorID_RetStack = 21 ; Return stack out of space.
+ErrorID_NoProc = 22 ; Unknown Procedure

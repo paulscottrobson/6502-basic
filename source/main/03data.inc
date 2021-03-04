@@ -22,6 +22,7 @@ codePtr:.fill 	2							; (codePtr),y points to code.
 temp0: 	.fill 	2							; working variables.
 temp1: 	.fill 	2
 temp2: 	.fill 	2
+temp3: 	.fill 	2
 
 tempShort:	 								; short term storage.
 		.fill 	1

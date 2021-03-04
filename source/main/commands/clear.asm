@@ -54,6 +54,8 @@ _CCFoundEnd:
 
 		variable_reset 						; reset the variable hash table pointers.
 		
+		jsr 	ScanProc 					; scan for procedures
+	
 		puly
 		rts
 

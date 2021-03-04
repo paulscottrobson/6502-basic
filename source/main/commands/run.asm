@@ -21,7 +21,7 @@ Command_Run: 	;; [run]
 		ldx 	#$FF
 		txs
 		jsr 	CommandClear 				; clear everything.
-		jsr 	ResetCodeAddress
+		jsr 	ResetCodeAddress 			; back to the start.
 		ldy 	#3
 		;
 		;		Come here to do next instruction.

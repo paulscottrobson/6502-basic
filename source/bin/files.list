@@ -20,9 +20,11 @@
 ../source/main/commands/new.asm
 ../source/main/commands/poke.asm
 ../source/main/commands/print.asm
+../source/main/commands/proc.asm
 ../source/main/commands/rem.asm
 ../source/main/commands/repeat.asm
 ../source/main/commands/run.asm
+../source/main/commands/scanner.asm
 ../source/main/commands/stopend.asm
 ../source/main/commands/transfer.asm
 ../source/main/commands/vdu.asm

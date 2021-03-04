@@ -23,5 +23,6 @@ ErrorTextList:
 	.byte Structures nested wrong,"23"
 	.byte Cannot create variable,"22"
 	.byte Return stack out of space.,"26"
+	.byte Unknown Procedure,"17"
 	.byte 0
 
