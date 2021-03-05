@@ -1,4 +1,2 @@
-print str$(x1,16)
-print zz
-print a$
+print 1/0
 repeat:until false

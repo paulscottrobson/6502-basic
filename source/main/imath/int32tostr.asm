@@ -24,7 +24,10 @@ MCharCount:	.fill 	1						; count of converted characters
 
 		.section code		
 		
-MInt32ToString:
+MLInt32ToString: ;; <inttostr>						
+		tax									; module passes stack in A, base in Y
+		tya
+MInt32ToString: 
 		pha 								; save base
 		sta 	tempShort 					; save target base.
 		lda 	#0

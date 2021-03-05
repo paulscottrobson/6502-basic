@@ -5,8 +5,8 @@ Group0Vectors:
 	.word	AdvanceNextLine          ; $80 [[eol]]
 	.word	CommandShift1            ; $81 [[sh1]]
 	.word	CommandShift2            ; $82 [[sh2]]
-	.word	Unimplemented            ; $83 [[sh3]]
-	.word	Unimplemented            ; $84 [[fpc]]
+	.word	TKErr09                  ; $83 [[sh3]]
+	.word	TKErr10                  ; $84 [[fpc]]
 	.word	TKErr08                  ; $85 [[str]]
 	.word	AndHandler               ; $86 and
 	.word	OrHandler                ; $87 or

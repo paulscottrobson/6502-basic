@@ -69,6 +69,6 @@ h = open(genDir+"errortext.inc","w")
 h.write(header)
 h.write("ErrorTextList:\n")
 for e in errors:
-	h.write('\t.byte {0},"{1}"\n'.format(e["Text"],len(e["Text"])))
+	h.write('\t.text {1},"{0}"\n'.format(e["Text"].upper(),len(e["Text"])))
 h.write("\t.byte 0\n\n")
 h.close()

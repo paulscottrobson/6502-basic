@@ -17,4 +17,14 @@ main_evaluatesmall .macro
 	jsr	mainHandler
 	.endm
 
+main_inttostr .macro
+	ldx	#6
+	jsr	mainHandler
+	.endm
+
+main_printstring .macro
+	ldx	#8
+	jsr	mainHandler
+	.endm
+
 .send code

@@ -136,6 +136,8 @@ TKErr05:	;; [STEP]
 TKErr06:	;; [THEN]
 TKErr07:	;; [TO]
 TKErr08:	;; [[[STR]]]
+TKErr09:	;; [[[SH3]]]
+TKErr10:	;; [[[FPC]]]
 		error 	Syntax
 
 		.include "../../generated/tokenvectors0.inc"

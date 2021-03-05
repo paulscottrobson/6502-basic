@@ -117,7 +117,7 @@ _PrintExit2:
 ;
 ; ************************************************************************************************
 
-PrintString:
+PrintString: ;; <printstring>
 		.pshx
 		.pshy
 		ldy 	#0							; get length

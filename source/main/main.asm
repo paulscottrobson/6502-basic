@@ -50,4 +50,6 @@ mainVectors:
 	.word LinkEvaluate         ; index 0
 	.word LinkEvaluateInteger  ; index 2
 	.word LinkEvaluateSmallInt ; index 4
+	.word MLInt32ToString      ; index 6
+	.word PrintString          ; index 8
 .send code
