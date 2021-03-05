@@ -1,2 +1,3 @@
 vpoke 0,0
-stop
+vdoke 256,&F000
+repeat:until false

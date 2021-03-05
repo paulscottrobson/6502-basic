@@ -12,9 +12,11 @@
 		.section code
 
 ExtensionHandler:
-		.debug
 		lda 	(codePtr),y
-				
+		iny
+		asl 	a
+		tax
+		jmp 	(Group2Vectors-12,X)
 		.send code
 
 		.include "../generated/tokenvectors2.inc"
