@@ -13,6 +13,7 @@
 Start:	ldx 	#$FF
 		txs
 		
+		.device_initialise
 		set16 	basePage,testBaseAddress
 		set16  	endMemory,$9800
 

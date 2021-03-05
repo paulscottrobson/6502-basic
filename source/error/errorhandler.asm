@@ -51,7 +51,7 @@ _EHNoLine: 									; set up line number in TOS
 _EHHalt:jmp 	_EHHalt
 
 EHAtMsg:
-		.text 	9," AT LINE "
+		.text 	9," at line "
 ;
 ;		List of error messages in order.
 ;
