@@ -74,7 +74,7 @@ _CRCheckIndirect:
 ;
 ; ************************************************************************************************
 
-shifter .macro
+CommandShift1:	;; [[[SH1]]]
 		lda 	(codePtr),y 				; get shifted value		
 		bpl 	Unimplemented 				; we have an error as this should not happen.
 		asl 	a 							; double into X
@@ -83,14 +83,11 @@ shifter .macro
 		jsr 	_RunIt 						; we have no jsr (aaaa,X)
 		jmp 	CRNextInstruction
 _RunIt:		
-		jmp 	(\1-6*2,x) 					; and do the code.	
-		.endm
-
-CommandShift1:	;; [[[SH1]]]
-		shifter Group1Vectors			
+		jmp 	(Group1Vectors) 			; and do the code.	
 
 CommandShift2:	;; [[[SH2]]]
-		shifter Group2Vectors	
+		.extension_execown
+		jmp 	CRNextInstruction
 
 ; ************************************************************************************************
 ;
@@ -142,6 +139,5 @@ TKErr08:	;; [[[STR]]]
 
 		.include "../../generated/tokenvectors0.inc"
 		.include "../../generated/tokenvectors1.inc"
-		.include "../../generated/tokenvectors2.inc"
 
 		.send code

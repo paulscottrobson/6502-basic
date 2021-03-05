@@ -27,6 +27,7 @@ groups = """
 	variable		
 	assembler 		
 	error			*
+	extension 		*
 	string 			
 	device 			
 	floatingpoint	- 	
@@ -86,8 +87,8 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	if enableCode:
 		for i in comFiles:
 			h.write('\t.include "{0}"\n'.format(i.replace(os.sep,"/")))
+	h.write("\n.section code\n")
 	if createDispatcher:												# dispatcher here ??
-		h.write("\n.section code\n")
 		h.write("\n{0}Handler:\n".format(section))
 		if enableCode:
 			h.write("\tdispatch {0}Vectors\n\n".format(section))
@@ -98,13 +99,13 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 				ix += 2
 		else:
 			h.write("\terror NoModule\n")
-		h.write(".send code\n")
+	h.write(".send code\n")
 	h.close()
 	#
 	h = open(localDir+os.sep+section+".inc","w")						# create the include file for this level.
 	h.write(header)
+	h.write(".section code\n")
 	if createDispatcher:
-		h.write(".section code\n")
 		ix = 0
 		for k in vectorKeys:
 			h.write("{0}_{1} .macro\n".format(section,k))
@@ -112,7 +113,11 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 			h.write("\tjsr\t{0}Handler\n".format(section))
 			h.write("\t.endm\n\n")
 			ix += 2
-		h.write(".send code\n")
+	else:
+		h.write("{0}_{1} .macro\n".format(section,"execown"))
+		h.write("\tjsr\t{0}Handler\n".format(section))
+		h.write("\t.endm\n\n")
+	h.write(".send code\n")
 	h.close()
 #
 #		Write out installed flags

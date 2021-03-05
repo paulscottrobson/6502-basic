@@ -1,9 +1,10 @@
 TODO
 ====
-Implement LOCAL and give it a good bashing.
-Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.
-Start Code Reading/Review
+
+Document commands so far.
 Add arrays.
+Implement VPDEEK/VPDOKE and put those links in to run $82/$83 words and check they work.
+Start Code Reading/Review to r1.
 
 Incomplete but hooked in for write and test
 ===========================================

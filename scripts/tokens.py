@@ -140,12 +140,12 @@ class Tokens(object):
 		#		System specific commands in group 2
 		#
 		[group2]
-			vpoke
+			vpoke	vdoke
 		#
 		#		Floating point functions and system unary functions in group 3.
 		#
 		[group3]
-			vpeek(
+			vpeek( 	vdeek(
 """		
 
 Tokens.SYSTEM =   0x40								# shifts, eol etc.

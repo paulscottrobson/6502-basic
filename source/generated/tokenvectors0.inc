@@ -78,7 +78,7 @@ Group0Vectors:
 	.word	TKErr07                  ; $c9 to
 	.word	TKErr05                  ; $ca step
 	.word	CallProc                 ; $cb proc
-	.word	Unimplemented            ; $cc local
+	.word	CommandLocal             ; $cc local
 	.word	Unimplemented            ; $cd dim
 	.word	Command_Rem              ; $ce rem
 	.word	CommandLet               ; $cf let

@@ -10,6 +10,7 @@
 	.include "device/device.inc"
 	.include "error/error.inc"
 	.include "error/errorhandler.inc"
+	.include "extension/extension.inc"
 	.include "floatingpoint/floatingpoint.inc"
 	.include "interaction/interaction.inc"
 	.include "string/memory.inc"
@@ -43,6 +44,13 @@ section_start_error:
 	.include "error/error.asm"
 	.section code
 section_end_error:
+	.send code
+	.section code
+section_start_extension:
+	.send code
+	.include "extension/extension.asm"
+	.section code
+section_end_extension:
 	.send code
 	.section code
 section_start_floatingpoint:

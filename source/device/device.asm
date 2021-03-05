@@ -1,8 +1,8 @@
 ;
 ;	Automatically generated
 ;
-	.include "x16/x16io.asm"
-	.include "x16/x16timer.asm"
+	.include "option_x16/x16io.asm"
+	.include "option_x16/x16timer.asm"
 
 .section code
 

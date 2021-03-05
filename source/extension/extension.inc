@@ -2,8 +2,8 @@
 ;	Automatically generated
 ;
 .section code
-error_execown .macro
-	jsr	errorHandler
+extension_execown .macro
+	jsr	extensionHandler
 	.endm
 
 .send code

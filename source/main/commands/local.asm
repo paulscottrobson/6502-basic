@@ -18,6 +18,26 @@ storeSize:
 
 ; ************************************************************************************************
 ;
+;									Local command
+;
+; ************************************************************************************************
+
+CommandLocal:		;; [local]
+		jsr 	LocaliseVariable 			; localise one.
+		lda 	(codePtr),y 				; what follows ?
+		iny
+		cmp 	#TKW_EQUAL 					; local x = 2 ?
+		beq 	_CLAssignment
+		cmp 	#TKW_COMMA 					; comma try again.
+		beq 	CommandLocal
+		dey
+		rts
+
+_CLAssignment:
+		.debug
+
+; ************************************************************************************************
+;
 ;					Get a variable reference, push current value on the stack.
 ;		
 ; ************************************************************************************************

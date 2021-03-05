@@ -25,4 +25,7 @@ if len(sys.argv) == 2:
 	keys = [x for x in segments.keys()]
 	keys.sort(key = lambda x:segments[x]["start"])
 	for k in keys:
-		print("Section {0:16} ${1:04x}-${2:04x} ({3} bytes)".format('"'+k+'"',segments[k]["start"],segments[k]["end"],segments[k]["end"]-segments[k]["start"]))		
+		sz = segments[k]["end"]-segments[k]["start"]
+		total += sz
+		print("Section {0:16} ${1:04x}-${2:04x} ({3} bytes)".format('"'+k+'"',segments[k]["start"],segments[k]["end"],sz))		
+	print("\nApproximate total {0} bytes.".format(total))		
