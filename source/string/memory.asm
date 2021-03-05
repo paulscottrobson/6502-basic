@@ -31,7 +31,7 @@ softMemAlloc: 								; memory allocated for temporary strings
 
 AllocateSoftString: 						; allocae soft string memory
 		sta 	tempShort 					; save count
-		pshy 								; save Y
+		.pshy 								; save Y
 
 		lda 	softMemAlloc+1 				; if the high byte is zero, it needs allocating.
 		bne 	_ASSDone
@@ -54,7 +54,7 @@ _ASSDone:
 		lda 	#0 							; empty that string, set the length = 0.
 		tay
 		sta 	(softMemAlloc),y
-		puly 								; restore Y and exit.
+		.puly 								; restore Y and exit.
 		rts
 
 ; ************************************************************************************************
@@ -87,7 +87,7 @@ WriteSoftString:
 
 StrClone: 	;; <clone>
 		tax 								; set up stack.
-		pshy
+		.pshy
 		;
 		ldy 	#0 							; get length, add 1 for length
 		lda 	(temp0),y 	
@@ -106,7 +106,7 @@ StrClone: 	;; <clone>
 		sta 	esType,x
 		;
 		jsr 	SCCopyTemp0 				; copy temp0 string to soft memory copy (concat.asm)
-		puly
+		.puly
 		txa
 		rts
 		.send code		

@@ -21,7 +21,7 @@
 StringSubstring:	;; <substring>
 		pha
 		tax 								; access stack.
-		pshy 								; save Y
+		.pshy 								; save Y
 		jsr 	CopyStringTop 				; point temp0 to the string.
 
 		ldy 	#0 							; get length.
@@ -60,7 +60,7 @@ _SSBCopyLoop:
 _SSBReturnNull:
 		jsr 	ReturnNull
 _SSBExit:
-		puly 								; restore Y
+		.puly 								; restore Y
 		pla
 		rts
 

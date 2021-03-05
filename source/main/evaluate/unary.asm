@@ -63,7 +63,7 @@ UnaryAbs:	;; [abs(]
 		rts
 _UAFloat:
 		txa
-		floatingpoint_fabs		
+		.floatingpoint_fabs		
 		tax
 		jsr 	CheckRightParen
 		rts
@@ -82,7 +82,7 @@ UnarySgn:	;; [sgn(]
 		rts
 _USFloat:
 		txa
-		floatingpoint_fsgn
+		.floatingpoint_fsgn
 		tax
 		jsr 	CheckRightParen
 		rts
@@ -260,7 +260,7 @@ UnaryIntToFloat: ;; [int(]
 		lda 	esType,x
 		bne 	_UIFExit
 		txa
-		floatingpoint_intToFloat
+		.floatingpoint_intToFloat
 		tax
 		lda 	#1
 		sta 	esType,x
@@ -272,7 +272,7 @@ UnaryFloatToInt: ;; [float(]
 		lda 	esType,x
 		beq 	_UFIExit
 		txa
-		floatingpoint_floatToInt
+		.floatingpoint_floatToInt
 		tax
 _UFIExit:
 		rts

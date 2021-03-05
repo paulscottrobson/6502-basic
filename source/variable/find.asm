@@ -18,7 +18,7 @@
 ; ************************************************************************************************
 
 FindVariable:
-		pshy
+		.pshy
 		;
 		tya 								; point temp2 to the actual name.
 		clc
@@ -72,7 +72,7 @@ _FVCheck:
 		cmp 	#$3A 						; until reached the end marker.
 		bcc 	_FVCheck 
 		;
-		puly 								; return with CS as found.
+		.puly 								; return with CS as found.
 		sec 
 		rts
 		
@@ -80,7 +80,7 @@ _FVCheck:
 		;		Didn't find it, return CC
 		;
 _FVFail:
-		puly
+		.puly
 		clc
 		rts		
 		.send 	code		

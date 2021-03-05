@@ -48,7 +48,7 @@ PerformComparison:
 		beq 	_PCIsInteger 				; if not two integers
 		jsr 	BPMakeBothFloat 			; make both float
 		txa
-		floatingpoint_fCompare 				; and compare them.
+		.floatingpoint_fCompare 				; and compare them.
 		stx 	tempShort 					; save result
 		tax
 		lda 	tempShort
@@ -59,7 +59,7 @@ _PCIsInteger:
 
 _PCIsString:
 		txa 								; A has SP
-		string_sCompare 					; compare strings
+		.string_sCompare 					; compare strings
 		stx 	tempShort 					; save result
 		tax 								; put SP back in X and get result.
 		lda 	tempShort

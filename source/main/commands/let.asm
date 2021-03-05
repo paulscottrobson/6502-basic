@@ -35,7 +35,7 @@ CommandLet: ;; [let]
 ; ************************************************************************************************
 
 WriteValue:
-		pshy
+		.pshy
 		jsr 	TOSToTemp0 					; set temp0 to point to target address.
 		;
 		;		Check not assigning string to number or vice versa.
@@ -73,7 +73,7 @@ WriteValue:
 		jsr 	TOSToTemp0 					; set Temp0 to write address
 		inx
 		txa 							
-		floatingpoint_storefp 				; write using FP pack & write function.
+		.floatingpoint_storefp 				; write using FP write function.
 		tax
 		jmp 	_WVCopyExit
 		;
@@ -81,7 +81,7 @@ WriteValue:
 		;
 _WVCopyString:	
 		txa
-		string_write
+		.string_write
 		tax
 		jmp 	_WVCopyExit		
 		;
@@ -106,7 +106,7 @@ _WVCopyData1:
 		lda 	esInt0+1,x
 		sta 	(temp0),y
 _WVCopyExit:
-		puly
+		.puly
 		rts
 
 

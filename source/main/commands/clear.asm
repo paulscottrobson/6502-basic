@@ -18,7 +18,7 @@
 ; ************************************************************************************************
 
 CommandClear: 	;; [clear]
-		pshy
+		.pshy
 
 		lda 	endMemory					; set high memory = end of memory
 		sta 	highMemory
@@ -52,11 +52,11 @@ _CCFoundEnd:
 
 		jsr 	RSReset 					; reset the return stack.
 
-		variable_reset 						; reset the variable hash table pointers.
+		.variable_reset 						; reset the variable hash table pointers.
 		
 		jsr 	ScanProc 					; scan for procedures
 	
-		puly
+		.puly
 		rts
 
 ; ************************************************************************************************

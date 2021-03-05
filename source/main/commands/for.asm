@@ -45,7 +45,7 @@ Command_FOR:		;; [for]
 		;
 		;		Set up the FOR stack frame.
 		;
-		pshy 								; copy things into the area with the default STEP
+		.pshy 								; copy things into the area with the default STEP
 		ldy 	#4
 		lda		esInt0 						; the address of the index into 4 and 5
 		sta 	(rsPointer),y
@@ -69,7 +69,7 @@ Command_FOR:		;; [for]
 		iny
 		lda		esInt3+1 					
 		sta 	(rsPointer),y
-		puly
+		.puly
 		;
 		;		Check for STEP
 		;
@@ -81,11 +81,11 @@ Command_FOR:		;; [for]
 		;
 		iny									; skip over step.
 		jsr 	EvaluateInteger 			; get step
-		pshy
+		.pshy
 		lda 	esInt0,x 					; copy it into step (bit lazy here)
 		ldy 	#6
 		sta 	(rsPointer),y
-		puly
+		.puly
 _CFDone:
 		lda 	#1
 		jsr 	RSSavePosition 				; save position.
@@ -113,7 +113,7 @@ Command_NEXT:		;; [next]
 		ldx 	#0 							; start on stack
 		jsr 	EvaluateReference 			; this is the variable/parameter to localise.
 		;
-		pshy
+		.pshy
 		ldy 	#4 							; check same variable
 		lda 	(rsPointer),y
 		cmp 	esInt0,x
@@ -122,12 +122,12 @@ Command_NEXT:		;; [next]
 		lda 	(rsPointer),y
 		cmp 	esInt1,x
 		bne 	_CNBadIndex
-		puly
+		.puly
 		;
 		;		Main NEXT code.
 		;
 _CNNoIndex:		
-		pshy 								; don't need this now.
+		.pshy 								; don't need this now.
 		;
 		;		Adjust the variable by the STEP
 		;
@@ -199,7 +199,7 @@ _CNNoOverflow:
 		;		Exit the loop as complete
 		;
 _CNLoopExit:
-		puly		
+		.puly		
 		lda 	#11
 		jsr 	RSFree
 		rts
@@ -207,7 +207,7 @@ _CNLoopExit:
 		;		Loop back 
 		;		
 _CNLoopRound:
-		puly		
+		.puly		
 		lda 	#1
 		jsr 	RSLoadPosition				; go back to the loop top
 		rts			

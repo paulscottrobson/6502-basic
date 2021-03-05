@@ -24,7 +24,7 @@ fs32Length: 								; length of string being converted.
 
 MInt32FromString:
 		sta 	tempShort 					; save base
-		pshy  								; save Y
+		.pshy  								; save Y
 		ldy 	#0 							; get length
 		lda 	(temp0),y
 		sta 	fs32Length 
@@ -50,7 +50,7 @@ _I32FSNN2:
 		;		Main loop - get and process one character.
 		;
 _I32FSMainLoop:
-		pla 								; get the base back into tempshort
+		pla 								; get the base back into tempShort
 		pha
 		and 	#$7F
 		sta 	tempShort
@@ -95,14 +95,14 @@ _I32FSDone:
 		bpl 	_I32FSNN3 				
 		jsr 	MInt32Negate 				; negate the result.
 _I32FSNN3:
-		puly 								; restore Y
+		.puly 								; restore Y
 		sec
 		rts
 
 _I32FSFail:
 		pla
 _I32FSFail2:
-		puly
+		.puly
 		clc
 		rts
 

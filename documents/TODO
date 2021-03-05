@@ -1,15 +1,9 @@
 TODO
 ====
-
-When string popped, use string write code, check that when it has a concreted value it uses that.
-
 Implement LOCAL and give it a good bashing.
-
 Implement VPEEK/VPOKE and put those links in to run $82/$83 words and check they work.
-
+Start Code Reading/Review
 Add arrays.
-
-Start Code Reading.
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -24,11 +18,7 @@ Incomplete but hooked in for write and test
 
 	Number stack overflow.
 
-	On create float what is the default.
-	
 Notes
 =====
 	Stack position fudged for readability.
-	When calling parameters reset softalloc before every param, they might all be concreted strings.
-
 

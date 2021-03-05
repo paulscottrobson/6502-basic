@@ -59,10 +59,10 @@ IOPrintChar: ;; <print>
 ; ************************************************************************************************
 
 IOInkey: ;; <inkey>
-		pshy
+		.pshy
 		jsr 	$FFE4
 		sta 	tempShort
-		puly
+		.puly
 		lda 	tempShort
 		rts
 

@@ -16,7 +16,7 @@ include ../documents/general.make
 endif
 
 OBJDIR = $(SOURCEDIR)bin$(S)
-ASMOPTS = -Wall -q -c -L $(OBJDIR)basic.lst -l $(OBJDIR)basic.lbl -Wall
+ASMOPTS = -Walias -Wmacro-prefix -Wall -q -c -L $(OBJDIR)basic.lst -l $(OBJDIR)basic.lbl -Wall
 APPNAME = $(OBJDIR)basic.prg
 
 .PHONY: all run analyse dump
@@ -35,8 +35,8 @@ dump : $(APPNAME)
 
 $(APPNAME) : basic.asm 
 	$(CDEL) generated$(S)*.inc $(CDELQ)
-#	python ..$(S)scripts$(S)tests$(S)teststr.py >$(BASICDIR)test.bas
-	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)demo.bas
+	python ..$(S)scripts$(S)tests$(S)teststr.py >$(BASICDIR)test.bas
+	python ..$(S)scripts$(S)makepgm.py $(BASICDIR)test.bas
 	python ..$(S)scripts$(S)errorgen.py
 	python ..$(S)scripts$(S)builder.py
 	python ..$(S)scripts$(S)tables.py

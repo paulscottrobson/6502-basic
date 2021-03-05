@@ -28,7 +28,7 @@ DereferenceOne:
 		lsr 	a 							; do float dereference if bit 0 set.
 		bcs 	_DRFloatDeReference
 		;
-		pshy 								; save Y
+		.pshy 								; save Y
 		;
 		lda 	esInt0,x 					; copy address to temp0
 		sta 	temp0
@@ -66,15 +66,16 @@ _DeRefByte:									; only one.
 		and 	#$40
 		sta 	esType,x
 
-		puly 								; restore Y.
+		.puly 								; restore Y.
 _DRNotReference		
 		rts
 		;
 		;		Float dereferncing is done by the floating point library
 		;
 _DRFloatDereference:
+		jsr 	TOSToTemp0 					; address to deref in temp0
 		txa
-		floatingpoint_deref
+		.floatingpoint_loadfp
 		tax
 		lda 	#$01 						; type to FP (float)
 		sta 	esType,x

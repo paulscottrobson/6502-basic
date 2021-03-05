@@ -23,7 +23,7 @@ binop 	.macro
 		jmp 	\1 							; else do it as integer.
 _IsFPOperation:
 		txa 								; call the relevant fp routine
-		floatingpoint_\2
+		.floatingpoint_\2
 		tax
 		rts
 		.endm
@@ -69,7 +69,7 @@ BPMakeFloat:
 		lsr 	a
 		bcs 	_BPIsFloat
 		txa
-		floatingpoint_intTofloat 			; if int, convert to float
+		.floatingpoint_intTofloat 			; if int, convert to float
 		tax
 _BPIsFloat:
 		rts
@@ -93,7 +93,7 @@ AddHandler:	;; [+]
 		;
 _AHStringConcat:
 		txa
-		string_concat
+		.string_concat
 		tax
 		rts
 
@@ -153,8 +153,8 @@ PowerHandler:	;; [^]
 PowerInteger:
 		jsr 	BPMakeBothFloat				; make them float.
 		txa
-		floatingpoint_fpower()				; do the power calculation
-		floatingpoint_floatToInt()			; convert back to integer.
+		.floatingpoint_fpower				; do the power calculation
+		.floatingpoint_floatToInt			; convert back to integer.
 		tax
 		lda 	#0 							; make type integer
 		sta 	esType,x

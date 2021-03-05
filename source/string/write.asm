@@ -62,7 +62,7 @@ srcStrLen:									; length of source string.
 StringWrite: 	;; <write>		
 		tax
 		pha
-		pshy
+		.pshy
 		;
 		;		Check if it will overwrite the old string first.
 		;
@@ -105,7 +105,7 @@ _SWWriteReference
 		;		Restore and exit.
 		;
 _SWExit:
-		puly 	
+		.puly 	
 		pla
 		rts		
 
@@ -190,7 +190,7 @@ _RCFail:
 ; ************************************************************************************************
 
 AllocateHardMemory:
-		pshy
+		.pshy
 		lda 	srcStrLen 				; characters in string
 		adc 	#1+1+8 					; one for hard memory size, one for string size, extra for expansion
 		bcs 	_AHMSetMax 				; max out that amount.
@@ -220,7 +220,7 @@ _AHMIsOkay:
 		iny 	
 		sta 	(temp1),y
 
-		puly
+		.puly
 		rts
 
 ; ************************************************************************************************
@@ -230,7 +230,7 @@ _AHMIsOkay:
 ; ************************************************************************************************
 
 CopyStringToHardMemory:
-		pshy
+		.pshy
 		ldy 	#0 						; copy target address to temp2
 		lda 	(temp1),y
 		sta 	temp2
@@ -245,7 +245,7 @@ _CSTHMLoop:
 		dey
 		cpy 	#$FF
 		bne 	_CSTHMLoop
-		puly
+		.puly
 		rts
 
 ; ************************************************************************************************

@@ -34,12 +34,12 @@ EventFunction:	;; [event(]
 		ora 	esInt3,x
 		bne 	_EFValue
 		;
-		pshy 								; get time -> temp1
-		pshx
-		device_timer
+		.pshy 								; get time -> temp1
+		.pshx
+		.device_timer
 		sty 	temp1+1
 		sta 	temp1
-		pulx 								; restore X.
+		.pulx 								; restore X.
 		;
 		jsr 	TOSToTemp0 					; point temp0 to the variable.
 		;
@@ -60,14 +60,14 @@ EventFunction:	;; [event(]
 		;
 		jsr 	SetEventTimer 				; reset the timer for next time.
 		jsr	 	MInt32True 					; and treutn true as fired.
-		puly
+		.puly
 		rts
 		;
 _EFInitialise:
 		jsr		SetEventTimer 				; set trigger time to time + elapsed
 _EFFail:											
 		jsr 	MInt32False
-		puly
+		.puly
 		rts
 
 _EFValue:

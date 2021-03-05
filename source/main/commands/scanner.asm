@@ -68,12 +68,12 @@ _FPLoop:									; check the MSB is non zero
 		;
 		;		Now compare the names.
 		;
-		pshy
+		.pshy
 		ldy 	#4
 _FPCName:
 		lda 	(temp3),y 					; check the same
 		cmp 	(temp0),y
-		bne 	_FPPulYNext 				; if different go to next one.
+		bne 	_FPpulYNext 				; if different go to next one.
 		iny
 		cmp 	#$3A
 		bcc 	_FPCName 					; compare the whole lot....
@@ -87,8 +87,8 @@ _FPCName:
 		ldy 	yInLine  					; get the original Y back
 		rts		
 		;
-_FPPulYNext:
-		puly
+_FPpulYNext:
+		.puly
 		;
 		;		Fail, go to next. To speed up the hash check 
 		;
@@ -119,7 +119,7 @@ _FPError:
 ; ************************************************************************************************
 
 ScanProc:
-		pshy		
+		.pshy		
 		lda 	lowMemory 					; copy the start of the procList, at low memory
 		sta 	procList
 		lda 	lowMemory+1
@@ -155,7 +155,7 @@ _ScanNext: 									; go to next line.
 _ScanExit:
 		lda 	#0 							; write ending zero.
 		jsr 	_ScanWrite
-		puly
+		.puly
 		rts
 ;
 ;		Write A into lowMemory, expanding the procedure table.

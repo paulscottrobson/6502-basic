@@ -20,12 +20,12 @@
 ExecChr:	;; [chr$(]
 		jsr 	EvaluateSmallInteger		; character number
 		jsr 	CheckRightParen				; right bracket
-		pshy 								; save Y
+		.pshy 								; save Y
 		txa 								; A = stack
 		ldy 	esInt0,x					; Y = character
-		string_chrs		 					; make it.
+		.string_chrs		 					; make it.
 		tax 								; X = stack
-		puly 								; restore Y.
+		.puly 								; restore Y.
 		rts
 
 ; ************************************************************************************************
@@ -47,7 +47,7 @@ ExecSubstring:
 		dex
 		jsr 	CheckRightParen 			; check closing right bracket.
 		txa 								; do the substring and exit.
-		string_substring 
+		.string_substring 
 		tax		
 		rts
 
@@ -91,7 +91,7 @@ ExecRight:	;; [right$(]
 		jsr 	EvaluateSmallInteger 		; smallint 2nd parameter.
 		dex
 		;
-		pshy 								; save Y
+		.pshy 								; save Y
 		lda 	esInt0,x 					; copy address of string to temp0
 		sta 	temp0
 		lda 	esInt1,x
@@ -114,7 +114,7 @@ _EROkay:
 		lda 	#255 						; 255 default for 3nd parameter.
 		jsr 	MInt32Set8Bit 	
 
-		puly
+		.puly
 		jmp 	ExecSubString 				; do the substring code.
 
 		.send 	code

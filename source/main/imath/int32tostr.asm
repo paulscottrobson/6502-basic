@@ -29,7 +29,7 @@ MInt32ToString:
 		sta 	tempShort 					; save target base.
 		lda 	#0
 		sta 	MCharCount 					; clear character count to 0
-		pshy 								; save Y on the stack.
+		.pshy 								; save Y on the stack.
 		;
 		lda 	tempShort 					; check if we are signed conversion
 		bpl 	_I32TSUnsigned 
@@ -48,7 +48,7 @@ _I32TSUnsigned:
 		ldy 	#0 							; write charcount to first character.
 		lda 	MCharCount 
 		sta 	(temp0),y	
-		puly 								; restore YA
+		.puly 								; restore YA
 		pla
 		rts
 ;

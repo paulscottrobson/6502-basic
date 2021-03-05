@@ -14,7 +14,7 @@
 ErrorHandler:
 		lda 	#$EE
 		tay
-		debug
+		.debug
 _EHHalt:jmp 	_EHHalt
 				
 		.send code

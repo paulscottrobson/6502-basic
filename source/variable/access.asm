@@ -62,7 +62,7 @@ AccessVariable:	;; <access>
 		;
 		;		The second character isn't integer variable, so it can't be a default integer
 		;
-_AVLong:pshx 								; save X on the stack.
+_AVLong:.pshx 								; save X on the stack.
 		jsr 	AccessSetup 				; set up the basic stuff.
 		jsr 	FindVariable 				; does the variable exist already
 		bcs 	_AVFound
@@ -74,7 +74,7 @@ _AVLong:pshx 								; save X on the stack.
 _AVCanCreate:		
 		jsr 	CreateVariable 				; no, create it.
 _AVFound:		
-		pulx
+		.pulx
 		;
 		clc 								; copy temp0 (variable record address)
 		lda 	temp0 						; +5 (to point to the data)
@@ -115,7 +115,7 @@ _AVTypeTable:
 AccessSetup:
 		lda 	#0 							; zero the hash byte.
 		sta 	varHash
-		pshy 								; save Y position.
+		.pshy 								; save Y position.
 
 _ASLoop:lda 	(codePtr),y					; get next identifier character
 		cmp 	#$3A 						; is it 3A-3F which end all identifiers ?
@@ -155,7 +155,7 @@ _ASComplete:
 		adc 	#0
 		sta 	hashList+1
 
-		puly
+		.puly
 		rts
 
 		.send code		

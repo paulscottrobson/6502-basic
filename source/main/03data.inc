@@ -24,7 +24,7 @@ temp1: 	.fill 	2
 temp2: 	.fill 	2
 temp3: 	.fill 	2
 
-tempShort:	 								; short term storage.
+tempshort:	 								; short term storage.
 		.fill 	1
 
 highMemory: 								; top of program memory available.

@@ -66,7 +66,7 @@ _PrintString:
 		;
 _PrintFloat:
 		lda 	#0 							; stack level.
-		floatingpoint_floattostring 		; convert to string at (temp0)
+		.floatingpoint_floattostring 		; convert to string at (temp0)
 		jmp 	_PrintSpaceTemp0		
 		;
 		;		Print integer
@@ -80,7 +80,7 @@ _PrintInteger:
 		;
 _PrintSpaceTemp0:
 		lda 	#32
-		device_print		
+		.device_print		
 		;
 		;		Print (temp0) as leading count string
 		;
@@ -90,13 +90,13 @@ _PrintTemp0:
 		;		Print new line (')
 		;		
 _PrintNewLine:
-		device_crlf
+		.device_crlf
 		jmp 	_PrintLoopSkip
 		;
 		;		Print tab (,)
 		;		
 _PrintTab:
-		device_tab
+		.device_tab
 		jmp 	_PrintLoopSkip
 		;
 		;		Exit print		
@@ -107,7 +107,7 @@ _PrintExit:
 		beq 	_PrintExit2
 		cmp 	#TKW_COMMA
 		beq 	_PrintExit2
-		device_crlf
+		.device_crlf
 _PrintExit2:
 		rts
 
@@ -118,22 +118,22 @@ _PrintExit2:
 ; ************************************************************************************************
 
 PrintString:
-		pshx
-		pshy
+		.pshx
+		.pshy
 		ldy 	#0							; get length
 		lda 	(temp0),y
 		tax 								; into X
 _PSLoop:cpx 	#0 							; finished ?
 		beq 	_PSExit
 		dex
-		pshx
+		.pshx
 		iny		
 		lda 	(temp0),y
-		device_print
-		pulx
+		.device_print
+		.pulx
 		jmp 	_PSLoop
-_PSExit:puly
-		pulx
+_PSExit:.puly
+		.pulx
 		rts
 
 		.send code

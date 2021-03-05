@@ -35,7 +35,7 @@ EvaluateLevel:
 		;		Found a variable.
 		;
 		txa 								; stack level in X
-		variable_access  					; access the variable reference.
+		.variable_access  					; access the variable reference.
 		tax
 		jmp		_ELHasTerm 	
 		;
@@ -63,7 +63,7 @@ _ELIsToken:
 		bne 	_ELCheckUnary
 		txa 								; put X into A
 		iny 								; skip over the float marker
-		floatingpoint_importtoken 			; import tokenise floating point
+		.floatingpoint_importtoken 			; import tokenise floating point
 		tax 								; restore X
 		jmp 	_ELHasTerm
 		;
@@ -166,7 +166,7 @@ _ELMinus:
 		lda 	esType,x 					; is it integer
 		beq 	_ELMinusInteger
 		txa
-		floatingpoint_fnegate 				; do fp negate
+		.floatingpoint_fnegate 				; do fp negate
 		tax
 		jmp 	_ELHasTerm
 _ELMinusInteger:

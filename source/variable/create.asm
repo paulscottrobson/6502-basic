@@ -75,6 +75,8 @@ _CVClear: 									; zero the allocated memory.
 		sta 	(hashList),y
 
 		lda 	varType 					; is it a string ($3C)
+		cmp 	#$3E
+		beq 	_CVDefaultFloat0
 		cmp 	#$3C
 		bne 	_CVNoDefaultNull
 
@@ -86,9 +88,14 @@ _CVClear: 									; zero the allocated memory.
 		lda 	#NullString >> 8
 		iny
 		sta 	(temp0),y
+		jmp 	_CVNoDefaultNull
+
+_CVDefaultFloat0:
+		ldy 	#5
+		.floatingpoint_setzero
 
 _CVNoDefaultNull:		
-		puly 								; restore Y
+		.puly 								; restore Y
 		rts
 ;
 ;		Size look up table.

@@ -77,13 +77,18 @@ floatingpoint_loadfp .macro
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_storefp .macro
+floatingpoint_setzero .macro
 	ldx	#30
 	jsr	floatingpointHandler
 	.endm
 
-floatingpoint_stringToFloat .macro
+floatingpoint_storefp .macro
 	ldx	#32
+	jsr	floatingpointHandler
+	.endm
+
+floatingpoint_stringToFloat .macro
+	ldx	#34
 	jsr	floatingpointHandler
 	.endm
 

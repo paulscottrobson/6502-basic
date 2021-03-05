@@ -27,7 +27,7 @@ Command_Run: 	;; [run]
 		;		Come here to do next instruction.
 		;
 CRNextInstruction:
-		StringSoftReset 					; reset the soft string pointer.
+		.StringSoftReset 					; reset the soft string pointer.
 		lda 	(codePtr),y 				; get next token.
 		bpl 	_CRNotToken
 		cmp 	#TOK_TOKENS 				; if in the tokens then do that token.

@@ -4,7 +4,7 @@
 #		Name:		teststr.py
 #		Author:		Paul Robson (paul@robsons.org.uk)
 #		Date:		3rd March 2021
-#		Purpose:	String manipulation tests
+#		Purpose:	String mani.pulation tests
 #
 # *****************************************************************************
 # *****************************************************************************

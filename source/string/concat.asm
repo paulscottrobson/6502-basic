@@ -19,7 +19,7 @@
 
 StringConcat:	;; <concat>
 		tax									; stack pos in X
-		pshy 								; save Y on stack.
+		.pshy 								; save Y on stack.
 		jsr 	CopyStringPair 				; temp0 and temp1 point to strings to concat.
 		;
 		sec 								; calculate alloc strings. lengths added + 1 for size.
@@ -39,7 +39,7 @@ StringConcat:	;; <concat>
 		sta 	temp0+1
 		jsr 	SCCopyTemp0 				; copy temp0 e.g. what was temp1.
 
-		puly 								; restore Y
+		.puly 								; restore Y
 		txa 								; and A
 		rts
 

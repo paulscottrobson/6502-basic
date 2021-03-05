@@ -19,15 +19,15 @@
 
 UnaryTimer:		;; [timer(]
 		jsr 	CheckRightParen
-		pshy
+		.pshy
 		jsr 	MInt32Zero 					; zero result
-		stx 	temp0 						; returning in YA so can't use pshx
-		device_timer()						; get clock.
+		stx 	temp0 						; returning in YA so can't use .pshx
+		.device_timer						; get clock.
 		ldx 	temp0						; restore X and update 16 bit result
 		sta 	esInt0,x
 		tya
 		sta 	esInt1,x
-		puly
+		.puly
 		rts
 
 ; ************************************************************************************************
@@ -39,7 +39,7 @@ UnaryTimer:		;; [timer(]
 UnaryInkey:		;; [inkey(]
 		jsr 	CheckRightParen
 		stx 	temp0
-		device_inkey()
+		.device_inkey
 		ldx 	temp0
 		jsr 	MInt32Set8Bit
 		rts
@@ -54,7 +54,7 @@ UnaryGet:		;; [get(]
 		jsr 	CheckRightParen
 		stx 	temp0
 _UGLoop:		
-		device_inkey()
+		.device_inkey		
 		cmp 	#0
 		beq 	_UGLoop
 		ldx 	temp0
@@ -71,8 +71,8 @@ UnarySys: 		;; [sys(]
 		jsr 	EvaluateInteger 				; get the address
 		jsr 	CheckRightParen
 		jsr 	TOSToTemp0 						; copy to temp0
-		pshx 									; save XY
-		pshy
+		.pshx 									; save XY
+		.pshy
 		;
 		lda 	("A"-"A")*4+SingleLetterVar 	; load AXY
 		ldx 	("X"-"A")*4+SingleLetterVar
@@ -80,8 +80,8 @@ UnarySys: 		;; [sys(]
 		jsr 	_CallTemp0
 		;
 		sta 	tempShort 						; restore YX
-		puly
-		pulx
+		.puly
+		.pulx
 		lda 	tempShort
 		jsr 	MInt32Set8Bit 					; return result.
 		rts

@@ -162,7 +162,7 @@ MInt32Zero:
 ; *****************************************************************************
 
 MInt32Random:
-		pshy
+		.pshy
 		ldy 	#7
 		lda 	MSeed32+0
 		bne 	_Random1
@@ -186,7 +186,7 @@ _Random2:
 		sta 	esInt2,x
 		lda 	MSeed32+3
 		sta 	esInt3,x
-		puly
+		.puly
 		lda 	#0
 		sta 	esType,x
 		rts

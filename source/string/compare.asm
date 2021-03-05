@@ -20,7 +20,7 @@
 STRCompare:	;; <sCompare>
 		pha 								; save A
 		tax 								; put stack pos in X
-		pshy								; save Y
+		.pshy								; save Y
 		jsr 	CopyStringPair
 
 		ldy 	#0 							; get the smaller of the two string sizes.
@@ -62,7 +62,7 @@ _SCReturnResult:
 		bcc 	_SCExit 					; if 1st < 2nd then -1
 		ldx 	#1 							; X = $01 if greater
 _SCExit:
-		puly 								; restore YA and exit with result in X
+		.puly 								; restore YA and exit with result in X
 		pla
 		rts
 

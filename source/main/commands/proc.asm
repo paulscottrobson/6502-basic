@@ -25,7 +25,7 @@ paramCount: 								; number of parameters + 1
 CallProc:	;; [proc]
 		jsr 	FindProcedure 				; find procedure, put in temp0. A contains name length.		
 		pha 								; save length on stack
-		sta 	tempShort 					; save length in tempshort
+		sta 	tempShort 					; save length in tempShort
 		lda 	temp0+1 					; save procedure target on stack.
 		pha
 		lda 	temp0

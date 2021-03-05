@@ -27,10 +27,10 @@ LocaliseVariable:
 		cmp 	#$40
 		bcs 	_LVSyntax
 		txa 								; get the address of that variable.
-		variable_access
+		.variable_access
 		tax
-		pshx
-		pshy 								; save Y.
+		.pshx
+		.pshy 								; save Y.
 		;
 		jsr 	TOSToTemp0 					; the address of the variable is now in temp0.
 		lda 	esType,x 					; get the type
@@ -100,8 +100,8 @@ _LVCopyData:
 		dec 	storeSize 					; do it storesize times
 		bne 	_LVCopyData
 		;
-		puly
-		pulx
+		.puly
+		.pulx
 		rts
 
 _LVSyntax:
@@ -121,8 +121,8 @@ RestoreLocals:
 		bcc 	_RLocal
 		rts
 _RLocal:
-		pshx
-		pshy
+		.pshx
+		.pshy
 
 		ldy 	#1 							; copy target address to temp0
 		lda 	(rsPointer),y
@@ -141,7 +141,7 @@ _RLocal:
 		beq 	_RIsInteger
 		ldx 	#VARFSize 					; size float
 _RIsInteger:
-		pshx 								; save size on stack.
+		.pshx 								; save size on stack.
 		ldy 	#3							; start size to copy back from pointer.
 _RCopyBack:				
 		lda 	(rsPointer),y
@@ -160,14 +160,30 @@ _RCopyBack:
 		adc 	#3 							; (2 for address one for marker)
 _RRestoreAAndLoop:		
 		jsr 	RSFree
-		puly
-		pulx
+		.puly
+		.pulx
 		jmp 	RestoreLocals 				; go see if there are any more locals.
 		;
 		;		Handle strings.
 		;		
 _RString:
-		debug
+		ldx 	#0
+		ldy 	#1 							; set up for a string write.
+		lda 	(rsPointer),y
+		sta 	esInt0,x
+		iny
+		lda 	(rsPointer),y
+		sta 	esInt1,x
+		;
+		clc
+		lda 	rsPointer
+		adc 	#3
+		sta 	esInt0+1,x
+		lda 	rsPointer+1
+		adc 	#0
+		sta 	esInt1+1,x
+		txa
+		.string_write
 		;
 		;		Assign variable to string.
 		;
