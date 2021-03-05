@@ -25,26 +25,12 @@ Command_VDoke:		;; [vdoke]
 CmdVideoWrite:		
 		php
 		ldx 	#0  				; get address into levels 0,1
-		jsr 	EvaluateInteger
+		jsr 	XEvaluateInteger
 		jsr 	CheckComma
 		inx
-		jsr 	EvaluateInteger
-
-		lda 	esInt2,x 			; check range of address, data to $FFFF
-		and 	#1
-		ora 	esInt3,x
-		ora 	esInt2+1,x
-		ora 	esInt3+1,x
-		bne 	_CVWValue
-		;
-		lda 	esInt0				; set address up
-		sta 	$9F20
-		lda 	esInt1
-		sta	 	$9F21
-		lda 	esInt2
-		and 	#1
-		ora 	#$10 				; step 1.
-		sta 	$9F22
+		jsr 	XEvaluateInteger
+		dex
+		jsr 	SetUpTOSVRamAddress
 		;
 		lda 	esInt0+1 			; get MSB of write value
 		sta 	$9F23
@@ -56,6 +42,55 @@ CmdVideoWrite:
 _CVWExit:
 		rts
 
-_CVWValue:
+SetUpTOSVRamAddress:
+		lda 	esInt2,x 			; check range of address, data to $FFFF
+		and 	#1
+		ora 	esInt3,x
+		bne 	CVWValue
+		lda 	esInt0,x				; set address up
+		sta 	$9F20
+		lda 	esInt1,x
+		sta	 	$9F21
+		lda 	esInt2,x
+		and 	#1
+		ora 	#$10 				; step 1.
+		sta 	$9F22
+		rts		
+CVWValue:
 		error 	BadValue
+
+; ************************************************************************************************
+;
+;										VPeek/VDeek
+;
+; ************************************************************************************************
+
+Command_VPeek:		;; [vpeek(]
+		sec 						; one byte , CS
+		bcs 	CmdVideoRead
+Command_VDeek:		;; [vdeek(]
+		clc 						; two bytes, CC
+CmdVideoRead:		
+		.debug
+		php 						; save action on stack.
+		tax 						; save stack position
+		jsr 	XEvaluateInteger 	; address
+		jsr 	CheckRightParen 	; closing right bracket.
+		;
+		jsr 	SetUpTOSVRamAddress	; set up VRAM address.
+		;
+		lda 	#0 					; zero the return value
+		sta 	esInt3,x
+		sta 	esInt2,x
+		sta 	esInt1,x
+		;
+		lda 	$9F23
+		sta 	esInt0,x
+		plp
+		bcs 	_CVRExit
+		lda 	$9F23
+		sta 	esInt1,x
+_CVRExit:
+		txa 						; return X position.
+		rts
 		.send code

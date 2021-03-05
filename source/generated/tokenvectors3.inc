@@ -2,5 +2,5 @@
 ;	Automatically generated
 ;
 Group3Vectors:
-	.word	Unimplemented            ; $86 vpeek(
-	.word	Unimplemented            ; $87 vdeek(
+	.word	Command_VPeek            ; $86 vpeek(
+	.word	Command_VDeek            ; $87 vdeek(

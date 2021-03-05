@@ -86,6 +86,7 @@ _RunIt:
 		jmp 	(Group1Vectors) 			; and do the code.	
 
 CommandShift2:	;; [[[SH2]]]
+		lda 	#$FF 						; $FF means command not unary function.
 		.extension_execown
 		jmp 	CRNextInstruction
 

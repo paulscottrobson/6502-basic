@@ -152,6 +152,8 @@ _ELCheckUnary:
 		beq 	_ELIndirect
 		cmp 	#TKW_QMARK
 		beq 	_ELIndirect
+		cmp 	#TOK_SHIFT3 				; is it the unary extension.
+		beq 	_ELExtension
 		cmp 	#TOK_UNARYST 				; must be TOK_UNARYST ... TOK_TOKENS
 		bcc 	_ELUSyntax
 		cmp 	#TOK_TOKENS
@@ -191,6 +193,14 @@ _ELHaveModifier:
 		;
 _ELCallTemp0:
 		jmp 	(temp0)
+		;
+		;		Call extension routine
+		;
+_ELExtension:
+		txa 								; stack pos in A
+		.extension_execown		 			; call extension unary (A = $00-$FE)
+		tax 								; restore stack
+		jmp 	_ELHasTerm
 
 ; ************************************************************************************************
 ;
