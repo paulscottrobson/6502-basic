@@ -23,7 +23,9 @@ storeSize:
 ; ************************************************************************************************
 
 CommandLocal:		;; [local]
+		ldx 	#0
 		jsr 	LocaliseVariable 			; localise one.
+_CLCheckNext:
 		lda 	(codePtr),y 				; what follows ?
 		iny
 		cmp 	#TKW_EQUAL 					; local x = 2 ?
@@ -34,7 +36,11 @@ CommandLocal:		;; [local]
 		rts
 
 _CLAssignment:
-		.debug
+		ldx 	#1
+		jsr 	Evaluate 					; evaluate RHS
+		dex
+		jsr 	WriteValue
+		jmp 	_CLCheckNext
 
 ; ************************************************************************************************
 ;

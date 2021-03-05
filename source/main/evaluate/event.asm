@@ -28,6 +28,7 @@ EventFunction:	;; [event(]
 		jsr 	CheckRightParen 			; finish off with the
 		dex
 		;
+
 		lda 	esInt1,x 					; check max of 32767
 		and 	#$80
 		ora 	esInt2,x
@@ -42,6 +43,9 @@ EventFunction:	;; [event(]
 		.pulx 								; restore X.
 		;
 		jsr 	TOSToTemp0 					; point temp0 to the variable.
+		ldy 	#3							; if -ve
+		lda 	(temp0),y
+		bmi 	_EFFail 	 				; straight out with fail, means on pause.
 		;
 		ldy 	#0 							; is the fire time zero ?
 		lda 	(temp0),y
@@ -66,8 +70,8 @@ EventFunction:	;; [event(]
 _EFInitialise:
 		jsr		SetEventTimer 				; set trigger time to time + elapsed
 _EFFail:											
-		jsr 	MInt32False
 		.puly
+		jsr 	MInt32False
 		rts
 
 _EFValue:
