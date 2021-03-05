@@ -83,7 +83,7 @@ CommandShift1:	;; [[[SH1]]]
 		jsr 	_RunIt 						; we have no jsr (aaaa,X)
 		jmp 	CRNextInstruction
 _RunIt:		
-		jmp 	(Group1Vectors) 			; and do the code.	
+		jmp 	(Group1Vectors-12,x) 		; and do the code.	
 
 CommandShift2:	;; [[[SH2]]]
 		lda 	#$FF 						; $FF means command not unary function.

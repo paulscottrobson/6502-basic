@@ -1,10 +1,4 @@
-print asc("*")
-print chr$(42)
-print left$("ABCDE",3)
-print len("ABCDE")
-print min(1,8,12,7,-5)
-print max("HELLO","AND","GOODBYE")
-print mid$("ABCDE",2,2)
-print mid$("ABCDE",3)
-print right$("ABCDE",3)
-repeat:until 0
+print str$(x1,16)
+print zz
+print a$
+repeat:until false

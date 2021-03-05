@@ -1,9 +1,9 @@
 ;
 ;	Automatically generated
 ;
-	.include "main/01common.inc"
-	.include "main/02macros.inc"
-	.include "main/03data.inc"
+	.include "main/00header/01common.inc"
+	.include "main/00header/02macros.inc"
+	.include "main/00header/03data.inc"
 	.include "main/imath/intmacros.inc"
 	.include "main/main.inc"
 	.include "assembler/assembler.inc"

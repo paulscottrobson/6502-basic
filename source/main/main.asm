@@ -1,7 +1,7 @@
 ;
 ;	Automatically generated
 ;
-	.include "00start.asm"
+	.include "00header/00start.asm"
 	.include "commands/assert.asm"
 	.include "commands/clear.asm"
 	.include "commands/for.asm"

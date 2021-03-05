@@ -32,23 +32,17 @@ CreateVariable:
 		ldx 	varType 					; get var type 0-5
 		lda		_CVSize-$3A,x 				; the bytes for this new variable.
 		pha 								; save length
-		tay 								; put into Y.
 		;
 		lda 	lowMemory 					; set low Memory ptr to temp0
-		sta 	temp0
+		sta 	temp0 						; (address of the new variable)
 		lda 	lowMemory+1
 		sta 	temp0+1
+		;
 		pla 								; get length
 		jsr 	AdvanceLowMemoryByte 		; shift alloc memory forward by the length.
-		;
-_CVClear: 									; zero the allocated memory.
-		dey 								
-		lda 	#0
-		sta 	(temp0),y
-		cpy 	#4
-		bne 	_CVClear		
 
 		lda 	varHash 					; store hash at offset 4.
+		ldy 	#4
 		sta 	(temp0),y
 
 		pla 								; offset, work out where the variable name is.
@@ -73,28 +67,9 @@ _CVClear: 									; zero the allocated memory.
 		dey
 		lda 	temp0
 		sta 	(hashList),y
-
-		lda 	varType 					; is it a string ($3C)
-		cmp 	#$3E
-		beq 	_CVDefaultFloat0
-		cmp 	#$3C
-		bne 	_CVNoDefaultNull
-
-		lda 	#0 							; put a reference to null string as the default value.
-		sta 	NullString
-		ldy 	#5
-		lda 	#NullString & $FF
-		sta 	(temp0),y
-		lda 	#NullString >> 8
-		iny
-		sta 	(temp0),y
-		jmp 	_CVNoDefaultNull
-
-_CVDefaultFloat0:
-		ldy 	#5
-		.floatingpoint_setzero
-
-_CVNoDefaultNull:		
+		lda 	varType 					; type in A
+		ldy 	#5 							; offset in Y
+		jsr 	ZeroTemp0Y 					; zero (temp0),y with whatever type.
 		.puly 								; restore Y
 		rts
 ;
@@ -103,5 +78,51 @@ _CVNoDefaultNull:
 _CVSize:.byte 	VarHSize+VarISize,VarHSize+VarISize 					; <storage for integer>
 		.byte 	VarHSize+VarSSize,VarHSize+VarSSize 					; <storage for string>
 		.byte 	VarHSize+VarFSize,VarHSize+VarFSize 					; <storage for float>
-		.send 	code
+
+; ************************************************************************************************
+;
+;							Write a blank at (temp0),y, allowing for type A.
+;
+; ************************************************************************************************
 		
+ZeroTemp0Y:
+		and 	#$FE 						; convert array type to base type
+		cmp 	#$3C 						; check string		
+		beq 	_ZTWriteNullString 			; write "" string
+		cmp 	#$3E 						; check float
+		beq 	_ZTWriteFloat
+		;
+		;		Null Integer.
+		;
+		.pshy
+		lda 	#0
+		sta 	(temp0),y
+		iny
+		sta 	(temp0),y
+		iny
+		sta 	(temp0),y
+		iny
+		sta 	(temp0),y
+		.puly
+		rts
+		;
+		;		Null string at (temp0),Y
+		;
+_ZTWriteNullString:
+		lda 	#0 							; put a reference to null string as the default value.
+		sta 	NullString
+		lda 	#NullString & $FF
+		sta 	(temp0),y
+		lda 	#NullString >> 8
+		iny
+		sta 	(temp0),y
+		dey
+		rts
+		;
+		;		Float write done by floating point module.
+		;
+_ZTWriteFloat:
+		.floatingpoint_setzero
+		rts
+
+		.send 	code

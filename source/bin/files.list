@@ -13,7 +13,7 @@
 ../source/floatingpoint/loadstore.asm
 ../source/floatingpoint/muldiv.asm
 ../source/floatingpoint/unary.asm
-../source/main/00start.asm
+../source/main/00header/00start.asm
 ../source/main/commands/assert.asm
 ../source/main/commands/clear.asm
 ../source/main/commands/for.asm
