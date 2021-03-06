@@ -30,6 +30,32 @@ ExecChr:	;; [chr$(]
 
 ; ************************************************************************************************
 ;
+;							LOWER$()/UPPER$() handler
+;
+; ************************************************************************************************
+
+ExecLower:	;; [lower$(]
+		sec 	
+		bcs 	ExecUpperLower
+ExecUpper:  ;; [upper$(]		
+		clc
+ExecUpperLower:		
+		php 								; save carry
+		jsr 	EvaluateString 				; string to stack,X
+		jsr 	CheckRightParen 			; check closing right bracket.
+		plp 								; restore carry, save Y
+		.pshy
+		lda 	#0 							; A zero if upper, 1 if lower.
+		rol 	a
+		tay 								; now in Y
+		txa 								; do the substring and exit.
+		.string_setcase
+		tax	
+		.puly	
+		rts
+
+; ************************************************************************************************
+;
 ;										LEFT$() handler
 ;
 ; ************************************************************************************************

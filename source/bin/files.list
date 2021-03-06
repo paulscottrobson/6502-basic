@@ -57,6 +57,7 @@
 ../source/string/compare.asm
 ../source/string/concat.asm
 ../source/string/memory.asm
+../source/string/setcase.asm
 ../source/string/substring.asm
 ../source/string/write.asm
 ../source/variable/access.asm

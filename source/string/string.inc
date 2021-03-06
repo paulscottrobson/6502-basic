@@ -22,13 +22,18 @@ string_sCompare .macro
 	jsr	stringHandler
 	.endm
 
-string_substring .macro
+string_setcase .macro
 	ldx	#8
 	jsr	stringHandler
 	.endm
 
-string_write .macro
+string_substring .macro
 	ldx	#10
+	jsr	stringHandler
+	.endm
+
+string_write .macro
+	ldx	#12
 	jsr	stringHandler
 	.endm
 

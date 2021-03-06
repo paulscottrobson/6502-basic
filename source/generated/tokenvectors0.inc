@@ -67,8 +67,8 @@ Group0Vectors:
 	.word	UnaryIntToFloat          ; $be int(
 	.word	UnaryFloatToInt          ; $bf float(
 	.word	UnaryIsVal               ; $c0 isval(
-	.word	Unimplemented            ; $c1 upper$(
-	.word	Unimplemented            ; $c2 lower$(
+	.word	ExecUpper                ; $c1 upper$(
+	.word	ExecLower                ; $c2 lower$(
 	.word	UnaryReference           ; $c3 @
 	.word	UnaryComplement          ; $c4 ~
 	.word	UnaryHexMarker           ; $c5 &
