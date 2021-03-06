@@ -2,6 +2,7 @@
 ;	Automatically generated
 ;
 	.include "access.asm"
+	.include "accessarray.asm"
 	.include "create.asm"
 	.include "createarray.asm"
 	.include "find.asm"

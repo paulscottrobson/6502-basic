@@ -42,6 +42,7 @@ errorDef = """
 	Params:Parameters do not match.
 	DupArray:Array already defined
 	NotArray:DIM requires array
+	ArrayIndex:Bad array index.
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

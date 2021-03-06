@@ -28,5 +28,6 @@ ErrorTextList:
 	.text 24,"Parameters do not match."
 	.text 21,"Array already defined"
 	.text 18,"DIM requires array"
+	.text 16,"Bad array index."
 	.byte 0
 

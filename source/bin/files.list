@@ -60,6 +60,7 @@
 ../source/string/substring.asm
 ../source/string/write.asm
 ../source/variable/access.asm
+../source/variable/accessarray.asm
 ../source/variable/create.asm
 ../source/variable/createarray.asm
 ../source/variable/find.asm

@@ -37,7 +37,7 @@ class Dumper(object):
 	#
 	def dumpType(self,h,t):
 		hashBase = self.hashBase + self.tableSize * 2 * t
-		h.write("\nVariable group {0}\n".format(self.tails[t]))
+		h.write("\n--- Variable group {0} ---\n".format(self.tails[t]))
 		for te in range(0,self.tableSize):
 			tLink = te * 2 + hashBase
 			ptr = self.deek(tLink)

@@ -93,9 +93,12 @@ _AVFound:
 		sta 	esType,x
 		;
 		ldy 	varEnd 						; restore Y
-		;
-		; TODO: Array stuff.
-		;
+
+		lda 	VarType 					; get variable type, put LSB into C
+		lsr 	a
+		bcc 	_AVNotArray
+		jsr 	AccessArray 				; array lookup. if LSB was set.
+_AVNotArray:		
 		txa 								; return stack in A and return
 		rts
 
