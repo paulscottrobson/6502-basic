@@ -94,6 +94,10 @@ _SFNextLine:
 _SFNLNoCarry:
 		lda 	(codePtr),y 				; reached the end of the program.
 		bne		_SFLoop 					; no go round again
+		lda 	temp1
+		cmp 	#TKW_DATA 					; if searching for Data different error.
+		bne 	_SFError
+		error 	DataError 				
 		;
 		;		Structure error
 		;

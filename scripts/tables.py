@@ -113,6 +113,7 @@ for group in range(0,4):												# for each group
 		elif t1.endswith("("):											# or $3B (integer array)
 			t1 = t1[:-1] + chr(0x3B)
 		bList = [ord(c.upper()) & 0x3F for c in t1]						# convert to 6 bit format
+		bList[-1] = bList[-1] | 0x80 									# set bit 7 of last.
 		bList.insert(0,len(bList))										# length up front
 		bList = ",".join(["${0:02x}".format(c) for c in bList])			# reformat and write out.
 		h.write("\t.byte {0:32} ; ${1:02x} {2}\n".format(bList,n,token.lower()))

@@ -1,4 +1,3 @@
-data "Paul"
 print "START"
 dim c(5),name$(2)
 read a,b2,c(3)
@@ -9,6 +8,6 @@ data 12,13,14:print "NEXT"
 print "TEXTIES"
 data "Paul","Jane"
 print "DONE"
-repeat:until false
+stop
 
 

@@ -64,6 +64,7 @@ CommandData: ;; [data]
 		lda 	#TOK_EOL 					; go forward to end of line or colon.
 		ldx 	#TKW_COLON
 		jsr 	ScanForward
+		dey 								; ending on EOL is a scan issue, as it increments
 		rts
 
 ; ************************************************************************************************

@@ -43,6 +43,7 @@ errorDef = """
 	DupArray:Array already defined
 	NotArray:DIM requires array
 	ArrayIndex:Bad array index.
+	DataError:Out of data
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

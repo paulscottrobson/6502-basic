@@ -28,3 +28,4 @@ ErrorID_Params = 24 ; Parameters do not match.
 ErrorID_DupArray = 25 ; Array already defined
 ErrorID_NotArray = 26 ; DIM requires array
 ErrorID_ArrayIndex = 27 ; Bad array index.
+ErrorID_DataError = 28 ; Out of data

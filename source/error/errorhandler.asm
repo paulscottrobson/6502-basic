@@ -29,10 +29,10 @@ _EHFound:
 		lda 	(codePtr),y
 		beq 	_EHNoLine
 
-		set16 	temp0,EHAtMsg
-		.main_printstring		
-_EHNoLine: 									; set up line number in TOS
-		ldy 	#1
+		set16 	temp0,EHAtMsg 				; print " @ "
+		.main_printstring	
+
+		ldy 	#1 							; set up line number in TOS
 		ldx 	#0
 		lda 	(codePtr),y
 		sta 	esInt0,x
@@ -47,11 +47,12 @@ _EHNoLine: 									; set up line number in TOS
 		lda 	#0
 		.main_inttostr
 		.main_printstring		
+_EHNoLine: 									
 
 _EHHalt:jmp 	_EHHalt
 
 EHAtMsg:
-		.text 	9," at line "
+		.text 	3," @ "
 ;
 ;		List of error messages in order.
 ;

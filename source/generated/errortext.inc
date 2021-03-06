@@ -29,5 +29,6 @@ ErrorTextList:
 	.text 21,"Array already defined"
 	.text 18,"DIM requires array"
 	.text 16,"Bad array index."
+	.text 11,"Out of data"
 	.byte 0
 
