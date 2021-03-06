@@ -8,7 +8,7 @@ Group1Vectors:
 	.word	Unimplemented            ; $89 list
 	.word	Command_New              ; $8a new
 	.word	Command_Run              ; $8b run
-	.word	Unimplemented            ; $8c read
+	.word	CommandRead              ; $8c read
 	.word	CommandRestore           ; $8d restore
 	.word	CommandEnd               ; $8e end
 	.word	CommandStop              ; $8f stop
