@@ -40,6 +40,8 @@ errorDef = """
 	RetStack:Return stack out of space.
 	NoProc:Unknown Procedure
 	Params:Parameters do not match.
+	DupArray:Array already defined
+	NotArray:DIM requires array
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

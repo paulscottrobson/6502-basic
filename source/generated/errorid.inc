@@ -25,3 +25,5 @@ ErrorID_NoAuto = 21 ; Cannot create variable
 ErrorID_RetStack = 22 ; Return stack out of space.
 ErrorID_NoProc = 23 ; Unknown Procedure
 ErrorID_Params = 24 ; Parameters do not match.
+ErrorID_DupArray = 25 ; Array already defined
+ErrorID_NotArray = 26 ; DIM requires array

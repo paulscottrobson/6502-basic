@@ -16,6 +16,7 @@
 ../source/main/00header/00start.asm
 ../source/main/commands/assert.asm
 ../source/main/commands/clear.asm
+../source/main/commands/dim.asm
 ../source/main/commands/for.asm
 ../source/main/commands/if.asm
 ../source/main/commands/let.asm
@@ -60,5 +61,6 @@
 ../source/string/write.asm
 ../source/variable/access.asm
 ../source/variable/create.asm
+../source/variable/createarray.asm
 ../source/variable/find.asm
 ../source/variable/reset.asm

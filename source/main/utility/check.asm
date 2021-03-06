@@ -31,7 +31,7 @@ _CTError:
 ;	
 ; ************************************************************************************************
 
-CheckRightParen:
+CheckRightParen: ;; <checkrightparen>
 		lda 	(codePtr),y
 		iny
 		cmp 	#TKW_RPAREN

@@ -62,7 +62,8 @@ AccessVariable:	;; <access>
 		;
 		;		The second character isn't integer variable, so it can't be a default integer
 		;
-_AVLong:.pshx 								; save X on the stack.
+_AVLong:
+		.pshx 								; save X on the stack.
 		jsr 	AccessSetup 				; set up the basic stuff.
 		jsr 	FindVariable 				; does the variable exist already
 		bcs 	_AVFound

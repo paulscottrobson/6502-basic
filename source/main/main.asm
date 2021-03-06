@@ -4,6 +4,7 @@
 	.include "00header/00start.asm"
 	.include "commands/assert.asm"
 	.include "commands/clear.asm"
+	.include "commands/dim.asm"
 	.include "commands/for.asm"
 	.include "commands/if.asm"
 	.include "commands/let.asm"
@@ -47,9 +48,10 @@ mainHandler:
 	dispatch mainVectors
 
 mainVectors:
-	.word LinkEvaluate         ; index 0
-	.word LinkEvaluateInteger  ; index 2
-	.word LinkEvaluateSmallInt ; index 4
-	.word MLInt32ToString      ; index 6
-	.word PrintString          ; index 8
+	.word CheckRightParen      ; index 0
+	.word LinkEvaluate         ; index 2
+	.word LinkEvaluateInteger  ; index 4
+	.word LinkEvaluateSmallInt ; index 6
+	.word MLInt32ToString      ; index 8
+	.word PrintString          ; index 10
 .send code

@@ -75,9 +75,9 @@ CreateVariable:
 ;
 ;		Size look up table.
 ;
-_CVSize:.byte 	VarHSize+VarISize,VarHSize+VarISize 					; <storage for integer>
-		.byte 	VarHSize+VarSSize,VarHSize+VarSSize 					; <storage for string>
-		.byte 	VarHSize+VarFSize,VarHSize+VarFSize 					; <storage for float>
+_CVSize:.byte 	VarHSize+VarISize,VarHSize+VarASize 					; <storage for integer>
+		.byte 	VarHSize+VarSSize,VarHSize+VarASize 					; <storage for string>
+		.byte 	VarHSize+VarFSize,VarHSize+VarASize 					; <storage for float>
 
 ; ************************************************************************************************
 ;
@@ -86,7 +86,10 @@ _CVSize:.byte 	VarHSize+VarISize,VarHSize+VarISize 					; <storage for integer>
 ; ************************************************************************************************
 		
 ZeroTemp0Y:
-		and 	#$FE 						; convert array type to base type
+		lsr 	a 							; bit 0 in carry
+		asl 	a
+		bcs 	_ZTExit 					; we don't initialise arrays.
+		;
 		cmp 	#$3C 						; check string		
 		beq 	_ZTWriteNullString 			; write "" string
 		cmp 	#$3E 						; check float
@@ -104,6 +107,7 @@ ZeroTemp0Y:
 		iny
 		sta 	(temp0),y
 		.puly
+_ZTExit:		
 		rts
 		;
 		;		Null string at (temp0),Y
@@ -122,7 +126,9 @@ _ZTWriteNullString:
 		;		Float write done by floating point module.
 		;
 _ZTWriteFloat:
+		.pshx
 		.floatingpoint_setzero
+		.pulx
 		rts
 
 		.send 	code

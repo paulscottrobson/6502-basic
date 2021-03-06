@@ -93,6 +93,7 @@ VarHSize = 5 								; header (2 link, 2 name, 1 hash)
 VarISize = 4 								; integer (32 bit)
 VarFSize = 6 								; float (4 mantissa, 1 exponent 1 sign/zero)
 VarSSize = 2 								; address (2 bytes)
+VarASize = 5 								; array [address,size,byteSize]
 
 ; ************************************************************************************************
 ;

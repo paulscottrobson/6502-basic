@@ -3,6 +3,7 @@
 ;
 	.include "access.asm"
 	.include "create.asm"
+	.include "createarray.asm"
 	.include "find.asm"
 	.include "reset.asm"
 
@@ -13,5 +14,6 @@ variableHandler:
 
 variableVectors:
 	.word AccessVariable       ; index 0
-	.word HashTableReset       ; index 2
+	.word CreateArray          ; index 2
+	.word HashTableReset       ; index 4
 .send code

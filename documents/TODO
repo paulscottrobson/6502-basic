@@ -1,6 +1,7 @@
 TODO
 ====
-Add arrays.
+Upper$/Lower$
+Add array access.
 Start Code Reading/Review to r1.
 
 Incomplete but hooked in for write and test
@@ -11,6 +12,7 @@ Incomplete but hooked in for write and test
 	Out of memory in 
 		pointer advance in clear.asm alloc, soft/hard memory allocation alloc() function.
 		creating procedure table.
+		creating arrays.
 		
 	Special case 1 in concrete ???
 

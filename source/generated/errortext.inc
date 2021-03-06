@@ -26,5 +26,7 @@ ErrorTextList:
 	.text 26,"Return stack out of space."
 	.text 17,"Unknown Procedure"
 	.text 24,"Parameters do not match."
+	.text 21,"Array already defined"
+	.text 18,"DIM requires array"
 	.byte 0
 
