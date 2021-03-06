@@ -13,6 +13,7 @@
 	.include "commands/poke.asm"
 	.include "commands/print.asm"
 	.include "commands/proc.asm"
+	.include "commands/readdata.asm"
 	.include "commands/rem.asm"
 	.include "commands/repeat.asm"
 	.include "commands/run.asm"

@@ -91,7 +91,7 @@ Group0Vectors:
 	.word	CommandGOTO              ; $d6 goto
 	.word	CommandGOSUB             ; $d7 gosub
 	.word	CommandRETURN            ; $d8 return
-	.word	Unimplemented            ; $d9 data
+	.word	CommandData              ; $d9 data
 	.word	Command_Assert           ; $da assert
 	.word	Command_Poke             ; $db poke
 	.word	Command_Doke             ; $dc doke

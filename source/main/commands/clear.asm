@@ -52,10 +52,11 @@ _CCFoundEnd:
 
 		jsr 	RSReset 					; reset the return stack.
 
-		.variable_reset 						; reset the variable hash table pointers.
+		.variable_reset 					; reset the variable hash table pointers.
 		
 		jsr 	ScanProc 					; scan for procedures
-	
+		jsr 	CommandRestore 				; do a restore
+
 		.puly
 		rts
 
