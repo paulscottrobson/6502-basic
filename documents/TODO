@@ -1,7 +1,11 @@
 TODO
 ====
 List
+	- integer, hex constants.
+	- Floating point values (stub ?)
+
 Start Code Reading/Review..
+
 Tokenising
 
 Incomplete but hooked in for write and test
@@ -25,3 +29,4 @@ Notes
 
 New commands/Changes to document
 ================================
+LIST

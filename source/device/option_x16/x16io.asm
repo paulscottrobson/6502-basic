@@ -128,10 +128,10 @@ IOInk:	 ;; <ink>
 
 _IOColourTable:
 		.byte 	$90 					; 0 Black
-		.byte 	$1C 					; 1 Red
+		.byte 	$96 					; 1 Red
 		.byte 	$1E 					; 2 Green
 		.byte 	$9E 					; 3 Yellow
-		.byte 	$1F 					; 4 Blue
+		.byte 	$9A 					; 4 Blue
 		.byte 	$9C 					; 5 Magenta
 		.byte 	$9F 					; 6 Cyan
 		.byte 	$05 					; 7 White

@@ -22,13 +22,18 @@ main_evaluatesmall .macro
 	jsr	mainHandler
 	.endm
 
-main_inttostr .macro
+main_evaluateterm .macro
 	ldx	#8
 	jsr	mainHandler
 	.endm
 
-main_printstring .macro
+main_inttostr .macro
 	ldx	#10
+	jsr	mainHandler
+	.endm
+
+main_printstring .macro
+	ldx	#12
 	jsr	mainHandler
 	.endm
 

@@ -21,6 +21,7 @@
 ../source/main/commands/if.asm
 ../source/main/commands/input.asm
 ../source/main/commands/let.asm
+../source/main/commands/list.asm
 ../source/main/commands/local.asm
 ../source/main/commands/new.asm
 ../source/main/commands/poke.asm
@@ -63,6 +64,7 @@
 ../source/string/setcase.asm
 ../source/string/substring.asm
 ../source/string/write.asm
+../source/tokeniser/detokenise.asm
 ../source/variable/access.asm
 ../source/variable/accessarray.asm
 ../source/variable/create.asm

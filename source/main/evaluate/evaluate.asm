@@ -304,6 +304,12 @@ LinkEvaluate: 	;; <evaluate>
 		txa
 		rts
 
+LinkEvaluateTerm: 	;; <evaluateterm>
+		tax
+		jsr 	EvaluateTerm
+		txa
+		rts
+
 LinkEvaluateInteger: 	;; <evaluateint>
 		tax
 		jsr 	EvaluateInteger

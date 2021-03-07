@@ -9,6 +9,7 @@
 	.include "commands/if.asm"
 	.include "commands/input.asm"
 	.include "commands/let.asm"
+	.include "commands/list.asm"
 	.include "commands/local.asm"
 	.include "commands/new.asm"
 	.include "commands/poke.asm"
@@ -55,6 +56,7 @@ mainVectors:
 	.word LinkEvaluate         ; index 2
 	.word LinkEvaluateInteger  ; index 4
 	.word LinkEvaluateSmallInt ; index 6
-	.word MLInt32ToString      ; index 8
-	.word PrintString          ; index 10
+	.word LinkEvaluateTerm     ; index 8
+	.word MLInt32ToString      ; index 10
+	.word PrintString          ; index 12
 .send code
