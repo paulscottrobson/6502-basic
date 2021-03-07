@@ -4,6 +4,7 @@
 ;		Name:		comparison.asm
 ;		Purpose:	Binary Compare Routines
 ;		Created:	22nd February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -19,8 +20,8 @@
 ; ************************************************************************************************
 
 comparer 	.macro 
-		jsr 	PerformComparison
-		cmp 	#\1
+		jsr 	PerformComparison 			; returns $FF,$00,$01 accordingly
+		cmp 	#\1 						; and we do something if it is = or <> a value.
 		\2  	CompareTrue
 		jmp 	CompareFalse
 		.endm
@@ -37,27 +38,28 @@ PerformComparison:
 		jsr 	DereferenceTwo 				; make both values.
 		lda 	esType,x 					; check for two strings.
 		and 	esType+1,x
-		asl 	a
+		asl 	a 							; bit 7 set if both bit 6s were set.
 		bmi 	_PCIsString 				
 		;
 		lda 	esType,x 					; check either is floating point.
 		ora 	esType+1,x
-		asl 	a 							; shift bit 6 (string) to bit 7
+		asl 	a 							; shift bit 6 (string) to bit 7, mixed types
 		bmi 	_PCError 					
+		;
 		and 	#$02 						; because of ASL, check type in bit 0
-		beq 	_PCIsInteger 				; if not two integers
+		beq 	_PCIsInteger 				; if not two integers, e.g. 1 of the bits is set
 		jsr 	BPMakeBothFloat 			; make both float
 		txa
-		.floatingpoint_fCompare 				; and compare them.
+		.floatingpoint_fCompare 			; and compare them.
 		stx 	tempShort 					; save result
 		tax
 		lda 	tempShort
 		rts
 
-_PCIsInteger:
+_PCIsInteger:								; integer compare
 		jmp 	MInt32Compare
 
-_PCIsString:
+_PCIsString: 								; string compare
 		txa 								; A has SP
 		.string_sCompare 					; compare strings
 		stx 	tempShort 					; save result
@@ -65,7 +67,7 @@ _PCIsString:
 		lda 	tempShort
 		rts
 
-_PCError:									; mixed types
+_PCError:									; mixed types - strings and numbers
 		error 	BadType
 
 ; ************************************************************************************************

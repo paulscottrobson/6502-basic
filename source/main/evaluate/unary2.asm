@@ -4,6 +4,7 @@
 ;		Name:		unary2.asm
 ;		Purpose:	More Unary Routines
 ;		Created:	2nd March 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,7 +19,7 @@
 ; ************************************************************************************************
 
 UnaryTimer:		;; [timer(]
-		jsr 	CheckRightParen
+		jsr 	CheckRightParen 			; no parameters
 		.pshy
 		jsr 	MInt32Zero 					; zero result
 		stx 	temp0 						; returning in YA so can't use .pshx
@@ -70,7 +71,7 @@ _UGLoop:
 UnarySys: 		;; [sys(]
 		jsr 	EvaluateInteger 				; get the address
 		jsr 	CheckRightParen
-		jsr 	TOSToTemp0 						; copy to temp0
+		jsr 	TOSToTemp0 						; copy call address to temp0
 		.pshx 									; save XY
 		.pshy
 		;

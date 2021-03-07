@@ -1,9 +1,11 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		binary.asm
-;		Purpose:	Binary Routines
+;		Name:		dereference.asm
+;		Purpose:	Dereference code - convert a ref to a value to the value.
+;					(variables and pointers are dereferenced as late as possible)
 ;		Created:	22nd February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -23,7 +25,7 @@ DereferenceTwo:
 		dex
 DereferenceOne:		
 		lda 	esType,x
-		bpl 	_DRNotReference 			; is it a reference ?
+		bpl 	_DRNotReference 			; is it a reference ? if not, we don't need to do anything
 
 		lsr 	a 							; do float dereference if bit 0 set.
 		bcs 	_DRFloatDeReference
@@ -39,6 +41,8 @@ DereferenceOne:
 		sta 	esInt1,x
 		sta 	esInt2,x
 		sta 	esInt3,x
+		;
+		;		Figure out if string addr ref (2) byte (1) or word (4) 
 		;
 		lda 	esType,x 					; get the type byte.
 		and 	#$60 						; get string flag ($40) and byte flag ($20)

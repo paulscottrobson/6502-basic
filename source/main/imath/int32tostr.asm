@@ -4,6 +4,7 @@
 ;		Name:		int32tostr.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	Convert string to integer on stack.
 ;
 ; *****************************************************************************
@@ -27,6 +28,7 @@ MCharCount:	.fill 	1						; count of converted characters
 MLInt32ToString: ;; <inttostr>						
 		tax									; module passes stack in A, base in Y
 		tya
+
 MInt32ToString: 
 		pha 								; save base
 		sta 	tempShort 					; save target base.
@@ -42,7 +44,7 @@ MInt32ToString:
 		;
 		lda 	#"-" 						; write a '-' prefix out.
 		jsr 	MI32WriteCharacter 			
-		jsr 	MInt32Negate 				; negate the value.
+		jsr 	MInt32Negate 				; negate the value, so now it's positive.
 _I32TSNoFlip:
 		pla 								; get the base back
 		and 	#$7F 						; clear the sign flag so it's just a base now.		
@@ -76,7 +78,7 @@ MI32DivideWrite:
 		jsr 	MI32DivideWrite 				; and jsr the dividor recursively.
 _I32NoRecurse:
 		pla 								; get the remainder back
-		cmp 	#10  						; handle hexadecimals.
+		cmp 	#10  						; handle hexadecimals, now converting to ASCII
 		bcc 	_I32NotHex		
 		adc 	#7-1
 _I32NotHex:

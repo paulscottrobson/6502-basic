@@ -4,6 +4,7 @@
 ;		Name:		binary.asm
 ;		Purpose:	Binary Routines
 ;		Created:	22nd February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -13,7 +14,7 @@
 		
 ; ************************************************************************************************
 ;
-;								Macro to do binary operation
+;					Macro to do binary operation - float or int (not string)
 ;
 ; ************************************************************************************************
 
@@ -37,12 +38,12 @@ _IsFPOperation:
 
 BinaryProcess:
 		lda 	esType,x 					; or type bytes together and check bit 6.
-		ora 	esType+1,x
+		ora 	esType+1,x 					; (the float bit)
 		asl 	a		
-		bmi 	_BPStringType 				; if one is set, then string type.
+		bmi 	_BPStringType 				; if bit 6 is set, then string type, error
 		;
 		clc 								; return CC for integer
-		and 	#$02 						; $02 because of ASL A.
+		and 	#$02 						; $02 because of ASL A. check original bit 1.
 		beq 	_BPExit 					; if both integer then return with CC.
 		jsr 	BPMakeBothFloat 			; make both float
 		lda 	#$01 						; set result type to float
@@ -65,9 +66,9 @@ BPMakeBothFloat:
 		jsr 	BPMakeFloat 				; one is a float, so we do both as floats.
 		dex
 BPMakeFloat:
-		lda 	esType,x 					; get type bit.
+		lda 	esType,x 					; get type bit which is in bit 0
 		lsr 	a
-		bcs 	_BPIsFloat
+		bcs 	_BPIsFloat 					; already a float if set.
 		txa
 		.floatingpoint_intTofloat 			; if int, convert to float
 		tax
@@ -84,7 +85,7 @@ AddHandler:	;; [+]
 		jsr 	DereferenceTwo 				; dereference top two on stack.
 		lda 	esType,x 					; check two strings.
 		and 	esType+1,x
-		and 	#$40 						; if both have bit 6 set ...
+		and 	#$40 						; if both have bit 6 set ... we have two strings
 		bne 	_AHStringConcat				; concatenate strings.
 		;
 		binop 	MInt32Add,fadd
@@ -92,14 +93,14 @@ AddHandler:	;; [+]
 		;		Two strings, so concatenate them.
 		;
 _AHStringConcat:
-		txa
+		tax 								; handled by the string module.
 		.string_concat
 		tax
 		rts
 
 ; ************************************************************************************************
 ;
-;										All the others
+;		All the others are identical, some operations (mod,and,or,xor,shift,ref) floats don't work.
 ;
 ; ************************************************************************************************
 
@@ -167,15 +168,15 @@ PowerInteger:
 ; ************************************************************************************************
 
 Mint32WordIndirect:
-		lda 	#$80 				 		; word reference type
+ 		lda 	#$80 				 		; word reference type (bit 7 set)
 		bne 	Min32Indirect
 Mint32ByteIndirect:
-		lda 	#$A0 						; byte reference type
+		lda 	#$A0 						; byte reference type (bit 7, bit 5 set)
 Min32Indirect:
 		pha 								; save the indirection
 		jsr 	MInt32Add 					; add a!b a?b
 		pla 								; and set the type to reference.
-		sta 	esType,x 	
+		sta 	esType,x 	 				; so a!b => a+b and it's a reference....
 		rts		
 
 ; ************************************************************************************************
@@ -185,10 +186,11 @@ Min32Indirect:
 ; ************************************************************************************************
 
 Mint32ShiftLeftX:
-		clc
+		clc 								; CC shift left
 		bcc 	Mint32Shift
 Mint32ShiftRightX:
-		sec
+		sec 								; CS shift right
+
 Mint32Shift:								; at this point, CS is right, CC is left
 		php 								; save carry flag on stack.
 		lda 	esInt1+1,x 					; if shift >= 32 then it is zero.
@@ -204,7 +206,7 @@ _MShiftLoop:
 		dec 	esInt0+1,x
 		plp 								; restore and save carry
 		php
-		bcc 	_MShiftLeft
+		bcc 	_MShiftLeft 				; and shift left/right accordingly.
 		jsr 	Mint32ShiftRight
 		jmp 	_MShiftLoop
 _MShiftLeft:		
@@ -215,7 +217,7 @@ _MShiftExit:
 		rts
 
 _MShiftZero:
-		jmp 	MInt32False 				; return 0.
+		jmp 	MInt32False 				; return 0 as shifted >= 32 times.
 
 		.send code		
 		

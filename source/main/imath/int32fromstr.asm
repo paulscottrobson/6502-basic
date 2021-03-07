@@ -4,6 +4,7 @@
 ;		Name:		int32fromstr.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	Convert string to integer on stack.
 ;
 ; *****************************************************************************
@@ -25,7 +26,7 @@ fs32Length: 								; length of string being converted.
 MInt32FromString:
 		sta 	tempShort 					; save base
 		.pshy  								; save Y
-		ldy 	#0 							; get length
+		ldy 	#0 							; get length of string to convert
 		lda 	(temp0),y
 		sta 	fs32Length 
 		beq 	_I32FSFail2					; fail if length zero.
@@ -35,7 +36,7 @@ MInt32FromString:
 		cmp 	#"-"						; is it a - character
 		bne 	_I32FSNotNegative 			
 		lda 	fs32Length 					; get length back.
-		cmp 	#1 							; if 1 it is just a '-; so fail.'
+		cmp 	#1 							; if 1 it is just a - on its own so fail.
 		beq 	_I32FSFail2
 		ldy 	#2 							; first digit of the number. 								
 _I32FSNotNegative:
@@ -60,7 +61,7 @@ _I32FSMainLoop:
 		bcc 	_I32FSNotLC
 		sbc 	#32
 _I32FSNotLC:		
-		sec 								; subtract 48 (ASCII "0")
+		sec 								; subtract 48 (ASCII "0") - ASCII to Hex conversion
 		sbc 	#"0"
 		bcc 	_I32FSFail 					; nothing more to do.
 		cmp 	#9+1 						; if it is 0-9 validate vs base.
@@ -71,10 +72,10 @@ _I32FSNotLC:
 		sbc 	#7 							; adjust into range so now character is 0->nnn
 _I32FSValidate:
 		cmp 	tempShort 					; compare against the base.
-		bcs 	_I32FSFail 					; sorry, too large for this base.
+		bcs 	_I32FSFail 					; sorry, too large for this base, so fail.
 
 		pha 								; save the new digit value.
-		inx 								; put base into next slot.
+		inx 								; put base into next slot up on stack
 		lda 	tempShort
 		jsr 	MInt32Set8Bit
 		dex
@@ -84,8 +85,7 @@ _I32FSValidate:
 		jsr 	MInt32Set8Bit		
 		dex
 		jsr 	MInt32Add 					; and add it
-		iny 								; look at next character
-
+		iny 								; bump the character pointer
 		cpy 	fs32Length 					; until > length.
 		beq 	_I32FSMainLoop 
 		bcc 	_I32FSMainLoop

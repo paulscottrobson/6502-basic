@@ -4,6 +4,7 @@
 ;		Name:		unary.asm
 ;		Purpose:	Unary Routines
 ;		Created:	26th February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -20,12 +21,15 @@
 UnaryLen:	;; [len(]
 		jsr 	ULStart
 ULFinish:		
-		lda 	(temp0),y
-		ldy 	tempShort 					
-		jsr 	MInt32Set8Bit
+		lda 	(temp0),y 					; get length prefix
+		ldy 	tempShort 					; get Y back 
+		jsr 	MInt32Set8Bit 				; write it out.
 		jsr 	CheckRightParen
 		rts
-
+;
+;		Gets a string, and copies its address to temp0, and saves Y in tempShort
+;		shared by LEN() and ASC()
+;
 ULStart:jsr 	EvaluateString
 		lda 	esInt0,x 					; copy address of string to temp0
 		sta 	temp0
@@ -43,10 +47,10 @@ ULStart:jsr 	EvaluateString
 
 UnaryAsc:	;; [asc(]
 		jsr 	ULStart 					; same as LEN() get string, save Y, point to length.
-		lda 	(temp0),y
+		lda 	(temp0),y 					; read length
 		iny 		 						; point to first character, we can do LEN code after that
-		cmp 	#0 
-		bne 	ULFinish
+		cmp 	#0  	
+		bne 	ULFinish 					; if length = 0 then error : asc("") -> error.
 		error 	BadValue
 
 ; ************************************************************************************************
@@ -56,13 +60,13 @@ UnaryAsc:	;; [asc(]
 ; ************************************************************************************************
 
 UnaryAbs:	;; [abs(]
-		jsr 	EvaluateNumeric
-		bcs 	_UAFloat
-		jsr 	MInt32Absolute
+		jsr 	EvaluateNumeric 			; some numeric value
+		bcs 	_UAFloat 					; CS then float, so use that function
+		jsr 	MInt32Absolute 				; int version
 		jsr 	CheckRightParen
-		rts
+		rts 
 _UAFloat:
-		txa
+		txa 								; float version
 		.floatingpoint_fabs		
 		tax
 		jsr 	CheckRightParen
@@ -75,7 +79,7 @@ _UAFloat:
 ; ************************************************************************************************
 
 UnarySgn:	;; [sgn(]
-		jsr 	EvaluateNumeric
+		jsr 	EvaluateNumeric 			; same as above but sign of value
 		bcs 	_USFloat
 		jsr 	MInt32Sign
 		jsr 	CheckRightParen
@@ -94,7 +98,7 @@ _USFloat:
 ; ************************************************************************************************
 
 UnaryPeek:	;; [peek(]
-		jsr 	PDLCode
+		jsr 	PDLCode 					; each has common setup code put reads 1,2 or 4 bytes
 		jmp 	PDLByte0
 
 UnaryDeek:	;; [deek(]
@@ -103,17 +107,18 @@ UnaryDeek:	;; [deek(]
 
 UnaryLeek:	;; [leek(]
 		jsr 	PDLCode
-		ldy 	#3
+
+		ldy 	#3							; read 3-2
 		lda 	(temp0),y
 		sta 	esInt3,x
 		dey
 		lda 	(temp0),y
 		sta 	esInt2,x
-PDLByte1:
+PDLByte1: 									; read 1
 		ldy 	#1
 		lda 	(temp0),y
 		sta 	esInt1,x
-PDLByte0:		
+PDLByte0:									; read 0
 		ldy 	#0
 		lda 	(temp0),y
 		sta 	esInt0,x
@@ -122,14 +127,14 @@ PDLByte0:
 		rts
 
 PDLCode:
-		jsr 	EvaluateInteger
+		jsr 	EvaluateInteger 			; some address
 		lda 	esInt0,x 					; copy address of string to temp0
 		sta 	temp0
 		lda 	esInt1,x
 		sta 	temp0+1
 		;
 		lda 	#0 							; zero upper 3 bytes of result, type okay.
-		sta 	esInt1,x
+		sta 	esInt1,x 					; PEEK needs upper 3 cleared
 		sta 	esInt2,x
 		sta 	esInt3,x
 		sty 	tempShort 					; save Y
@@ -167,7 +172,7 @@ Unary_Min:	;; [min(]
 Unary_Max: ;; [max(]
 		lda 	#$FF 						; c1 cmp c2 needs to be < e.g. c1 < c2
 UnaryMBody:
-		pha 								; save comparator on stack.
+		pha 								; save comparator on stack, shows min or max
 		jsr 	Evaluate 					; get the first thing to check
 		;
 _UnaryMLoop:
@@ -180,7 +185,7 @@ _UnaryMLoop:
 		error 	Syntax 						; syntax error.
 		;
 _UnaryMExit:
-		pla 								; throw comparator and return.
+		pla 								; done so throw comparator and return.
 		rts
 		;
 _UnaryMCompare:
@@ -256,10 +261,10 @@ UnaryComplement: ;; [~]
 ; ************************************************************************************************
 
 UnaryIntToFloat: ;; [int(]
-		jsr 	EvaluateNumeric
-		lda 	esType,x
+		jsr 	EvaluateNumeric				; some number
+		lda 	esType,x 					; if float already, exit
 		bne 	_UIFExit
-		txa
+		txa 								; convert and set type
 		.floatingpoint_intToFloat
 		tax
 		lda 	#1
@@ -268,12 +273,14 @@ _UIFExit:
 		rts
 
 UnaryFloatToInt: ;; [float(]
-		jsr 	EvaluateNumeric
-		lda 	esType,x
+		jsr 	EvaluateNumeric 			; the number
+		lda 	esType,x 					; if int already exit
 		beq 	_UFIExit
-		txa
-		.floatingpoint_floatToInt
+		txa 								; convert to int
+		.floatingpoint_floatToInt		
 		tax
+		lda 	#0 							; set type
+		sta 	esType,x
 _UFIExit:
 		rts
 
@@ -288,6 +295,7 @@ UnaryAlloc: ;; [alloc(]
 		jsr 	EvaluateInteger
 		jsr 	CheckRightParen
 		dex
+		;
 		lda 	esInt2+1,x 					; check at least in 64k range.
 		ora 	esInt3+1,x
 		bne 	_UABadValue

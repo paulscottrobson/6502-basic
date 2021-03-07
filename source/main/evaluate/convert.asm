@@ -4,6 +4,7 @@
 ;		Name:		convert.asm
 ;		Purpose:	str$() val() isval() functions
 ;		Created:	3rd March 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -21,7 +22,7 @@ Event_Str: 	;; [str$(]
 		jsr 	EvaluateNumeric 			; get a number.
 		lda 	esType,x 					; is it floating point
 		bne 	_ESFloat
-		jsr 	ConvertGetBase
+		jsr 	ConvertGetBase 				; get base, or default.
 		set16 	temp0,convertBuffer 		; convert here.
 		lda 	esInt0+1,x 					; get the base
 		jsr 	MInt32ToString 				; convert to string.		
@@ -36,7 +37,7 @@ _ESFloat:
 
 _ESCloneExit:
 		txa
-		.string_clone 						; clone string at temp0 to TOS.
+		.string_clone 						; clone string at temp0 to TOS in soft string memory
 		tax
 		rts
 
@@ -50,9 +51,9 @@ _ESCloneExit:
 ; ************************************************************************************************
 
 UnaryVal:		;; [val(]
-		sec
+		sec 								; Carry set to return value
 		bcs 	ValueMain
-UnaryIsVal:		;; [isval(]
+UnaryIsVal:		;; [isval(] 				; Carry clear to return legitimacy
 		clc
 ValueMain:
 		php 								; save results (CS is value, CC is validation)
@@ -109,15 +110,16 @@ _VMExit:
 ConvertGetBase:
 		lda 	#10+$80 					; default base 10 signed.	
 		sta 	esInt0+1,x
-		lda 	(codePtr),y
+		lda 	(codePtr),y 				; check for ,base)
 		cmp 	#TKW_COMMA
-		bne 	_CGBDone
+		bne 	_CGBDone 					; not found, should be )
+		;
 		inx 								; next level
 		iny 								; skip comma.
 		jsr 	EvaluateSmallInteger		; evaluate the base.
 		dex
-		cmp 	#2
-		bcc 	_CGBValue
+		cmp 	#2 							; base range is 2..16
+		bcc 	_CGBValue 					; (it should work as high as 37)
 		cmp 	#17
 		bcs 	_CGBValue
 _CGBDone:

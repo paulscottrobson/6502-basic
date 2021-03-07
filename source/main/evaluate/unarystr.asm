@@ -3,7 +3,9 @@
 ;
 ;		Name:		unarystr.asm
 ;		Purpose:	Unary Routines
-;		Created:	28,th February 2021
+;					The functionality is in the string library.
+;		Created:	28th February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,12 +20,12 @@
 ; ************************************************************************************************
 
 ExecChr:	;; [chr$(]
-		jsr 	EvaluateSmallInteger		; character number
+		jsr 	EvaluateSmallInteger		; character number 0-255
 		jsr 	CheckRightParen				; right bracket
 		.pshy 								; save Y
 		txa 								; A = stack
 		ldy 	esInt0,x					; Y = character
-		.string_chrs		 					; make it.
+		.string_chrs		 				; make it
 		tax 								; X = stack
 		.puly 								; restore Y.
 		rts
@@ -35,10 +37,10 @@ ExecChr:	;; [chr$(]
 ; ************************************************************************************************
 
 ExecLower:	;; [lower$(]
-		sec 	
+		sec 								; set carry is lower
 		bcs 	ExecUpperLower
 ExecUpper:  ;; [upper$(]		
-		clc
+		clc 								; clear carry is upper
 ExecUpperLower:		
 		php 								; save carry
 		jsr 	EvaluateString 				; string to stack,X
@@ -57,6 +59,8 @@ ExecUpperLower:
 ; ************************************************************************************************
 ;
 ;										LEFT$() handler
+;
+;		These three all set up MID$ in the three stack spaces - string, start, size
 ;
 ; ************************************************************************************************
 
@@ -92,7 +96,7 @@ ExecMid:	;; [mid$(]
 		cmp 	#0
 		beq 	_EMValue
 		inx
-		lda 	#255 						; 255 default for 3nd parameter.
+		lda 	#255 						; 255 default for 3nd parameter - this is optional.
 		jsr 	MInt32Set8Bit 	
 		lda 	(codePtr),y 				; is there a ) next
 		cmp 	#TKW_RPAREN 				; if so, just MID$(a$,2)

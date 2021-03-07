@@ -3,19 +3,8 @@ Review List
 
 ;		Reviewed: 	7th March 2021
 
-./main/imath/int32divide.asm
-./main/imath/int32fromstr.asm
-./main/imath/int32tostr.asm
-./main/evaluate/binary.asm
-./main/evaluate/compare.asm
-./main/evaluate/convert.asm
-./main/evaluate/dereference.asm
 ./main/evaluate/evaluate.asm
 ./main/evaluate/event.asm
-./main/evaluate/unary.asm
-./main/evaluate/unary2.asm
-./main/evaluate/unarystr.asm
-./main/commands/assert.asm
 ./main/commands/clear.asm
 ./main/commands/dim.asm
 ./main/commands/for.asm
