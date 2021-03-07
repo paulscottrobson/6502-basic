@@ -7,6 +7,7 @@
 	.include "commands/dim.asm"
 	.include "commands/for.asm"
 	.include "commands/if.asm"
+	.include "commands/input.asm"
 	.include "commands/let.asm"
 	.include "commands/local.asm"
 	.include "commands/new.asm"

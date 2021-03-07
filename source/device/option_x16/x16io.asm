@@ -76,6 +76,10 @@ IOPrintChar: ;; <print>
 		tax
 		phy
 		txa
+		cmp 	#8 							; make BS (8) onto CHR$(14)
+		bne 	_IOPCNotBS
+		lda 	#$14
+_IOPCNotBS:
 		jsr 	$FFD2
 		ply
 		rts
@@ -83,6 +87,7 @@ IOPrintChar: ;; <print>
 ; ************************************************************************************************
 ;
 ;				Check key is pressed/in kbd buffer, returns key if so 0 otherwise
+;				Only keys outside 32..127 are 0 (no key) 8 (backspace) 13 (return)
 ;											(INKEY)
 ;
 ; ************************************************************************************************
@@ -92,7 +97,18 @@ IOInkey: ;; <inkey>
 		jsr 	$FFE4
 		sta 	tempShort
 		.puly
-		lda 	tempShort
+		lda 	tempShort				; no key pressed.
+		beq 	_IOIExit
+		cmp 	#13 					; allow CR
+		beq 	_IOIExit
+		cmp 	#$14 					; backspace code
+		beq 	_IOIBackspace
+		cmp 	#32
+		bcc 	IOInkey
+		bcs 	_IOIExit
+_IOIBackspace:
+		lda 	#8 						; return chr(8)		
+_IOIExit:		
 		rts
 
 ; ************************************************************************************************

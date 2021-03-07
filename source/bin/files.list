@@ -19,6 +19,7 @@
 ../source/main/commands/dim.asm
 ../source/main/commands/for.asm
 ../source/main/commands/if.asm
+../source/main/commands/input.asm
 ../source/main/commands/let.asm
 ../source/main/commands/local.asm
 ../source/main/commands/new.asm

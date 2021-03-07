@@ -84,7 +84,7 @@ Group0Vectors:
 	.word	Command_Dim              ; $cf dim
 	.word	Command_Rem              ; $d0 rem
 	.word	CommandLet               ; $d1 let
-	.word	Unimplemented            ; $d2 input
+	.word	Command_Input            ; $d2 input
 	.word	Command_ELSE             ; $d3 else
 	.word	Command_VDU              ; $d4 vdu
 	.word	Command_Print            ; $d5 print

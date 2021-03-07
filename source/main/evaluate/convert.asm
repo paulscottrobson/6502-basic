@@ -77,7 +77,6 @@ ValueMain:
 		.if installed_floatingpoint == 1
 		txa
 		.floatingpoint_stringToFloat 
-		clc
 		tax
 		bcs 	_VMSuccess					; it converted okay.
 		.endif
