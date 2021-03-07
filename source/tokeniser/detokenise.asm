@@ -23,7 +23,8 @@ lastCharacterClass:			; 0 identifier or constant 1 punctuation or string.
 		
 LTYLineNumber = $84
 LTYPunctuation = $82
-LTYIdentifier = $86
+LTYIdentifier = $87
+LTYConstant = $86
 LTYKeyword = $83
 LTYString = $81
 
@@ -73,7 +74,9 @@ _DTPadOut:
 _DTListLoop		
 		lda 	(codePtr),y
 		cmp 	#TOK_STR 				; Inline string.
-		beq 	_DTIsString 			
+		beq 	_DTIsString
+		cmp 	#TKW_AMP 				; & hex marker
+		beq 	_DTHexConstant 			
 		cmp 	#TOK_EOL 				; End of Line
 		bne 	_DTNotEnd
 		lda 	#255 					; print CR
@@ -85,7 +88,36 @@ _DTNotEnd:
 		bmi 	_DTIsToken
 		cmp 	#$40
 		bcc 	_DTIsIdentifier
-		.debug
+		lda 	#10 					; this is the base
+		bne 	_DTConstant
+		;
+		;		Hex constant
+		;	
+_DTHexConstant:
+		lda 	#"&"
+		jsr 	ListOutputCharacter
+		iny
+		lda 	#16		
+		;
+		;		Handle constant base X.
+		;		
+_DTConstant:
+		pha
+		lda 	#0 							; now constant, may need spaces
+		jsr 	DTSwitchMode
+		settype LTYConstant
+		ldx 	#2
+		txa
+		.main_evaluateterm
+		tax
+		jsr 	TOSToTemp0
+		pla
+		sta 	tempShort
+		.pshy
+		lda 	tempShort
+		jsr 	DTPrintInteger
+		.puly
+		jmp 	_DTListLoop
 		;
 		;		Handle token, could be punctuation or text.
 		;
@@ -124,8 +156,9 @@ _DTIsString:
 ; ************************************************************************************************
 
 DTPrintInteger:
+		pha
 		set16 	temp0,convertBuffer
-		tay
+		.puly
 		txa
 		.main_inttostr
 		tax
@@ -307,13 +340,16 @@ _DTILoop:
 		cmp 	#$3A
 		bcc 	_DTILoop
 		iny
+
 		cmp 	#$3A 						; is it integer non array
 		beq 	_DTIExit 					; no postfix.
-
 		pha
 		lda  	#1 							; it ends in punctuation
 		sta 	LastCharacterClass
+		setType LTYPunctuation
 		pla
+		cmp 	#$3B
+		beq 	_DTIArray
 
 		lsr 	a 							; array flag in C
 		php
@@ -325,11 +361,11 @@ _DTIDollar:
 		jsr 	ListOutputCharacter
 		plp
 		bcc 	_DTIExit
+_DTIArray:		
 		lda 	#"("
 		jsr 	ListOutputCharacter
 _DTIExit:
 		rts
-
 
 ; ************************************************************************************************
 ;

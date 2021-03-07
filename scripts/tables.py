@@ -108,10 +108,6 @@ for group in range(0,4):												# for each group
 	n = t.getBinaryStart()												# so we can track the number
 	for token in tokenText[group]:										# for each token
 		t1 = token 														# we tokenise to identifier 
-		if t1.endswith("$("):											# format, so some may end
-			t1 = t1[:-2] + chr(0x3D)									# width $3D (string array)
-		elif t1.endswith("("):											# or $3B (integer array)
-			t1 = t1[:-1] + chr(0x3B)
 		bList = [ord(c.upper()) & 0x3F for c in t1]						# convert to 6 bit format
 		bList[-1] = bList[-1] | 0x80 									# set bit 7 of last.
 		bList.insert(0,len(bList))										# length up front

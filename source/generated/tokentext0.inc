@@ -32,37 +32,37 @@ Group0Text:
 	.byte $04,$14,$08,$05,$8e              ; $a1 then
 	.byte $05,$05,$0e,$04,$09,$86          ; $a2 endif
 	.byte $07,$05,$0e,$04,$10,$12,$0f,$83  ; $a3 endproc
-	.byte $01,$bb                          ; $a4 (
-	.byte $04,$0c,$05,$0e,$bb              ; $a5 len(
-	.byte $04,$13,$07,$0e,$bb              ; $a6 sgn(
-	.byte $04,$01,$02,$13,$bb              ; $a7 abs(
-	.byte $07,$12,$01,$0e,$04,$0f,$0d,$bb  ; $a8 random(
+	.byte $01,$a8                          ; $a4 (
+	.byte $04,$0c,$05,$0e,$a8              ; $a5 len(
+	.byte $04,$13,$07,$0e,$a8              ; $a6 sgn(
+	.byte $04,$01,$02,$13,$a8              ; $a7 abs(
+	.byte $07,$12,$01,$0e,$04,$0f,$0d,$a8  ; $a8 random(
 	.byte $04,$10,$01,$07,$85              ; $a9 page
 	.byte $04,$14,$12,$15,$85              ; $aa true
 	.byte $05,$06,$01,$0c,$13,$85          ; $ab false
-	.byte $04,$0d,$09,$0e,$bb              ; $ac min(
-	.byte $04,$0d,$01,$18,$bb              ; $ad max(
-	.byte $04,$13,$19,$13,$bb              ; $ae sys(
-	.byte $06,$14,$09,$0d,$05,$12,$bb      ; $af timer(
-	.byte $06,$05,$16,$05,$0e,$14,$bb      ; $b0 event(
-	.byte $04,$07,$05,$14,$bb              ; $b1 get(
-	.byte $06,$09,$0e,$0b,$05,$19,$bb      ; $b2 inkey(
-	.byte $06,$01,$0c,$0c,$0f,$03,$bb      ; $b3 alloc(
-	.byte $04,$03,$08,$12,$bd              ; $b4 chr$(
-	.byte $05,$0c,$05,$06,$14,$bd          ; $b5 left$(
-	.byte $04,$0d,$09,$04,$bd              ; $b6 mid$(
-	.byte $06,$12,$09,$07,$08,$14,$bd      ; $b7 right$(
-	.byte $04,$13,$14,$12,$bd              ; $b8 str$(
-	.byte $04,$16,$01,$0c,$bb              ; $b9 val(
-	.byte $05,$10,$05,$05,$0b,$bb          ; $ba peek(
-	.byte $05,$04,$05,$05,$0b,$bb          ; $bb deek(
-	.byte $05,$0c,$05,$05,$0b,$bb          ; $bc leek(
-	.byte $04,$01,$13,$03,$bb              ; $bd asc(
-	.byte $04,$09,$0e,$14,$bb              ; $be int(
-	.byte $06,$06,$0c,$0f,$01,$14,$bb      ; $bf float(
-	.byte $06,$09,$13,$16,$01,$0c,$bb      ; $c0 isval(
-	.byte $06,$15,$10,$10,$05,$12,$bd      ; $c1 upper$(
-	.byte $06,$0c,$0f,$17,$05,$12,$bd      ; $c2 lower$(
+	.byte $04,$0d,$09,$0e,$a8              ; $ac min(
+	.byte $04,$0d,$01,$18,$a8              ; $ad max(
+	.byte $04,$13,$19,$13,$a8              ; $ae sys(
+	.byte $06,$14,$09,$0d,$05,$12,$a8      ; $af timer(
+	.byte $06,$05,$16,$05,$0e,$14,$a8      ; $b0 event(
+	.byte $04,$07,$05,$14,$a8              ; $b1 get(
+	.byte $06,$09,$0e,$0b,$05,$19,$a8      ; $b2 inkey(
+	.byte $06,$01,$0c,$0c,$0f,$03,$a8      ; $b3 alloc(
+	.byte $05,$03,$08,$12,$24,$a8          ; $b4 chr$(
+	.byte $06,$0c,$05,$06,$14,$24,$a8      ; $b5 left$(
+	.byte $05,$0d,$09,$04,$24,$a8          ; $b6 mid$(
+	.byte $07,$12,$09,$07,$08,$14,$24,$a8  ; $b7 right$(
+	.byte $05,$13,$14,$12,$24,$a8          ; $b8 str$(
+	.byte $04,$16,$01,$0c,$a8              ; $b9 val(
+	.byte $05,$10,$05,$05,$0b,$a8          ; $ba peek(
+	.byte $05,$04,$05,$05,$0b,$a8          ; $bb deek(
+	.byte $05,$0c,$05,$05,$0b,$a8          ; $bc leek(
+	.byte $04,$01,$13,$03,$a8              ; $bd asc(
+	.byte $04,$09,$0e,$14,$a8              ; $be int(
+	.byte $06,$06,$0c,$0f,$01,$14,$a8      ; $bf float(
+	.byte $06,$09,$13,$16,$01,$0c,$a8      ; $c0 isval(
+	.byte $07,$15,$10,$10,$05,$12,$24,$a8  ; $c1 upper$(
+	.byte $07,$0c,$0f,$17,$05,$12,$24,$a8  ; $c2 lower$(
 	.byte $01,$80                          ; $c3 @
 	.byte $01,$be                          ; $c4 ~
 	.byte $01,$a6                          ; $c5 &
