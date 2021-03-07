@@ -19,6 +19,7 @@
 	.include "commands/run.asm"
 	.include "commands/scanner.asm"
 	.include "commands/stopend.asm"
+	.include "commands/text.asm"
 	.include "commands/transfer.asm"
 	.include "commands/vdu.asm"
 	.include "commands/while.asm"

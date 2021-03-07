@@ -117,6 +117,7 @@ for group in range(0,4):												# for each group
 		bList.insert(0,len(bList))										# length up front
 		bList = ",".join(["${0:02x}".format(c) for c in bList])			# reformat and write out.
 		h.write("\t.byte {0:32} ; ${1:02x} {2}\n".format(bList,n,token.lower()))
+		n += 1
 	h.write("\t.byte $00\n\n")											# marks end of list.
 #
 #		List undefined keywords

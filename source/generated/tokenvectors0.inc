@@ -96,3 +96,7 @@ Group0Vectors:
 	.word	Command_Poke             ; $db poke
 	.word	Command_Doke             ; $dc doke
 	.word	Command_Loke             ; $dd loke
+	.word	Command_Ink              ; $de ink
+	.word	Command_Paper            ; $df paper
+	.word	Command_CLS              ; $e0 cls
+	.word	Command_Locate           ; $e1 locate

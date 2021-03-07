@@ -20,8 +20,26 @@
 IOInitialise: ;; <initialise>
 		lda 	#15
 		jsr 	IOPrintChar
+		lda 	#2
+		jsr 	IOInk
+		lda 	#0
+		jsr 	IOPaper
+		jsr 	IOClearScreen
 		rts
 		
+; ************************************************************************************************
+;
+;									Clear Screen/Home Cursor
+;
+; ************************************************************************************************
+
+IOClearScreen: ;; <clear>
+		pha
+		lda	 	#147
+		jsr 	IOPrintChar
+		pla
+		rts
+
 ; ************************************************************************************************
 ;
 ;											Print CR/LF
@@ -76,5 +94,71 @@ IOInkey: ;; <inkey>
 		.puly
 		lda 	tempShort
 		rts
+
+; ************************************************************************************************
+;
+;							Set Ink Colour (BBC Micro colour scheme)
+;
+; ************************************************************************************************
+
+IOInk:	 ;; <ink>
+		pha
+		and 	#7
+		tax
+		lda 	_IOColourTable,x
+		jsr 	IOPrintChar
+		pla
+		rts
+
+_IOColourTable:
+		.byte 	$90 					; 0 Black
+		.byte 	$1C 					; 1 Red
+		.byte 	$1E 					; 2 Green
+		.byte 	$9E 					; 3 Yellow
+		.byte 	$1F 					; 4 Blue
+		.byte 	$9C 					; 5 Magenta
+		.byte 	$9F 					; 6 Cyan
+		.byte 	$05 					; 7 White
+
+; ************************************************************************************************
+;
+;							Set Paper Colour (BBC Micro colour scheme)
+;
+; ************************************************************************************************
+
+IOPaper: ;; <paper>
+		pha
+		pha
+		lda 	#1 						; 1 swaps fgr/bgr
+		jsr 	IOPrintChar
+		pla
+		jsr 	IOInk
+		lda 	#1
+		jsr 	IOPrintChar
+		pla
+		rts
+
+; ************************************************************************************************
+;
+;									Set Cursor to (A,Y)
+;
+; ************************************************************************************************
+
+IOLocate: ;; <locate>
+		pha
+		lda 	#$13 					; home
+		jsr 	IOPrintChar
+		lda 	#$11 	 				; print Y x $11 (down)		
+		jsr 	_IOLoc2 
+		.puly 							; horizontal pos in A
+		lda 	#$1D 					
+_IOLoc2:		
+		cpy 	#0
+		beq 	_IOLocExit
+		jsr 	IOPrintChar
+		dey
+		bne 	_IOLoc2
+_IOLocExit:
+		rts				
 
 		.send 	code

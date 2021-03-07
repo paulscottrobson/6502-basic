@@ -31,6 +31,7 @@
 ../source/main/commands/run.asm
 ../source/main/commands/scanner.asm
 ../source/main/commands/stopend.asm
+../source/main/commands/text.asm
 ../source/main/commands/transfer.asm
 ../source/main/commands/vdu.asm
 ../source/main/commands/while.asm

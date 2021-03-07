@@ -1,18 +1,19 @@
 TODO
 ====
 Better Array test.
-Start Code Reading/Review..
 Input
 List
+Start Code Reading/Review..
 Tokenising
 
 Incomplete but hooked in for write and test
 ===========================================
 
-	FP Import from token, int/float conversions, add/sub/mul/div/compare, negate, load and store.
+	All floating point operations.
 
 	Out of memory in 
-		pointer advance in clear.asm alloc, soft/hard memory allocation alloc() function.
+		pointer advance in clear.asm alloc
+		soft/hard memory allocation alloc() function.
 		creating procedure table.
 		creating arrays.
 		
@@ -26,3 +27,4 @@ Notes
 
 New commands/Changes to document
 ================================
+INK PAPER CLS LOCATE

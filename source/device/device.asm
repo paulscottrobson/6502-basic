@@ -10,10 +10,14 @@ deviceHandler:
 	dispatch deviceVectors
 
 deviceVectors:
-	.word IONewLine            ; index 0
-	.word IOInitialise         ; index 2
-	.word IOInkey              ; index 4
-	.word IOPrintChar          ; index 6
-	.word IOTab                ; index 8
-	.word IOReadTimer          ; index 10
+	.word IOClearScreen        ; index 0
+	.word IONewLine            ; index 2
+	.word IOInitialise         ; index 4
+	.word IOInk                ; index 6
+	.word IOInkey              ; index 8
+	.word IOLocate             ; index 10
+	.word IOPaper              ; index 12
+	.word IOPrintChar          ; index 14
+	.word IOTab                ; index 16
+	.word IOReadTimer          ; index 18
 .send code

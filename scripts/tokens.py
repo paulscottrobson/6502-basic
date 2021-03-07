@@ -129,7 +129,8 @@ class Tokens(object):
 			to 		step 	proc 	local	dim		
 			rem 	let 	input	else	vdu 	
 			print	goto 	gosub 	return 	data	 	
-			assert 	poke 	doke 	loke 	
+			assert 	poke 	doke 	loke 	ink
+			paper 	cls 	locate 
 		#
 		#		Put these in group 1.
 		#
