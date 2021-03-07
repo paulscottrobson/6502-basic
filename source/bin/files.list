@@ -64,7 +64,11 @@
 ../source/string/setcase.asm
 ../source/string/substring.asm
 ../source/string/write.asm
-../source/tokeniser/detokenise.asm
+../source/tokeniser/detokenise/detokenise.asm
+../source/tokeniser/detokenise/dtprint.asm
+../source/tokeniser/detokenise/identifier.asm
+../source/tokeniser/detokenise/token.asm
+../source/tokeniser/tokentext.asm
 ../source/variable/access.asm
 ../source/variable/accessarray.asm
 ../source/variable/create.asm

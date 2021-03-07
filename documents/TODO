@@ -1,12 +1,10 @@
 TODO
 ====
-List
-	- Fix deek(<space> xxx) bug (run it !)
-	- Floating point values (stub ?)
-
 Start Code Reading/Review..
+Version 0.11
 
 Tokenising
+Interactive.
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -29,4 +27,3 @@ Notes
 
 New commands/Changes to document
 ================================
-LIST

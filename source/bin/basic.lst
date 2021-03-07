@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/basic.prg basic.asm
-; Sun Mar  7 15:32:59 2021
+; Sun Mar  7 16:08:10 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -328,6 +328,18 @@
 ;******  Return to file: basic.asm
 
 
+;******  Processing file: tokeniser/detokenise/colouring.inc
+
+=$84					LTYLineNumber = $84
+=$82					LTYPunctuation = $82
+=$87					LTYIdentifier = $87
+=$86					LTYConstant = $86
+=$83					LTYKeyword = $83
+=$81					LTYString = $81
+
+;******  Return to file: basic.asm
+
+
 ;******  Processing file: tokeniser/tokeniser.inc
 
 
@@ -359,7 +371,7 @@
 .1017	a9 98		lda #$98			lda 	#($9800) >> 8
 .1019	8d cb 0a	sta $0acb			sta 	1+(endMemory)
 .101c	4c d9 14	jmp $14d9			jmp 	Command_Run
-.2fde					ReturnPos:
+.2feb					ReturnPos:
 .5000					testBaseAddress:
 
 ;******  Processing file: main/00header/../../generated/testcode.inc
@@ -448,7 +460,7 @@
 .105f	20 73 10	jsr $1073			jsr 	AdvanceLowMemoryByte		; need at least one here, to skip the end of program zero offset.
 .1062	20 7d 22	jsr $227d			jsr 	RSReset 					; reset the return stack.
 .1065	a2 04		ldx #$04		ldx	#4
-.1067	20 d5 2f	jsr $2fd5		jsr	variableHandler
+.1067	20 e2 2f	jsr $2fe2		jsr	variableHandler
 .106a	20 8e 16	jsr $168e			jsr 	ScanProc 					; scan for procedures
 .106d	20 9a 14	jsr $149a			jsr 	CommandRestore 				; do a restore
 .1070	68		pla				pla
@@ -470,7 +482,7 @@
 
 .107d					Command_Dim:
 .107d	a2 02		ldx #$02		ldx	#2
-.107f	20 d5 2f	jsr $2fd5		jsr	variableHandler
+.107f	20 e2 2f	jsr $2fe2		jsr	variableHandler
 .1082	b1 02		lda ($02),y			lda 	(codePtr),y 				; see what follows.
 .1084	c8		iny				iny
 .1085	c9 c8		cmp #$c8			cmp 	#TKW_COMMA 					; comma follows, go back and do next
@@ -483,169 +495,169 @@
 
 ;******  Processing file: main/commands/for.asm
 
-.2fde					Command_FOR:
-.2fde	a9 46		lda #$46			lda 	#markerFOR 					; allocate the space.
-.2fe0	a2 0b		ldx #$0b			ldx 	#11
-.2fe2	20 8b 22	jsr $228b			jsr 	RSClaim
-.2fe5	20 78 11	jsr $1178			jsr 	CommandLET 					; do the same as LET.
-.2fe8	a5 40		lda $40				lda 	esType 						; check type should be integer reference.
-.2fea	c9 80		cmp #$80			cmp 	#$80
-.2fec	d0 4c		bne $303a			bne 	_CFType
-.2fee	a9 cb		lda #$cb			lda 	#TKW_TO 					; check TO present.
-.2ff0	20 58 22	jsr $2258			jsr 	CheckToken
-.2ff3	a2 01		ldx #$01			ldx 	#1 							; keep the variable address in stack 0
-.2ff5	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger				; get terminal value in stack 1
-.2ff8	98		tya				tya
-.2ff9	48		pha				pha
-.2ffa	a0 04		ldy #$04			ldy 	#4
-.2ffc	a5 48		lda $48				lda		esInt0 						; the address of the index into 4 and 5
-.2ffe	91 78		sta ($78),y			sta 	(rsPointer),y
-.3000	c8		iny				iny
-.3001	a5 50		lda $50				lda		esInt1
-.3003	91 78		sta ($78),y			sta 	(rsPointer),y
-.3005	c8		iny				iny
-.3006	a9 01		lda #$01			lda 	#1  						; the default step in 6
-.3008	91 78		sta ($78),y			sta 	(rsPointer),y
-.300a	c8		iny				iny
-.300b	a5 49		lda $49				lda		esInt0+1 					; terminal value in 7 to 11.
-.300d	91 78		sta ($78),y			sta 	(rsPointer),y
-.300f	c8		iny				iny
-.3010	a5 51		lda $51				lda		esInt1+1
-.3012	91 78		sta ($78),y			sta 	(rsPointer),y
-.3014	c8		iny				iny
-.3015	a5 59		lda $59				lda		esInt2+1
-.3017	91 78		sta ($78),y			sta 	(rsPointer),y
-.3019	c8		iny				iny
-.301a	a5 61		lda $61				lda		esInt3+1
-.301c	91 78		sta ($78),y			sta 	(rsPointer),y
-.301e	68		pla				pla
-.301f	a8		tay				tay
-.3020	b1 02		lda ($02),y			lda 	(codePtr),y 				; followed by STEP.
-.3022	c9 cc		cmp #$cc			cmp 	#TKW_STEP
-.3024	d0 0e		bne $3034			bne 	_CFDone
-.3026	c8		iny				iny									; skip over step.
-.3027	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger 			; get step
-.302a	98		tya				tya
-.302b	48		pha				pha
-.302c	b5 48		lda $48,x			lda 	esInt0,x 					; copy it into step (bit lazy here)
-.302e	a0 06		ldy #$06			ldy 	#6
-.3030	91 78		sta ($78),y			sta 	(rsPointer),y
-.3032	68		pla				pla
-.3033	a8		tay				tay
-.3034					_CFDone:
-.3034	a9 01		lda #$01			lda 	#1
-.3036	20 b7 22	jsr $22b7			jsr 	RSSavePosition 				; save position.
-.3039	60		rts				rts
-.303a					_CFType:
-.303a	a2 07		ldx #$07			ldx 	#ErrorID_BadType
-.303c	20 a3 23	jsr $23a3		jsr	errorHandler
-.303f					Command_NEXT:
-.303f	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
-.3041	a1 78		lda ($78,x)			lda 	(rsPointer,x)
-.3043	c9 46		cmp #$46			cmp 	#markerFOR 						; does it match
-.3045	f0 05		beq $304c			beq 	_isok
-.3047	a2 10		ldx #$10			ldx 	#ErrorID_nextErr
+.2feb					Command_FOR:
+.2feb	a9 46		lda #$46			lda 	#markerFOR 					; allocate the space.
+.2fed	a2 0b		ldx #$0b			ldx 	#11
+.2fef	20 8b 22	jsr $228b			jsr 	RSClaim
+.2ff2	20 78 11	jsr $1178			jsr 	CommandLET 					; do the same as LET.
+.2ff5	a5 40		lda $40				lda 	esType 						; check type should be integer reference.
+.2ff7	c9 80		cmp #$80			cmp 	#$80
+.2ff9	d0 4c		bne $3047			bne 	_CFType
+.2ffb	a9 cb		lda #$cb			lda 	#TKW_TO 					; check TO present.
+.2ffd	20 58 22	jsr $2258			jsr 	CheckToken
+.3000	a2 01		ldx #$01			ldx 	#1 							; keep the variable address in stack 0
+.3002	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger				; get terminal value in stack 1
+.3005	98		tya				tya
+.3006	48		pha				pha
+.3007	a0 04		ldy #$04			ldy 	#4
+.3009	a5 48		lda $48				lda		esInt0 						; the address of the index into 4 and 5
+.300b	91 78		sta ($78),y			sta 	(rsPointer),y
+.300d	c8		iny				iny
+.300e	a5 50		lda $50				lda		esInt1
+.3010	91 78		sta ($78),y			sta 	(rsPointer),y
+.3012	c8		iny				iny
+.3013	a9 01		lda #$01			lda 	#1  						; the default step in 6
+.3015	91 78		sta ($78),y			sta 	(rsPointer),y
+.3017	c8		iny				iny
+.3018	a5 49		lda $49				lda		esInt0+1 					; terminal value in 7 to 11.
+.301a	91 78		sta ($78),y			sta 	(rsPointer),y
+.301c	c8		iny				iny
+.301d	a5 51		lda $51				lda		esInt1+1
+.301f	91 78		sta ($78),y			sta 	(rsPointer),y
+.3021	c8		iny				iny
+.3022	a5 59		lda $59				lda		esInt2+1
+.3024	91 78		sta ($78),y			sta 	(rsPointer),y
+.3026	c8		iny				iny
+.3027	a5 61		lda $61				lda		esInt3+1
+.3029	91 78		sta ($78),y			sta 	(rsPointer),y
+.302b	68		pla				pla
+.302c	a8		tay				tay
+.302d	b1 02		lda ($02),y			lda 	(codePtr),y 				; followed by STEP.
+.302f	c9 cc		cmp #$cc			cmp 	#TKW_STEP
+.3031	d0 0e		bne $3041			bne 	_CFDone
+.3033	c8		iny				iny									; skip over step.
+.3034	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger 			; get step
+.3037	98		tya				tya
+.3038	48		pha				pha
+.3039	b5 48		lda $48,x			lda 	esInt0,x 					; copy it into step (bit lazy here)
+.303b	a0 06		ldy #$06			ldy 	#6
+.303d	91 78		sta ($78),y			sta 	(rsPointer),y
+.303f	68		pla				pla
+.3040	a8		tay				tay
+.3041					_CFDone:
+.3041	a9 01		lda #$01			lda 	#1
+.3043	20 b7 22	jsr $22b7			jsr 	RSSavePosition 				; save position.
+.3046	60		rts				rts
+.3047					_CFType:
+.3047	a2 07		ldx #$07			ldx 	#ErrorID_BadType
 .3049	20 a3 23	jsr $23a3		jsr	errorHandler
-.304c					_isok:
-.304c	b1 02		lda ($02),y			lda 	(codePtr),y 				; is it NEXT <index>
-.304e	c9 40		cmp #$40			cmp 	#$40 						; e.g. a variable follows 00-3F
-.3050	b0 18		bcs $306a			bcs 	_CNNoIndex
-.3052	a2 00		ldx #$00			ldx 	#0 							; start on stack
-.3054	20 02 1c	jsr $1c02			jsr 	EvaluateReference 			; this is the variable/parameter to localise.
-.3057	98		tya				tya
-.3058	48		pha				pha
-.3059	a0 04		ldy #$04			ldy 	#4 							; check same variable
-.305b	b1 78		lda ($78),y			lda 	(rsPointer),y
-.305d	d5 48		cmp $48,x			cmp 	esInt0,x
-.305f	d0 76		bne $30d7			bne 	_CNBadIndex
-.3061	c8		iny				iny
-.3062	b1 78		lda ($78),y			lda 	(rsPointer),y
-.3064	d5 50		cmp $50,x			cmp 	esInt1,x
-.3066	d0 6f		bne $30d7			bne 	_CNBadIndex
-.3068	68		pla				pla
-.3069	a8		tay				tay
-.306a					_CNNoIndex:
-.306a	98		tya				tya
-.306b	48		pha				pha
-.306c	a0 04		ldy #$04			ldy 	#4 							; make temp0 point to the index
-.306e	b1 78		lda ($78),y			lda 	(rsPointer),y
-.3070	85 04		sta $04				sta 	temp0
-.3072	c8		iny				iny
-.3073	b1 78		lda ($78),y			lda 	(rsPointer),y
-.3075	85 05		sta $05				sta 	temp0+1
-.3077	c8		iny				iny
-.3078	a2 00		ldx #$00			ldx 	#0 							; X is the sign extend part of the step.
-.307a	b1 78		lda ($78),y			lda 	(rsPointer),y 				; get the step.
-.307c	85 09		sta $09				sta 	temp2+1 					; save for later.
-.307e	10 01		bpl $3081			bpl 	_CNSignX
-.3080	ca		dex				dex  								; X = $FF
-.3081					_CNSignX:
-.3081	18		clc				clc 								; add to the LSB
-.3082	a0 00		ldy #$00			ldy 	#0
-.3084	71 04		adc ($04),y			adc 	(temp0),y
-.3086	91 04		sta ($04),y			sta 	(temp0),y
-.3088					_CNPropogate:
-.3088	c8		iny				iny  								; add the sign extended in X to the rest.
-.3089	8a		txa				txa
-.308a	71 04		adc ($04),y			adc 	(temp0),y
-.308c	91 04		sta ($04),y			sta 	(temp0),y
-.308e	c8		iny				iny
-.308f	8a		txa				txa
-.3090	71 04		adc ($04),y			adc 	(temp0),y
-.3092	91 04		sta ($04),y			sta 	(temp0),y
-.3094	c8		iny				iny
-.3095	8a		txa				txa
-.3096	71 04		adc ($04),y			adc 	(temp0),y
-.3098	91 04		sta ($04),y			sta 	(temp0),y
-.309a	18		clc				clc 								; point temp1 to the terminal value stored in the stack.
-.309b	a5 78		lda $78				lda 	rsPointer
-.309d	69 07		adc #$07			adc 	#7
-.309f	85 06		sta $06				sta 	temp1
-.30a1	a9 00		lda #$00			lda 	#0
-.30a3	85 08		sta $08				sta 	temp2 						; clear temp2, which is the OR of all the subtractions.
-.30a5	a8		tay				tay 								; and clear the Y register again.
-.30a6	65 79		adc $79				adc 	rsPointer+1
-.30a8	85 07		sta $07				sta 	temp1+1
-.30aa	38		sec				sec 								; calculate current - limit oring interim values.
-.30ab	20 e3 30	jsr $30e3			jsr 	_CNCompare
-.30ae	20 e3 30	jsr $30e3			jsr 	_CNCompare
-.30b1	20 e3 30	jsr $30e3			jsr 	_CNCompare
-.30b4	20 e3 30	jsr $30e3			jsr 	_CNCompare
-.30b7	50 02		bvc $30bb			bvc 	_CNNoOverflow 				; converts to a signed comparison on the sign bit.
-.30b9	49 80		eor #$80			eor 	#$80
-.30bb					_CNNoOverflow:
-.30bb	a4 09		ldy $09				ldy 	temp2+1						; get step back
-.30bd	30 1d		bmi $30dc			bmi 	_CNCheckDownto
-.30bf	c9 00		cmp #$00			cmp 	#0
-.30c1	30 0c		bmi $30cf			bmi 	_CNLoopRound 				; loop round if < =
-.30c3	a5 08		lda $08				lda 	temp2
-.30c5	f0 08		beq $30cf			beq 	_CNLoopRound
-.30c7					_CNLoopExit:
-.30c7	68		pla				pla
-.30c8	a8		tay				tay
-.30c9	a9 0b		lda #$0b			lda 	#11
-.30cb	20 ad 22	jsr $22ad			jsr 	RSFree
-.30ce	60		rts				rts
-.30cf					_CNLoopRound:
-.30cf	68		pla				pla
-.30d0	a8		tay				tay
-.30d1	a9 01		lda #$01			lda 	#1
-.30d3	20 ca 22	jsr $22ca			jsr 	RSLoadPosition				; go back to the loop top
-.30d6	60		rts				rts
-.30d7					_CNBadIndex:
-.30d7	a2 13		ldx #$13			ldx 	#ErrorID_BadIndex
-.30d9	20 a3 23	jsr $23a3		jsr	errorHandler
-.30dc					_CNCheckDownto:
-.30dc	c9 00		cmp #$00			cmp 	#0
-.30de	10 ef		bpl $30cf			bpl 	_CNLoopRound
-.30e0	4c c7 30	jmp $30c7			jmp 	_CNLoopExit
-.30e3					_CNCompare:
-.30e3	b1 04		lda ($04),y			lda 	(temp0),y 					; do the subtraction - compare don't care about answer
-.30e5	f1 06		sbc ($06),y			sbc 	(temp1),y
-.30e7	05 08		ora $08				ora 	temp2 						; Or into temp2 (does not affect carry)
-.30e9	85 08		sta $08				sta 	temp2
-.30eb	c8		iny				iny
-.30ec	60		rts				rts
+.304c					Command_NEXT:
+.304c	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
+.304e	a1 78		lda ($78,x)			lda 	(rsPointer,x)
+.3050	c9 46		cmp #$46			cmp 	#markerFOR 						; does it match
+.3052	f0 05		beq $3059			beq 	_isok
+.3054	a2 10		ldx #$10			ldx 	#ErrorID_nextErr
+.3056	20 a3 23	jsr $23a3		jsr	errorHandler
+.3059					_isok:
+.3059	b1 02		lda ($02),y			lda 	(codePtr),y 				; is it NEXT <index>
+.305b	c9 40		cmp #$40			cmp 	#$40 						; e.g. a variable follows 00-3F
+.305d	b0 18		bcs $3077			bcs 	_CNNoIndex
+.305f	a2 00		ldx #$00			ldx 	#0 							; start on stack
+.3061	20 02 1c	jsr $1c02			jsr 	EvaluateReference 			; this is the variable/parameter to localise.
+.3064	98		tya				tya
+.3065	48		pha				pha
+.3066	a0 04		ldy #$04			ldy 	#4 							; check same variable
+.3068	b1 78		lda ($78),y			lda 	(rsPointer),y
+.306a	d5 48		cmp $48,x			cmp 	esInt0,x
+.306c	d0 76		bne $30e4			bne 	_CNBadIndex
+.306e	c8		iny				iny
+.306f	b1 78		lda ($78),y			lda 	(rsPointer),y
+.3071	d5 50		cmp $50,x			cmp 	esInt1,x
+.3073	d0 6f		bne $30e4			bne 	_CNBadIndex
+.3075	68		pla				pla
+.3076	a8		tay				tay
+.3077					_CNNoIndex:
+.3077	98		tya				tya
+.3078	48		pha				pha
+.3079	a0 04		ldy #$04			ldy 	#4 							; make temp0 point to the index
+.307b	b1 78		lda ($78),y			lda 	(rsPointer),y
+.307d	85 04		sta $04				sta 	temp0
+.307f	c8		iny				iny
+.3080	b1 78		lda ($78),y			lda 	(rsPointer),y
+.3082	85 05		sta $05				sta 	temp0+1
+.3084	c8		iny				iny
+.3085	a2 00		ldx #$00			ldx 	#0 							; X is the sign extend part of the step.
+.3087	b1 78		lda ($78),y			lda 	(rsPointer),y 				; get the step.
+.3089	85 09		sta $09				sta 	temp2+1 					; save for later.
+.308b	10 01		bpl $308e			bpl 	_CNSignX
+.308d	ca		dex				dex  								; X = $FF
+.308e					_CNSignX:
+.308e	18		clc				clc 								; add to the LSB
+.308f	a0 00		ldy #$00			ldy 	#0
+.3091	71 04		adc ($04),y			adc 	(temp0),y
+.3093	91 04		sta ($04),y			sta 	(temp0),y
+.3095					_CNPropogate:
+.3095	c8		iny				iny  								; add the sign extended in X to the rest.
+.3096	8a		txa				txa
+.3097	71 04		adc ($04),y			adc 	(temp0),y
+.3099	91 04		sta ($04),y			sta 	(temp0),y
+.309b	c8		iny				iny
+.309c	8a		txa				txa
+.309d	71 04		adc ($04),y			adc 	(temp0),y
+.309f	91 04		sta ($04),y			sta 	(temp0),y
+.30a1	c8		iny				iny
+.30a2	8a		txa				txa
+.30a3	71 04		adc ($04),y			adc 	(temp0),y
+.30a5	91 04		sta ($04),y			sta 	(temp0),y
+.30a7	18		clc				clc 								; point temp1 to the terminal value stored in the stack.
+.30a8	a5 78		lda $78				lda 	rsPointer
+.30aa	69 07		adc #$07			adc 	#7
+.30ac	85 06		sta $06				sta 	temp1
+.30ae	a9 00		lda #$00			lda 	#0
+.30b0	85 08		sta $08				sta 	temp2 						; clear temp2, which is the OR of all the subtractions.
+.30b2	a8		tay				tay 								; and clear the Y register again.
+.30b3	65 79		adc $79				adc 	rsPointer+1
+.30b5	85 07		sta $07				sta 	temp1+1
+.30b7	38		sec				sec 								; calculate current - limit oring interim values.
+.30b8	20 f0 30	jsr $30f0			jsr 	_CNCompare
+.30bb	20 f0 30	jsr $30f0			jsr 	_CNCompare
+.30be	20 f0 30	jsr $30f0			jsr 	_CNCompare
+.30c1	20 f0 30	jsr $30f0			jsr 	_CNCompare
+.30c4	50 02		bvc $30c8			bvc 	_CNNoOverflow 				; converts to a signed comparison on the sign bit.
+.30c6	49 80		eor #$80			eor 	#$80
+.30c8					_CNNoOverflow:
+.30c8	a4 09		ldy $09				ldy 	temp2+1						; get step back
+.30ca	30 1d		bmi $30e9			bmi 	_CNCheckDownto
+.30cc	c9 00		cmp #$00			cmp 	#0
+.30ce	30 0c		bmi $30dc			bmi 	_CNLoopRound 				; loop round if < =
+.30d0	a5 08		lda $08				lda 	temp2
+.30d2	f0 08		beq $30dc			beq 	_CNLoopRound
+.30d4					_CNLoopExit:
+.30d4	68		pla				pla
+.30d5	a8		tay				tay
+.30d6	a9 0b		lda #$0b			lda 	#11
+.30d8	20 ad 22	jsr $22ad			jsr 	RSFree
+.30db	60		rts				rts
+.30dc					_CNLoopRound:
+.30dc	68		pla				pla
+.30dd	a8		tay				tay
+.30de	a9 01		lda #$01			lda 	#1
+.30e0	20 ca 22	jsr $22ca			jsr 	RSLoadPosition				; go back to the loop top
+.30e3	60		rts				rts
+.30e4					_CNBadIndex:
+.30e4	a2 13		ldx #$13			ldx 	#ErrorID_BadIndex
+.30e6	20 a3 23	jsr $23a3		jsr	errorHandler
+.30e9					_CNCheckDownto:
+.30e9	c9 00		cmp #$00			cmp 	#0
+.30eb	10 ef		bpl $30dc			bpl 	_CNLoopRound
+.30ed	4c d4 30	jmp $30d4			jmp 	_CNLoopExit
+.30f0					_CNCompare:
+.30f0	b1 04		lda ($04),y			lda 	(temp0),y 					; do the subtraction - compare don't care about answer
+.30f2	f1 06		sbc ($06),y			sbc 	(temp1),y
+.30f4	05 08		ora $08				ora 	temp2 						; Or into temp2 (does not affect carry)
+.30f6	85 08		sta $08				sta 	temp2
+.30f8	c8		iny				iny
+.30f9	60		rts				rts
 
 ;******  Return to file: main/main.asm
 
@@ -682,11 +694,11 @@
 .10b9					_IFSkip:
 .10b9	a9 d3		lda #$d3			lda	 	#TKW_ELSE 					; test failed, go to ELSE or ENDIF whichever comes first.
 .10bb	a2 a2		ldx #$a2			ldx 	#TKW_ENDIF
-.10bd	4c d8 31	jmp $31d8			jmp		ScanForward
+.10bd	4c e5 31	jmp $31e5			jmp		ScanForward
 .10c0					Command_ELSE:
 .10c0	a2 a2		ldx #$a2			ldx 	#TKW_ENDIF
 .10c2	8a		txa				txa
-.10c3	4c d8 31	jmp $31d8			jmp		ScanForward
+.10c3	4c e5 31	jmp $31e5			jmp		ScanForward
 .10c6					Command_ENDIF:
 .10c6	60		rts				rts
 
@@ -879,77 +891,77 @@
 
 ;******  Processing file: main/commands/list.asm
 
-.30ed					CommandList:
-.30ed	a2 00		ldx #$00			ldx		#0 							; set start/end lines in stack 0/1
-.30ef	20 f0 21	jsr $21f0			jsr 	MInt32False
-.30f2	e8		inx				inx
-.30f3	20 ec 21	jsr $21ec			jsr 	MInt32True
-.30f6	b1 02		lda ($02),y			lda 	(codePtr),y
-.30f8	c9 c8		cmp #$c8			cmp 	#TKW_COMMA 					; list ,xxxx
-.30fa	f0 4e		beq $314a			beq 	_CLEnd
-.30fc	c9 00		cmp #$00			cmp 	#0 							; list ... on its own.
-.30fe	30 1b		bmi $311b			bmi 	_CLDoListing
-.3100	a2 00		ldx #$00			ldx 	#0 							; get start
-.3102	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger
-.3105	b1 02		lda ($02),y			lda 	(codePtr),y 				; , follows
-.3107	c9 c8		cmp #$c8			cmp 	#TKW_COMMA
-.3109	f0 06		beq $3111			beq 	_CLEndLine
-.310b	20 33 21	jsr $2133			jsr 	MInt32CopyUp 				; copy first to second
-.310e	4c 1b 31	jmp $311b			jmp 	_CLDoListing
-.3111					_CLEndLine:
-.3111	c8		iny				iny 								; skip comma
-.3112	b1 02		lda ($02),y			lda 	(codePtr),y  				; no number follows.
-.3114	30 05		bmi $311b			bmi 	_CLDoListing
-.3116	a2 01		ldx #$01			ldx 	#1
-.3118	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger				; get end
-.311b					_CLDoListing:
-.311b	20 33 15	jsr $1533			jsr 	ResetCodeAddress 			; back to the start.
-.311e					_CLCheckLoop:
-.311e	a0 00		ldy #$00			ldy 	#0							; check end.
-.3120	b1 02		lda ($02),y			lda 	(codePtr),y
-.3122	f0 26		beq $314a			beq 	_CLEnd
-.3124	a2 00		ldx #$00			ldx 	#0 							; compare vs lower.
-.3126	20 4d 31	jsr $314d			jsr 	CLCompareLineTOS
-.3129	c9 ff		cmp #$ff			cmp 	#255 						; if < skip
-.312b	f0 0d		beq $313a			beq 	_CLNext
-.312d	e8		inx				inx
-.312e	20 4d 31	jsr $314d			jsr 	CLCompareLineTOS 			; compare vs higher
-.3131	c9 01		cmp #$01			cmp 	#1
-.3133	f0 05		beq $313a			beq 	_CLNext
-.3135	a2 02		ldx #$02		ldx	#2
-.3137	20 1a 2d	jsr $2d1a		jsr	tokeniserHandler
-.313a					_CLNext:
-.313a	a0 00		ldy #$00			ldy 	#0
-.313c	b1 02		lda ($02),y			lda 	(codePtr),y
-.313e	18		clc				clc
-.313f	65 02		adc $02				adc 	codePtr
-.3141	85 02		sta $02				sta 	codePtr
-.3143	90 d9		bcc $311e			bcc 	_CLCheckLoop
-.3145	e6 03		inc $03				inc 	codePtr+1
-.3147	4c 1e 31	jmp $311e			jmp 	_CLCheckLoop
-.314a					_CLEnd:
-.314a	4c 4a 31	jmp $314a			jmp 	_CLEnd
-.314d					CLCompareLineTOS:
-.314d	a0 01		ldy #$01			ldy 	#1
-.314f	b1 02		lda ($02),y			lda 	(codePtr),y
-.3151	55 48		eor $48,x			eor 	esInt0,x
-.3153	85 04		sta $04				sta 	temp0
-.3155	c8		iny				iny
-.3156	b1 02		lda ($02),y			lda 	(codePtr),y
-.3158	55 50		eor $50,x			eor 	esInt1,x
-.315a	05 04		ora $04				ora 	temp0
-.315c	f0 10		beq $316e			beq 	_CLCLTExit
-.315e	88		dey				dey
-.315f	b1 02		lda ($02),y			lda 	(codePtr),y
-.3161	d5 48		cmp $48,x			cmp 	esInt0,x
-.3163	c8		iny				iny
-.3164	b1 02		lda ($02),y			lda 	(codePtr),y
-.3166	f5 50		sbc $50,x			sbc 	esInt1,x
-.3168	a9 ff		lda #$ff			lda 	#255
-.316a	90 02		bcc $316e			bcc 	_CLCLTExit
-.316c	a9 01		lda #$01			lda 	#1
-.316e					_CLCLTExit:
-.316e	60		rts				rts
+.30fa					CommandList:
+.30fa	a2 00		ldx #$00			ldx		#0 							; set start/end lines in stack 0/1
+.30fc	20 f0 21	jsr $21f0			jsr 	MInt32False
+.30ff	e8		inx				inx
+.3100	20 ec 21	jsr $21ec			jsr 	MInt32True
+.3103	b1 02		lda ($02),y			lda 	(codePtr),y
+.3105	c9 c8		cmp #$c8			cmp 	#TKW_COMMA 					; list ,xxxx
+.3107	f0 4e		beq $3157			beq 	_CLEnd
+.3109	c9 00		cmp #$00			cmp 	#0 							; list ... on its own.
+.310b	30 1b		bmi $3128			bmi 	_CLDoListing
+.310d	a2 00		ldx #$00			ldx 	#0 							; get start
+.310f	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger
+.3112	b1 02		lda ($02),y			lda 	(codePtr),y 				; , follows
+.3114	c9 c8		cmp #$c8			cmp 	#TKW_COMMA
+.3116	f0 06		beq $311e			beq 	_CLEndLine
+.3118	20 33 21	jsr $2133			jsr 	MInt32CopyUp 				; copy first to second
+.311b	4c 28 31	jmp $3128			jmp 	_CLDoListing
+.311e					_CLEndLine:
+.311e	c8		iny				iny 								; skip comma
+.311f	b1 02		lda ($02),y			lda 	(codePtr),y  				; no number follows.
+.3121	30 05		bmi $3128			bmi 	_CLDoListing
+.3123	a2 01		ldx #$01			ldx 	#1
+.3125	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger				; get end
+.3128					_CLDoListing:
+.3128	20 33 15	jsr $1533			jsr 	ResetCodeAddress 			; back to the start.
+.312b					_CLCheckLoop:
+.312b	a0 00		ldy #$00			ldy 	#0							; check end.
+.312d	b1 02		lda ($02),y			lda 	(codePtr),y
+.312f	f0 26		beq $3157			beq 	_CLEnd
+.3131	a2 00		ldx #$00			ldx 	#0 							; compare vs lower.
+.3133	20 5a 31	jsr $315a			jsr 	CLCompareLineTOS
+.3136	c9 ff		cmp #$ff			cmp 	#255 						; if < skip
+.3138	f0 0d		beq $3147			beq 	_CLNext
+.313a	e8		inx				inx
+.313b	20 5a 31	jsr $315a			jsr 	CLCompareLineTOS 			; compare vs higher
+.313e	c9 01		cmp #$01			cmp 	#1
+.3140	f0 05		beq $3147			beq 	_CLNext
+.3142	a2 02		ldx #$02		ldx	#2
+.3144	20 27 2d	jsr $2d27		jsr	tokeniserHandler
+.3147					_CLNext:
+.3147	a0 00		ldy #$00			ldy 	#0
+.3149	b1 02		lda ($02),y			lda 	(codePtr),y
+.314b	18		clc				clc
+.314c	65 02		adc $02				adc 	codePtr
+.314e	85 02		sta $02				sta 	codePtr
+.3150	90 d9		bcc $312b			bcc 	_CLCheckLoop
+.3152	e6 03		inc $03				inc 	codePtr+1
+.3154	4c 2b 31	jmp $312b			jmp 	_CLCheckLoop
+.3157					_CLEnd:
+.3157	4c 57 31	jmp $3157			jmp 	_CLEnd
+.315a					CLCompareLineTOS:
+.315a	a0 01		ldy #$01			ldy 	#1
+.315c	b1 02		lda ($02),y			lda 	(codePtr),y
+.315e	55 48		eor $48,x			eor 	esInt0,x
+.3160	85 04		sta $04				sta 	temp0
+.3162	c8		iny				iny
+.3163	b1 02		lda ($02),y			lda 	(codePtr),y
+.3165	55 50		eor $50,x			eor 	esInt1,x
+.3167	05 04		ora $04				ora 	temp0
+.3169	f0 10		beq $317b			beq 	_CLCLTExit
+.316b	88		dey				dey
+.316c	b1 02		lda ($02),y			lda 	(codePtr),y
+.316e	d5 48		cmp $48,x			cmp 	esInt0,x
+.3170	c8		iny				iny
+.3171	b1 02		lda ($02),y			lda 	(codePtr),y
+.3173	f5 50		sbc $50,x			sbc 	esInt1,x
+.3175	a9 ff		lda #$ff			lda 	#255
+.3177	90 02		bcc $317b			bcc 	_CLCLTExit
+.3179	a9 01		lda #$01			lda 	#1
+.317b					_CLCLTExit:
+.317b	60		rts				rts
 
 ;******  Return to file: main/main.asm
 
@@ -982,7 +994,7 @@
 .1218	b0 67		bcs $1281			bcs 	_LVSyntax
 .121a	8a		txa				txa 								; get the address of that variable.
 .121b	a2 00		ldx #$00		ldx	#0
-.121d	20 d5 2f	jsr $2fd5		jsr	variableHandler
+.121d	20 e2 2f	jsr $2fe2		jsr	variableHandler
 .1220	aa		tax				tax
 .1221	8a		txa				txa
 .1222	48		pha				pha
@@ -1387,7 +1399,7 @@
 .1475	88		dey				dey
 .1476	a9 d9		lda #$d9			lda 	#TKW_DATA 					; scan forward to a DATA statement.
 .1478	aa		tax				tax
-.1479	20 d8 31	jsr $31d8			jsr 	ScanForward
+.1479	20 e5 31	jsr $31e5			jsr 	ScanForward
 .147c					_CRInData:
 .147c	a2 01		ldx #$01			ldx 	#1 							; evaluate a value at Stack,1
 .147e	20 b0 1b	jsr $1bb0			jsr 	Evaluate
@@ -1403,7 +1415,7 @@
 .1491					CommandData:
 .1491	a9 80		lda #$80			lda 	#TOK_EOL 					; go forward to end of line or colon.
 .1493	a2 c7		ldx #$c7			ldx 	#TKW_COLON
-.1495	20 d8 31	jsr $31d8			jsr 	ScanForward
+.1495	20 e5 31	jsr $31e5			jsr 	ScanForward
 .1498	88		dey				dey 								; ending on EOL is a scan issue, as it increments
 .1499	60		rts				rts
 .149a					CommandRestore:
@@ -1455,31 +1467,31 @@
 
 ;******  Processing file: main/commands/repeat.asm
 
-.316f					Command_Repeat:
-.316f	a2 04		ldx #$04			ldx 	#4 							; allocate 4 bytes on stack for REPEAT
-.3171	a9 52		lda #$52			lda 	#markerREPEAT 				; repeat marker allocate 4 bytes
-.3173	20 8b 22	jsr $228b			jsr 	RSClaim
-.3176	a9 01		lda #$01			lda 	#1 							; save position at offset 1.
-.3178	20 b7 22	jsr $22b7			jsr 	RSSavePosition
-.317b	60		rts				rts
-.317c					Command_Until:
-.317c	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
-.317e	a1 78		lda ($78,x)			lda 	(rsPointer,x)
-.3180	c9 52		cmp #$52			cmp 	#markerREPEAT 						; does it match
-.3182	f0 05		beq $3189			beq 	_isok
-.3184	a2 0f		ldx #$0f			ldx 	#ErrorID_untilErr
-.3186	20 a3 23	jsr $23a3		jsr	errorHandler
-.3189					_isok:
-.3189	20 cd 1b	jsr $1bcd			jsr 	EvaluateRootInteger 		; at the bottom.
-.318c	20 17 22	jsr $2217			jsr 	MInt32Zero					; check if TOS zero
-.318f	d0 06		bne $3197			bne 	_CUExit
-.3191	a9 01		lda #$01			lda 	#1
-.3193	20 ca 22	jsr $22ca			jsr 	RSLoadPosition 				; reload the position from offset 1.
-.3196	60		rts				rts
-.3197					_CUExit:
-.3197	a9 04		lda #$04			lda 	#4 							; throw 4 bytes from stack.
-.3199	20 ad 22	jsr $22ad			jsr 	RSFree
-.319c	60		rts				rts
+.317c					Command_Repeat:
+.317c	a2 04		ldx #$04			ldx 	#4 							; allocate 4 bytes on stack for REPEAT
+.317e	a9 52		lda #$52			lda 	#markerREPEAT 				; repeat marker allocate 4 bytes
+.3180	20 8b 22	jsr $228b			jsr 	RSClaim
+.3183	a9 01		lda #$01			lda 	#1 							; save position at offset 1.
+.3185	20 b7 22	jsr $22b7			jsr 	RSSavePosition
+.3188	60		rts				rts
+.3189					Command_Until:
+.3189	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
+.318b	a1 78		lda ($78,x)			lda 	(rsPointer,x)
+.318d	c9 52		cmp #$52			cmp 	#markerREPEAT 						; does it match
+.318f	f0 05		beq $3196			beq 	_isok
+.3191	a2 0f		ldx #$0f			ldx 	#ErrorID_untilErr
+.3193	20 a3 23	jsr $23a3		jsr	errorHandler
+.3196					_isok:
+.3196	20 cd 1b	jsr $1bcd			jsr 	EvaluateRootInteger 		; at the bottom.
+.3199	20 17 22	jsr $2217			jsr 	MInt32Zero					; check if TOS zero
+.319c	d0 06		bne $31a4			bne 	_CUExit
+.319e	a9 01		lda #$01			lda 	#1
+.31a0	20 ca 22	jsr $22ca			jsr 	RSLoadPosition 				; reload the position from offset 1.
+.31a3	60		rts				rts
+.31a4					_CUExit:
+.31a4	a9 04		lda #$04			lda 	#4 							; throw 4 bytes from stack.
+.31a6	20 ad 22	jsr $22ad			jsr 	RSFree
+.31a9	60		rts				rts
 
 ;******  Return to file: main/main.asm
 
@@ -1591,14 +1603,14 @@
 >1576	ea 18					.word	PowerHandler             ; $96 ^
 >1578	c4 18					.word	WordRefHandler           ; $97 !
 >157a	d7 18					.word	ByteRefHandler           ; $98 ?
->157c	6f 31					.word	Command_Repeat           ; $99 repeat
->157e	9d 31					.word	Command_While            ; $9a while
->1580	de 2f					.word	Command_FOR              ; $9b for
+>157c	7c 31					.word	Command_Repeat           ; $99 repeat
+>157e	aa 31					.word	Command_While            ; $9a while
+>1580	eb 2f					.word	Command_FOR              ; $9b for
 >1582	8b 10					.word	CommandIf                ; $9c if
 >1584	45 15					.word	TKErr04                  ; $9d defproc
->1586	7c 31					.word	Command_Until            ; $9e until
->1588	c0 31					.word	Command_Wend             ; $9f wend
->158a	3f 30					.word	Command_NEXT             ; $a0 next
+>1586	89 31					.word	Command_Until            ; $9e until
+>1588	cd 31					.word	Command_Wend             ; $9f wend
+>158a	4c 30					.word	Command_NEXT             ; $a0 next
 >158c	45 15					.word	TKErr06                  ; $a1 then
 >158e	c6 10					.word	Command_ENDIF            ; $a2 endif
 >1590	4b 14					.word	ReturnProc               ; $a3 endproc
@@ -1674,7 +1686,7 @@
 >160e	2d 10					.word	CommandClear             ; $86 clear
 >1610	40 15					.word	Unimplemented            ; $87 load
 >1612	40 15					.word	Unimplemented            ; $88 save
->1614	ed 30					.word	CommandList              ; $89 list
+>1614	fa 30					.word	CommandList              ; $89 list
 >1616	f8 12					.word	Command_New              ; $8a new
 >1618	d9 14					.word	Command_Run              ; $8b run
 >161a	66 14					.word	CommandRead              ; $8c read
@@ -1972,38 +1984,38 @@
 
 ;******  Processing file: main/commands/while.asm
 
-.319d					Command_While:
-.319d	a9 57		lda #$57			lda 	#markerWhile 				; gosub marker allocate 4 bytes.
-.319f	a2 04		ldx #$04			ldx 	#4
-.31a1	20 8b 22	jsr $228b			jsr 	RSClaim 					; create on stack.
-.31a4	88		dey				dey
-.31a5	a9 01		lda #$01			lda 	#1
-.31a7	20 b7 22	jsr $22b7			jsr 	RSSavePosition 				; save position before the WHILE keyword.
-.31aa	c8		iny				iny
-.31ab	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger				; get the conditional
-.31ae	20 17 22	jsr $2217			jsr 	MInt32Zero 	 				; if zero, skip forward.
-.31b1	f0 01		beq $31b4			beq 	_CWFail
-.31b3	60		rts				rts
-.31b4					_CWFail:
-.31b4	a9 04		lda #$04			lda 	#4
-.31b6	20 ad 22	jsr $22ad			jsr 	RSFree 						; close the just opened position.
-.31b9	a9 9f		lda #$9f			lda 	#TKW_WEND 					; scan forward past WEND.
-.31bb	aa		tax				tax
-.31bc	20 d8 31	jsr $31d8			jsr 	ScanForward
-.31bf	60		rts				rts
-.31c0					Command_Wend:
-.31c0	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
-.31c2	a1 78		lda ($78,x)			lda 	(rsPointer,x)
-.31c4	c9 57		cmp #$57			cmp 	#markerWHILE 						; does it match
-.31c6	f0 05		beq $31cd			beq 	_isok
-.31c8	a2 11		ldx #$11			ldx 	#ErrorID_wendErr
-.31ca	20 a3 23	jsr $23a3		jsr	errorHandler
-.31cd					_isok:
-.31cd	a9 01		lda #$01			lda 	#1
-.31cf	20 ca 22	jsr $22ca			jsr 	RSLoadPosition				; go back until true
-.31d2	a9 04		lda #$04			lda 	#4
-.31d4	20 ad 22	jsr $22ad			jsr 	RSFree 						; close the loop
-.31d7	60		rts				rts
+.31aa					Command_While:
+.31aa	a9 57		lda #$57			lda 	#markerWhile 				; gosub marker allocate 4 bytes.
+.31ac	a2 04		ldx #$04			ldx 	#4
+.31ae	20 8b 22	jsr $228b			jsr 	RSClaim 					; create on stack.
+.31b1	88		dey				dey
+.31b2	a9 01		lda #$01			lda 	#1
+.31b4	20 b7 22	jsr $22b7			jsr 	RSSavePosition 				; save position before the WHILE keyword.
+.31b7	c8		iny				iny
+.31b8	20 cf 1b	jsr $1bcf			jsr 	EvaluateInteger				; get the conditional
+.31bb	20 17 22	jsr $2217			jsr 	MInt32Zero 	 				; if zero, skip forward.
+.31be	f0 01		beq $31c1			beq 	_CWFail
+.31c0	60		rts				rts
+.31c1					_CWFail:
+.31c1	a9 04		lda #$04			lda 	#4
+.31c3	20 ad 22	jsr $22ad			jsr 	RSFree 						; close the just opened position.
+.31c6	a9 9f		lda #$9f			lda 	#TKW_WEND 					; scan forward past WEND.
+.31c8	aa		tax				tax
+.31c9	20 e5 31	jsr $31e5			jsr 	ScanForward
+.31cc	60		rts				rts
+.31cd					Command_Wend:
+.31cd	a2 00		ldx #$00			ldx 	#0 							; get TOS return stack
+.31cf	a1 78		lda ($78,x)			lda 	(rsPointer,x)
+.31d1	c9 57		cmp #$57			cmp 	#markerWHILE 						; does it match
+.31d3	f0 05		beq $31da			beq 	_isok
+.31d5	a2 11		ldx #$11			ldx 	#ErrorID_wendErr
+.31d7	20 a3 23	jsr $23a3		jsr	errorHandler
+.31da					_isok:
+.31da	a9 01		lda #$01			lda 	#1
+.31dc	20 ca 22	jsr $22ca			jsr 	RSLoadPosition				; go back until true
+.31df	a9 04		lda #$04			lda 	#4
+.31e1	20 ad 22	jsr $22ad			jsr 	RSFree 						; close the loop
+.31e4	60		rts				rts
 
 ;******  Return to file: main/main.asm
 
@@ -2484,7 +2496,7 @@
 .1aad	30 0a		bmi $1ab9			bmi 	_ELIsConstant 				; 40-7F will be -ve and that's an integer constant.
 .1aaf	8a		txa				txa 								; stack level in X
 .1ab0	a2 00		ldx #$00		ldx	#0
-.1ab2	20 d5 2f	jsr $2fd5		jsr	variableHandler
+.1ab2	20 e2 2f	jsr $2fe2		jsr	variableHandler
 .1ab5	aa		tax				tax
 .1ab6	4c f6 1a	jmp $1af6			jmp		_ELHasTerm
 .1ab9					_ELIsConstant:
@@ -3799,74 +3811,74 @@
 
 ;******  Processing file: main/utility/scanner.asm
 
-.31d8					ScanForward:
-.31d8	85 06		sta $06				sta 	temp1 						; save tokens to search in temp1/temp1+1
-.31da	86 07		stx $07				stx 	temp1+1
-.31dc	a9 00		lda #$00			lda 	#0 							; temp2 counts structure levels.
-.31de	85 08		sta $08				sta 	temp2
-.31e0	b1 02		lda ($02),y	_SFLoop:lda 	(codePtr),y 				; look at the next token.
-.31e2	c8		iny				iny
-.31e3	a6 08		ldx $08				ldx 	temp2 						; check structure levels are zero.
-.31e5	d0 08		bne $31ef			bne 	_SFNoCheck 					; if so, check token against entered values.
-.31e7	c5 06		cmp $06				cmp 	temp1
-.31e9	f0 24		beq $320f			beq 	_SFExit
-.31eb	c5 07		cmp $07				cmp 	temp1+1
-.31ed	f0 20		beq $320f			beq 	_SFExit
-.31ef					_SFNoCheck:
-.31ef	c9 80		cmp #$80			cmp 	#$80 						; if it is 00-7F (variable/number) just skip it.
-.31f1	90 ed		bcc $31e0			bcc 	_SFLoop
-.31f3	c9 86		cmp #$86			cmp 	#TOK_BINARYST 				; $80-$85 is various specials.
-.31f5	90 19		bcc $3210			bcc 	_SFSpecials
-.31f7	c9 99		cmp #$99			cmp 	#TOK_STRUCTST 				; if < structure start then continue
-.31f9	90 e5		bcc $31e0			bcc 	_SFLoop
-.31fb	c9 a4		cmp #$a4			cmp 	#TOK_UNARYST 				; if >= unary start (after structure) then continue.
-.31fd	b0 e1		bcs $31e0			bcs 	_SFLoop
-.31ff	aa		tax				tax  								; token in X, and look up the adjuster.
-.3200	bd bd 1b	lda $1bbd,x			lda 	ELBinaryOperatorInfo-TOK_BINARYST,x
-.3203	38		sec				sec 								; convert to an offset
-.3204	e9 81		sbc #$81			sbc 	#$81
-.3206	18		clc				clc 								; add to depth
-.3207	65 08		adc $08				adc 	temp2
-.3209	85 08		sta $08				sta 	temp2
-.320b	10 d3		bpl $31e0			bpl 	_SFLoop 					; +ve okay to continue
-.320d	30 35		bmi $3244			bmi 	_SFError 					; if gone -ve then we have a nesting error
-.320f	60		rts		_SFExit:rts
-.3210					_SFSpecials:
-.3210	c9 80		cmp #$80			cmp 	#TOK_EOL 					; $80, advance to next line.
-.3212	f0 14		beq $3228			beq 	_SFNextLine
-.3214	c9 84		cmp #$84			cmp 	#TOK_FPC					; $84, skip embedded float
-.3216	f0 31		beq $3249			beq 	_SFFloatSkip
-.3218	c9 85		cmp #$85			cmp 	#TOK_STR 					; $85, skip string
-.321a	f0 04		beq $3220			beq 	_SFSkipString
-.321c	c8		iny				iny									; $81,$82,$83 shift, so just advance over the shifted
-.321d	4c e0 31	jmp $31e0			jmp 	_SFLoop 					; token.
-.3220					_SFSkipString:
-.3220	98		tya				tya
-.3221	38		sec				sec
-.3222	71 02		adc ($02),y			adc 	(codePtr),y
-.3224	a8		tay				tay
-.3225	4c e0 31	jmp $31e0			jmp 	_SFLoop
-.3228					_SFNextLine:
-.3228	a0 00		ldy #$00			ldy 	#0 							; get offset
-.322a	b1 02		lda ($02),y			lda 	(codePtr),y
-.322c	18		clc				clc 								; add to code pointer.
-.322d	65 02		adc $02				adc 	codePtr
-.322f	85 02		sta $02				sta 	codePtr
-.3231	90 02		bcc $3235			bcc		_SFNLNoCarry
-.3233	e6 03		inc $03				inc 	codePtr+1
-.3235					_SFNLNoCarry:
-.3235	b1 02		lda ($02),y			lda 	(codePtr),y 				; reached the end of the program.
-.3237	d0 a7		bne $31e0			bne		_SFLoop 					; no go round again
-.3239	a5 06		lda $06				lda 	temp1
-.323b	c9 d9		cmp #$d9			cmp 	#TKW_DATA 					; if searching for Data different error.
-.323d	d0 05		bne $3244			bne 	_SFError
-.323f	a2 1c		ldx #$1c			ldx 	#ErrorID_DataError
-.3241	20 a3 23	jsr $23a3		jsr	errorHandler
-.3244					_SFError:
-.3244	a2 14		ldx #$14			ldx 	#ErrorID_Struct
-.3246	20 a3 23	jsr $23a3		jsr	errorHandler
-.3249					_SFFloatSkip:
-.3249	4c 40 15	jmp $1540			jmp 	Unimplemented
+.31e5					ScanForward:
+.31e5	85 06		sta $06				sta 	temp1 						; save tokens to search in temp1/temp1+1
+.31e7	86 07		stx $07				stx 	temp1+1
+.31e9	a9 00		lda #$00			lda 	#0 							; temp2 counts structure levels.
+.31eb	85 08		sta $08				sta 	temp2
+.31ed	b1 02		lda ($02),y	_SFLoop:lda 	(codePtr),y 				; look at the next token.
+.31ef	c8		iny				iny
+.31f0	a6 08		ldx $08				ldx 	temp2 						; check structure levels are zero.
+.31f2	d0 08		bne $31fc			bne 	_SFNoCheck 					; if so, check token against entered values.
+.31f4	c5 06		cmp $06				cmp 	temp1
+.31f6	f0 24		beq $321c			beq 	_SFExit
+.31f8	c5 07		cmp $07				cmp 	temp1+1
+.31fa	f0 20		beq $321c			beq 	_SFExit
+.31fc					_SFNoCheck:
+.31fc	c9 80		cmp #$80			cmp 	#$80 						; if it is 00-7F (variable/number) just skip it.
+.31fe	90 ed		bcc $31ed			bcc 	_SFLoop
+.3200	c9 86		cmp #$86			cmp 	#TOK_BINARYST 				; $80-$85 is various specials.
+.3202	90 19		bcc $321d			bcc 	_SFSpecials
+.3204	c9 99		cmp #$99			cmp 	#TOK_STRUCTST 				; if < structure start then continue
+.3206	90 e5		bcc $31ed			bcc 	_SFLoop
+.3208	c9 a4		cmp #$a4			cmp 	#TOK_UNARYST 				; if >= unary start (after structure) then continue.
+.320a	b0 e1		bcs $31ed			bcs 	_SFLoop
+.320c	aa		tax				tax  								; token in X, and look up the adjuster.
+.320d	bd bd 1b	lda $1bbd,x			lda 	ELBinaryOperatorInfo-TOK_BINARYST,x
+.3210	38		sec				sec 								; convert to an offset
+.3211	e9 81		sbc #$81			sbc 	#$81
+.3213	18		clc				clc 								; add to depth
+.3214	65 08		adc $08				adc 	temp2
+.3216	85 08		sta $08				sta 	temp2
+.3218	10 d3		bpl $31ed			bpl 	_SFLoop 					; +ve okay to continue
+.321a	30 35		bmi $3251			bmi 	_SFError 					; if gone -ve then we have a nesting error
+.321c	60		rts		_SFExit:rts
+.321d					_SFSpecials:
+.321d	c9 80		cmp #$80			cmp 	#TOK_EOL 					; $80, advance to next line.
+.321f	f0 14		beq $3235			beq 	_SFNextLine
+.3221	c9 84		cmp #$84			cmp 	#TOK_FPC					; $84, skip embedded float
+.3223	f0 31		beq $3256			beq 	_SFFloatSkip
+.3225	c9 85		cmp #$85			cmp 	#TOK_STR 					; $85, skip string
+.3227	f0 04		beq $322d			beq 	_SFSkipString
+.3229	c8		iny				iny									; $81,$82,$83 shift, so just advance over the shifted
+.322a	4c ed 31	jmp $31ed			jmp 	_SFLoop 					; token.
+.322d					_SFSkipString:
+.322d	98		tya				tya
+.322e	38		sec				sec
+.322f	71 02		adc ($02),y			adc 	(codePtr),y
+.3231	a8		tay				tay
+.3232	4c ed 31	jmp $31ed			jmp 	_SFLoop
+.3235					_SFNextLine:
+.3235	a0 00		ldy #$00			ldy 	#0 							; get offset
+.3237	b1 02		lda ($02),y			lda 	(codePtr),y
+.3239	18		clc				clc 								; add to code pointer.
+.323a	65 02		adc $02				adc 	codePtr
+.323c	85 02		sta $02				sta 	codePtr
+.323e	90 02		bcc $3242			bcc		_SFNLNoCarry
+.3240	e6 03		inc $03				inc 	codePtr+1
+.3242					_SFNLNoCarry:
+.3242	b1 02		lda ($02),y			lda 	(codePtr),y 				; reached the end of the program.
+.3244	d0 a7		bne $31ed			bne		_SFLoop 					; no go round again
+.3246	a5 06		lda $06				lda 	temp1
+.3248	c9 d9		cmp #$d9			cmp 	#TKW_DATA 					; if searching for Data different error.
+.324a	d0 05		bne $3251			bne 	_SFError
+.324c	a2 1c		ldx #$1c			ldx 	#ErrorID_DataError
+.324e	20 a3 23	jsr $23a3		jsr	errorHandler
+.3251					_SFError:
+.3251	a2 14		ldx #$14			ldx 	#ErrorID_Struct
+.3253	20 a3 23	jsr $23a3		jsr	errorHandler
+.3256					_SFFloatSkip:
+.3256	4c 40 15	jmp $1540			jmp 	Unimplemented
 
 ;******  Return to file: main/main.asm
 
@@ -4873,20 +4885,14 @@
 ;******  Processing file: tokeniser/tokeniser.asm
 
 
-;******  Processing file: tokeniser/detokenise.asm
+;******  Processing file: tokeniser/detokenise/detokenise.asm
 
 .0b21					deTokeniseVector:
 >0b21							.fill 	2
 .0b23					lastCharacterClass:
 >0b23							.fill 	1
-=$84					LTYLineNumber = $84
-=$82					LTYPunctuation = $82
-=$87					LTYIdentifier = $87
-=$86					LTYConstant = $86
-=$83					LTYKeyword = $83
-=$81					LTYString = $81
 .2941					ListLine:
-.2941	a9 49		lda #$49			lda 	#(deTokenPrint) & $FF
+.2941	a9 51		lda #$51			lda 	#(deTokenPrint) & $FF
 .2943	8d 21 0b	sta $0b21			sta 	deTokeniseVector
 .2946	a9 2a		lda #$2a			lda 	#(deTokenPrint) >> 8
 .2948	8d 22 0b	sta $0b22			sta 	1+(deTokeniseVector)
@@ -4902,15 +4908,15 @@
 .295c	b1 02		lda ($02),y			lda 	(codePtr),y
 .295e	95 50		sta $50,x			sta 	esInt1,x
 .2960	a9 84		lda #$84			lda 	#LTYLineNumber
-.2962	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
+.2962	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
 .2965	a9 0a		lda #$0a			lda 	#10 					; base 10
-.2967	20 fb 29	jsr $29fb			jsr 	DTPrintInteger 			; print as integer.
+.2967	20 03 2a	jsr $2a03			jsr 	DTPrintInteger 			; print as integer.
 .296a	a0 00		ldy #$00			ldy 	#0 						; get length
 .296c	b1 04		lda ($04),y			lda 	(temp0),y 				; into X
 .296e	aa		tax				tax
 .296f					_DTPadOut:
 .296f	a9 20		lda #$20			lda 	#" "
-.2971	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
+.2971	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
 .2974	e8		inx				inx
 .2975	e0 06		cpx #$06			cpx 	#6
 .2977	d0 f6		bne $296f			bne 	_DTPadOut
@@ -4918,400 +4924,432 @@
 .297b					_DTListLoop
 .297b	b1 02		lda ($02),y			lda 	(codePtr),y
 .297d	c9 85		cmp #$85			cmp 	#TOK_STR 				; Inline string.
-.297f	f0 54		beq $29d5			beq 	_DTIsString
-.2981	c9 c5		cmp #$c5			cmp 	#TKW_AMP 				; & hex marker
-.2983	f0 16		beq $299b			beq 	_DTHexConstant
-.2985	c9 80		cmp #$80			cmp 	#TOK_EOL 				; End of Line
-.2987	d0 06		bne $298f			bne 	_DTNotEnd
-.2989	a9 ff		lda #$ff			lda 	#255 					; print CR
-.298b	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.298e	60		rts				rts
-.298f					_DTNotEnd:
-.298f	c9 00		cmp #$00			cmp 	#0
-.2991	30 36		bmi $29c9			bmi 	_DTIsToken
-.2993	c9 40		cmp #$40			cmp 	#$40
-.2995	90 38		bcc $29cf			bcc 	_DTIsIdentifier
-.2997	a9 0a		lda #$0a			lda 	#10 					; this is the base
-.2999	d0 08		bne $29a3			bne 	_DTConstant
-.299b					_DTHexConstant:
-.299b	a9 26		lda #$26			lda 	#"&"
-.299d	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.29a0	c8		iny				iny
-.29a1	a9 10		lda #$10			lda 	#16
-.29a3					_DTConstant:
-.29a3	48		pha				pha
-.29a4	a9 00		lda #$00			lda 	#0 							; now constant, may need spaces
-.29a6	20 be 2a	jsr $2abe			jsr 	DTSwitchMode
-.29a9	a9 86		lda #$86			lda 	#LTYConstant
-.29ab	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.29ae	a2 02		ldx #$02			ldx 	#2
-.29b0	8a		txa				txa
-.29b1	a2 08		ldx #$08		ldx	#8
-.29b3	20 d9 22	jsr $22d9		jsr	mainHandler
-.29b6	aa		tax				tax
-.29b7	20 ed 11	jsr $11ed			jsr 	TOSToTemp0
-.29ba	68		pla				pla
-.29bb	85 0c		sta $0c				sta 	tempShort
-.29bd	98		tya				tya
-.29be	48		pha				pha
-.29bf	a5 0c		lda $0c				lda 	tempShort
-.29c1	20 fb 29	jsr $29fb			jsr 	DTPrintInteger
-.29c4	68		pla				pla
-.29c5	a8		tay				tay
-.29c6	4c 7b 29	jmp $297b			jmp 	_DTListLoop
-.29c9					_DTIsToken:
-.29c9	20 65 2a	jsr $2a65			jsr 	DTDecodeToken
-.29cc	4c 7b 29	jmp $297b			jmp 	_DTListLoop
-.29cf					_DTIsIdentifier:
-.29cf	20 d0 2a	jsr $2ad0			jsr 	DTIdentifier
-.29d2	4c 7b 29	jmp $297b			jmp 	_DTListLoop
-.29d5					_DTIsString:
-.29d5	a9 01		lda #$01			lda 	#1 							; now punctuation, may need spaces
-.29d7	20 be 2a	jsr $2abe			jsr 	DTSwitchMode
-.29da	a9 81		lda #$81			lda 	#LTYString
-.29dc	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.29df	a9 22		lda #$22			lda 	#'"'						; open quote
-.29e1	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.29e4	a2 02		ldx #$02			ldx 	#2 							; evaluate string to TOS2.
-.29e6	8a		txa				txa
-.29e7	a2 08		ldx #$08		ldx	#8
-.29e9	20 d9 22	jsr $22d9		jsr	mainHandler
-.29ec	aa		tax				tax
-.29ed	20 ed 11	jsr $11ed			jsr 	TOSToTemp0
-.29f0	20 0d 2a	jsr $2a0d			jsr 	DTPrintLengthPrefix
-.29f3	a9 22		lda #$22			lda 	#'"'
-.29f5	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.29f8	4c 7b 29	jmp $297b			jmp 	_DTListLoop
-.29fb					DTPrintInteger:
-.29fb	48		pha				pha
-.29fc	a9 cd		lda #$cd			lda 	#(convertBuffer) & $FF
-.29fe	85 04		sta $04				sta 	temp0
-.2a00	a9 0a		lda #$0a			lda 	#(convertBuffer) >> 8
-.2a02	85 05		sta $05				sta 	1+(temp0)
-.2a04	68		pla				pla
-.2a05	a8		tay				tay
-.2a06	8a		txa				txa
-.2a07	a2 0a		ldx #$0a		ldx	#10
-.2a09	20 d9 22	jsr $22d9		jsr	mainHandler
-.2a0c	aa		tax				tax
-.2a0d					DTPrintLengthPrefix:
-.2a0d	98		tya				tya
-.2a0e	48		pha				pha
-.2a0f	a0 00		ldy #$00			ldy 	#0
-.2a11	b1 04		lda ($04),y			lda 	(temp0),y
-.2a13	aa		tax				tax
-.2a14	f0 0b		beq $2a21			beq 	_DTPLPExit
-.2a16					_DTPLPLoop:
-.2a16	c8		iny				iny
-.2a17	b1 04		lda ($04),y			lda 	(temp0),y
-.2a19	29 7f		and #$7f			and 	#$7F
-.2a1b	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2a1e	ca		dex				dex
-.2a1f	d0 f5		bne $2a16			bne 	_DTPLPLoop
-.2a21					_DTPLPExit:
-.2a21	68		pla				pla
-.2a22	a8		tay				tay
-.2a23	60		rts				rts
-.2a24					ListOutputCharacter:
-.2a24	85 0c		sta $0c				sta 	tempShort
-.2a26	48		pha				pha
-.2a27	8a		txa				txa
-.2a28	48		pha				pha
-.2a29	98		tya				tya
-.2a2a	48		pha				pha
-.2a2b	a5 0c		lda $0c				lda 	tempShort
-.2a2d	c9 20		cmp #$20			cmp 	#32
-.2a2f	b0 0c		bcs $2a3d			bcs		_LOCHiBit
-.2a31	09 40		ora #$40			ora 	#64
-.2a33	c9 40		cmp #$40			cmp 	#64
-.2a35	f0 06		beq $2a3d			beq 	_LOCHiBit
-.2a37	c9 5b		cmp #$5b			cmp 	#65+26
-.2a39	b0 02		bcs $2a3d			bcs 	_LOCHiBit
-.2a3b	69 20		adc #$20			adc 	#32
-.2a3d					_LOCHiBit:
-.2a3d	20 46 2a	jsr $2a46			jsr 	_LOCCallVector
-.2a40	68		pla				pla
-.2a41	a8		tay				tay
-.2a42	68		pla				pla
-.2a43	aa		tax				tax
-.2a44	68		pla				pla
-.2a45					_LOCExit:
-.2a45	60		rts				rts
-.2a46					_LOCCallVector:
-.2a46	6c 21 0b	jmp ($0b21)			jmp 	(deTokeniseVector)
-.2a49					deTokenPrint:
-.2a49	c9 00		cmp #$00			cmp 	#0
-.2a4b	30 06		bmi $2a53			bmi 	_dtpInk
-.2a4d	a2 0e		ldx #$0e		ldx	#14
-.2a4f	20 8c 23	jsr $238c		jsr	deviceHandler
-.2a52	60		rts				rts
-.2a53	c9 ff		cmp #$ff	_dtpInk:cmp 	#255
-.2a55	f0 08		beq $2a5f			beq 	_dtpCR
-.2a57	29 07		and #$07			and 	#7
-.2a59	a2 06		ldx #$06		ldx	#6
-.2a5b	20 8c 23	jsr $238c		jsr	deviceHandler
-.2a5e	60		rts				rts
-.2a5f					_dtpCR:
-.2a5f	a2 02		ldx #$02		ldx	#2
-.2a61	20 8c 23	jsr $238c		jsr	deviceHandler
-.2a64	60		rts				rts
-.2a65					DTDecodeToken:
-.2a65	a2 00		ldx #$00			ldx 	#0 							; table number to use
-.2a67	b1 02		lda ($02),y			lda 	(codePtr),y
-.2a69	c9 84		cmp #$84			cmp 	#$84
-.2a6b	b0 05		bcs $2a72			bcs 	_DTNotShift
-.2a6d	29 03		and #$03			and 	#3 							; get the shift 1..3
-.2a6f	0a		asl a				asl 	a 							; put 2 x in X
-.2a70	aa		tax				tax
-.2a71	c8		iny				iny
-.2a72					_DTNotShift:
-.2a72	bd 11 2b	lda $2b11,x			lda 	TokenTableAddress,x 		; get the token table to use to decode it.
-.2a75	85 04		sta $04				sta 	temp0 						; point into temp0
-.2a77	bd 12 2b	lda $2b12,x			lda 	TokenTableAddress+1,x
-.2a7a	85 05		sta $05				sta 	temp0+1
-.2a7c	b1 02		lda ($02),y			lda 	(codePtr),y 				; get the token value.
-.2a7e	c8		iny				iny 								; consume it.
-.2a7f	aa		tax				tax
-.2a80	98		tya				tya
-.2a81	48		pha				pha
-.2a82					_DTFindText:
-.2a82	e0 86		cpx #$86			cpx 	#$86 						; finished ?
-.2a84	f0 11		beq $2a97			beq 	_DTFoundText
-.2a86	ca		dex				dex
-.2a87	a0 00		ldy #$00			ldy 	#0
-.2a89	38		sec				sec
-.2a8a	b1 04		lda ($04),y			lda 	(temp0),y
-.2a8c	65 04		adc $04				adc 	temp0
-.2a8e	85 04		sta $04				sta 	temp0
-.2a90	90 f0		bcc $2a82			bcc 	_DTFindText
-.2a92	e6 05		inc $05				inc 	temp0+1
-.2a94	4c 82 2a	jmp $2a82			jmp 	_DTFindText
-.2a97					_DTFoundText:
-.2a97	a0 01		ldy #$01			ldy 	#1 							; get first character
-.2a99	b1 04		lda ($04),y			lda 	(temp0),y
-.2a9b	f0 11		beq $2aae			beq 	_DTIsPunctuation
-.2a9d	c9 1b		cmp #$1b			cmp 	#27
-.2a9f	b0 0d		bcs $2aae			bcs 	_DTIsPunctuation
-.2aa1	a9 00		lda #$00			lda 	#0 							; now text, may need spaces
-.2aa3	20 be 2a	jsr $2abe			jsr 	DTSwitchMode
-.2aa6	a9 83		lda #$83			lda 	#LTYKeyword
-.2aa8	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2aab	4c b8 2a	jmp $2ab8			jmp 	_DTPrint
-.2aae					_DTIsPunctuation:
-.2aae	a9 01		lda #$01			lda 	#1 							; now punctuation, may need spaces
-.2ab0	20 be 2a	jsr $2abe			jsr 	DTSwitchMode
-.2ab3	a9 82		lda #$82			lda 	#LTYPunctuation
-.2ab5	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2ab8					_DTPrint:
-.2ab8	20 0d 2a	jsr $2a0d			jsr 	DTPrintLengthPrefix 		; print it out.
-.2abb	68		pla				pla
-.2abc	a8		tay				tay
-.2abd	60		rts				rts
-.2abe					DTSwitchMode:
-.2abe	cd 23 0b	cmp $0b23			cmp 	LastCharacterClass
-.2ac1	f0 04		beq $2ac7			beq 	_DTSMNoChange
-.2ac3	8d 23 0b	sta $0b23			sta 	LastCharacterClass
-.2ac6					_DTSMExit:
-.2ac6	60		rts				rts
-.2ac7					_DTSMNoChange:
-.2ac7	c9 01		cmp #$01			cmp 	#1
-.2ac9	f0 fb		beq $2ac6			beq 	_DTSMExit
-.2acb	a9 20		lda #$20			lda 	#" "
-.2acd	4c 24 2a	jmp $2a24			jmp 	ListOutputCharacter
-.2ad0					DTIdentifier:
-.2ad0	a9 00		lda #$00			lda 	#0 							; now text, may need spaces
-.2ad2	20 be 2a	jsr $2abe			jsr 	DTSwitchMode
-.2ad5	a9 87		lda #$87			lda 	#LTYIdentifier
-.2ad7	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2ada					_DTILoop:
-.2ada	b1 02		lda ($02),y			lda 	(codePtr),y 				; output main bit of identifier.
-.2adc	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2adf	c8		iny				iny
-.2ae0	b1 02		lda ($02),y			lda 	(codePtr),y 				; until end identifier marker.
-.2ae2	c9 3a		cmp #$3a			cmp 	#$3A
-.2ae4	90 f4		bcc $2ada			bcc 	_DTILoop
-.2ae6	c8		iny				iny
-.2ae7	c9 3a		cmp #$3a			cmp 	#$3A 						; is it integer non array
-.2ae9	f0 25		beq $2b10			beq 	_DTIExit 					; no postfix.
-.2aeb	48		pha				pha
-.2aec	a9 01		lda #$01			lda  	#1 							; it ends in punctuation
-.2aee	8d 23 0b	sta $0b23			sta 	LastCharacterClass
-.2af1	a9 82		lda #$82			lda 	#LTYPunctuation
-.2af3	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2af6	68		pla				pla
-.2af7	c9 3b		cmp #$3b			cmp 	#$3B
-.2af9	f0 10		beq $2b0b			beq 	_DTIArray
-.2afb	4a		lsr a				lsr 	a 							; array flag in C
-.2afc	08		php				php
-.2afd	49 1e		eor #$1e			eor 	#$3C/2 						; check if $
-.2aff	f0 02		beq $2b03			beq 	_DTIDollar
-.2b01	a9 07		lda #$07			lda 	#"$"^"#" 					; this if #, 0 if $
-.2b03					_DTIDollar:
-.2b03	49 24		eor #$24			eor 	#"$"
-.2b05	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2b08	28		plp				plp
-.2b09	90 05		bcc $2b10			bcc 	_DTIExit
-.2b0b					_DTIArray:
-.2b0b	a9 28		lda #$28			lda 	#"("
-.2b0d	20 24 2a	jsr $2a24			jsr 	ListOutputCharacter
-.2b10					_DTIExit:
-.2b10	60		rts				rts
-.2b11					TokenTableAddress:
->2b11	19 2b						.word 	Group0Text
->2b13	ca 2c						.word 	Group1Text
->2b15	fe 2c						.word 	Group2Text
->2b17	0b 2d						.word 	Group3Text
+.297f	f0 58		beq $29d9			beq 	_DTIsString
+.2981	c9 84		cmp #$84			cmp 	#TOK_FPC 				; Floating point
+.2983	f0 7a		beq $29ff			beq 	_DTIsFloat
+.2985	c9 c5		cmp #$c5			cmp 	#TKW_AMP 				; & hex marker
+.2987	f0 16		beq $299f			beq 	_DTHexConstant
+.2989	c9 80		cmp #$80			cmp 	#TOK_EOL 				; End of Line
+.298b	d0 06		bne $2993			bne 	_DTNotEnd
+.298d	a9 ff		lda #$ff			lda 	#255 					; print CR
+.298f	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2992	60		rts				rts
+.2993					_DTNotEnd:
+.2993	c9 00		cmp #$00			cmp 	#0
+.2995	30 36		bmi $29cd			bmi 	_DTIsToken
+.2997	c9 40		cmp #$40			cmp 	#$40
+.2999	90 38		bcc $29d3			bcc 	_DTIsIdentifier
+.299b	a9 0a		lda #$0a			lda 	#10 					; this is the base
+.299d	d0 08		bne $29a7			bne 	_DTConstant
+.299f					_DTHexConstant:
+.299f	a9 26		lda #$26			lda 	#"&"
+.29a1	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.29a4	c8		iny				iny
+.29a5	a9 10		lda #$10			lda 	#16
+.29a7					_DTConstant:
+.29a7	48		pha				pha
+.29a8	a9 00		lda #$00			lda 	#0 							; now constant, may need spaces
+.29aa	20 6d 2a	jsr $2a6d			jsr 	DTSwitchMode
+.29ad	a9 86		lda #$86			lda 	#LTYConstant
+.29af	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.29b2	a2 02		ldx #$02			ldx 	#2
+.29b4	8a		txa				txa
+.29b5	a2 08		ldx #$08		ldx	#8
+.29b7	20 d9 22	jsr $22d9		jsr	mainHandler
+.29ba	aa		tax				tax
+.29bb	20 ed 11	jsr $11ed			jsr 	TOSToTemp0
+.29be	68		pla				pla
+.29bf	85 0c		sta $0c				sta 	tempShort
+.29c1	98		tya				tya
+.29c2	48		pha				pha
+.29c3	a5 0c		lda $0c				lda 	tempShort
+.29c5	20 03 2a	jsr $2a03			jsr 	DTPrintInteger
+.29c8	68		pla				pla
+.29c9	a8		tay				tay
+.29ca	4c 7b 29	jmp $297b			jmp 	_DTListLoop
+.29cd					_DTIsToken:
+.29cd	20 c0 2a	jsr $2ac0			jsr 	DTDecodeToken
+.29d0	4c 7b 29	jmp $297b			jmp 	_DTListLoop
+.29d3					_DTIsIdentifier:
+.29d3	20 7f 2a	jsr $2a7f			jsr 	DTIdentifier
+.29d6	4c 7b 29	jmp $297b			jmp 	_DTListLoop
+.29d9					_DTIsString:
+.29d9	a9 01		lda #$01			lda 	#1 							; now punctuation, may need spaces
+.29db	20 6d 2a	jsr $2a6d			jsr 	DTSwitchMode
+.29de	a9 81		lda #$81			lda 	#LTYString
+.29e0	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.29e3	a9 22		lda #$22			lda 	#'"'						; open quote
+.29e5	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.29e8	a2 02		ldx #$02			ldx 	#2 							; evaluate string to TOS2.
+.29ea	8a		txa				txa
+.29eb	a2 08		ldx #$08		ldx	#8
+.29ed	20 d9 22	jsr $22d9		jsr	mainHandler
+.29f0	aa		tax				tax
+.29f1	20 ed 11	jsr $11ed			jsr 	TOSToTemp0
+.29f4	20 15 2a	jsr $2a15			jsr 	DTPrintLengthPrefix
+.29f7	a9 22		lda #$22			lda 	#'"'
+.29f9	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.29fc	4c 7b 29	jmp $297b			jmp 	_DTListLoop
+.29ff					_DTIsFloat:
+>29ff	db						.byte 	$DB
+.2a00	4c ff 29	jmp $29ff			jmp 	_DTIsFloat
+
+;******  Return to file: tokeniser/tokeniser.asm
+
+
+;******  Processing file: tokeniser/detokenise/dtprint.asm
+
+.2a03					DTPrintInteger:
+.2a03	48		pha				pha
+.2a04	a9 cd		lda #$cd			lda 	#(convertBuffer) & $FF
+.2a06	85 04		sta $04				sta 	temp0
+.2a08	a9 0a		lda #$0a			lda 	#(convertBuffer) >> 8
+.2a0a	85 05		sta $05				sta 	1+(temp0)
+.2a0c	68		pla				pla
+.2a0d	a8		tay				tay
+.2a0e	8a		txa				txa
+.2a0f	a2 0a		ldx #$0a		ldx	#10
+.2a11	20 d9 22	jsr $22d9		jsr	mainHandler
+.2a14	aa		tax				tax
+.2a15					DTPrintLengthPrefix:
+.2a15	98		tya				tya
+.2a16	48		pha				pha
+.2a17	a0 00		ldy #$00			ldy 	#0
+.2a19	b1 04		lda ($04),y			lda 	(temp0),y
+.2a1b	aa		tax				tax
+.2a1c	f0 0b		beq $2a29			beq 	_DTPLPExit
+.2a1e					_DTPLPLoop:
+.2a1e	c8		iny				iny
+.2a1f	b1 04		lda ($04),y			lda 	(temp0),y
+.2a21	29 7f		and #$7f			and 	#$7F
+.2a23	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2a26	ca		dex				dex
+.2a27	d0 f5		bne $2a1e			bne 	_DTPLPLoop
+.2a29					_DTPLPExit:
+.2a29	68		pla				pla
+.2a2a	a8		tay				tay
+.2a2b	60		rts				rts
+.2a2c					ListOutputCharacter:
+.2a2c	85 0c		sta $0c				sta 	tempShort
+.2a2e	48		pha				pha
+.2a2f	8a		txa				txa
+.2a30	48		pha				pha
+.2a31	98		tya				tya
+.2a32	48		pha				pha
+.2a33	a5 0c		lda $0c				lda 	tempShort
+.2a35	c9 20		cmp #$20			cmp 	#32
+.2a37	b0 0c		bcs $2a45			bcs		_LOCHiBit
+.2a39	09 40		ora #$40			ora 	#64
+.2a3b	c9 40		cmp #$40			cmp 	#64
+.2a3d	f0 06		beq $2a45			beq 	_LOCHiBit
+.2a3f	c9 5b		cmp #$5b			cmp 	#65+26
+.2a41	b0 02		bcs $2a45			bcs 	_LOCHiBit
+.2a43	69 20		adc #$20			adc 	#32
+.2a45					_LOCHiBit:
+.2a45	20 4e 2a	jsr $2a4e			jsr 	_LOCCallVector
+.2a48	68		pla				pla
+.2a49	a8		tay				tay
+.2a4a	68		pla				pla
+.2a4b	aa		tax				tax
+.2a4c	68		pla				pla
+.2a4d					_LOCExit:
+.2a4d	60		rts				rts
+.2a4e					_LOCCallVector:
+.2a4e	6c 21 0b	jmp ($0b21)			jmp 	(deTokeniseVector)
+.2a51					deTokenPrint:
+.2a51	c9 00		cmp #$00			cmp 	#0
+.2a53	30 06		bmi $2a5b			bmi 	_dtpInk
+.2a55	a2 0e		ldx #$0e		ldx	#14
+.2a57	20 8c 23	jsr $238c		jsr	deviceHandler
+.2a5a	60		rts				rts
+.2a5b	c9 ff		cmp #$ff	_dtpInk:cmp 	#255
+.2a5d	f0 08		beq $2a67			beq 	_dtpCR
+.2a5f	29 07		and #$07			and 	#7
+.2a61	a2 06		ldx #$06		ldx	#6
+.2a63	20 8c 23	jsr $238c		jsr	deviceHandler
+.2a66	60		rts				rts
+.2a67					_dtpCR:
+.2a67	a2 02		ldx #$02		ldx	#2
+.2a69	20 8c 23	jsr $238c		jsr	deviceHandler
+.2a6c	60		rts				rts
+.2a6d					DTSwitchMode:
+.2a6d	cd 23 0b	cmp $0b23			cmp 	LastCharacterClass
+.2a70	f0 04		beq $2a76			beq 	_DTSMNoChange
+.2a72	8d 23 0b	sta $0b23			sta 	LastCharacterClass
+.2a75					_DTSMExit:
+.2a75	60		rts				rts
+.2a76					_DTSMNoChange:
+.2a76	c9 01		cmp #$01			cmp 	#1
+.2a78	f0 fb		beq $2a75			beq 	_DTSMExit
+.2a7a	a9 20		lda #$20			lda 	#" "
+.2a7c	4c 2c 2a	jmp $2a2c			jmp 	ListOutputCharacter
+
+;******  Return to file: tokeniser/tokeniser.asm
+
+
+;******  Processing file: tokeniser/detokenise/identifier.asm
+
+.2a7f					DTIdentifier:
+.2a7f	a9 00		lda #$00			lda 	#0 							; now text, may need spaces
+.2a81	20 6d 2a	jsr $2a6d			jsr 	DTSwitchMode
+.2a84	a9 87		lda #$87			lda 	#LTYIdentifier
+.2a86	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2a89					_DTILoop:
+.2a89	b1 02		lda ($02),y			lda 	(codePtr),y 				; output main bit of identifier.
+.2a8b	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2a8e	c8		iny				iny
+.2a8f	b1 02		lda ($02),y			lda 	(codePtr),y 				; until end identifier marker.
+.2a91	c9 3a		cmp #$3a			cmp 	#$3A
+.2a93	90 f4		bcc $2a89			bcc 	_DTILoop
+.2a95	c8		iny				iny
+.2a96	c9 3a		cmp #$3a			cmp 	#$3A 						; is it integer non array
+.2a98	f0 25		beq $2abf			beq 	_DTIExit 					; no postfix.
+.2a9a	48		pha				pha
+.2a9b	a9 01		lda #$01			lda  	#1 							; it ends in punctuation
+.2a9d	8d 23 0b	sta $0b23			sta 	LastCharacterClass
+.2aa0	a9 82		lda #$82			lda 	#LTYPunctuation
+.2aa2	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2aa5	68		pla				pla
+.2aa6	c9 3b		cmp #$3b			cmp 	#$3B
+.2aa8	f0 10		beq $2aba			beq 	_DTIArray
+.2aaa	4a		lsr a				lsr 	a 							; array flag in C
+.2aab	08		php				php
+.2aac	49 1e		eor #$1e			eor 	#$3C/2 						; check if $
+.2aae	f0 02		beq $2ab2			beq 	_DTIDollar
+.2ab0	a9 07		lda #$07			lda 	#"$"^"#" 					; this if #, 0 if $
+.2ab2					_DTIDollar:
+.2ab2	49 24		eor #$24			eor 	#"$"
+.2ab4	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2ab7	28		plp				plp
+.2ab8	90 05		bcc $2abf			bcc 	_DTIExit
+.2aba					_DTIArray:
+.2aba	a9 28		lda #$28			lda 	#"("
+.2abc	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2abf					_DTIExit:
+.2abf	60		rts				rts
+
+;******  Return to file: tokeniser/tokeniser.asm
+
+
+;******  Processing file: tokeniser/detokenise/token.asm
+
+.2ac0					DTDecodeToken:
+.2ac0	a2 00		ldx #$00			ldx 	#0 							; table number to use
+.2ac2	b1 02		lda ($02),y			lda 	(codePtr),y
+.2ac4	c9 84		cmp #$84			cmp 	#$84
+.2ac6	b0 05		bcs $2acd			bcs 	_DTNotShift
+.2ac8	29 03		and #$03			and 	#3 							; get the shift 1..3
+.2aca	0a		asl a				asl 	a 							; put 2 x in X
+.2acb	aa		tax				tax
+.2acc	c8		iny				iny
+.2acd					_DTNotShift:
+.2acd	bd 1e 2b	lda $2b1e,x			lda 	TokenTableAddress,x 		; get the token table to use to decode it.
+.2ad0	85 04		sta $04				sta 	temp0 						; point into temp0
+.2ad2	bd 1f 2b	lda $2b1f,x			lda 	TokenTableAddress+1,x
+.2ad5	85 05		sta $05				sta 	temp0+1
+.2ad7	b1 02		lda ($02),y			lda 	(codePtr),y 				; get the token value.
+.2ad9	c8		iny				iny 								; consume it.
+.2ada	aa		tax				tax
+.2adb	98		tya				tya
+.2adc	48		pha				pha
+.2add					_DTFindText:
+.2add	e0 86		cpx #$86			cpx 	#$86 						; finished ?
+.2adf	f0 11		beq $2af2			beq 	_DTFoundText
+.2ae1	ca		dex				dex
+.2ae2	a0 00		ldy #$00			ldy 	#0
+.2ae4	38		sec				sec
+.2ae5	b1 04		lda ($04),y			lda 	(temp0),y
+.2ae7	65 04		adc $04				adc 	temp0
+.2ae9	85 04		sta $04				sta 	temp0
+.2aeb	90 f0		bcc $2add			bcc 	_DTFindText
+.2aed	e6 05		inc $05				inc 	temp0+1
+.2aef	4c dd 2a	jmp $2add			jmp 	_DTFindText
+.2af2					_DTFoundText:
+.2af2	a0 00		ldy #$00			ldy 	#0 							; get last character
+.2af4	b1 04		lda ($04),y			lda 	(temp0),y
+.2af6	a8		tay				tay
+.2af7	b1 04		lda ($04),y			lda 	(temp0),y
+.2af9	29 7f		and #$7f			and 	#$7F 						; will have bit 7 set.
+.2afb	f0 11		beq $2b0e			beq 	_DTIsPunctuation
+.2afd	c9 1b		cmp #$1b			cmp 	#27
+.2aff	b0 0d		bcs $2b0e			bcs 	_DTIsPunctuation
+.2b01	a9 00		lda #$00			lda 	#0 							; now text, may need spaces
+.2b03	20 6d 2a	jsr $2a6d			jsr 	DTSwitchMode
+.2b06	a9 83		lda #$83			lda 	#LTYKeyword
+.2b08	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2b0b	4c 18 2b	jmp $2b18			jmp 	_DTPrint
+.2b0e					_DTIsPunctuation:
+.2b0e	a9 01		lda #$01			lda 	#1 							; now punctuation, may need spaces
+.2b10	20 6d 2a	jsr $2a6d			jsr 	DTSwitchMode
+.2b13	a9 82		lda #$82			lda 	#LTYPunctuation
+.2b15	20 2c 2a	jsr $2a2c			jsr 	ListOutputCharacter
+.2b18					_DTPrint:
+.2b18	20 15 2a	jsr $2a15			jsr 	DTPrintLengthPrefix 		; print it out.
+.2b1b	68		pla				pla
+.2b1c	a8		tay				tay
+.2b1d	60		rts				rts
+
+;******  Return to file: tokeniser/tokeniser.asm
+
+
+;******  Processing file: tokeniser/tokentext.asm
+
+.2b1e					TokenTableAddress:
+>2b1e	26 2b						.word 	Group0Text
+>2b20	d7 2c						.word 	Group1Text
+>2b22	0b 2d						.word 	Group2Text
+>2b24	18 2d						.word 	Group3Text
 
 ;******  Processing file: tokeniser/../generated/tokentext0.inc
 
-.2b19					Group0Text:
->2b19	03 01 0e 84				.byte $03,$01,$0e,$84                  ; $86 and
->2b1d	02 0f 92				.byte $02,$0f,$92                      ; $87 or
->2b20	03 18 0f 92				.byte $03,$18,$0f,$92                  ; $88 xor
->2b24	02 3e bd				.byte $02,$3e,$bd                      ; $89 >=
->2b27	02 3c bd				.byte $02,$3c,$bd                      ; $8a <=
->2b2a	01 be					.byte $01,$be                          ; $8b >
->2b2c	01 bc					.byte $01,$bc                          ; $8c <
->2b2e	01 bd					.byte $01,$bd                          ; $8d =
->2b30	02 3c be				.byte $02,$3c,$be                      ; $8e <>
->2b33	01 ab					.byte $01,$ab                          ; $8f +
->2b35	01 ad					.byte $01,$ad                          ; $90 -
->2b37	02 3e be				.byte $02,$3e,$be                      ; $91 >>
->2b3a	02 3c bc				.byte $02,$3c,$bc                      ; $92 <<
->2b3d	01 aa					.byte $01,$aa                          ; $93 *
->2b3f	01 af					.byte $01,$af                          ; $94 /
->2b41	03 0d 0f 84				.byte $03,$0d,$0f,$84                  ; $95 mod
->2b45	01 9e					.byte $01,$9e                          ; $96 ^
->2b47	01 a1					.byte $01,$a1                          ; $97 !
->2b49	01 bf					.byte $01,$bf                          ; $98 ?
->2b4b	06 12 05 10 05 01 94			.byte $06,$12,$05,$10,$05,$01,$94      ; $99 repeat
->2b52	05 17 08 09 0c 85			.byte $05,$17,$08,$09,$0c,$85          ; $9a while
->2b58	03 06 0f 92				.byte $03,$06,$0f,$92                  ; $9b for
->2b5c	02 09 86				.byte $02,$09,$86                      ; $9c if
->2b5f	07 04 05 06 10 12 0f 83			.byte $07,$04,$05,$06,$10,$12,$0f,$83  ; $9d defproc
->2b67	05 15 0e 14 09 8c			.byte $05,$15,$0e,$14,$09,$8c          ; $9e until
->2b6d	04 17 05 0e 84				.byte $04,$17,$05,$0e,$84              ; $9f wend
->2b72	04 0e 05 18 94				.byte $04,$0e,$05,$18,$94              ; $a0 next
->2b77	04 14 08 05 8e				.byte $04,$14,$08,$05,$8e              ; $a1 then
->2b7c	05 05 0e 04 09 86			.byte $05,$05,$0e,$04,$09,$86          ; $a2 endif
->2b82	07 05 0e 04 10 12 0f 83			.byte $07,$05,$0e,$04,$10,$12,$0f,$83  ; $a3 endproc
->2b8a	01 a8					.byte $01,$a8                          ; $a4 (
->2b8c	04 0c 05 0e a8				.byte $04,$0c,$05,$0e,$a8              ; $a5 len(
->2b91	04 13 07 0e a8				.byte $04,$13,$07,$0e,$a8              ; $a6 sgn(
->2b96	04 01 02 13 a8				.byte $04,$01,$02,$13,$a8              ; $a7 abs(
->2b9b	07 12 01 0e 04 0f 0d a8			.byte $07,$12,$01,$0e,$04,$0f,$0d,$a8  ; $a8 random(
->2ba3	04 10 01 07 85				.byte $04,$10,$01,$07,$85              ; $a9 page
->2ba8	04 14 12 15 85				.byte $04,$14,$12,$15,$85              ; $aa true
->2bad	05 06 01 0c 13 85			.byte $05,$06,$01,$0c,$13,$85          ; $ab false
->2bb3	04 0d 09 0e a8				.byte $04,$0d,$09,$0e,$a8              ; $ac min(
->2bb8	04 0d 01 18 a8				.byte $04,$0d,$01,$18,$a8              ; $ad max(
->2bbd	04 13 19 13 a8				.byte $04,$13,$19,$13,$a8              ; $ae sys(
->2bc2	06 14 09 0d 05 12 a8			.byte $06,$14,$09,$0d,$05,$12,$a8      ; $af timer(
->2bc9	06 05 16 05 0e 14 a8			.byte $06,$05,$16,$05,$0e,$14,$a8      ; $b0 event(
->2bd0	04 07 05 14 a8				.byte $04,$07,$05,$14,$a8              ; $b1 get(
->2bd5	06 09 0e 0b 05 19 a8			.byte $06,$09,$0e,$0b,$05,$19,$a8      ; $b2 inkey(
->2bdc	06 01 0c 0c 0f 03 a8			.byte $06,$01,$0c,$0c,$0f,$03,$a8      ; $b3 alloc(
->2be3	05 03 08 12 24 a8			.byte $05,$03,$08,$12,$24,$a8          ; $b4 chr$(
->2be9	06 0c 05 06 14 24 a8			.byte $06,$0c,$05,$06,$14,$24,$a8      ; $b5 left$(
->2bf0	05 0d 09 04 24 a8			.byte $05,$0d,$09,$04,$24,$a8          ; $b6 mid$(
->2bf6	07 12 09 07 08 14 24 a8			.byte $07,$12,$09,$07,$08,$14,$24,$a8  ; $b7 right$(
->2bfe	05 13 14 12 24 a8			.byte $05,$13,$14,$12,$24,$a8          ; $b8 str$(
->2c04	04 16 01 0c a8				.byte $04,$16,$01,$0c,$a8              ; $b9 val(
->2c09	05 10 05 05 0b a8			.byte $05,$10,$05,$05,$0b,$a8          ; $ba peek(
->2c0f	05 04 05 05 0b a8			.byte $05,$04,$05,$05,$0b,$a8          ; $bb deek(
->2c15	05 0c 05 05 0b a8			.byte $05,$0c,$05,$05,$0b,$a8          ; $bc leek(
->2c1b	04 01 13 03 a8				.byte $04,$01,$13,$03,$a8              ; $bd asc(
->2c20	04 09 0e 14 a8				.byte $04,$09,$0e,$14,$a8              ; $be int(
->2c25	06 06 0c 0f 01 14 a8			.byte $06,$06,$0c,$0f,$01,$14,$a8      ; $bf float(
->2c2c	06 09 13 16 01 0c a8			.byte $06,$09,$13,$16,$01,$0c,$a8      ; $c0 isval(
->2c33	07 15 10 10 05 12 24 a8			.byte $07,$15,$10,$10,$05,$12,$24,$a8  ; $c1 upper$(
->2c3b	07 0c 0f 17 05 12 24 a8			.byte $07,$0c,$0f,$17,$05,$12,$24,$a8  ; $c2 lower$(
->2c43	01 80					.byte $01,$80                          ; $c3 @
->2c45	01 be					.byte $01,$be                          ; $c4 ~
->2c47	01 a6					.byte $01,$a6                          ; $c5 &
->2c49	01 a9					.byte $01,$a9                          ; $c6 )
->2c4b	01 ba					.byte $01,$ba                          ; $c7 :
->2c4d	01 ac					.byte $01,$ac                          ; $c8 ,
->2c4f	01 bb					.byte $01,$bb                          ; $c9 ;
->2c51	01 a7					.byte $01,$a7                          ; $ca '
->2c53	02 14 8f				.byte $02,$14,$8f                      ; $cb to
->2c56	04 13 14 05 90				.byte $04,$13,$14,$05,$90              ; $cc step
->2c5b	04 10 12 0f 83				.byte $04,$10,$12,$0f,$83              ; $cd proc
->2c60	05 0c 0f 03 01 8c			.byte $05,$0c,$0f,$03,$01,$8c          ; $ce local
->2c66	03 04 09 8d				.byte $03,$04,$09,$8d                  ; $cf dim
->2c6a	03 12 05 8d				.byte $03,$12,$05,$8d                  ; $d0 rem
->2c6e	03 0c 05 94				.byte $03,$0c,$05,$94                  ; $d1 let
->2c72	05 09 0e 10 15 94			.byte $05,$09,$0e,$10,$15,$94          ; $d2 input
->2c78	04 05 0c 13 85				.byte $04,$05,$0c,$13,$85              ; $d3 else
->2c7d	03 16 04 95				.byte $03,$16,$04,$95                  ; $d4 vdu
->2c81	05 10 12 09 0e 94			.byte $05,$10,$12,$09,$0e,$94          ; $d5 print
->2c87	04 07 0f 14 8f				.byte $04,$07,$0f,$14,$8f              ; $d6 goto
->2c8c	05 07 0f 13 15 82			.byte $05,$07,$0f,$13,$15,$82          ; $d7 gosub
->2c92	06 12 05 14 15 12 8e			.byte $06,$12,$05,$14,$15,$12,$8e      ; $d8 return
->2c99	04 04 01 14 81				.byte $04,$04,$01,$14,$81              ; $d9 data
->2c9e	06 01 13 13 05 12 94			.byte $06,$01,$13,$13,$05,$12,$94      ; $da assert
->2ca5	04 10 0f 0b 85				.byte $04,$10,$0f,$0b,$85              ; $db poke
->2caa	04 04 0f 0b 85				.byte $04,$04,$0f,$0b,$85              ; $dc doke
->2caf	04 0c 0f 0b 85				.byte $04,$0c,$0f,$0b,$85              ; $dd loke
->2cb4	03 09 0e 8b				.byte $03,$09,$0e,$8b                  ; $de ink
->2cb8	05 10 01 10 05 92			.byte $05,$10,$01,$10,$05,$92          ; $df paper
->2cbe	03 03 0c 93				.byte $03,$03,$0c,$93                  ; $e0 cls
->2cc2	06 0c 0f 03 01 14 85			.byte $06,$0c,$0f,$03,$01,$14,$85      ; $e1 locate
->2cc9	00					.byte $00
+.2b26					Group0Text:
+>2b26	03 01 0e 84				.byte $03,$01,$0e,$84                  ; $86 and
+>2b2a	02 0f 92				.byte $02,$0f,$92                      ; $87 or
+>2b2d	03 18 0f 92				.byte $03,$18,$0f,$92                  ; $88 xor
+>2b31	02 3e bd				.byte $02,$3e,$bd                      ; $89 >=
+>2b34	02 3c bd				.byte $02,$3c,$bd                      ; $8a <=
+>2b37	01 be					.byte $01,$be                          ; $8b >
+>2b39	01 bc					.byte $01,$bc                          ; $8c <
+>2b3b	01 bd					.byte $01,$bd                          ; $8d =
+>2b3d	02 3c be				.byte $02,$3c,$be                      ; $8e <>
+>2b40	01 ab					.byte $01,$ab                          ; $8f +
+>2b42	01 ad					.byte $01,$ad                          ; $90 -
+>2b44	02 3e be				.byte $02,$3e,$be                      ; $91 >>
+>2b47	02 3c bc				.byte $02,$3c,$bc                      ; $92 <<
+>2b4a	01 aa					.byte $01,$aa                          ; $93 *
+>2b4c	01 af					.byte $01,$af                          ; $94 /
+>2b4e	03 0d 0f 84				.byte $03,$0d,$0f,$84                  ; $95 mod
+>2b52	01 9e					.byte $01,$9e                          ; $96 ^
+>2b54	01 a1					.byte $01,$a1                          ; $97 !
+>2b56	01 bf					.byte $01,$bf                          ; $98 ?
+>2b58	06 12 05 10 05 01 94			.byte $06,$12,$05,$10,$05,$01,$94      ; $99 repeat
+>2b5f	05 17 08 09 0c 85			.byte $05,$17,$08,$09,$0c,$85          ; $9a while
+>2b65	03 06 0f 92				.byte $03,$06,$0f,$92                  ; $9b for
+>2b69	02 09 86				.byte $02,$09,$86                      ; $9c if
+>2b6c	07 04 05 06 10 12 0f 83			.byte $07,$04,$05,$06,$10,$12,$0f,$83  ; $9d defproc
+>2b74	05 15 0e 14 09 8c			.byte $05,$15,$0e,$14,$09,$8c          ; $9e until
+>2b7a	04 17 05 0e 84				.byte $04,$17,$05,$0e,$84              ; $9f wend
+>2b7f	04 0e 05 18 94				.byte $04,$0e,$05,$18,$94              ; $a0 next
+>2b84	04 14 08 05 8e				.byte $04,$14,$08,$05,$8e              ; $a1 then
+>2b89	05 05 0e 04 09 86			.byte $05,$05,$0e,$04,$09,$86          ; $a2 endif
+>2b8f	07 05 0e 04 10 12 0f 83			.byte $07,$05,$0e,$04,$10,$12,$0f,$83  ; $a3 endproc
+>2b97	01 a8					.byte $01,$a8                          ; $a4 (
+>2b99	04 0c 05 0e a8				.byte $04,$0c,$05,$0e,$a8              ; $a5 len(
+>2b9e	04 13 07 0e a8				.byte $04,$13,$07,$0e,$a8              ; $a6 sgn(
+>2ba3	04 01 02 13 a8				.byte $04,$01,$02,$13,$a8              ; $a7 abs(
+>2ba8	07 12 01 0e 04 0f 0d a8			.byte $07,$12,$01,$0e,$04,$0f,$0d,$a8  ; $a8 random(
+>2bb0	04 10 01 07 85				.byte $04,$10,$01,$07,$85              ; $a9 page
+>2bb5	04 14 12 15 85				.byte $04,$14,$12,$15,$85              ; $aa true
+>2bba	05 06 01 0c 13 85			.byte $05,$06,$01,$0c,$13,$85          ; $ab false
+>2bc0	04 0d 09 0e a8				.byte $04,$0d,$09,$0e,$a8              ; $ac min(
+>2bc5	04 0d 01 18 a8				.byte $04,$0d,$01,$18,$a8              ; $ad max(
+>2bca	04 13 19 13 a8				.byte $04,$13,$19,$13,$a8              ; $ae sys(
+>2bcf	06 14 09 0d 05 12 a8			.byte $06,$14,$09,$0d,$05,$12,$a8      ; $af timer(
+>2bd6	06 05 16 05 0e 14 a8			.byte $06,$05,$16,$05,$0e,$14,$a8      ; $b0 event(
+>2bdd	04 07 05 14 a8				.byte $04,$07,$05,$14,$a8              ; $b1 get(
+>2be2	06 09 0e 0b 05 19 a8			.byte $06,$09,$0e,$0b,$05,$19,$a8      ; $b2 inkey(
+>2be9	06 01 0c 0c 0f 03 a8			.byte $06,$01,$0c,$0c,$0f,$03,$a8      ; $b3 alloc(
+>2bf0	05 03 08 12 24 a8			.byte $05,$03,$08,$12,$24,$a8          ; $b4 chr$(
+>2bf6	06 0c 05 06 14 24 a8			.byte $06,$0c,$05,$06,$14,$24,$a8      ; $b5 left$(
+>2bfd	05 0d 09 04 24 a8			.byte $05,$0d,$09,$04,$24,$a8          ; $b6 mid$(
+>2c03	07 12 09 07 08 14 24 a8			.byte $07,$12,$09,$07,$08,$14,$24,$a8  ; $b7 right$(
+>2c0b	05 13 14 12 24 a8			.byte $05,$13,$14,$12,$24,$a8          ; $b8 str$(
+>2c11	04 16 01 0c a8				.byte $04,$16,$01,$0c,$a8              ; $b9 val(
+>2c16	05 10 05 05 0b a8			.byte $05,$10,$05,$05,$0b,$a8          ; $ba peek(
+>2c1c	05 04 05 05 0b a8			.byte $05,$04,$05,$05,$0b,$a8          ; $bb deek(
+>2c22	05 0c 05 05 0b a8			.byte $05,$0c,$05,$05,$0b,$a8          ; $bc leek(
+>2c28	04 01 13 03 a8				.byte $04,$01,$13,$03,$a8              ; $bd asc(
+>2c2d	04 09 0e 14 a8				.byte $04,$09,$0e,$14,$a8              ; $be int(
+>2c32	06 06 0c 0f 01 14 a8			.byte $06,$06,$0c,$0f,$01,$14,$a8      ; $bf float(
+>2c39	06 09 13 16 01 0c a8			.byte $06,$09,$13,$16,$01,$0c,$a8      ; $c0 isval(
+>2c40	07 15 10 10 05 12 24 a8			.byte $07,$15,$10,$10,$05,$12,$24,$a8  ; $c1 upper$(
+>2c48	07 0c 0f 17 05 12 24 a8			.byte $07,$0c,$0f,$17,$05,$12,$24,$a8  ; $c2 lower$(
+>2c50	01 80					.byte $01,$80                          ; $c3 @
+>2c52	01 be					.byte $01,$be                          ; $c4 ~
+>2c54	01 a6					.byte $01,$a6                          ; $c5 &
+>2c56	01 a9					.byte $01,$a9                          ; $c6 )
+>2c58	01 ba					.byte $01,$ba                          ; $c7 :
+>2c5a	01 ac					.byte $01,$ac                          ; $c8 ,
+>2c5c	01 bb					.byte $01,$bb                          ; $c9 ;
+>2c5e	01 a7					.byte $01,$a7                          ; $ca '
+>2c60	02 14 8f				.byte $02,$14,$8f                      ; $cb to
+>2c63	04 13 14 05 90				.byte $04,$13,$14,$05,$90              ; $cc step
+>2c68	04 10 12 0f 83				.byte $04,$10,$12,$0f,$83              ; $cd proc
+>2c6d	05 0c 0f 03 01 8c			.byte $05,$0c,$0f,$03,$01,$8c          ; $ce local
+>2c73	03 04 09 8d				.byte $03,$04,$09,$8d                  ; $cf dim
+>2c77	03 12 05 8d				.byte $03,$12,$05,$8d                  ; $d0 rem
+>2c7b	03 0c 05 94				.byte $03,$0c,$05,$94                  ; $d1 let
+>2c7f	05 09 0e 10 15 94			.byte $05,$09,$0e,$10,$15,$94          ; $d2 input
+>2c85	04 05 0c 13 85				.byte $04,$05,$0c,$13,$85              ; $d3 else
+>2c8a	03 16 04 95				.byte $03,$16,$04,$95                  ; $d4 vdu
+>2c8e	05 10 12 09 0e 94			.byte $05,$10,$12,$09,$0e,$94          ; $d5 print
+>2c94	04 07 0f 14 8f				.byte $04,$07,$0f,$14,$8f              ; $d6 goto
+>2c99	05 07 0f 13 15 82			.byte $05,$07,$0f,$13,$15,$82          ; $d7 gosub
+>2c9f	06 12 05 14 15 12 8e			.byte $06,$12,$05,$14,$15,$12,$8e      ; $d8 return
+>2ca6	04 04 01 14 81				.byte $04,$04,$01,$14,$81              ; $d9 data
+>2cab	06 01 13 13 05 12 94			.byte $06,$01,$13,$13,$05,$12,$94      ; $da assert
+>2cb2	04 10 0f 0b 85				.byte $04,$10,$0f,$0b,$85              ; $db poke
+>2cb7	04 04 0f 0b 85				.byte $04,$04,$0f,$0b,$85              ; $dc doke
+>2cbc	04 0c 0f 0b 85				.byte $04,$0c,$0f,$0b,$85              ; $dd loke
+>2cc1	03 09 0e 8b				.byte $03,$09,$0e,$8b                  ; $de ink
+>2cc5	05 10 01 10 05 92			.byte $05,$10,$01,$10,$05,$92          ; $df paper
+>2ccb	03 03 0c 93				.byte $03,$03,$0c,$93                  ; $e0 cls
+>2ccf	06 0c 0f 03 01 14 85			.byte $06,$0c,$0f,$03,$01,$14,$85      ; $e1 locate
+>2cd6	00					.byte $00
 
-;******  Return to file: tokeniser/detokenise.asm
+;******  Return to file: tokeniser/tokentext.asm
 
 
 ;******  Processing file: tokeniser/../generated/tokentext1.inc
 
-.2cca					Group1Text:
->2cca	05 03 0c 05 01 92			.byte $05,$03,$0c,$05,$01,$92          ; $86 clear
->2cd0	04 0c 0f 01 84				.byte $04,$0c,$0f,$01,$84              ; $87 load
->2cd5	04 13 01 16 85				.byte $04,$13,$01,$16,$85              ; $88 save
->2cda	04 0c 09 13 94				.byte $04,$0c,$09,$13,$94              ; $89 list
->2cdf	03 0e 05 97				.byte $03,$0e,$05,$97                  ; $8a new
->2ce3	03 12 15 8e				.byte $03,$12,$15,$8e                  ; $8b run
->2ce7	04 12 05 01 84				.byte $04,$12,$05,$01,$84              ; $8c read
->2cec	07 12 05 13 14 0f 12 85			.byte $07,$12,$05,$13,$14,$0f,$12,$85  ; $8d restore
->2cf4	03 05 0e 84				.byte $03,$05,$0e,$84                  ; $8e end
->2cf8	04 13 14 0f 90				.byte $04,$13,$14,$0f,$90              ; $8f stop
->2cfd	00					.byte $00
+.2cd7					Group1Text:
+>2cd7	05 03 0c 05 01 92			.byte $05,$03,$0c,$05,$01,$92          ; $86 clear
+>2cdd	04 0c 0f 01 84				.byte $04,$0c,$0f,$01,$84              ; $87 load
+>2ce2	04 13 01 16 85				.byte $04,$13,$01,$16,$85              ; $88 save
+>2ce7	04 0c 09 13 94				.byte $04,$0c,$09,$13,$94              ; $89 list
+>2cec	03 0e 05 97				.byte $03,$0e,$05,$97                  ; $8a new
+>2cf0	03 12 15 8e				.byte $03,$12,$15,$8e                  ; $8b run
+>2cf4	04 12 05 01 84				.byte $04,$12,$05,$01,$84              ; $8c read
+>2cf9	07 12 05 13 14 0f 12 85			.byte $07,$12,$05,$13,$14,$0f,$12,$85  ; $8d restore
+>2d01	03 05 0e 84				.byte $03,$05,$0e,$84                  ; $8e end
+>2d05	04 13 14 0f 90				.byte $04,$13,$14,$0f,$90              ; $8f stop
+>2d0a	00					.byte $00
 
-;******  Return to file: tokeniser/detokenise.asm
+;******  Return to file: tokeniser/tokentext.asm
 
 
 ;******  Processing file: tokeniser/../generated/tokentext2.inc
 
-.2cfe					Group2Text:
->2cfe	05 16 10 0f 0b 85			.byte $05,$16,$10,$0f,$0b,$85          ; $86 vpoke
->2d04	05 16 04 0f 0b 85			.byte $05,$16,$04,$0f,$0b,$85          ; $87 vdoke
->2d0a	00					.byte $00
+.2d0b					Group2Text:
+>2d0b	05 16 10 0f 0b 85			.byte $05,$16,$10,$0f,$0b,$85          ; $86 vpoke
+>2d11	05 16 04 0f 0b 85			.byte $05,$16,$04,$0f,$0b,$85          ; $87 vdoke
+>2d17	00					.byte $00
 
-;******  Return to file: tokeniser/detokenise.asm
+;******  Return to file: tokeniser/tokentext.asm
 
 
 ;******  Processing file: tokeniser/../generated/tokentext3.inc
 
-.2d0b					Group3Text:
->2d0b	06 16 10 05 05 0b a8			.byte $06,$16,$10,$05,$05,$0b,$a8      ; $86 vpeek(
->2d12	06 16 04 05 05 0b a8			.byte $06,$16,$04,$05,$05,$0b,$a8      ; $87 vdeek(
->2d19	00					.byte $00
+.2d18					Group3Text:
+>2d18	06 16 10 05 05 0b a8			.byte $06,$16,$10,$05,$05,$0b,$a8      ; $86 vpeek(
+>2d1f	06 16 04 05 05 0b a8			.byte $06,$16,$04,$05,$05,$0b,$a8      ; $87 vdeek(
+>2d26	00					.byte $00
 
-;******  Return to file: tokeniser/detokenise.asm
+;******  Return to file: tokeniser/tokentext.asm
 
 
 ;******  Return to file: tokeniser/tokeniser.asm
 
-.2d1a					tokeniserHandler:
-.2d1a	7c 1d 2d	jmp ($2d1d,x)			jmp 	(tokeniserVectors,x)
-.2d1d					tokeniserVectors:
->2d1d	4b 29					.word Detokenise           ; index 0
->2d1f	41 29					.word ListLine             ; index 2
+.2d27					tokeniserHandler:
+.2d27	7c 2a 2d	jmp ($2d2a,x)			jmp 	(tokeniserVectors,x)
+.2d2a					tokeniserVectors:
+>2d2a	4b 29					.word Detokenise           ; index 0
+>2d2c	41 29					.word ListLine             ; index 2
 
 ;******  Return to file: basic.asm
 
-.2d21					section_end_tokeniser:
-.2d21					section_start_variable:
+.2d2e					section_end_tokeniser:
+.2d2e					section_start_variable:
 
 ;******  Processing file: variable/variable.asm
 
@@ -5326,464 +5364,464 @@
 >0b26							.fill 	1
 .007c					hashList:
 >007c							.fill 	2
-.2d21					AccessVariable:
-.2d21	aa		tax				tax 								; stack in X
-.2d22	c8		iny				iny
-.2d23	b1 02		lda ($02),y			lda 	(codePtr),y
-.2d25	88		dey				dey
-.2d26	c9 3a		cmp #$3a			cmp 	#TYPE_INT 					; is it one of the end markers ?
-.2d28	d0 15		bne $2d3f			bne 	_AVLong
-.2d2a	b1 02		lda ($02),y			lda 	(codePtr),y 				; this is the 6 bit ASCII of A-Z 1-26
-.2d2c	38		sec				sec 	 							; make it 0-25
-.2d2d	e9 01		sbc #$01			sbc 	#1
-.2d2f	0a		asl a				asl 	a 							; x 4 is LSB of address
-.2d30	0a		asl a				asl 	a
-.2d31	95 48		sta $48,x			sta 	esInt0,x
-.2d33	a9 0a		lda #$0a			lda 	#SingleLetterVar >> 8 		; make it an address
-.2d35	95 50		sta $50,x			sta 	esInt1,x
-.2d37	a9 80		lda #$80			lda 	#$80 						; type is integer reference.
-.2d39	95 40		sta $40,x			sta 	esType,x
-.2d3b	c8		iny				iny 								; skip over the variable reference in the code.
-.2d3c	c8		iny				iny
-.2d3d	8a		txa				txa 								; stack in A to return.
-.2d3e	60		rts				rts
-.2d3f					_AVLong:
-.2d3f	8a		txa				txa
-.2d40	48		pha				pha
-.2d41	20 88 2d	jsr $2d88			jsr 	AccessSetup 				; set up the basic stuff.
-.2d44	20 7c 2f	jsr $2f7c			jsr 	FindVariable 				; does the variable exist already
-.2d47	b0 0e		bcs $2d57			bcs 	_AVFound
-.2d49	ad 25 0b	lda $0b25			lda 	varType 					; is the variable type an array
-.2d4c	4a		lsr a				lsr 	a
-.2d4d	90 05		bcc $2d54			bcc 	_AVCanCreate
-.2d4f	a2 15		ldx #$15			ldx 	#ErrorID_noauto
-.2d51	20 a3 23	jsr $23a3		jsr	errorHandler
-.2d54					_AVCanCreate:
-.2d54	20 3b 2e	jsr $2e3b			jsr 	CreateVariable 				; no, create it.
-.2d57					_AVFound:
-.2d57	68		pla				pla
-.2d58	aa		tax				tax
-.2d59	18		clc				clc 								; copy temp0 (variable record address)
-.2d5a	a5 04		lda $04				lda 	temp0 						; +5 (to point to the data)
-.2d5c	69 05		adc #$05			adc 	#5
-.2d5e	95 48		sta $48,x			sta 	esInt0,x
-.2d60	a5 05		lda $05				lda 	temp0+1
-.2d62	69 00		adc #$00			adc 	#0
-.2d64	95 50		sta $50,x			sta 	esInt1,x
-.2d66	a9 00		lda #$00			lda 	#0
-.2d68	95 58		sta $58,x			sta 	esInt2,x
-.2d6a	95 60		sta $60,x			sta 	esInt3,x
-.2d6c	ac 25 0b	ldy $0b25			ldy 	varType 					; get the type ID from the type.
-.2d6f	b9 48 2d	lda $2d48,y			lda 	_AVTypeTable-$3A,y
-.2d72	95 40		sta $40,x			sta 	esType,x
-.2d74	ac 26 0b	ldy $0b26			ldy 	varEnd 						; restore Y
-.2d77	ad 25 0b	lda $0b25			lda 	VarType 					; get variable type, put LSB into C
-.2d7a	4a		lsr a				lsr 	a
-.2d7b	90 03		bcc $2d80			bcc 	_AVNotArray
-.2d7d	20 c5 2d	jsr $2dc5			jsr 	AccessArray 				; array lookup. if LSB was set.
-.2d80					_AVNotArray:
-.2d80	8a		txa				txa 								; return stack in A and return
-.2d81	60		rts				rts
-.2d82					_AVTypeTable:
->2d82	80 80						.byte 	$80,$80						; integer
->2d84	c0 c0						.byte 	$C0,$C0 					; string
->2d86	81 81						.byte 	$81,$81 					; float
-.2d88					AccessSetup:
-.2d88	a9 00		lda #$00			lda 	#0 							; zero the hash byte.
-.2d8a	8d 24 0b	sta $0b24			sta 	varHash
-.2d8d	98		tya				tya
-.2d8e	48		pha				pha
-.2d8f	b1 02		lda ($02),y	_ASLoop:lda 	(codePtr),y					; get next identifier character
-.2d91	c9 3a		cmp #$3a			cmp 	#$3A 						; is it 3A-3F which end all identifiers ?
-.2d93	b0 0b		bcs $2da0			bcs 	_ASComplete
-.2d95	18		clc				clc 								; add to the hash. Might improve this.
-.2d96	6d 24 0b	adc $0b24			adc 	varHash
-.2d99	8d 24 0b	sta $0b24			sta 	varHash
-.2d9c	c8		iny				iny 								; next character
-.2d9d	4c 8f 2d	jmp $2d8f			jmp 	_ASLoop
-.2da0					_ASComplete:
-.2da0	8d 25 0b	sta $0b25			sta 	varType 					; save variable type byte
-.2da3	c8		iny				iny
-.2da4	8c 26 0b	sty $0b26			sty 	varEnd 						; save the ending position.
-.2da7	38		sec				sec 								; convert type byte from $3A-$3F to 0..5
-.2da8	e9 3a		sbc #$3a			sbc 	#$3A
-.2daa	0a		asl a				asl 	a 							; multiply by hashTableSize (8 in this case)
-.2dab	0a		asl a				asl 	a
-.2dac	0a		asl a				asl 	a
-.2dad	0a		asl a				asl 	a 							; 2 bytes/word
-.2dae	85 04		sta $04				sta 	temp0 						; this is the offset to the start of the table.
-.2db0	ad 24 0b	lda $0b24			lda 	varHash 					; get hash
-.2db3	29 07		and #$07			and 	#(hashTableSize-1)			; force into range
-.2db5	0a		asl a				asl  	a 							; x 2 (for word) and CC
-.2db6	65 04		adc $04				adc 	temp0 						; now offset from the start of the hash table.
-.2db8	69 68		adc #$68			adc 	#hashTables & $FF 			; add to hash table base address
-.2dba	85 7c		sta $7c				sta 	hashList
-.2dbc	a9 0a		lda #$0a			lda 	#hashTables >> 8
-.2dbe	69 00		adc #$00			adc 	#0
-.2dc0	85 7d		sta $7d				sta 	hashList+1
-.2dc2	68		pla				pla
-.2dc3	a8		tay				tay
-.2dc4	60		rts				rts
+.2d2e					AccessVariable:
+.2d2e	aa		tax				tax 								; stack in X
+.2d2f	c8		iny				iny
+.2d30	b1 02		lda ($02),y			lda 	(codePtr),y
+.2d32	88		dey				dey
+.2d33	c9 3a		cmp #$3a			cmp 	#TYPE_INT 					; is it one of the end markers ?
+.2d35	d0 15		bne $2d4c			bne 	_AVLong
+.2d37	b1 02		lda ($02),y			lda 	(codePtr),y 				; this is the 6 bit ASCII of A-Z 1-26
+.2d39	38		sec				sec 	 							; make it 0-25
+.2d3a	e9 01		sbc #$01			sbc 	#1
+.2d3c	0a		asl a				asl 	a 							; x 4 is LSB of address
+.2d3d	0a		asl a				asl 	a
+.2d3e	95 48		sta $48,x			sta 	esInt0,x
+.2d40	a9 0a		lda #$0a			lda 	#SingleLetterVar >> 8 		; make it an address
+.2d42	95 50		sta $50,x			sta 	esInt1,x
+.2d44	a9 80		lda #$80			lda 	#$80 						; type is integer reference.
+.2d46	95 40		sta $40,x			sta 	esType,x
+.2d48	c8		iny				iny 								; skip over the variable reference in the code.
+.2d49	c8		iny				iny
+.2d4a	8a		txa				txa 								; stack in A to return.
+.2d4b	60		rts				rts
+.2d4c					_AVLong:
+.2d4c	8a		txa				txa
+.2d4d	48		pha				pha
+.2d4e	20 95 2d	jsr $2d95			jsr 	AccessSetup 				; set up the basic stuff.
+.2d51	20 89 2f	jsr $2f89			jsr 	FindVariable 				; does the variable exist already
+.2d54	b0 0e		bcs $2d64			bcs 	_AVFound
+.2d56	ad 25 0b	lda $0b25			lda 	varType 					; is the variable type an array
+.2d59	4a		lsr a				lsr 	a
+.2d5a	90 05		bcc $2d61			bcc 	_AVCanCreate
+.2d5c	a2 15		ldx #$15			ldx 	#ErrorID_noauto
+.2d5e	20 a3 23	jsr $23a3		jsr	errorHandler
+.2d61					_AVCanCreate:
+.2d61	20 48 2e	jsr $2e48			jsr 	CreateVariable 				; no, create it.
+.2d64					_AVFound:
+.2d64	68		pla				pla
+.2d65	aa		tax				tax
+.2d66	18		clc				clc 								; copy temp0 (variable record address)
+.2d67	a5 04		lda $04				lda 	temp0 						; +5 (to point to the data)
+.2d69	69 05		adc #$05			adc 	#5
+.2d6b	95 48		sta $48,x			sta 	esInt0,x
+.2d6d	a5 05		lda $05				lda 	temp0+1
+.2d6f	69 00		adc #$00			adc 	#0
+.2d71	95 50		sta $50,x			sta 	esInt1,x
+.2d73	a9 00		lda #$00			lda 	#0
+.2d75	95 58		sta $58,x			sta 	esInt2,x
+.2d77	95 60		sta $60,x			sta 	esInt3,x
+.2d79	ac 25 0b	ldy $0b25			ldy 	varType 					; get the type ID from the type.
+.2d7c	b9 55 2d	lda $2d55,y			lda 	_AVTypeTable-$3A,y
+.2d7f	95 40		sta $40,x			sta 	esType,x
+.2d81	ac 26 0b	ldy $0b26			ldy 	varEnd 						; restore Y
+.2d84	ad 25 0b	lda $0b25			lda 	VarType 					; get variable type, put LSB into C
+.2d87	4a		lsr a				lsr 	a
+.2d88	90 03		bcc $2d8d			bcc 	_AVNotArray
+.2d8a	20 d2 2d	jsr $2dd2			jsr 	AccessArray 				; array lookup. if LSB was set.
+.2d8d					_AVNotArray:
+.2d8d	8a		txa				txa 								; return stack in A and return
+.2d8e	60		rts				rts
+.2d8f					_AVTypeTable:
+>2d8f	80 80						.byte 	$80,$80						; integer
+>2d91	c0 c0						.byte 	$C0,$C0 					; string
+>2d93	81 81						.byte 	$81,$81 					; float
+.2d95					AccessSetup:
+.2d95	a9 00		lda #$00			lda 	#0 							; zero the hash byte.
+.2d97	8d 24 0b	sta $0b24			sta 	varHash
+.2d9a	98		tya				tya
+.2d9b	48		pha				pha
+.2d9c	b1 02		lda ($02),y	_ASLoop:lda 	(codePtr),y					; get next identifier character
+.2d9e	c9 3a		cmp #$3a			cmp 	#$3A 						; is it 3A-3F which end all identifiers ?
+.2da0	b0 0b		bcs $2dad			bcs 	_ASComplete
+.2da2	18		clc				clc 								; add to the hash. Might improve this.
+.2da3	6d 24 0b	adc $0b24			adc 	varHash
+.2da6	8d 24 0b	sta $0b24			sta 	varHash
+.2da9	c8		iny				iny 								; next character
+.2daa	4c 9c 2d	jmp $2d9c			jmp 	_ASLoop
+.2dad					_ASComplete:
+.2dad	8d 25 0b	sta $0b25			sta 	varType 					; save variable type byte
+.2db0	c8		iny				iny
+.2db1	8c 26 0b	sty $0b26			sty 	varEnd 						; save the ending position.
+.2db4	38		sec				sec 								; convert type byte from $3A-$3F to 0..5
+.2db5	e9 3a		sbc #$3a			sbc 	#$3A
+.2db7	0a		asl a				asl 	a 							; multiply by hashTableSize (8 in this case)
+.2db8	0a		asl a				asl 	a
+.2db9	0a		asl a				asl 	a
+.2dba	0a		asl a				asl 	a 							; 2 bytes/word
+.2dbb	85 04		sta $04				sta 	temp0 						; this is the offset to the start of the table.
+.2dbd	ad 24 0b	lda $0b24			lda 	varHash 					; get hash
+.2dc0	29 07		and #$07			and 	#(hashTableSize-1)			; force into range
+.2dc2	0a		asl a				asl  	a 							; x 2 (for word) and CC
+.2dc3	65 04		adc $04				adc 	temp0 						; now offset from the start of the hash table.
+.2dc5	69 68		adc #$68			adc 	#hashTables & $FF 			; add to hash table base address
+.2dc7	85 7c		sta $7c				sta 	hashList
+.2dc9	a9 0a		lda #$0a			lda 	#hashTables >> 8
+.2dcb	69 00		adc #$00			adc 	#0
+.2dcd	85 7d		sta $7d				sta 	hashList+1
+.2dcf	68		pla				pla
+.2dd0	a8		tay				tay
+.2dd1	60		rts				rts
 
 ;******  Return to file: variable/variable.asm
 
 
 ;******  Processing file: variable/accessarray.asm
 
-.2dc5					AccessArray:
-.2dc5	e8		inx				inx
-.2dc6	8a		txa				txa
-.2dc7	a2 04		ldx #$04		ldx	#4
-.2dc9	20 d9 22	jsr $22d9		jsr	mainHandler
-.2dcc	aa		tax				tax
-.2dcd	ca		dex				dex
-.2dce	a2 00		ldx #$00		ldx	#0
-.2dd0	20 d9 22	jsr $22d9		jsr	mainHandler
-.2dd3	b5 61		lda $61,x			lda 	esInt3+1,x 					; check index value
-.2dd5	15 59		ora $59,x			ora 	esInt2+1,x
-.2dd7	d0 33		bne $2e0c			bne 	_AABadIndex
-.2dd9	98		tya				tya
-.2dda	48		pha				pha
-.2ddb	b5 48		lda $48,x			lda 	esInt0,x 					; put array info ptr in temp0 - this points to the
-.2ddd	85 04		sta $04				sta 	temp0 						; address (+0) max (+2) and size (+4)
-.2ddf	b5 50		lda $50,x			lda 	esInt1,x
-.2de1	85 05		sta $05				sta 	temp0+1
-.2de3	a0 02		ldy #$02			ldy 	#2 							; check out of range, compare against max index.
-.2de5	b5 49		lda $49,x			lda 	esInt0+1,x
-.2de7	d1 04		cmp ($04),y			cmp 	(temp0),y
-.2de9	c8		iny				iny
-.2dea	b5 51		lda $51,x			lda 	esInt1+1,x
-.2dec	f1 04		sbc ($04),y			sbc 	(temp0),y
-.2dee	b0 1c		bcs $2e0c			bcs 	_AABadIndex 				; if >= then fail.
-.2df0	e8		inx				inx 								; point to index
-.2df1	a0 04		ldy #$04			ldy 	#4 							; get the size byte.
-.2df3	b1 04		lda ($04),y			lda 	(temp0),y
-.2df5	20 11 2e	jsr $2e11			jsr 	MultiplyTOSByA 				; specialist multiplier.
-.2df8	ca		dex				dex
-.2df9	a0 00		ldy #$00			ldy 	#0 							; add this to the array base as the new address
-.2dfb	18		clc				clc
-.2dfc	b5 49		lda $49,x			lda 	esInt0+1,x
-.2dfe	71 04		adc ($04),y			adc 	(temp0),y
-.2e00	95 48		sta $48,x			sta 	esInt0,x
-.2e02	b5 51		lda $51,x			lda 	esInt1+1,x
-.2e04	c8		iny				iny
-.2e05	71 04		adc ($04),y			adc 	(temp0),y
-.2e07	95 50		sta $50,x			sta 	esInt1,x
-.2e09	68		pla				pla
-.2e0a	a8		tay				tay
-.2e0b	60		rts				rts
-.2e0c					_AABadIndex:
-.2e0c	a2 1b		ldx #$1b			ldx 	#ErrorID_ArrayIndex
-.2e0e	20 a3 23	jsr $23a3		jsr	errorHandler
-.2e11					MultiplyTOSByA:
-.2e11	48		pha				pha
-.2e12	b5 48		lda $48,x			lda 	esInt0,x 					; copy index to temp1
-.2e14	85 06		sta $06				sta 	temp1
-.2e16	b5 50		lda $50,x			lda 	esInt1,x
-.2e18	85 07		sta $07				sta 	temp1+1
-.2e1a	68		pla				pla
-.2e1b	16 48		asl $48,x			asl 	esInt0,x 					; double it.
-.2e1d	36 50		rol $50,x			rol 	esInt1,x
-.2e1f	c9 02		cmp #$02			cmp 	#2 							; if x 2 then exit.
-.2e21	f0 17		beq $2e3a			beq 	_MTBAExit
-.2e23	c9 06		cmp #$06			cmp 	#6 							; if x 6 then add temp1 to index
-.2e25	d0 0f		bne $2e36			bne 	_MTBANotFloat
-.2e27	48		pha				pha
-.2e28	18		clc				clc 								; so this will make it x 3
-.2e29	b5 48		lda $48,x			lda 	esInt0,x
-.2e2b	65 06		adc $06				adc 	temp1
-.2e2d	95 48		sta $48,x			sta 	esInt0,x
-.2e2f	b5 50		lda $50,x			lda 	esInt1,x
-.2e31	65 07		adc $07				adc 	temp1+1
-.2e33	95 50		sta $50,x			sta 	esInt1,x
-.2e35	68		pla				pla
-.2e36					_MTBANotFloat:
-.2e36	16 48		asl $48,x			asl 	esInt0,x					; now it is x 4 or x 6
-.2e38	36 50		rol $50,x			rol 	esInt1,x
-.2e3a					_MTBAExit:
-.2e3a	60		rts				rts
+.2dd2					AccessArray:
+.2dd2	e8		inx				inx
+.2dd3	8a		txa				txa
+.2dd4	a2 04		ldx #$04		ldx	#4
+.2dd6	20 d9 22	jsr $22d9		jsr	mainHandler
+.2dd9	aa		tax				tax
+.2dda	ca		dex				dex
+.2ddb	a2 00		ldx #$00		ldx	#0
+.2ddd	20 d9 22	jsr $22d9		jsr	mainHandler
+.2de0	b5 61		lda $61,x			lda 	esInt3+1,x 					; check index value
+.2de2	15 59		ora $59,x			ora 	esInt2+1,x
+.2de4	d0 33		bne $2e19			bne 	_AABadIndex
+.2de6	98		tya				tya
+.2de7	48		pha				pha
+.2de8	b5 48		lda $48,x			lda 	esInt0,x 					; put array info ptr in temp0 - this points to the
+.2dea	85 04		sta $04				sta 	temp0 						; address (+0) max (+2) and size (+4)
+.2dec	b5 50		lda $50,x			lda 	esInt1,x
+.2dee	85 05		sta $05				sta 	temp0+1
+.2df0	a0 02		ldy #$02			ldy 	#2 							; check out of range, compare against max index.
+.2df2	b5 49		lda $49,x			lda 	esInt0+1,x
+.2df4	d1 04		cmp ($04),y			cmp 	(temp0),y
+.2df6	c8		iny				iny
+.2df7	b5 51		lda $51,x			lda 	esInt1+1,x
+.2df9	f1 04		sbc ($04),y			sbc 	(temp0),y
+.2dfb	b0 1c		bcs $2e19			bcs 	_AABadIndex 				; if >= then fail.
+.2dfd	e8		inx				inx 								; point to index
+.2dfe	a0 04		ldy #$04			ldy 	#4 							; get the size byte.
+.2e00	b1 04		lda ($04),y			lda 	(temp0),y
+.2e02	20 1e 2e	jsr $2e1e			jsr 	MultiplyTOSByA 				; specialist multiplier.
+.2e05	ca		dex				dex
+.2e06	a0 00		ldy #$00			ldy 	#0 							; add this to the array base as the new address
+.2e08	18		clc				clc
+.2e09	b5 49		lda $49,x			lda 	esInt0+1,x
+.2e0b	71 04		adc ($04),y			adc 	(temp0),y
+.2e0d	95 48		sta $48,x			sta 	esInt0,x
+.2e0f	b5 51		lda $51,x			lda 	esInt1+1,x
+.2e11	c8		iny				iny
+.2e12	71 04		adc ($04),y			adc 	(temp0),y
+.2e14	95 50		sta $50,x			sta 	esInt1,x
+.2e16	68		pla				pla
+.2e17	a8		tay				tay
+.2e18	60		rts				rts
+.2e19					_AABadIndex:
+.2e19	a2 1b		ldx #$1b			ldx 	#ErrorID_ArrayIndex
+.2e1b	20 a3 23	jsr $23a3		jsr	errorHandler
+.2e1e					MultiplyTOSByA:
+.2e1e	48		pha				pha
+.2e1f	b5 48		lda $48,x			lda 	esInt0,x 					; copy index to temp1
+.2e21	85 06		sta $06				sta 	temp1
+.2e23	b5 50		lda $50,x			lda 	esInt1,x
+.2e25	85 07		sta $07				sta 	temp1+1
+.2e27	68		pla				pla
+.2e28	16 48		asl $48,x			asl 	esInt0,x 					; double it.
+.2e2a	36 50		rol $50,x			rol 	esInt1,x
+.2e2c	c9 02		cmp #$02			cmp 	#2 							; if x 2 then exit.
+.2e2e	f0 17		beq $2e47			beq 	_MTBAExit
+.2e30	c9 06		cmp #$06			cmp 	#6 							; if x 6 then add temp1 to index
+.2e32	d0 0f		bne $2e43			bne 	_MTBANotFloat
+.2e34	48		pha				pha
+.2e35	18		clc				clc 								; so this will make it x 3
+.2e36	b5 48		lda $48,x			lda 	esInt0,x
+.2e38	65 06		adc $06				adc 	temp1
+.2e3a	95 48		sta $48,x			sta 	esInt0,x
+.2e3c	b5 50		lda $50,x			lda 	esInt1,x
+.2e3e	65 07		adc $07				adc 	temp1+1
+.2e40	95 50		sta $50,x			sta 	esInt1,x
+.2e42	68		pla				pla
+.2e43					_MTBANotFloat:
+.2e43	16 48		asl $48,x			asl 	esInt0,x					; now it is x 4 or x 6
+.2e45	36 50		rol $50,x			rol 	esInt1,x
+.2e47					_MTBAExit:
+.2e47	60		rts				rts
 
 ;******  Return to file: variable/variable.asm
 
 
 ;******  Processing file: variable/create.asm
 
-.2e3b					CreateVariable:
-.2e3b	98		tya				tya 								; push Y on the stack twice.
-.2e3c	48		pha				pha
-.2e3d	48		pha				pha
-.2e3e	ae 25 0b	ldx $0b25			ldx 	varType 					; get var type 0-5
-.2e41	bd 4c 2e	lda $2e4c,x			lda		_CVSize-$3A,x 				; the bytes for this new variable.
-.2e44	48		pha				pha 								; save length
-.2e45	a5 0f		lda $0f				lda 	lowMemory 					; set low Memory ptr to temp0
-.2e47	85 04		sta $04				sta 	temp0 						; (address of the new variable)
-.2e49	a5 10		lda $10				lda 	lowMemory+1
-.2e4b	85 05		sta $05				sta 	temp0+1
-.2e4d	68		pla				pla 								; get length
-.2e4e	20 73 10	jsr $1073			jsr 	AdvanceLowMemoryByte 		; shift alloc memory forward by the length.
-.2e51	ad 24 0b	lda $0b24			lda 	varHash 					; store hash at offset 4.
-.2e54	a0 04		ldy #$04			ldy 	#4
-.2e56	91 04		sta ($04),y			sta 	(temp0),y
-.2e58	68		pla				pla 								; offset, work out where the variable name is.
-.2e59	18		clc				clc
-.2e5a	65 02		adc $02				adc 	codePtr
-.2e5c	a0 02		ldy #$02			ldy 	#2 							; copy that into slots 2 + 3.
-.2e5e	91 04		sta ($04),y			sta 	(temp0),y
-.2e60	a5 03		lda $03				lda 	codePtr+1
-.2e62	69 00		adc #$00			adc 	#0
-.2e64	c8		iny				iny
-.2e65	91 04		sta ($04),y			sta 	(temp0),y
-.2e67	a0 00		ldy #$00			ldy 	#0 							; copy current hash pointer in link
-.2e69	b1 7c		lda ($7c),y			lda 	(hashList),y
+.2e48					CreateVariable:
+.2e48	98		tya				tya 								; push Y on the stack twice.
+.2e49	48		pha				pha
+.2e4a	48		pha				pha
+.2e4b	ae 25 0b	ldx $0b25			ldx 	varType 					; get var type 0-5
+.2e4e	bd 59 2e	lda $2e59,x			lda		_CVSize-$3A,x 				; the bytes for this new variable.
+.2e51	48		pha				pha 								; save length
+.2e52	a5 0f		lda $0f				lda 	lowMemory 					; set low Memory ptr to temp0
+.2e54	85 04		sta $04				sta 	temp0 						; (address of the new variable)
+.2e56	a5 10		lda $10				lda 	lowMemory+1
+.2e58	85 05		sta $05				sta 	temp0+1
+.2e5a	68		pla				pla 								; get length
+.2e5b	20 73 10	jsr $1073			jsr 	AdvanceLowMemoryByte 		; shift alloc memory forward by the length.
+.2e5e	ad 24 0b	lda $0b24			lda 	varHash 					; store hash at offset 4.
+.2e61	a0 04		ldy #$04			ldy 	#4
+.2e63	91 04		sta ($04),y			sta 	(temp0),y
+.2e65	68		pla				pla 								; offset, work out where the variable name is.
+.2e66	18		clc				clc
+.2e67	65 02		adc $02				adc 	codePtr
+.2e69	a0 02		ldy #$02			ldy 	#2 							; copy that into slots 2 + 3.
 .2e6b	91 04		sta ($04),y			sta 	(temp0),y
-.2e6d	c8		iny				iny
-.2e6e	b1 7c		lda ($7c),y			lda 	(hashList),y
-.2e70	91 04		sta ($04),y			sta 	(temp0),y
-.2e72	a5 05		lda $05				lda 	temp0+1 					; set new link
-.2e74	91 7c		sta ($7c),y			sta 	(hashList),y
-.2e76	88		dey				dey
-.2e77	a5 04		lda $04				lda 	temp0
-.2e79	91 7c		sta ($7c),y			sta 	(hashList),y
-.2e7b	ad 25 0b	lda $0b25			lda 	varType 					; type in A
-.2e7e	a0 05		ldy #$05			ldy 	#5 							; offset in Y
-.2e80	20 8c 2e	jsr $2e8c			jsr 	ZeroTemp0Y 					; zero (temp0),y with whatever type.
-.2e83	68		pla				pla
-.2e84	a8		tay				tay
-.2e85	60		rts				rts
->2e86	09 0a				_CVSize:.byte 	VarHSize+VarISize,VarHSize+VarASize 					; <storage for integer>
->2e88	07 0a						.byte 	VarHSize+VarSSize,VarHSize+VarASize 					; <storage for string>
->2e8a	0b 0a						.byte 	VarHSize+VarFSize,VarHSize+VarASize 					; <storage for float>
-.2e8c					ZeroTemp0Y:
-.2e8c	4a		lsr a				lsr 	a 							; bit 0 in carry
-.2e8d	0a		asl a				asl 	a
-.2e8e	b0 19		bcs $2ea9			bcs 	_ZTExit 					; we don't initialise arrays.
-.2e90	c9 3c		cmp #$3c			cmp 	#$3C 						; check string
-.2e92	f0 16		beq $2eaa			beq 	_ZTWriteNullString 			; write "" string
-.2e94	c9 3e		cmp #$3e			cmp 	#$3E 						; check float
-.2e96	f0 22		beq $2eba			beq 	_ZTWriteFloat
-.2e98	98		tya				tya
-.2e99	48		pha				pha
-.2e9a	a9 00		lda #$00			lda 	#0
-.2e9c	91 04		sta ($04),y			sta 	(temp0),y
-.2e9e	c8		iny				iny
-.2e9f	91 04		sta ($04),y			sta 	(temp0),y
-.2ea1	c8		iny				iny
-.2ea2	91 04		sta ($04),y			sta 	(temp0),y
-.2ea4	c8		iny				iny
-.2ea5	91 04		sta ($04),y			sta 	(temp0),y
-.2ea7	68		pla				pla
-.2ea8	a8		tay				tay
-.2ea9					_ZTExit:
-.2ea9	60		rts				rts
-.2eaa					_ZTWriteNullString:
-.2eaa	a9 00		lda #$00			lda 	#0 							; put a reference to null string as the default value.
-.2eac	8d cc 0a	sta $0acc			sta 	NullString
-.2eaf	a9 cc		lda #$cc			lda 	#NullString & $FF
-.2eb1	91 04		sta ($04),y			sta 	(temp0),y
-.2eb3	a9 0a		lda #$0a			lda 	#NullString >> 8
-.2eb5	c8		iny				iny
-.2eb6	91 04		sta ($04),y			sta 	(temp0),y
-.2eb8	88		dey				dey
-.2eb9	60		rts				rts
-.2eba					_ZTWriteFloat:
-.2eba	8a		txa				txa
-.2ebb	48		pha				pha
-.2ebc	a2 1e		ldx #$1e		ldx	#30
-.2ebe	20 94 26	jsr $2694		jsr	floatingpointHandler
-.2ec1	68		pla				pla
-.2ec2	aa		tax				tax
-.2ec3	60		rts				rts
+.2e6d	a5 03		lda $03				lda 	codePtr+1
+.2e6f	69 00		adc #$00			adc 	#0
+.2e71	c8		iny				iny
+.2e72	91 04		sta ($04),y			sta 	(temp0),y
+.2e74	a0 00		ldy #$00			ldy 	#0 							; copy current hash pointer in link
+.2e76	b1 7c		lda ($7c),y			lda 	(hashList),y
+.2e78	91 04		sta ($04),y			sta 	(temp0),y
+.2e7a	c8		iny				iny
+.2e7b	b1 7c		lda ($7c),y			lda 	(hashList),y
+.2e7d	91 04		sta ($04),y			sta 	(temp0),y
+.2e7f	a5 05		lda $05				lda 	temp0+1 					; set new link
+.2e81	91 7c		sta ($7c),y			sta 	(hashList),y
+.2e83	88		dey				dey
+.2e84	a5 04		lda $04				lda 	temp0
+.2e86	91 7c		sta ($7c),y			sta 	(hashList),y
+.2e88	ad 25 0b	lda $0b25			lda 	varType 					; type in A
+.2e8b	a0 05		ldy #$05			ldy 	#5 							; offset in Y
+.2e8d	20 99 2e	jsr $2e99			jsr 	ZeroTemp0Y 					; zero (temp0),y with whatever type.
+.2e90	68		pla				pla
+.2e91	a8		tay				tay
+.2e92	60		rts				rts
+>2e93	09 0a				_CVSize:.byte 	VarHSize+VarISize,VarHSize+VarASize 					; <storage for integer>
+>2e95	07 0a						.byte 	VarHSize+VarSSize,VarHSize+VarASize 					; <storage for string>
+>2e97	0b 0a						.byte 	VarHSize+VarFSize,VarHSize+VarASize 					; <storage for float>
+.2e99					ZeroTemp0Y:
+.2e99	4a		lsr a				lsr 	a 							; bit 0 in carry
+.2e9a	0a		asl a				asl 	a
+.2e9b	b0 19		bcs $2eb6			bcs 	_ZTExit 					; we don't initialise arrays.
+.2e9d	c9 3c		cmp #$3c			cmp 	#$3C 						; check string
+.2e9f	f0 16		beq $2eb7			beq 	_ZTWriteNullString 			; write "" string
+.2ea1	c9 3e		cmp #$3e			cmp 	#$3E 						; check float
+.2ea3	f0 22		beq $2ec7			beq 	_ZTWriteFloat
+.2ea5	98		tya				tya
+.2ea6	48		pha				pha
+.2ea7	a9 00		lda #$00			lda 	#0
+.2ea9	91 04		sta ($04),y			sta 	(temp0),y
+.2eab	c8		iny				iny
+.2eac	91 04		sta ($04),y			sta 	(temp0),y
+.2eae	c8		iny				iny
+.2eaf	91 04		sta ($04),y			sta 	(temp0),y
+.2eb1	c8		iny				iny
+.2eb2	91 04		sta ($04),y			sta 	(temp0),y
+.2eb4	68		pla				pla
+.2eb5	a8		tay				tay
+.2eb6					_ZTExit:
+.2eb6	60		rts				rts
+.2eb7					_ZTWriteNullString:
+.2eb7	a9 00		lda #$00			lda 	#0 							; put a reference to null string as the default value.
+.2eb9	8d cc 0a	sta $0acc			sta 	NullString
+.2ebc	a9 cc		lda #$cc			lda 	#NullString & $FF
+.2ebe	91 04		sta ($04),y			sta 	(temp0),y
+.2ec0	a9 0a		lda #$0a			lda 	#NullString >> 8
+.2ec2	c8		iny				iny
+.2ec3	91 04		sta ($04),y			sta 	(temp0),y
+.2ec5	88		dey				dey
+.2ec6	60		rts				rts
+.2ec7					_ZTWriteFloat:
+.2ec7	8a		txa				txa
+.2ec8	48		pha				pha
+.2ec9	a2 1e		ldx #$1e		ldx	#30
+.2ecb	20 94 26	jsr $2694		jsr	floatingpointHandler
+.2ece	68		pla				pla
+.2ecf	aa		tax				tax
+.2ed0	60		rts				rts
 
 ;******  Return to file: variable/variable.asm
 
 
 ;******  Processing file: variable/createarray.asm
 
-.2ec4					CreateArray:
-.2ec4	20 88 2d	jsr $2d88			jsr 	AccessSetup 				; set up the basic stuff.
-.2ec7	ad 25 0b	lda $0b25			lda 	varType 					; is the variable type an array
-.2eca	4a		lsr a				lsr 	a
-.2ecb	90 3f		bcc $2f0c			bcc 	_CANotArray 				; no, cause an error.
-.2ecd	20 7c 2f	jsr $2f7c			jsr 	FindVariable 				; does the variable exist already
-.2ed0	b0 35		bcs $2f07			bcs 	_CAFound 					; cannot redefine it.
-.2ed2	20 3b 2e	jsr $2e3b			jsr 	CreateVariable 				; create the variable entry.
-.2ed5	ac 26 0b	ldy $0b26			ldy 	varEnd 						; point Y to the end of the variable entry.
-.2ed8	a5 04		lda $04				lda 	temp0 						; push address of new variable entry on the stack
-.2eda	48		pha				pha
-.2edb	a5 05		lda $05				lda 	temp0+1
-.2edd	48		pha				pha
-.2ede	ad 25 0b	lda $0b25			lda 	varType 					; push variable type on the stack.
-.2ee1	48		pha				pha
-.2ee2	a9 00		lda #$00			lda 	#0 							; work out the array dimension on TOS.
-.2ee4	a2 04		ldx #$04		ldx	#4
-.2ee6	20 d9 22	jsr $22d9		jsr	mainHandler
-.2ee9	a2 00		ldx #$00		ldx	#0
-.2eeb	20 d9 22	jsr $22d9		jsr	mainHandler
-.2eee	68		pla				pla 		 						; restore type and position.
-.2eef	8d 25 0b	sta $0b25			sta 	varType
-.2ef2	68		pla				pla
-.2ef3	85 05		sta $05				sta 	temp0+1
-.2ef5	68		pla				pla
-.2ef6	85 04		sta $04				sta 	temp0
-.2ef8	a5 50		lda $50				lda 	esInt1 						; limit array max to 4096.
-.2efa	29 e0		and #$e0			and 	#$E0
-.2efc	05 58		ora $58				ora 	esInt2
-.2efe	05 60		ora $60				ora 	esInt3
-.2f00	f0 0f		beq $2f11			beq 	_CASizeOk
-.2f02					_CASize:
-.2f02	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
-.2f04	20 a3 23	jsr $23a3		jsr	errorHandler
-.2f07					_CAFound:
-.2f07	a2 19		ldx #$19			ldx 	#ErrorID_DupArray
-.2f09	20 a3 23	jsr $23a3		jsr	errorHandler
-.2f0c					_CANotArray:
-.2f0c	a2 1a		ldx #$1a			ldx 	#ErrorID_NotArray
-.2f0e	20 a3 23	jsr $23a3		jsr	errorHandler
-.2f11					_CASizeOk:
-.2f11	e6 48		inc $48				inc 	esInt0 						; bump it by one, as we index from 0
-.2f13	d0 02		bne $2f17			bne 	_CANoCarry 					; e.g. DIM A(10) ... A(0) - A(10)
-.2f15	e6 49		inc $49				inc 	esInt0+1
-.2f17					_CANoCarry:
-.2f17	98		tya				tya
-.2f18	48		pha				pha
-.2f19	a0 05		ldy #$05			ldy 	#5
-.2f1b	a5 0f		lda $0f				lda 	lowMemory 					; copy low memory address in +5,+6
-.2f1d	91 04		sta ($04),y			sta 	(temp0),y 					; this is where it will come from
-.2f1f	c8		iny				iny
-.2f20	a5 10		lda $10				lda 	lowMemory+1
-.2f22	91 04		sta ($04),y			sta 	(temp0),y
-.2f24	c8		iny				iny
-.2f25	a5 48		lda $48				lda 	esInt0 						; copy maximum index value to +7,+8
-.2f27	91 04		sta ($04),y			sta 	(temp0),y
-.2f29	c8		iny				iny
-.2f2a	a5 50		lda $50				lda 	esInt1
-.2f2c	91 04		sta ($04),y			sta 	(temp0),y
-.2f2e	c8		iny				iny
-.2f2f	ae 25 0b	ldx $0b25			ldx 	varType 					; get the length per element
-.2f32	bd 3a 2f	lda $2f3a,x			lda 	_CAActualSize-$3A-1,x
-.2f35	91 04		sta ($04),y			sta 	(temp0),y
-.2f37	aa		tax				tax 								; save size in X
-.2f38	a5 0f		lda $0f				lda 	lowMemory 					; set temp0 to low memory.
-.2f3a	85 04		sta $04				sta 	temp0
-.2f3c	a5 10		lda $10				lda 	lowMemory+1
-.2f3e	85 05		sta $05				sta 	temp0+1
-.2f40	a9 00		lda #$00			lda 	#0 							; temp1 is the counter.
-.2f42	85 06		sta $06				sta 	temp1
-.2f44	85 07		sta $07				sta 	temp1+1
-.2f46					_CAInitialiseArray:
-.2f46	a0 00		ldy #$00			ldy 	#0 							; write a null record at temp0
-.2f48	ad 25 0b	lda $0b25			lda 	varType 					; base type of array in A.
-.2f4b	29 fe		and #$fe			and 	#$FE
-.2f4d	20 8c 2e	jsr $2e8c			jsr 	ZeroTemp0Y
-.2f50	8a		txa				txa 								; add X to temp0, also updating lowMemory
-.2f51	18		clc				clc
-.2f52	65 04		adc $04				adc 	temp0
-.2f54	85 04		sta $04				sta 	temp0
-.2f56	85 0f		sta $0f				sta 	lowMemory
-.2f58	a5 05		lda $05				lda 	temp0+1
-.2f5a	69 00		adc #$00			adc 	#0
-.2f5c	85 05		sta $05				sta 	temp0+1
-.2f5e	85 10		sta $10				sta 	lowMemory+1
-.2f60	e6 06		inc $06				inc 	temp1 						; bump the counter.
-.2f62	d0 02		bne $2f66			bne 	_CAIANoCarry
-.2f64	e6 07		inc $07				inc 	temp1+1
-.2f66					_CAIANoCarry:
-.2f66	a5 48		lda $48				lda 	esInt0 						; counter reached max index
-.2f68	c5 06		cmp $06				cmp 	temp1
-.2f6a	d0 da		bne $2f46			bne 	_CAInitialiseArray
-.2f6c	a5 50		lda $50				lda 	esInt1
-.2f6e	c5 07		cmp $07				cmp 	temp1+1
-.2f70	d0 d4		bne $2f46			bne 	_CAInitialiseArray
-.2f72	68		pla				pla
-.2f73	a8		tay				tay
-.2f74	60		rts				rts
-.2f75					_CAActualSize:
->2f75	04 00						.byte 	VarISize,0
->2f77	02 00						.byte 	VarSSize,0
->2f79	06 00						.byte 	VarFSize,0
->2f7b	db						.byte 	$DB
+.2ed1					CreateArray:
+.2ed1	20 95 2d	jsr $2d95			jsr 	AccessSetup 				; set up the basic stuff.
+.2ed4	ad 25 0b	lda $0b25			lda 	varType 					; is the variable type an array
+.2ed7	4a		lsr a				lsr 	a
+.2ed8	90 3f		bcc $2f19			bcc 	_CANotArray 				; no, cause an error.
+.2eda	20 89 2f	jsr $2f89			jsr 	FindVariable 				; does the variable exist already
+.2edd	b0 35		bcs $2f14			bcs 	_CAFound 					; cannot redefine it.
+.2edf	20 48 2e	jsr $2e48			jsr 	CreateVariable 				; create the variable entry.
+.2ee2	ac 26 0b	ldy $0b26			ldy 	varEnd 						; point Y to the end of the variable entry.
+.2ee5	a5 04		lda $04				lda 	temp0 						; push address of new variable entry on the stack
+.2ee7	48		pha				pha
+.2ee8	a5 05		lda $05				lda 	temp0+1
+.2eea	48		pha				pha
+.2eeb	ad 25 0b	lda $0b25			lda 	varType 					; push variable type on the stack.
+.2eee	48		pha				pha
+.2eef	a9 00		lda #$00			lda 	#0 							; work out the array dimension on TOS.
+.2ef1	a2 04		ldx #$04		ldx	#4
+.2ef3	20 d9 22	jsr $22d9		jsr	mainHandler
+.2ef6	a2 00		ldx #$00		ldx	#0
+.2ef8	20 d9 22	jsr $22d9		jsr	mainHandler
+.2efb	68		pla				pla 		 						; restore type and position.
+.2efc	8d 25 0b	sta $0b25			sta 	varType
+.2eff	68		pla				pla
+.2f00	85 05		sta $05				sta 	temp0+1
+.2f02	68		pla				pla
+.2f03	85 04		sta $04				sta 	temp0
+.2f05	a5 50		lda $50				lda 	esInt1 						; limit array max to 4096.
+.2f07	29 e0		and #$e0			and 	#$E0
+.2f09	05 58		ora $58				ora 	esInt2
+.2f0b	05 60		ora $60				ora 	esInt3
+.2f0d	f0 0f		beq $2f1e			beq 	_CASizeOk
+.2f0f					_CASize:
+.2f0f	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
+.2f11	20 a3 23	jsr $23a3		jsr	errorHandler
+.2f14					_CAFound:
+.2f14	a2 19		ldx #$19			ldx 	#ErrorID_DupArray
+.2f16	20 a3 23	jsr $23a3		jsr	errorHandler
+.2f19					_CANotArray:
+.2f19	a2 1a		ldx #$1a			ldx 	#ErrorID_NotArray
+.2f1b	20 a3 23	jsr $23a3		jsr	errorHandler
+.2f1e					_CASizeOk:
+.2f1e	e6 48		inc $48				inc 	esInt0 						; bump it by one, as we index from 0
+.2f20	d0 02		bne $2f24			bne 	_CANoCarry 					; e.g. DIM A(10) ... A(0) - A(10)
+.2f22	e6 49		inc $49				inc 	esInt0+1
+.2f24					_CANoCarry:
+.2f24	98		tya				tya
+.2f25	48		pha				pha
+.2f26	a0 05		ldy #$05			ldy 	#5
+.2f28	a5 0f		lda $0f				lda 	lowMemory 					; copy low memory address in +5,+6
+.2f2a	91 04		sta ($04),y			sta 	(temp0),y 					; this is where it will come from
+.2f2c	c8		iny				iny
+.2f2d	a5 10		lda $10				lda 	lowMemory+1
+.2f2f	91 04		sta ($04),y			sta 	(temp0),y
+.2f31	c8		iny				iny
+.2f32	a5 48		lda $48				lda 	esInt0 						; copy maximum index value to +7,+8
+.2f34	91 04		sta ($04),y			sta 	(temp0),y
+.2f36	c8		iny				iny
+.2f37	a5 50		lda $50				lda 	esInt1
+.2f39	91 04		sta ($04),y			sta 	(temp0),y
+.2f3b	c8		iny				iny
+.2f3c	ae 25 0b	ldx $0b25			ldx 	varType 					; get the length per element
+.2f3f	bd 47 2f	lda $2f47,x			lda 	_CAActualSize-$3A-1,x
+.2f42	91 04		sta ($04),y			sta 	(temp0),y
+.2f44	aa		tax				tax 								; save size in X
+.2f45	a5 0f		lda $0f				lda 	lowMemory 					; set temp0 to low memory.
+.2f47	85 04		sta $04				sta 	temp0
+.2f49	a5 10		lda $10				lda 	lowMemory+1
+.2f4b	85 05		sta $05				sta 	temp0+1
+.2f4d	a9 00		lda #$00			lda 	#0 							; temp1 is the counter.
+.2f4f	85 06		sta $06				sta 	temp1
+.2f51	85 07		sta $07				sta 	temp1+1
+.2f53					_CAInitialiseArray:
+.2f53	a0 00		ldy #$00			ldy 	#0 							; write a null record at temp0
+.2f55	ad 25 0b	lda $0b25			lda 	varType 					; base type of array in A.
+.2f58	29 fe		and #$fe			and 	#$FE
+.2f5a	20 99 2e	jsr $2e99			jsr 	ZeroTemp0Y
+.2f5d	8a		txa				txa 								; add X to temp0, also updating lowMemory
+.2f5e	18		clc				clc
+.2f5f	65 04		adc $04				adc 	temp0
+.2f61	85 04		sta $04				sta 	temp0
+.2f63	85 0f		sta $0f				sta 	lowMemory
+.2f65	a5 05		lda $05				lda 	temp0+1
+.2f67	69 00		adc #$00			adc 	#0
+.2f69	85 05		sta $05				sta 	temp0+1
+.2f6b	85 10		sta $10				sta 	lowMemory+1
+.2f6d	e6 06		inc $06				inc 	temp1 						; bump the counter.
+.2f6f	d0 02		bne $2f73			bne 	_CAIANoCarry
+.2f71	e6 07		inc $07				inc 	temp1+1
+.2f73					_CAIANoCarry:
+.2f73	a5 48		lda $48				lda 	esInt0 						; counter reached max index
+.2f75	c5 06		cmp $06				cmp 	temp1
+.2f77	d0 da		bne $2f53			bne 	_CAInitialiseArray
+.2f79	a5 50		lda $50				lda 	esInt1
+.2f7b	c5 07		cmp $07				cmp 	temp1+1
+.2f7d	d0 d4		bne $2f53			bne 	_CAInitialiseArray
+.2f7f	68		pla				pla
+.2f80	a8		tay				tay
+.2f81	60		rts				rts
+.2f82					_CAActualSize:
+>2f82	04 00						.byte 	VarISize,0
+>2f84	02 00						.byte 	VarSSize,0
+>2f86	06 00						.byte 	VarFSize,0
+>2f88	db						.byte 	$DB
 
 ;******  Return to file: variable/variable.asm
 
 
 ;******  Processing file: variable/find.asm
 
-.2f7c					FindVariable:
-.2f7c	98		tya				tya
-.2f7d	48		pha				pha
-.2f7e	98		tya				tya 								; point temp2 to the actual name.
-.2f7f	18		clc				clc
-.2f80	65 02		adc $02				adc 	codePtr
-.2f82	85 08		sta $08				sta 	temp2
-.2f84	a5 03		lda $03				lda 	codePtr+1
-.2f86	69 00		adc #$00			adc 	#0
-.2f88	85 09		sta $09				sta 	temp2+1
-.2f8a	a0 00		ldy #$00			ldy 	#0
-.2f8c	a5 7c		lda $7c				lda 	hashList 					; copy hashlist to temp0
-.2f8e	85 04		sta $04				sta 	temp0
-.2f90	a5 7d		lda $7d				lda 	hashList+1
-.2f92	85 05		sta $05				sta 	temp0+1
-.2f94	a0 01		ldy #$01	_FVNext:ldy 	#1 							; get MSB
-.2f96	b1 04		lda ($04),y			lda 	(temp0),y
-.2f98	f0 2c		beq $2fc6			beq 	_FVFail
-.2f9a	aa		tax				tax
-.2f9b	88		dey				dey		 							; get LSB
-.2f9c	b1 04		lda ($04),y			lda 	(temp0),y
-.2f9e	85 04		sta $04				sta 	temp0 						; update pointer.
-.2fa0	86 05		stx $05				stx 	temp0+1
-.2fa2	a0 04		ldy #$04			ldy 	#4 							; check hashes match
-.2fa4	b1 04		lda ($04),y			lda 	(temp0),y
-.2fa6	cd 24 0b	cmp $0b24			cmp 	varHash
-.2fa9	d0 e9		bne $2f94			bne 	_FVNext 					; if not, no point in checking the name.
-.2fab	88		dey				dey 								; copy name pointer to temp1.
-.2fac	b1 04		lda ($04),y			lda 	(temp0),y
-.2fae	85 07		sta $07				sta 	temp1+1
-.2fb0	88		dey				dey
+.2f89					FindVariable:
+.2f89	98		tya				tya
+.2f8a	48		pha				pha
+.2f8b	98		tya				tya 								; point temp2 to the actual name.
+.2f8c	18		clc				clc
+.2f8d	65 02		adc $02				adc 	codePtr
+.2f8f	85 08		sta $08				sta 	temp2
+.2f91	a5 03		lda $03				lda 	codePtr+1
+.2f93	69 00		adc #$00			adc 	#0
+.2f95	85 09		sta $09				sta 	temp2+1
+.2f97	a0 00		ldy #$00			ldy 	#0
+.2f99	a5 7c		lda $7c				lda 	hashList 					; copy hashlist to temp0
+.2f9b	85 04		sta $04				sta 	temp0
+.2f9d	a5 7d		lda $7d				lda 	hashList+1
+.2f9f	85 05		sta $05				sta 	temp0+1
+.2fa1	a0 01		ldy #$01	_FVNext:ldy 	#1 							; get MSB
+.2fa3	b1 04		lda ($04),y			lda 	(temp0),y
+.2fa5	f0 2c		beq $2fd3			beq 	_FVFail
+.2fa7	aa		tax				tax
+.2fa8	88		dey				dey		 							; get LSB
+.2fa9	b1 04		lda ($04),y			lda 	(temp0),y
+.2fab	85 04		sta $04				sta 	temp0 						; update pointer.
+.2fad	86 05		stx $05				stx 	temp0+1
+.2faf	a0 04		ldy #$04			ldy 	#4 							; check hashes match
 .2fb1	b1 04		lda ($04),y			lda 	(temp0),y
-.2fb3	85 06		sta $06				sta 	temp1
-.2fb5	a0 00		ldy #$00			ldy 	#0
-.2fb7					_FVCheck:
-.2fb7	b1 06		lda ($06),y			lda 	(temp1),y 					; compare names
-.2fb9	d1 08		cmp ($08),y			cmp 	(temp2),y
-.2fbb	d0 d7		bne $2f94			bne 	_FVNext		 				; fail if different.
-.2fbd	c8		iny				iny
-.2fbe	c9 3a		cmp #$3a			cmp 	#$3A 						; until reached the end marker.
-.2fc0	90 f5		bcc $2fb7			bcc 	_FVCheck
-.2fc2	68		pla				pla
-.2fc3	a8		tay				tay
-.2fc4	38		sec				sec
-.2fc5	60		rts				rts
-.2fc6					_FVFail:
-.2fc6	68		pla				pla
-.2fc7	a8		tay				tay
-.2fc8	18		clc				clc
-.2fc9	60		rts				rts
+.2fb3	cd 24 0b	cmp $0b24			cmp 	varHash
+.2fb6	d0 e9		bne $2fa1			bne 	_FVNext 					; if not, no point in checking the name.
+.2fb8	88		dey				dey 								; copy name pointer to temp1.
+.2fb9	b1 04		lda ($04),y			lda 	(temp0),y
+.2fbb	85 07		sta $07				sta 	temp1+1
+.2fbd	88		dey				dey
+.2fbe	b1 04		lda ($04),y			lda 	(temp0),y
+.2fc0	85 06		sta $06				sta 	temp1
+.2fc2	a0 00		ldy #$00			ldy 	#0
+.2fc4					_FVCheck:
+.2fc4	b1 06		lda ($06),y			lda 	(temp1),y 					; compare names
+.2fc6	d1 08		cmp ($08),y			cmp 	(temp2),y
+.2fc8	d0 d7		bne $2fa1			bne 	_FVNext		 				; fail if different.
+.2fca	c8		iny				iny
+.2fcb	c9 3a		cmp #$3a			cmp 	#$3A 						; until reached the end marker.
+.2fcd	90 f5		bcc $2fc4			bcc 	_FVCheck
+.2fcf	68		pla				pla
+.2fd0	a8		tay				tay
+.2fd1	38		sec				sec
+.2fd2	60		rts				rts
+.2fd3					_FVFail:
+.2fd3	68		pla				pla
+.2fd4	a8		tay				tay
+.2fd5	18		clc				clc
+.2fd6	60		rts				rts
 
 ;******  Return to file: variable/variable.asm
 
 
 ;******  Processing file: variable/reset.asm
 
-.2fca					HashTableReset:
-.2fca	a2 60		ldx #$60			ldx 	#6*2*hashTableSize
-.2fcc	a9 00		lda #$00			lda 	#0
-.2fce					_HTRClear:
-.2fce	9d 67 0a	sta $0a67,x			sta 	hashTables-1,x
-.2fd1	ca		dex				dex
-.2fd2	d0 fa		bne $2fce			bne 	_HTRClear
-.2fd4	60		rts				rts
+.2fd7					HashTableReset:
+.2fd7	a2 60		ldx #$60			ldx 	#6*2*hashTableSize
+.2fd9	a9 00		lda #$00			lda 	#0
+.2fdb					_HTRClear:
+.2fdb	9d 67 0a	sta $0a67,x			sta 	hashTables-1,x
+.2fde	ca		dex				dex
+.2fdf	d0 fa		bne $2fdb			bne 	_HTRClear
+.2fe1	60		rts				rts
 
 ;******  Return to file: variable/variable.asm
 
-.2fd5					variableHandler:
-.2fd5	7c d8 2f	jmp ($2fd8,x)			jmp 	(variableVectors,x)
-.2fd8					variableVectors:
->2fd8	21 2d					.word AccessVariable       ; index 0
->2fda	c4 2e					.word CreateArray          ; index 2
->2fdc	ca 2f					.word HashTableReset       ; index 4
+.2fe2					variableHandler:
+.2fe2	7c e5 2f	jmp ($2fe5,x)			jmp 	(variableVectors,x)
+.2fe5					variableVectors:
+>2fe5	2e 2d					.word AccessVariable       ; index 0
+>2fe7	d1 2e					.word CreateArray          ; index 2
+>2fe9	d7 2f					.word HashTableReset       ; index 4
 
 ;******  Return to file: basic.asm
 
-.2fde					section_end_variable:
+.2feb					section_end_variable:
 
 ;******  End of listing

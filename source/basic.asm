@@ -15,6 +15,7 @@
 	.include "interaction/interaction.inc"
 	.include "string/memory.inc"
 	.include "string/string.inc"
+	.include "tokeniser/detokenise/colouring.inc"
 	.include "tokeniser/tokeniser.inc"
 	.include "variable/variable.inc"
 	.section code
