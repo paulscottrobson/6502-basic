@@ -4,6 +4,7 @@
 ;		Name:		x16io.asm
 ;		Purpose:	Input/Output x16
 ;		Created:	28th February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,9 +19,9 @@
 ; ************************************************************************************************
 
 IOInitialise: ;; <initialise>
-		lda 	#15
+		lda 	#15 						; switch to upper/lower case mode
 		jsr 	IOPrintChar
-		lda 	#2
+		lda 	#2 							; green on black and clear screen
 		jsr 	IOInk
 		lda 	#0
 		jsr 	IOPaper
@@ -35,7 +36,7 @@ IOInitialise: ;; <initialise>
 
 IOClearScreen: ;; <clear>
 		pha
-		lda	 	#147
+		lda	 	#147 						; char code $93 clears screen
 		jsr 	IOPrintChar
 		pla
 		rts
@@ -73,14 +74,14 @@ IOTab: ;; <tab>
 ; ************************************************************************************************
 
 IOPrintChar: ;; <print>
-		tax
+		tax 								; save in X so we can save Y
 		phy
 		txa
-		cmp 	#8 							; make BS (8) onto CHR$(14)
-		bne 	_IOPCNotBS
+		cmp 	#8 							; make BS (8) onto CHR$(14) which is the
+		bne 	_IOPCNotBS 					; Commodore/X16 backspace code.
 		lda 	#$14
 _IOPCNotBS:
-		jsr 	$FFD2
+		jsr 	$FFD2 						; CBM OS Call.
 		ply
 		rts
 
@@ -93,21 +94,22 @@ _IOPCNotBS:
 ; ************************************************************************************************
 
 IOInkey: ;; <inkey>
-		.pshy
+		.pshy 								; read key with Y protected
 		jsr 	$FFE4
 		sta 	tempShort
 		.puly
-		lda 	tempShort				; no key pressed.
+		lda 	tempShort					; no key pressed.
 		beq 	_IOIExit
-		cmp 	#13 					; allow CR
+		cmp 	#13 						; allow CR (13)
 		beq 	_IOIExit
-		cmp 	#$14 					; backspace code
+		cmp 	#$14 						; backspace code ($14) returns 8.
 		beq 	_IOIBackspace
-		cmp 	#32
+		cmp 	#32 						; no other control allowed.
 		bcc 	IOInkey
 		bcs 	_IOIExit
+
 _IOIBackspace:
-		lda 	#8 						; return chr(8)		
+		lda 	#8 							; return chr(8)		
 _IOIExit:		
 		rts
 
@@ -119,9 +121,9 @@ _IOIExit:
 
 IOInk:	 ;; <ink>
 		pha
-		and 	#7
+		and 	#7 							; 8 primaries
 		tax
-		lda 	_IOColourTable,x
+		lda 	_IOColourTable,x 			; look up CBM code and print it.
 		jsr 	IOPrintChar
 		pla
 		rts
@@ -145,8 +147,8 @@ _IOColourTable:
 IOPaper: ;; <paper>
 		pha
 		pha
-		lda 	#1 						; 1 swaps fgr/bgr
-		jsr 	IOPrintChar
+		lda 	#1 						; 1 swaps fgr/bgr, so we swap them, set fgr
+		jsr 	IOPrintChar 			; and then swap them again.
 		pla
 		jsr 	IOInk
 		lda 	#1
@@ -162,12 +164,12 @@ IOPaper: ;; <paper>
 
 IOLocate: ;; <locate>
 		pha
-		lda 	#$13 					; home
+		lda 	#$13 					; home cursor code
 		jsr 	IOPrintChar
 		lda 	#$11 	 				; print Y x $11 (down)		
 		jsr 	_IOLoc2 
-		.puly 							; horizontal pos in A
-		lda 	#$1D 					
+		.puly 							; horizontal pos in A now
+		lda 	#$1D 					; print Y x $1D (right)
 _IOLoc2:		
 		cpy 	#0
 		beq 	_IOLocExit

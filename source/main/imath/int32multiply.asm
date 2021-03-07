@@ -4,6 +4,7 @@
 ;		Name:		int32multiply.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	32 bit unsigned multiply
 ;
 ; *****************************************************************************
@@ -22,7 +23,7 @@ MInt32Multiply:
 		jsr 	MInt32CopyUp
 		dex 	
 		jsr 	MInt32CopyUp 				; copy 1st -> 2nd
-		jsr 	MInt32False 					; zero 1st.
+		jsr 	MInt32False 				; zero 1st.
 _I32Loop:
 		lda 	esInt0+2,x 					; get low bit of 3rd
 		and 	#1

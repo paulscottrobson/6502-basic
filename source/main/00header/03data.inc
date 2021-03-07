@@ -4,6 +4,7 @@
 ;		Name:		03data.inc
 ;		Purpose:	Common data handlers
 ;		Created:	21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -103,6 +104,9 @@ convertBuffer:								; buffer for numeric conversions
 
 		.send storage
 
+;
+;		Include constants associated with tokens.
+;
 		.include "../../generated/tokenconst.inc"
 
 TYPE_INT =		($3A) 						; type bytes that end identifier.
@@ -111,3 +115,4 @@ TYPE_STR =		($3C)
 TYPE_STRARRAY =	($3D)
 TYPE_FLOAT =	($3E)
 TYPE_FLOATARRAY=($3F)
+

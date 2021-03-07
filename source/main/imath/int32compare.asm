@@ -4,6 +4,7 @@
 ;		Name:		int32compare.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	Simple 32 bit compare routines
 ;
 ; *****************************************************************************
@@ -19,7 +20,7 @@
 ; *****************************************************************************
 
 MInt32Compare:
-		lda 	esInt0,x 					; equality check.
+		lda 	esInt0,x 					; equality check first.
 		cmp 	esInt0+1,x
 		bne 	MInt32Compare2
 		lda 	esInt1,x
@@ -29,10 +30,12 @@ MInt32Compare:
 		cmp 	esInt2+1,x
 		bne 	MInt32Compare2
 		lda 	esInt3,x
-		eor 	esInt3+1,x 					; will return 0 if the same.
+		eor 	esInt3+1,x 					; EOR will return 0 if the same.
 		bne 	MInt32Compare2
 		rts
-
+;
+;		Different so subtract to work out larger
+;
 MInt32Compare2:
 		lda		esInt0,x 					; unsigned 32 bit comparison.
 		cmp 	esInt0+1,x		
@@ -42,7 +45,7 @@ MInt32Compare2:
 		sbc 	esInt2+1,x		
 		lda		esInt3,x
 		sbc 	esInt3+1,x		
-		bvc 	_I32LNoOverflow 			; make it signed 32 bi comparison
+		bvc 	_I32LNoOverflow 			; make it signed 32 bit comparison
 		eor 	#$80
 _I32LNoOverflow		
 		bmi 	MInt32CLess					; if -ve then return $FF

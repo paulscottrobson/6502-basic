@@ -4,6 +4,7 @@
 ;		Name:		int32unary.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	Simple 32 bit unary operations
 ;
 ; *****************************************************************************
@@ -33,7 +34,7 @@ MInt32Absolute:
 ; *****************************************************************************
 
 MInt32Negate:
-		sec
+		sec 								; subtract from zero.
 		lda 	#0
 		sbc 	esInt0,x
 		sta 	esInt0,x
@@ -55,7 +56,7 @@ MInt32Negate:
 ; *****************************************************************************
 
 MInt32Not:
-		lda 	esInt0,x
+		lda 	esInt0,x 					; one's complement all four.
 		eor 	#$FF
 		sta 	esInt0,x
 		lda 	esInt1,x
@@ -79,9 +80,9 @@ MInt32Sign:
 		lda 	esInt3,x					; look at MSB
 		bmi 	MInt32True 					; if set return -1 (true)
 		jsr 	MInt32Zero 					; is it zero ?
-		beq 	MInt32False 					; if zero return 0 (false)
-		jsr 	MInt32False 					; > 0 return 1
-		inc 	esInt0,x 
+		beq 	MInt32False 				; if zero return 0 (false)
+		jsr 	MInt32False 				; > 0 return 1, by setting it to zero
+		inc 	esInt0,x  					; and bumping the LSB.
 		rts
 
 ; *****************************************************************************
@@ -112,8 +113,8 @@ MInt32Write123:
 ; *****************************************************************************
 		
 MInt32Set8Bit:
-		sta 	esInt0,x
-		lda 	#0
+		sta 	esInt0,x 					; coopt above function to write
+		lda 	#0 							; a value 0-255
 		beq		MInt32Write123
 
 ; *****************************************************************************
@@ -163,11 +164,11 @@ MInt32Zero:
 
 MInt32Random:
 		.pshy
-		ldy 	#7
-		lda 	MSeed32+0
+		ldy 	#7 							; do it 7 times
+		lda 	MSeed32+0 					; check the seed isn't zero
 		bne 	_Random1
-		tay
-		lda		#$AA
+		tay 								; if so do it 256 times
+		lda		#$AA 						; and use this to seed the seed....
 _Random1:
 		asl 	a
 		rol 	MSeed32+1
@@ -178,7 +179,8 @@ _Random1:
 _Random2:		
 		dey
 		bne 	_Random1
-		sta 	MSeed32+0
+
+		sta 	MSeed32+0 					; copy the seed in.
 		sta 	esInt0,x
 		lda 	MSeed32+1
 		sta 	esInt1,x

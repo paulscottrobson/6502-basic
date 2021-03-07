@@ -4,7 +4,6 @@
 	.include "main/00header/01common.inc"
 	.include "main/00header/02macros.inc"
 	.include "main/00header/03data.inc"
-	.include "main/imath/intmacros.inc"
 	.include "main/main.inc"
 	.include "assembler/assembler.inc"
 	.include "device/device.inc"

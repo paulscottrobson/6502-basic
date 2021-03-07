@@ -21,6 +21,9 @@ Incomplete but hooked in for write and test
 
 	Number stack overflow.
 
+	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
+	need 6502 versions along with dispatch macro.
+	
 Notes
 =====
 	Stack position fudged for readability.

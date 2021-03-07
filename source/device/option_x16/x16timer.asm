@@ -1,9 +1,10 @@
-		; ************************************************************************************************
+; ************************************************************************************************
 ; ************************************************************************************************
 ;
 ;		Name:		x16timer.asm
 ;		Purpose:	X16 timer
 ;		Created:	2nd March 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,15 +19,15 @@
 ; ************************************************************************************************
 
 IOReadTimer: ;; <timer>
-		jsr 	$FFDE
+		jsr 	$FFDE 						; reads timer into YXA so we want only YA
 		pha
 		txa
 		tay
 		pla
 		rts
-
 ;
-;		50Hz clocks, this is not a microtimer, so a x 3 / 4 approximation should be fine
+;	Porting note: The system is designed around 60Hz clock ticks. For 50Hz clocks, 
+;   a x 3 / 4 approximation should be fine.
 ;
 
 		.send code

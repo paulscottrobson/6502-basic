@@ -4,6 +4,7 @@
 ;		Name:		int32binary.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	Simple 32 bit binary logic operations
 ;
 ; *****************************************************************************
