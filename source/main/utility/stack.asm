@@ -4,7 +4,8 @@
 ;		Name:		stack.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		21st February 2021
-;		Purpose:	Stack manager
+;		Reviewed: 	7th March 2021
+;		Purpose:	Stack manager and support routines.
 ;
 ; *****************************************************************************
 ; *****************************************************************************

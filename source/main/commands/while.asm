@@ -4,6 +4,7 @@
 ;		Name:		while.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		1st March 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	While/Wend
 ;
 ; *****************************************************************************
@@ -25,7 +26,7 @@ Command_While: 	;; [While]
 		jsr 	RSSavePosition 				; save position before the WHILE keyword.
 		iny
 		jsr 	EvaluateInteger				; get the conditional
-		jsr 	MInt32Zero 	 				; if zero, skip forward.
+		jsr 	MInt32Zero 	 				; if zero, skip forward to the fail code.
 		beq 	_CWFail
 		rts
 		;

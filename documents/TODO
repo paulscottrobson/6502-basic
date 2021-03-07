@@ -2,7 +2,7 @@ TODO
 ====
 Start Code Reading/Review..
 Version 0.11
-
+	- don't review detokeniser yet.
 Tokenising
 Interactive.
 
@@ -23,6 +23,8 @@ Incomplete but hooked in for write and test
 
 	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
 	need 6502 versions along with dispatch macro.
+	
+	scanner.asm skipping embedded float.
 	
 Notes
 =====

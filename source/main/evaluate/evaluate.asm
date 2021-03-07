@@ -4,6 +4,7 @@
 ;		Name:		evaluate.asm
 ;		Purpose:	Main evaluation code
 ;		Created:	22nd February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -61,6 +62,9 @@ _ELIsToken:
 		beq 	_ELIsString
 		cmp 	#TOK_FPC 					; if no, then check unary.
 		bne 	_ELCheckUnary
+		;
+		;		Found a floating point record
+		;
 		txa 								; put X into A
 		iny 								; skip over the float marker
 		.floatingpoint_importtoken 			; import tokenise floating point
@@ -186,7 +190,7 @@ _ELIndirect:
 		lda 	#$20 						; now $00 if !, $20 if ?
 _ELHaveModifier:
 		ora 	#$80						; make it the appropriate reference.
-		sta 	esType,x
+		sta 	esType,x 					; $80 for ! $A0 for ?
 		jmp 	_ELHasTerm
 		;
 		;		Indirect call (temp0)
@@ -214,133 +218,6 @@ UnaryParenthesis:	;; [(]
 		jsr 	CheckRightParen 			; check for )
 		rts
 
-; ************************************************************************************************
-;
-;									Evaluate various terms
-;
-; ************************************************************************************************
-
-EvaluateTerm:
-		lda 	#15
-		jsr 	EvaluateLevel
-		jsr 	DereferenceOne
-		rts
-
-EvaluateNumericTerm:
-		jsr 	EvaluateTerm
-		lda 	esType,x
-		asl 	a 							; see if it's a string.
-		bmi 	ENTType
-		rts
-
-EvaluateIntegerTerm:
-		jsr 	EvaluateTerm
-		lda 	esType,x
-		bne 	ENTType
-		rts
-
-ENTType:
-		error 	BadType
-
-; ************************************************************************************************
-;
-;									Evaluate various expressions
-;
-; ************************************************************************************************
-
-EvaluateRoot: 								; evaluate at bottom stack level
-		ldx 	#0
-Evaluate:
-		lda 	#0
-		jsr 	EvaluateLevel
-		jsr 	DereferenceOne
-		rts
-
-EvaluateNumeric:
-		jsr 	Evaluate
-		lda 	esType,x
-		asl 	a 							; see if it's a string.
-		bmi 	ENTType
-		lsr 	a 							; shift float flag into carry.
-		lsr 	a
-		rts
-
-EvaluateString:
-		jsr 	Evaluate
-		lda 	esType,x
-		asl 	a 							; see if it's a string.
-		bpl 	ENTType
-		rts
-
-EvaluateRootInteger:
-		ldx 	#0
-EvaluateInteger:
-		jsr 	Evaluate
-		lda 	esType,x
-		bne 	ENTType
-		rts
-
-EvaluateSmallInteger:
-		jsr 	EvaluateInteger
-		lda 	esInt1,x
-		ora 	esInt2,x
-		ora 	esInt3,x
-		bne 	_ESIValue
-		lda 	esInt0,x
-		rts
-
-_ESIValue:
-		error 	BadValue
-
-; ************************************************************************************************
-;
-;											Links
-;
-; ************************************************************************************************
-
-LinkEvaluate: 	;; <evaluate>
-		tax
-		jsr 	Evaluate
-		txa
-		rts
-
-LinkEvaluateTerm: 	;; <evaluateterm>
-		tax
-		jsr 	EvaluateTerm
-		txa
-		rts
-
-LinkEvaluateInteger: 	;; <evaluateint>
-		tax
-		jsr 	EvaluateInteger
-		txa
-		rts
-
-LinkEvaluateSmallInt: 	;; <evaluatesmall>
-		tax
-		jsr 	EvaluateSmallInteger
-		txa
-		rts
-
-; ************************************************************************************************
-;
-;									Evaluate a reference
-;
-; ************************************************************************************************
-				
-EvaluateReference:
-		;
-		;		Get the precedence level of !, also ?, to evaluate a refrence
-		;
-		lda 	ELBinaryOperatorInfo+TKW_PLING-TOK_BINARYST
-		sec 								; sub 1 to allow a!x b?x to work.
-		sbc 	#1
-		jsr 	EvaluateLevel
-		lda 	esType,x
-		bpl 	_ERFail
-		rts
-_ERFail:
-		error 	NoReference		
 
 ; ************************************************************************************************
 ;

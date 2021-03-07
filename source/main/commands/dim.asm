@@ -2,8 +2,9 @@
 ; ************************************************************************************************
 ;
 ;		Name:		dim.asm
-;		Purpose:	Array dimensioning
+;		Purpose:	Array dimensioning (work done in variable module)
 ;		Created:	6th March 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************

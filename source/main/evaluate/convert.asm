@@ -53,8 +53,8 @@ _ESCloneExit:
 UnaryVal:		;; [val(]
 		sec 								; Carry set to return value
 		bcs 	ValueMain
-UnaryIsVal:		;; [isval(] 				; Carry clear to return legitimacy
-		clc
+UnaryIsVal:		;; [isval(] 				
+		clc									; Carry clear to return legitimacy
 ValueMain:
 		php 								; save results (CS is value, CC is validation)
 		jsr 	EvaluateString

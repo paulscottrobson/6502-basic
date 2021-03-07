@@ -4,6 +4,7 @@
 ;		Name:		if.asm
 ;		Purpose:	Conditional execution
 ;		Created:	28th February 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,7 +19,7 @@
 ; ************************************************************************************************
 
 CommandIf: ;; [if]
-		jsr 	EvaluateRootInteger 		; if what ?
+		jsr 	EvaluateRootInteger 		; get what's being tested.
 		;
 		lda 	(codePtr),y 				; check for IF .. THEN or IF .. GOTO which are single lines.
 		cmp 	#TKW_GOTO

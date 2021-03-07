@@ -4,6 +4,7 @@
 ;		Name:		event.asm
 ;		Purpose:	Event() function
 ;		Created:	3rd March 2021
+;		Reviewed: 	7th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,19 +19,19 @@
 ; ************************************************************************************************
 
 EventFunction:	;; [event(]
-		jsr 	EvaluateReference			; get the variable reference.
+		jsr 	EvaluateReference			; get the variable reference that tracks the event
 		lda 	esType,x  			
-		cmp 	#$80 						; must be int ref
+		cmp 	#$80 						; must be integer reference
 		bne 	_EFType
 		jsr 	CheckComma
 		inx
 		jsr 	EvaluateInteger		 		; get the elapsed time between firing.
-		jsr 	CheckRightParen 			; finish off with the
+		jsr 	CheckRightParen 			; finish off with the right bracket
 		dex
 		;
 
-		lda 	esInt1,x 					; check max of 32767
-		and 	#$80
+		lda 	esInt1,x 					; check max of 32767, we use 16 bit for timers and
+		and 	#$80 						; it doesn't work > 32767
 		ora 	esInt2,x
 		ora 	esInt3,x
 		bne 	_EFValue
@@ -42,10 +43,10 @@ EventFunction:	;; [event(]
 		sta 	temp1
 		.pulx 								; restore X.
 		;
-		jsr 	TOSToTemp0 					; point temp0 to the variable.
+		jsr 	TOSToTemp0 					; set temp0 to the address of the event variable
 		ldy 	#3							; if -ve
 		lda 	(temp0),y
-		bmi 	_EFFail 	 				; straight out with fail, means on pause.
+		bmi 	_EFFail 	 				; straight out with fail, means "on pause".
 		;
 		ldy 	#0 							; is the fire time zero ?
 		lda 	(temp0),y
@@ -78,10 +79,11 @@ _EFValue:
 		error 	BadValue
 _EFType:
 		error 	BadType		
-
-
+;
+;		Add the event rate to the current clock value.
+;
 SetEventTimer:
-		ldy 	#0 							; add elapsed to current time, store in variable
+		ldy 	#0 	
 		clc
 		lda 	temp1
 		adc 	esInt0+1,x
@@ -93,7 +95,7 @@ SetEventTimer:
 		;
 		dey
 		ora 	(temp0),y 					; if the result is non zero, exit
-		bne 	_SETExit
+		bne 	_SETExit 					; zero means initialise.....
 
 		lda 	#1 							; timer zero won't work, so make it 1, which is 
 		sta 	(temp0),y 					; near enough.

@@ -4,6 +4,7 @@
 ;		Name:		scanner.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		1st March 2021
+;		Reviewed: 	7th March 2021
 ;		Purpose:	Scan forward to branch over groups.
 ;
 ; *****************************************************************************
@@ -27,8 +28,8 @@ _SFLoop:lda 	(codePtr),y 				; look at the next token.
 		iny 
 		ldx 	temp2 						; check structure levels are zero.
 		bne 	_SFNoCheck 					; if so, check token against entered values.
-		cmp 	temp1
-		beq 	_SFExit
+		cmp 	temp1 						; if either matches, we've reached the token
+		beq 	_SFExit 					; at the same strcture depth.
 		cmp 	temp1+1
 		beq 	_SFExit
 _SFNoCheck:
@@ -49,7 +50,7 @@ _SFNoCheck:
 		;		This table is in evaluate.asm as it contains binary operator precedence
 		;		and structure data.
 		;
-		sec 								; convert to an offset
+		sec 								; convert to an offset ($FF,$01)
 		sbc 	#$81
 		clc 								; add to depth
 		adc 	temp2
@@ -96,8 +97,8 @@ _SFNLNoCarry:
 		bne		_SFLoop 					; no go round again
 		lda 	temp1
 		cmp 	#TKW_DATA 					; if searching for Data different error.
-		bne 	_SFError
-		error 	DataError 				
+		bne 	_SFError 					; read uses this to search for data statements
+		error 	DataError 					; so we want an appropriate error.
 		;
 		;		Structure error
 		;
