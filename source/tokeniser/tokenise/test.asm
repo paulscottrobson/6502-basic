@@ -1,45 +1,32 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		00start.asm
-;		Purpose:	Start up code.
-;		Created:	21st February 2021
+;		Name:		test.asm
+;		Purpose:	Tokenise testing code.
+;		Created:	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
 		.section code
-Start:	ldx 	#$FF
-		txs
-		
-		jmp 	TokTest
-		
-		.device_initialise
-		set16 	basePage,testBaseAddress
-		set16  	endMemory,$9800
 
-		jmp 	Command_Run
-	
+; ************************************************************************************************
+;
+;								Tokenise testing code.
+;
+; ************************************************************************************************
+
+TokTest:	
+			set16 	codePtr,ttestCode
+			jsr 	Tokenise
+TokStop:	.debug
+			jmp 	TokStop
+
+ttestCode:	.byte 	ttEnd-ttestCode-1
+			.text 	'41 &19F'
+ttEnd:			
+			.word 	$FFFF
+
+
 		.send code
-
-;
-;		Hack to load code in.
-;
-ReturnPos:
-		* = $5000
-testBaseAddress:		
-		.include "../../generated/testcode.inc"
-		* = ReturnPos
-
-; ************************************************************************************************
-;
-;									Changes and Updates
-;
-; ************************************************************************************************
-;
-;		Date			Notes
-;		==== 			=====
-;		07-Mar-21 		Pre code read v0.01
-;
-; ************************************************************************************************

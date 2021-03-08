@@ -5,6 +5,8 @@
 	.include "detokenise/dtprint.asm"
 	.include "detokenise/identifier.asm"
 	.include "detokenise/token.asm"
+	.include "tokenise/test.asm"
+	.include "tokenise/tokenise.asm"
 	.include "tokentext.asm"
 
 .section code
