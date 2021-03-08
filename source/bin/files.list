@@ -69,9 +69,11 @@
 ../source/tokeniser/detokenise/dtprint.asm
 ../source/tokeniser/detokenise/identifier.asm
 ../source/tokeniser/detokenise/token.asm
+../source/tokeniser/tokenise/search.asm
 ../source/tokeniser/tokenise/test.asm
 ../source/tokeniser/tokenise/tokenise.asm
 ../source/tokeniser/tokenise/tokinteger.asm
+../source/tokeniser/tokenise/tokpunct.asm
 ../source/tokeniser/tokentext.asm
 ../source/variable/access.asm
 ../source/variable/accessarray.asm

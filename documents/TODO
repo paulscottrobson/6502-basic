@@ -4,7 +4,6 @@ TODO
 Complete Code Reading/Review => Version 0.11
 
 Tokenising:
-	- tokenise punctuation
 	- tokenise identifiers/tokens
 	- strings
 

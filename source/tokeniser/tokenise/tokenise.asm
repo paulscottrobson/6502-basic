@@ -75,8 +75,9 @@ _TokConst:
 		;		Punctuation token.
 		;
 _TokPunctuation:
-		.debug
-		lda 	#"p"
+		jsr 	TokenisePunctuation
+		bcs 	_TokLoop
+		bcc 	_TokFail
 		;
 		;		Identifier or text token
 		;

@@ -26,3 +26,6 @@ Review List
 ./tokeniser/detokenise/identifier.asm
 ./tokeniser/detokenise/token.asm
 ./tokeniser/tokentext.asm
+
+
+./tokeniser/tokenise/ .... all

@@ -22,9 +22,10 @@ TokTest:
 			jsr 	Tokenise
 TokStop:	.debug
 			jmp 	TokStop
+			lda 	tokenBuffer
 
 ttestCode:	.byte 	ttEnd-ttestCode-1
-			.text 	'41 &FE'
+			.text 	'*>=>>'
 ttEnd:			
 			.word 	$FFFF
 

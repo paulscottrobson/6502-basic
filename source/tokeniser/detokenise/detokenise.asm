@@ -89,7 +89,7 @@ _DTHexConstant:
 		iny
 		lda 	#16		
 		;
-		;		Handle constant base X.
+		;		Handle constant base A.
 		;		
 _DTConstant:
 		pha
