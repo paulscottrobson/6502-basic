@@ -7,6 +7,7 @@
 	.include "detokenise/token.asm"
 	.include "tokenise/test.asm"
 	.include "tokenise/tokenise.asm"
+	.include "tokenise/tokinteger.asm"
 	.include "tokentext.asm"
 
 .section code

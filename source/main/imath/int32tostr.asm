@@ -28,7 +28,10 @@ MCharCount:	.fill 	1						; count of converted characters
 MLInt32ToString: ;; <inttostr>						
 		tax									; module passes stack in A, base in Y
 		tya
-
+		jsr 	MInt32ToString
+		txa
+		rts
+		
 MInt32ToString: 
 		pha 								; save base
 		sta 	tempShort 					; save target base.

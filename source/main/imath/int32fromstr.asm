@@ -23,6 +23,13 @@ fs32Length: 								; length of string being converted.
 ;
 ; *****************************************************************************
 
+LinkInt32FromString: ;; <strtoint>
+		tax
+		tya
+		jsr 	MInt32FromString
+		txa
+		rts
+
 MInt32FromString:
 		sta 	tempShort 					; save base
 		.pshy  								; save Y

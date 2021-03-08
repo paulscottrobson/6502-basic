@@ -38,11 +38,10 @@ TokeniseASCIIZ:
 		;		Main tokenisation loop
 		;
 _TokLoop:
-		.debug
 		lda 	(codePtr),y 				; get next character
 		beq 	_TokExit 					; if zero, then exit.	
 		iny 								; skip over spaces.
-		cmp 	" "
+		cmp 	#" "
 		beq 	_TokLoop
 		dey 								; point back to character.
 		cmp 	#"&"						; Hexadecimal constant.
@@ -69,20 +68,28 @@ _TokHexConst:
 		;		Handle constant in base A
 		;
 _TokConst:
-		.debug
+		jsr 	TokeniseInteger
+		bcs 	_TokLoop
+		bcc 	_TokFail
 		;
 		;		Punctuation token.
 		;
 _TokPunctuation:
 		.debug
+		lda 	#"p"
 		;
 		;		Identifier or text token
 		;
 _TokIdentifier:
 		.debug
+		LDA 	#"I"
 
 _TokExit:		
 		sec
+		rts
+
+_TokFail:
+		clc
 		rts
 
 ; ************************************************************************************************

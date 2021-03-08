@@ -60,4 +60,5 @@ mainVectors:
 	.word LinkEvaluateTerm     ; index 8
 	.word MLInt32ToString      ; index 10
 	.word PrintString          ; index 12
+	.word LinkInt32FromString  ; index 14
 .send code

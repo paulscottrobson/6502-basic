@@ -113,7 +113,8 @@ class Tokeniser(object):
 
 if __name__ == "__main__":
 	tw = Tokeniser()
-	if False:
+	if True:
+		tw.test("4169302")
 		tw.test("42 67 &2A &43")		
 		tw.test('"" "Hello"')
 		tw.test("a a% a%( a$ a$( a# a#(")

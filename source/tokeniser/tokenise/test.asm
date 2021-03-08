@@ -24,7 +24,7 @@ TokStop:	.debug
 			jmp 	TokStop
 
 ttestCode:	.byte 	ttEnd-ttestCode-1
-			.text 	'41 &19F'
+			.text 	'41 &FE'
 ttEnd:			
 			.word 	$FFFF
 

@@ -37,4 +37,9 @@ main_printstring .macro
 	jsr	mainHandler
 	.endm
 
+main_strtoint .macro
+	ldx	#14
+	jsr	mainHandler
+	.endm
+
 .send code
