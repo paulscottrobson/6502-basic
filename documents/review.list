@@ -1,32 +1,25 @@
 Review List
 ===========
 
-;		Reviewed: 	7th March 2021
+;		Reviewed: 	8th March 2021
 
-./main/commands/for.asm
-./main/commands/input.asm
-./main/commands/let.asm
-./main/commands/list.asm
-./main/commands/local.asm
-./main/commands/print.asm
-./main/commands/proc.asm
-./main/commands/readdata.asm
-./main/commands/run.asm
-./main/commands/scanner.asm
-./string/chr.asm
-./string/compare.asm
-./string/concat.asm
-./string/memory.asm
-./string/memory.inc
-./string/setcase.asm
-./string/substring.asm
 ./string/write.asm
 ./variable/access.asm
-./variable/accessarray.asm
 ./variable/create.asm
-./variable/createarray.asm
 ./variable/find.asm
 ./variable/reset.asm
+
+;
+;		These are very recent so are delayed a few days.
+;
+./variable/createarray.asm
+./variable/accessarray.asm
+./main/commands/input.asm
+./main/commands/list.asm
+./main/commands/local.asm
+./main/commands/proc.asm
+./main/commands/readdata.asm
+./main/commands/scanner.asm
 ./tokeniser/detokenise/colouring.inc
 ./tokeniser/detokenise/detokenise.asm
 ./tokeniser/detokenise/dtprint.asm

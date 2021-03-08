@@ -4,6 +4,7 @@
 ;		Name:		substring.asm
 ;		Purpose:	Substring code for mid$ left$ right$
 ;		Created:	28th February 2021
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -29,7 +30,7 @@ StringSubstring:	;; <substring>
 		sta 	temp1
 
 		lda 	esInt0+1,x 					; get the initial offset
-		cmp 	temp1 						; 
+		cmp 	temp1 						; return "" if > length.
 		beq 	_SSBOkay
 		bcs 	_SSBReturnNull
 _SSBOkay:
@@ -37,7 +38,7 @@ _SSBOkay:
 		clc 
 		adc 	#1 							
 		sec
-		sbc 	esInt0+1,x 					; the anything >= this is bad.
+		sbc 	esInt0+1,x 					; the anything >= this is bad - max size
 		cmp 	esInt0+2,x  				; check bad >= required
 		bcc		_SSBTrunc
 		lda 	esInt0+2,x

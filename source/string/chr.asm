@@ -4,6 +4,7 @@
 ;		Name:		chr.asm
 ;		Purpose:	Chr$() function
 ;		Created:	28th February 2021
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -34,14 +35,14 @@ StringChrs:	;; <chrs>
 ; ************************************************************************************************
 
 ReturnSoftString:
-		lda 	softMemAlloc
+		lda 	softMemAlloc 				; copy address
 		sta 	esInt0,x		
 		lda 	softMemAlloc+1
-		sta 	esInt1,x		
-		lda 	#0
+		sta 	esInt1,x				
+		lda 	#0 							; zero upper bytes
 		sta 	esInt2,x		
 		sta 	esInt3,x		
-		lda 	#$40
+		lda 	#$40 						; type string.
 		sta 	esType,x
 		rts
 

@@ -4,6 +4,7 @@
 ;		Name:		setcase.asm
 ;		Purpose:	Upper$/Lower$ functions
 ;		Created:	6th March 2021
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -20,7 +21,7 @@
 CaseString: ;; <setcase>
 		pha 								; save A and copy to X
 		tax
-		.pshy 								; save Y on stack.
+		.pshy 								; save Y on stack (case dir/flag)
 		jsr 	TOSToTemp0 					; target string -> temp0
 		ldy 	#0
 		lda 	(temp0),y  					; get length,
@@ -32,7 +33,7 @@ CaseString: ;; <setcase>
 		lda 	(temp0),y 					; count to copy in X
 		tax
 _CSCopy:
-		cpx 	#0
+		cpx 	#0 							; finished if 0.
 		beq 	_CSExit
 		dex
 		iny 	
@@ -53,11 +54,10 @@ _CSUpper:
 		cmp 	#"z"+1
 		bcs 	_CSWrite
 _CSFlipWrite:
-		eor 	#"A"^"a"
+		eor 	#"A"^"a" 					; switch case.
 _CSWrite:		
-		jsr 	WriteSoftString
+		jsr 	WriteSoftString 			; add to soft string.
 		jmp 	_CSCopy
-
 
 _CSExit:
 		.puly 								; restore YA.

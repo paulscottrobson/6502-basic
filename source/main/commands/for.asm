@@ -4,6 +4,7 @@
 ;		Name:		for.asm
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;		Date:		1st March 2021
+;		Reviewed: 	8th March 2021
 ;		Purpose:	For/Next
 ;
 ; *****************************************************************************
@@ -28,13 +29,13 @@
 ; *****************************************************************************
 
 Command_FOR:		;; [for]
-		lda 	#markerFOR 					; allocate the space.
+		lda 	#markerFOR 					; allocate the space and set the marker
 		ldx 	#11
 		jsr 	RSClaim
-		jsr 	CommandLET 					; do the same as LET.
+		jsr 	CommandLET 					; do the same as LET FOR [a = 4]
 		;
 		lda 	esType 						; check type should be integer reference.
-		cmp 	#$80
+		cmp 	#$80 						; we do not do FOR floats.
 		bne 	_CFType
 		;
 		lda 	#TKW_TO 					; check TO present.
@@ -47,14 +48,14 @@ Command_FOR:		;; [for]
 		;
 		.pshy 								; copy things into the area with the default STEP
 		ldy 	#4
-		lda		esInt0 						; the address of the index into 4 and 5
+		lda		esInt0 						; copy the address of the index variable into 4 and 5
 		sta 	(rsPointer),y
 		iny
 		lda		esInt1
 		sta 	(rsPointer),y
 		iny
 		;
-		lda 	#1  						; the default step in 6
+		lda 	#1  						; the default step in 6, (-128 .. 127 only)
 		sta 	(rsPointer),y
 		iny
 		;
@@ -114,7 +115,7 @@ Command_NEXT:		;; [next]
 		jsr 	EvaluateReference 			; this is the variable/parameter to localise.
 		;
 		.pshy
-		ldy 	#4 							; check same variable
+		ldy 	#4 							; check same variable as that stored at +4,+5
 		lda 	(rsPointer),y
 		cmp 	esInt0,x
 		bne 	_CNBadIndex
@@ -127,7 +128,7 @@ Command_NEXT:		;; [next]
 		;		Main NEXT code.
 		;
 _CNNoIndex:		
-		.pshy 								; don't need this now.
+		.pshy 								; don't need this for the rest of the instruction.
 		;
 		;		Adjust the variable by the STEP
 		;
@@ -176,9 +177,9 @@ _CNPropogate:
 		sta 	temp1+1
 		;
 		sec 								; calculate current - limit oring interim values.
-		jsr 	_CNCompare
-		jsr 	_CNCompare
-		jsr 	_CNCompare
+		jsr 	_CNCompare 					; each of these does a byte.
+		jsr 	_CNCompare 					; we calculate the OR of all these subtractions.
+		jsr 	_CNCompare 					; and the carry of the subtraction.
 		jsr 	_CNCompare
 		;
 		;		At this point temp2 zero if the same, and CS if current >= limit.

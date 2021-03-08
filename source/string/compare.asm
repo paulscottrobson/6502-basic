@@ -4,6 +4,7 @@
 ;		Name:		compare.asm
 ;		Purpose:	Comparison for strings
 ;		Created:	28th February 2021
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -21,7 +22,7 @@ STRCompare:	;; <sCompare>
 		pha 								; save A
 		tax 								; put stack pos in X
 		.pshy								; save Y
-		jsr 	CopyStringPair
+		jsr 	CopyStringPair 				; copy strings to temp0,temp1
 
 		ldy 	#0 							; get the smaller of the two string sizes.
 		lda 	(temp0),y

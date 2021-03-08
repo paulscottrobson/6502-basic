@@ -4,6 +4,7 @@
 ;		Name:		run.asm
 ;		Purpose:	Main Run Program
 ;		Created:	26th February 2021
+;		Reviewed: 	8th March 2021-
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -22,7 +23,7 @@ Command_Run: 	;; [run]
 		txs
 		jsr 	CommandClear 				; clear everything.
 		jsr 	ResetCodeAddress 			; back to the start.
-		ldy 	#3
+		ldy 	#3 							; over offset/line #
 		;
 		;		Come here to do next instruction.
 		;

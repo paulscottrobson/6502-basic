@@ -4,6 +4,7 @@
 ;		Name:		print.asm
 ;		Purpose:	Print command
 ;		Created:	1st March 2021
+;		Reviewed: 	8th March 2021-
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -25,7 +26,7 @@ lastPrintToken: 							; last token before : or EOL
 ; ************************************************************************************************
 
 Command_Print: ;; [print]
-		lda 	#0 							; clear LPT flag
+		lda 	#0 							; clear LPT to a non token
 		sta 	lastPrintToken
 		dey
 _PrintLoopSkip:
@@ -36,7 +37,7 @@ _PrintLoop:
 		beq 	_PrintExit
 		cmp 	#TKW_COLON
 		beq 	_PrintExit
-		sta 	lastPrintToken 				; update LPT
+		sta 	lastPrintToken 				; update Last print token, so we check ; and ,
 		;
 		cmp 	#TKW_SEMICOLON 				; ignore semicolon
 		beq 	_PrintLoopSkip

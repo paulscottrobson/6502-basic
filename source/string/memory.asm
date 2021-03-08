@@ -4,6 +4,7 @@
 ;		Name:		memory.asm
 ;		Purpose:	String memory handler
 ;		Created:	27th February 2021
+;		Reviewed: 	8th March 2021-
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -39,13 +40,13 @@ AllocateSoftString: 						; allocae soft string memory
 		lda 	highMemory 					; reset the soft memory alloc pointer.
 		sta 	softMemAlloc 				; to speed up slightly, we only reset this when we first need it
 		ldy 	highMemory+1 				; but it needs to be reset before each command.
-		dey
-		sty 	softMemAlloc+1
-
+		dey 								; it is set to 1/4k below high memory, allowing space
+		sty 	softMemAlloc+1 				; for a concreted string.
 _ASSDone:
+
 		sec 								; allocate downwards enough memory
-		lda 	softMemAlloc 
-		sbc 	tempShort
+		lda 	softMemAlloc 				; subtract the memory requirements in A from
+		sbc 	tempShort 					; the soft memory pointer
 		sta 	softMemAlloc
 		lda 	softMemAlloc+1
 		sbc 	#0
@@ -66,13 +67,13 @@ _ASSDone:
 WriteSoftString:
 		sty 	tempShort 					; save Y
 		;
-		pha
+		pha 								; save character on stack
 		ldy 	#0 							; get and bump length
 		lda 	(softMemAlloc),y
 		clc
 		adc 	#1
 		sta 	(softMemAlloc),y
-		tay 								; pointer in Y
+		tay 								; offset in Y
 		;
 		pla 								; get char and write.
 		sta 	(softMemAlloc),y
@@ -81,7 +82,7 @@ WriteSoftString:
 
 ; ************************************************************************************************
 ;
-;								Clone soft string at YA to TOS
+;								Clone soft string at temp0 to TOS
 ;
 ; ************************************************************************************************
 
@@ -90,7 +91,7 @@ StrClone: 	;; <clone>
 		.pshy
 		;
 		ldy 	#0 							; get length, add 1 for length
-		lda 	(temp0),y 	
+		lda 	(temp0),y 					; this is the bytes required.
 		clc
 		adc 	#1
 		jsr 	AllocateSoftString 			; allocate soft memory
@@ -99,7 +100,7 @@ StrClone: 	;; <clone>
 		sta 	esInt0,x
 		lda 	softMemAlloc+1
 		sta 	esInt1,x
-		lda 	#0
+		lda 	#0 							; zero upper 2 bytes
 		sta 	esInt2,x
 		sta 	esInt3,x
 		lda 	#$40 						; set type to string.

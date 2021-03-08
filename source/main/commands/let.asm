@@ -4,6 +4,7 @@
 ;		Name:		let.asm
 ;		Purpose:	Assignment statement (LET is optional)
 ;		Created:	28th February 2021
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -23,7 +24,7 @@ CommandLet: ;; [let]
 		lda 	#TKW_EQUAL 					; check for equals
 		jsr 	CheckToken
 		inx 								; do RHS
-		jsr 	Evaluate 					; evaluate and derefernce
+		jsr 	Evaluate 					; evaluate and dereference
 		dex
 		jsr 	WriteValue 					; write it out
 		rts
@@ -40,8 +41,8 @@ WriteValue:
 		;
 		;		Check not assigning string to number or vice versa.
 		;
-		lda 	esType,x 					; check the string/integer flags match
-		eor 	esType+1,x
+		lda 	esType,x 					; check the string flags match
+		eor 	esType+1,x 					; one string, one number causes an error.
 		and 	#$40
 		bne		_WVType
 		;
@@ -57,7 +58,7 @@ WriteValue:
 		lda 	esType,x 					; check both are integer.
 		ora 	esType+1,x
 		lsr 	a
-		bcc 	_WVCopyData4
+		bcc 	_WVCopyData4 				; copy 4 data bytes.
 		;
 		;		Check for float->integer, which is a type error. At least one is a float.
 		;
@@ -89,7 +90,7 @@ _WVCopyString:
 		;
 _WVCopyData4:
 		lda 	esType,x 					; is the int ref a byte ref ?
-		and 	#$20
+		and 	#$20 						; (e.g. is bit 5 set)
 		bne 	_WVCopyData1  			
 		;
 		ldy 	#3
