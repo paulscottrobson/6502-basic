@@ -72,6 +72,7 @@
 ../source/tokeniser/tokenise/search.asm
 ../source/tokeniser/tokenise/test.asm
 ../source/tokeniser/tokenise/tokenise.asm
+../source/tokeniser/tokenise/tokident.asm
 ../source/tokeniser/tokenise/tokinteger.asm
 ../source/tokeniser/tokenise/tokpunct.asm
 ../source/tokeniser/tokentext.asm

@@ -82,8 +82,9 @@ _TokPunctuation:
 		;		Identifier or text token
 		;
 _TokIdentifier:
-		.debug
-		LDA 	#"I"
+		jsr 	TokeniseIdentifier
+		bcs 	_TokLoop
+		bcc 	_TokFail
 
 _TokExit:		
 		sec

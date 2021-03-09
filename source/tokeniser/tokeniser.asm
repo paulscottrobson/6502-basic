@@ -8,6 +8,7 @@
 	.include "tokenise/search.asm"
 	.include "tokenise/test.asm"
 	.include "tokenise/tokenise.asm"
+	.include "tokenise/tokident.asm"
 	.include "tokenise/tokinteger.asm"
 	.include "tokenise/tokpunct.asm"
 	.include "tokentext.asm"
