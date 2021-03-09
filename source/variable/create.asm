@@ -39,7 +39,12 @@ CreateVariable:
 		sta 	temp0+1
 		;
 		pla 								; get length
-		jsr 	AdvanceLowMemoryByte 		; shift alloc memory forward by the length.
+		clc 								; add to low memory.
+		adc 	lowMemory
+		sta 	lowMemory
+		bcc 	_CVNoCarry
+		inc 	lowMemory+1
+_CVNoCarry:
 
 		lda 	varHash 					; store hash at offset 4.
 		ldy 	#4

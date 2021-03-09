@@ -13,18 +13,21 @@ import random,sys
 sys.path.append("..")
 sys.path.append("../scripts")
 from tokeniser import *
+from tokens import *
 
 class TokeniserTest(object):
 
 	def __init__(self,count,tgtFile):
 		random.seed()
 		self.seed = random.randint(10000,99999)
-		#self.seed = 35538
+		#self.seed = 89671
 		random.seed(self.seed)
 		self.tokeniser = Tokeniser()
+		self.tokens = Tokens().getAllTokens()
+		self.tokenKeys = [x for x in self.tokens.keys()]
 		h = open(tgtFile,"w")
 		h.write(";\n;\tBuilt using seed {0}\n;\n".format(self.seed))
-		self.output(h,self.randomLine(),"1")
+		self.output(h,self.createLine(),"1")
 		h.close()
 		#
 	def output(self,h,line,stem = ""):
@@ -36,8 +39,40 @@ class TokeniserTest(object):
 		h.write("TokenBytes{0}:\n".format(stem))
 		h.write('\t.byte\t{0}\n'.format(",".join(["${0:02x}".format(c) for c in result])))
 		#
-
-
+	def createLine(self):
+		t = self.getElement()
+		while len(t) < 140:
+			nt = self.getElement()
+			if self.isid(nt[0]) and self.isid(t[-1]):
+				t = t + " "
+			t = t + nt
+		return t
+		#
+	def getElement(self):
+		n = random.randint(0,4)
+		if n == 0:
+			return self.randomToken()
+		if n == 1:
+			return str(random.randint(0,1000))
+		if n == 2:
+			return "&{0:x}".format(random.randint(0,1000))
+		if n == 3 or n == 4:
+			s = "".join([chr(random.randint(97,117)) for x in range(0,random.randint(1,6))])
+			if n == 4:
+				return '"'+s+'"'
+			return  s+["","(","$","$(","#","#("][random.randint(0,5)]
+		return False
+		#
+	def randomToken(self):
+		k = self.tokenKeys[random.randint(0,len(self.tokenKeys)-1)]
+		k = self.tokens[k]["token"]
+		if k.startswith("[") or k == "&":
+			k = self.randomToken()
+		return k
+		#
+	def isid(self,c):
+		return "abcdefghijklmnopqrstuvwxyz0123456789_.".find(c.lower()) >= 0
+		#
 	def randomLine(self):
 		s = """
 			' "This is a comment"

@@ -22,7 +22,7 @@ CaseString: ;; <setcase>
 		pha 								; save A and copy to X
 		tax
 		.pshy 								; save Y on stack (case dir/flag)
-		jsr 	TOSToTemp0 					; target string -> temp0
+		jsr 	CopyStringTop 				; target string -> temp0
 		ldy 	#0
 		lda 	(temp0),y  					; get length,
 		clc

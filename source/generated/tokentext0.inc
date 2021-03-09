@@ -2,9 +2,9 @@
 ;	Automatically generated
 ;
 Group0Text:
-	.byte $03,$01,$0e,$84                  ; $86 and
-	.byte $02,$0f,$92                      ; $87 or
-	.byte $03,$18,$0f,$92                  ; $88 xor
+	.byte $03,$41,$4e,$c4                  ; $86 and
+	.byte $02,$4f,$d2                      ; $87 or
+	.byte $03,$58,$4f,$d2                  ; $88 xor
 	.byte $02,$3e,$bd                      ; $89 >=
 	.byte $02,$3c,$bd                      ; $8a <=
 	.byte $01,$be                          ; $8b >
@@ -17,82 +17,82 @@ Group0Text:
 	.byte $02,$3c,$bc                      ; $92 <<
 	.byte $01,$aa                          ; $93 *
 	.byte $01,$af                          ; $94 /
-	.byte $03,$0d,$0f,$84                  ; $95 mod
-	.byte $01,$9e                          ; $96 ^
+	.byte $03,$4d,$4f,$c4                  ; $95 mod
+	.byte $01,$de                          ; $96 ^
 	.byte $01,$a1                          ; $97 !
 	.byte $01,$bf                          ; $98 ?
-	.byte $06,$12,$05,$10,$05,$01,$94      ; $99 repeat
-	.byte $05,$17,$08,$09,$0c,$85          ; $9a while
-	.byte $03,$06,$0f,$92                  ; $9b for
-	.byte $02,$09,$86                      ; $9c if
-	.byte $07,$04,$05,$06,$10,$12,$0f,$83  ; $9d defproc
-	.byte $05,$15,$0e,$14,$09,$8c          ; $9e until
-	.byte $04,$17,$05,$0e,$84              ; $9f wend
-	.byte $04,$0e,$05,$18,$94              ; $a0 next
-	.byte $04,$14,$08,$05,$8e              ; $a1 then
-	.byte $05,$05,$0e,$04,$09,$86          ; $a2 endif
-	.byte $07,$05,$0e,$04,$10,$12,$0f,$83  ; $a3 endproc
+	.byte $06,$52,$45,$50,$45,$41,$d4      ; $99 repeat
+	.byte $05,$57,$48,$49,$4c,$c5          ; $9a while
+	.byte $03,$46,$4f,$d2                  ; $9b for
+	.byte $02,$49,$c6                      ; $9c if
+	.byte $07,$44,$45,$46,$50,$52,$4f,$c3  ; $9d defproc
+	.byte $05,$55,$4e,$54,$49,$cc          ; $9e until
+	.byte $04,$57,$45,$4e,$c4              ; $9f wend
+	.byte $04,$4e,$45,$58,$d4              ; $a0 next
+	.byte $04,$54,$48,$45,$ce              ; $a1 then
+	.byte $05,$45,$4e,$44,$49,$c6          ; $a2 endif
+	.byte $07,$45,$4e,$44,$50,$52,$4f,$c3  ; $a3 endproc
 	.byte $01,$a8                          ; $a4 (
-	.byte $04,$0c,$05,$0e,$a8              ; $a5 len(
-	.byte $04,$13,$07,$0e,$a8              ; $a6 sgn(
-	.byte $04,$01,$02,$13,$a8              ; $a7 abs(
-	.byte $07,$12,$01,$0e,$04,$0f,$0d,$a8  ; $a8 random(
-	.byte $04,$10,$01,$07,$85              ; $a9 page
-	.byte $04,$14,$12,$15,$85              ; $aa true
-	.byte $05,$06,$01,$0c,$13,$85          ; $ab false
-	.byte $04,$0d,$09,$0e,$a8              ; $ac min(
-	.byte $04,$0d,$01,$18,$a8              ; $ad max(
-	.byte $04,$13,$19,$13,$a8              ; $ae sys(
-	.byte $06,$14,$09,$0d,$05,$12,$a8      ; $af timer(
-	.byte $06,$05,$16,$05,$0e,$14,$a8      ; $b0 event(
-	.byte $04,$07,$05,$14,$a8              ; $b1 get(
-	.byte $06,$09,$0e,$0b,$05,$19,$a8      ; $b2 inkey(
-	.byte $06,$01,$0c,$0c,$0f,$03,$a8      ; $b3 alloc(
-	.byte $05,$03,$08,$12,$24,$a8          ; $b4 chr$(
-	.byte $06,$0c,$05,$06,$14,$24,$a8      ; $b5 left$(
-	.byte $05,$0d,$09,$04,$24,$a8          ; $b6 mid$(
-	.byte $07,$12,$09,$07,$08,$14,$24,$a8  ; $b7 right$(
-	.byte $05,$13,$14,$12,$24,$a8          ; $b8 str$(
-	.byte $04,$16,$01,$0c,$a8              ; $b9 val(
-	.byte $05,$10,$05,$05,$0b,$a8          ; $ba peek(
-	.byte $05,$04,$05,$05,$0b,$a8          ; $bb deek(
-	.byte $05,$0c,$05,$05,$0b,$a8          ; $bc leek(
-	.byte $04,$01,$13,$03,$a8              ; $bd asc(
-	.byte $04,$09,$0e,$14,$a8              ; $be int(
-	.byte $06,$06,$0c,$0f,$01,$14,$a8      ; $bf float(
-	.byte $06,$09,$13,$16,$01,$0c,$a8      ; $c0 isval(
-	.byte $07,$15,$10,$10,$05,$12,$24,$a8  ; $c1 upper$(
-	.byte $07,$0c,$0f,$17,$05,$12,$24,$a8  ; $c2 lower$(
-	.byte $01,$80                          ; $c3 @
-	.byte $01,$be                          ; $c4 ~
+	.byte $04,$4c,$45,$4e,$a8              ; $a5 len(
+	.byte $04,$53,$47,$4e,$a8              ; $a6 sgn(
+	.byte $04,$41,$42,$53,$a8              ; $a7 abs(
+	.byte $07,$52,$41,$4e,$44,$4f,$4d,$a8  ; $a8 random(
+	.byte $04,$50,$41,$47,$c5              ; $a9 page
+	.byte $04,$54,$52,$55,$c5              ; $aa true
+	.byte $05,$46,$41,$4c,$53,$c5          ; $ab false
+	.byte $04,$4d,$49,$4e,$a8              ; $ac min(
+	.byte $04,$4d,$41,$58,$a8              ; $ad max(
+	.byte $04,$53,$59,$53,$a8              ; $ae sys(
+	.byte $06,$54,$49,$4d,$45,$52,$a8      ; $af timer(
+	.byte $06,$45,$56,$45,$4e,$54,$a8      ; $b0 event(
+	.byte $04,$47,$45,$54,$a8              ; $b1 get(
+	.byte $06,$49,$4e,$4b,$45,$59,$a8      ; $b2 inkey(
+	.byte $06,$41,$4c,$4c,$4f,$43,$a8      ; $b3 alloc(
+	.byte $05,$43,$48,$52,$24,$a8          ; $b4 chr$(
+	.byte $06,$4c,$45,$46,$54,$24,$a8      ; $b5 left$(
+	.byte $05,$4d,$49,$44,$24,$a8          ; $b6 mid$(
+	.byte $07,$52,$49,$47,$48,$54,$24,$a8  ; $b7 right$(
+	.byte $05,$53,$54,$52,$24,$a8          ; $b8 str$(
+	.byte $04,$56,$41,$4c,$a8              ; $b9 val(
+	.byte $05,$50,$45,$45,$4b,$a8          ; $ba peek(
+	.byte $05,$44,$45,$45,$4b,$a8          ; $bb deek(
+	.byte $05,$4c,$45,$45,$4b,$a8          ; $bc leek(
+	.byte $04,$41,$53,$43,$a8              ; $bd asc(
+	.byte $04,$49,$4e,$54,$a8              ; $be int(
+	.byte $06,$46,$4c,$4f,$41,$54,$a8      ; $bf float(
+	.byte $06,$49,$53,$56,$41,$4c,$a8      ; $c0 isval(
+	.byte $07,$55,$50,$50,$45,$52,$24,$a8  ; $c1 upper$(
+	.byte $07,$4c,$4f,$57,$45,$52,$24,$a8  ; $c2 lower$(
+	.byte $01,$c0                          ; $c3 @
+	.byte $01,$fe                          ; $c4 ~
 	.byte $01,$a6                          ; $c5 &
 	.byte $01,$a9                          ; $c6 )
 	.byte $01,$ba                          ; $c7 :
 	.byte $01,$ac                          ; $c8 ,
 	.byte $01,$bb                          ; $c9 ;
 	.byte $01,$a7                          ; $ca '
-	.byte $02,$14,$8f                      ; $cb to
-	.byte $04,$13,$14,$05,$90              ; $cc step
-	.byte $04,$10,$12,$0f,$83              ; $cd proc
-	.byte $05,$0c,$0f,$03,$01,$8c          ; $ce local
-	.byte $03,$04,$09,$8d                  ; $cf dim
-	.byte $03,$12,$05,$8d                  ; $d0 rem
-	.byte $03,$0c,$05,$94                  ; $d1 let
-	.byte $05,$09,$0e,$10,$15,$94          ; $d2 input
-	.byte $04,$05,$0c,$13,$85              ; $d3 else
-	.byte $03,$16,$04,$95                  ; $d4 vdu
-	.byte $05,$10,$12,$09,$0e,$94          ; $d5 print
-	.byte $04,$07,$0f,$14,$8f              ; $d6 goto
-	.byte $05,$07,$0f,$13,$15,$82          ; $d7 gosub
-	.byte $06,$12,$05,$14,$15,$12,$8e      ; $d8 return
-	.byte $04,$04,$01,$14,$81              ; $d9 data
-	.byte $06,$01,$13,$13,$05,$12,$94      ; $da assert
-	.byte $04,$10,$0f,$0b,$85              ; $db poke
-	.byte $04,$04,$0f,$0b,$85              ; $dc doke
-	.byte $04,$0c,$0f,$0b,$85              ; $dd loke
-	.byte $03,$09,$0e,$8b                  ; $de ink
-	.byte $05,$10,$01,$10,$05,$92          ; $df paper
-	.byte $03,$03,$0c,$93                  ; $e0 cls
-	.byte $06,$0c,$0f,$03,$01,$14,$85      ; $e1 locate
+	.byte $02,$54,$cf                      ; $cb to
+	.byte $04,$53,$54,$45,$d0              ; $cc step
+	.byte $04,$50,$52,$4f,$c3              ; $cd proc
+	.byte $05,$4c,$4f,$43,$41,$cc          ; $ce local
+	.byte $03,$44,$49,$cd                  ; $cf dim
+	.byte $03,$52,$45,$cd                  ; $d0 rem
+	.byte $03,$4c,$45,$d4                  ; $d1 let
+	.byte $05,$49,$4e,$50,$55,$d4          ; $d2 input
+	.byte $04,$45,$4c,$53,$c5              ; $d3 else
+	.byte $03,$56,$44,$d5                  ; $d4 vdu
+	.byte $05,$50,$52,$49,$4e,$d4          ; $d5 print
+	.byte $04,$47,$4f,$54,$cf              ; $d6 goto
+	.byte $05,$47,$4f,$53,$55,$c2          ; $d7 gosub
+	.byte $06,$52,$45,$54,$55,$52,$ce      ; $d8 return
+	.byte $04,$44,$41,$54,$c1              ; $d9 data
+	.byte $06,$41,$53,$53,$45,$52,$d4      ; $da assert
+	.byte $04,$50,$4f,$4b,$c5              ; $db poke
+	.byte $04,$44,$4f,$4b,$c5              ; $dc doke
+	.byte $04,$4c,$4f,$4b,$c5              ; $dd loke
+	.byte $03,$49,$4e,$cb                  ; $de ink
+	.byte $05,$50,$41,$50,$45,$d2          ; $df paper
+	.byte $03,$43,$4c,$d3                  ; $e0 cls
+	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e1 locate
 	.byte $00
 

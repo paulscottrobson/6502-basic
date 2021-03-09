@@ -41,12 +41,14 @@ _EHFound:
 
 		ldy 	#1 							; set up line number in TOS
 		ldx 	#0
-		jsr 	MInt32False 				; erase slot 0.
 		lda 	(codePtr),y
 		sta 	esInt0,x
 		iny
 		lda 	(codePtr),y
 		sta 	esInt1,x
+		lda 	#0
+		sta 	esInt2,x
+		sta 	esInt3,x
 		set16 	temp0,convertBuffer 		; convert to string and print
 		ldy 	#10 						; in base 10.
 		lda 	#0							; stack position zero.

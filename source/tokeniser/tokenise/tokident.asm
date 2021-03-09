@@ -41,8 +41,7 @@ _TICopyID:
 _TICopyUnderScore:
 		lda 	#"-"						; _ is mapped to -
 _TICopyIn:
-		inx 								; write into buffer in 6 bit ASCII form
-		and 	#$3F
+		inx 								; write into buffer in 7 bit ASCII form
 		sta 	convertBuffer,x
 		stx 	convertBuffer
 		iny 								; next character
@@ -100,6 +99,7 @@ _TINotFloat:
 		ldx 	#1
 _TIOutput:
 		lda 	convertBuffer,x
+		and 	#$3F
 		pha
 		jsr 	TokenWrite
 		inx

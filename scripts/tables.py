@@ -108,7 +108,7 @@ for group in range(0,4):												# for each group
 	n = t.getBinaryStart()												# so we can track the number
 	for token in tokenText[group]:										# for each token
 		t1 = token 														# we tokenise to identifier 
-		bList = [ord(c.upper()) & 0x3F for c in t1]						# convert to 6 bit format
+		bList = [ord(c.upper()) for c in t1]							# convert to 6 bit format
 		bList[-1] = bList[-1] | 0x80 									# set bit 7 of last.
 		bList.insert(0,len(bList))										# length up front
 		bList = ",".join(["${0:02x}".format(c) for c in bList])			# reformat and write out.

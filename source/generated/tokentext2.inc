@@ -2,7 +2,7 @@
 ;	Automatically generated
 ;
 Group2Text:
-	.byte $05,$16,$10,$0f,$0b,$85          ; $86 vpoke
-	.byte $05,$16,$04,$0f,$0b,$85          ; $87 vdoke
+	.byte $05,$56,$50,$4f,$4b,$c5          ; $86 vpoke
+	.byte $05,$56,$44,$4f,$4b,$c5          ; $87 vdoke
 	.byte $00
 

@@ -3,6 +3,9 @@
 list
 a_1 = -99
 x = -2
+print a
+print upper$("Hello")
+print lower$("Hello")
 c1$ = "SAVEME"+"test"
 print "START",a_1,c1$,x
 proc show()

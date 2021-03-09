@@ -61,15 +61,13 @@ _DTFindText:
 		;		temp0 now points to the text
 		;
 _DTFoundText:
-		ldy 	#0 							; get last character
-		lda 	(temp0),y
-		tay
+		ldy 	#1 							; get first character
 		lda 	(temp0),y
 		and 	#$7F 						; will have bit 7 set.		
-		beq 	_DTIsPunctuation 
-		cmp 	#27
+		cmp 	#"A" 						; check for punctuation.
+		bcc 	_DTIsPunctuation 
+		cmp 	#"Z"+1
 		bcs 	_DTIsPunctuation
-
 		lda 	#0 							; now text, may need spaces
 		jsr 	DTSwitchMode
 		settype LTYKeyword
@@ -80,6 +78,20 @@ _DTIsPunctuation:
 		setType LTYPunctuation
 _DTPrint:		
 		jsr 	DTPrintLengthPrefix 		; print it out.
+		ldy 	#0 							; get last character		
+		lda 	(temp0),y
+		tay
+		lda 	(temp0),y
+		and 	#$7F 						; will have bit 7 set.		
+		cmp 	#"A" 						; check for punctuation.
+		bcc 	_DTIsNowPunctuation 
+		cmp 	#"Z"+1
+		bcc 	_DTPExit
+_DTIsNowPunctuation:						; if so, set current to last character.
+		lda 	#1
+		sta		LastCharacterClass
+
+_DTPExit:
 		.puly
 		rts
 
