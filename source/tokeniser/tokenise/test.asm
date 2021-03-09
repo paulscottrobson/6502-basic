@@ -25,7 +25,7 @@ TokStop:	.debug
 			lda 	tokenBuffer
 
 ttestCode:	.byte 	ttEnd-ttestCode-1
-			.text 	'ab ac( ad$ ae$( a0# a9#('
+			.text 	'"deMo""""."'
 ttEnd:			
 			.word 	$FFFF
 

@@ -93,7 +93,7 @@ AddHandler:	;; [+]
 		;		Two strings, so concatenate them.
 		;
 _AHStringConcat:
-		tax 								; handled by the string module.
+		txa 								; handled by the string module.
 		.string_concat
 		tax
 		rts

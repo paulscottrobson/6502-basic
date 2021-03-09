@@ -1,14 +1,9 @@
 TODO
 ====
 
+Crosscheck jsr/jmp calls vs module routines.
+Testing tokeniser.
 Complete Code Reading/Review => Version 0.11
-
-Tokenising:
-	- strings
-
-Testing:
-Underscore Listing - => _
-
 Interactive.
 Editing => 0.12 sort of usable.
 
@@ -31,6 +26,8 @@ Incomplete but hooked in for write and test
 	need 6502 versions along with dispatch macro.
 	
 	scanner.asm skipping embedded float.
+
+	indent listing.
 	
 Notes
 =====

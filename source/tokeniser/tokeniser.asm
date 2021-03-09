@@ -11,6 +11,7 @@
 	.include "tokenise/tokident.asm"
 	.include "tokenise/tokinteger.asm"
 	.include "tokenise/tokpunct.asm"
+	.include "tokenise/tokstring.asm"
 	.include "tokentext.asm"
 
 .section code

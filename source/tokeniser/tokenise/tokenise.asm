@@ -46,6 +46,8 @@ _TokLoop:
 		dey 								; point back to character.
 		cmp 	#"&"						; Hexadecimal constant.
 		beq 	_TokHexConst
+		cmp 	#'"'						; Quoted String
+		beq 	_TokQString
 		cmp 	#"Z"+1 						; > 'Z' is punctuation
 		bcs 	_TokPunctuation
 		cmp 	#"A" 						; A..Z identifier
@@ -69,6 +71,13 @@ _TokHexConst:
 		;
 _TokConst:
 		jsr 	TokeniseInteger
+		bcs 	_TokLoop
+		bcc 	_TokFail
+		;
+		;		Quoted string
+		;
+_TokQString:
+		jsr 	TokeniseString				
 		bcs 	_TokLoop
 		bcc 	_TokFail
 		;

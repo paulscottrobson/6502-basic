@@ -11,16 +11,17 @@
 
 		.section code
 Start:	ldx 	#$FF
-		txs
-		
-		jmp 	TokTest
+		txs	
 		
 		.device_initialise
 		set16 	basePage,testBaseAddress
 		set16  	endMemory,$9800
 
 		jmp 	Command_Run
-	
+
+		* = Start+$28
+		jmp 	TokTest
+
 		.send code
 
 ;

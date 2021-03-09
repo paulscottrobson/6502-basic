@@ -23,6 +23,10 @@ DTIdentifier:
 		settype LTYIdentifier
 _DTILoop:
 		lda 	(codePtr),y 				; output main bit of identifier.
+		cmp 	#"-"						; make - back to _
+		bne 	_DTINotUS
+		lda 	#"_"
+_DTINotUS:		
 		jsr 	ListOutputCharacter		
 		iny
 		lda 	(codePtr),y 				; until end identifier marker.

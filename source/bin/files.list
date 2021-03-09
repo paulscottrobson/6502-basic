@@ -75,6 +75,7 @@
 ../source/tokeniser/tokenise/tokident.asm
 ../source/tokeniser/tokenise/tokinteger.asm
 ../source/tokeniser/tokenise/tokpunct.asm
+../source/tokeniser/tokenise/tokstring.asm
 ../source/tokeniser/tokentext.asm
 ../source/variable/access.asm
 ../source/variable/accessarray.asm
