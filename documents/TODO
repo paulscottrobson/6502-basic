@@ -2,7 +2,7 @@ TODO
 ====
 
 Crosscheck jsr/jmp calls vs module routines.
-Testing tokeniser.
+Testing tokeniser (generated not real)
 Complete Code Reading/Review => Version 0.11
 Interactive.
 Editing => 0.12 sort of usable.

@@ -18,16 +18,18 @@
 ; ************************************************************************************************
 
 TokTest:	
-			set16 	codePtr,ttestCode
+			set16 	codePtr,TokenText1
 			jsr 	Tokenise
-TokStop:	.debug
-			jmp 	TokStop
-			lda 	tokenBuffer
-
-ttestCode:	.byte 	ttEnd-ttestCode-1
-			.text 	'"deMo""""."'
-ttEnd:			
-			.word 	$FFFF
+TokStop:	ldx 	#0
+_TokCheck:	lda 	TokenBytes1,x
+			cmp 	tokenBuffer,x
+_TokFail:	bne 	_TokFail
+			inx
+			cmp 	#$80
+			bne 	_TokCheck			
+			jmp 	$FFFF
+			
+			.include "../../generated/toktest.inc"
 
 
 		.send code

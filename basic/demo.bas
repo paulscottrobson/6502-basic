@@ -1,5 +1,5 @@
 ' "This is a comment"
-; a = sys(&1028)
+;a = sys(&1028)
 list
 a_1 = -99
 x = -2
