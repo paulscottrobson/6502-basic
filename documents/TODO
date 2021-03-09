@@ -1,9 +1,14 @@
 TODO
 ====
-
-Complete Code Reading/Review => Version 0.11
-Interactive.
-Editing => 0.12 sort of usable.
+Replace END by XEMU (quit & dump) 
+Test all the test programs (not tokens, that's new)
+Warm start module in main, dependent on what's built in, 
+Line Input in driver.
+Interactive stuff, typing commands in
+Editing programs using line numbers.
+=> 0.12 sort of usable.
+Load and Save
+Review newer stuff => 0.13
 
 Incomplete but hooked in for write and test
 ===========================================

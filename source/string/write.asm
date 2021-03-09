@@ -4,6 +4,7 @@
 ;		Name:		write.asm
 ;		Purpose:	String writing
 ;		Created:	2nd March 2021
+;		Reviewed: 	9th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -74,7 +75,7 @@ StringWrite: 	;; <write>
 		jsr 	RequiresConcretion
 		bcc 	_SWWriteReference
 		;
-		;		Check for special cases
+		;		Check for special cases (e.g. null string "")
 		;
 		jsr 	CheckSpecialConcretion
 		bcs 	_SWWriteReference
@@ -116,13 +117,16 @@ _SWExit:
 ; ************************************************************************************************
 
 CheckOverwriteCurrent:
+		;
+		;		Initial setup stuff.
+		;
 		ldy 	#0 						; get address of string being written to temp0
 		lda 	esInt1+1,x
 		sta 	temp0+1 
 		lda 	esInt0+1,x
 		sta 	temp0
 		;
-		lda 	(temp0),y 				; get length of string being copied.
+		lda 	(temp0),y 				; get length of string being copied and save it.
 		sta 	srcStrLen 
 		;
 		lda 	esInt0,x 				; copy where the final address it being written to temp1.
@@ -130,21 +134,26 @@ CheckOverwriteCurrent:
 		lda 	esInt1,x 				; data record + 5
 		sta 	temp1+1
 		;
+		;		Is it already stored in hard memory (e.g. >= high memory)
+		;
 		ldy 	#1 						; get the MSB of the address of string currently stored there.
 		lda 	(temp1),y 				
 		cmp 	highMemory+1 			; if < high memory then it cannot be something stored
 		bcc 	_COCFail 				; in hard memory.
 		;
 		; 		Check if it physically fits, if so return TRUE (CS) to copy over.
+		;		First get the size of the chunk itself.
 		;
 		ldy 	#0 						; copy target address - 1 into temp2
-		lda 	(temp1),y
-		sbc 	#1
+		lda 	(temp1),y 				; when allocating hard memory, the overall size is
+		sbc 	#1 						; in the previous byte.
 		sta 	temp2
 		iny
 		lda 	(temp1),y
 		sbc 	#0
 		sta 	temp2+1
+		;
+		;		Now compare that against the length required.
 		;
 		ldy 	#0 						; how large is this physical chunk.
 		lda 	(temp2),y
@@ -166,12 +175,19 @@ _COCCanReuse:
 ; ************************************************************************************************
 
 RequiresConcretion:
+		;
+		;		If it is already concreted, likely to be duplication e.g. a$ = c$
+		;
 		lda 	temp0+1 				; get MSB of address of string to be written
 		cmp 	highMemory+1 			; if >= high memory it is concreted
 		bcs 	_RCSucceed 				; so it needs concreting again - duplication.
 		;
+		;		If no soft memory allocated this time, it's fixed, like a program string.
+		;
 		lda 	softMemAlloc+1 			; have we allocated any soft memory yet ?
 		beq 	_RCFail 				; if not, this cannot be soft memory.
+		;
+		;		If >= soft mem alloc ptr, then it must have been allocated this time.
 		;
 		lda 	temp0+1 				; get MSB of address of string to be written
 		cmp 	softMemAlloc+1 			; if >= soft mem alloc it is either soft
@@ -191,6 +207,10 @@ _RCFail:
 
 AllocateHardMemory:
 		.pshy
+		;
+		;		Work out the size to allocate. We add a bit so the string can expand in
+		;		chunks, if we are building out of single characters say.
+		;
 		lda 	srcStrLen 				; characters in string
 		adc 	#1+1+8 					; one for hard memory size, one for string size, extra for expansion
 		bcs 	_AHMSetMax 				; max out that amount.
@@ -199,7 +219,11 @@ AllocateHardMemory:
 _AHMSetMax:		
 		lda 	#MaxStringSize+2
 _AHMIsOkay:
-		pha	
+		;
+		;		Effectively subtracting it from high memory, and setting the block size
+		;		to the first byte of this newly allocated block.
+		;
+		pha	 							; save size to be allocated
 		eor 	#$FF 					; complement and add to high Memory
 		sec  							; and copy result to TOS as target address.
 		adc 	highMemory
@@ -209,7 +233,7 @@ _AHMIsOkay:
 		sta 	highMemory+1
 		ldy 	#0 						; Y = 0
 		pla 							; get the total size of the storage block
-		sta 	(highMemory),y
+		sta 	(highMemory),y 			; and set it
 		;
 		clc
 		lda		highMemory 				; point the target address to the byte after this.
@@ -243,7 +267,7 @@ _CSTHMLoop:
 		lda 	(temp0),y
 		sta 	(temp2),y
 		dey
-		cpy 	#$FF
+		cpy 	#$FF 					; this does the +1
 		bne 	_CSTHMLoop
 		.puly
 		rts
@@ -256,7 +280,7 @@ _CSTHMLoop:
 ; ************************************************************************************************
 
 CheckSpecialConcretion:
-		lda 	srcStrLen 				; check string is null.
+		lda 	srcStrLen 				; check string is null e.g. length = 0
 		beq 	_CSCNullString
 		clc
 		rts
@@ -264,8 +288,8 @@ CheckSpecialConcretion:
 		;		If concretable string is null, then return a fixed one.
 		;
 _CSCNullString:
-		lda 	#0
-		sta 	NullString		
+		lda 	#0 						; by always returning this address we don't waste
+		sta 	NullString		 		; storage on null strings.
 		set16 	temp0,NullString
 		sec
 		rts

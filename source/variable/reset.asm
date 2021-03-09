@@ -4,6 +4,7 @@
 ;		Name:		reset.asm
 ;		Purpose:	Reset the hash tables
 ;		Created:	1st March 2021
+;		Reviewed: 	9th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,7 +19,7 @@
 ; ************************************************************************************************
 
 HashTableReset:		;; <reset>
-		ldx 	#6*2*hashTableSize
+		ldx 	#6*2*hashTableSize			; 6 types, 2 bytes per table entry.
 		lda 	#0
 _HTRClear:
 		sta 	hashTables-1,x

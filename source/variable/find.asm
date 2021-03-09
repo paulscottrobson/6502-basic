@@ -4,6 +4,7 @@
 ;		Name:		find.asm
 ;		Purpose:	Locate a variable
 ;		Created:	1st March 2021
+;		Reviewed: 	9th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -20,8 +21,8 @@
 FindVariable:
 		.pshy
 		;
-		tya 								; point temp2 to the actual name.
-		clc
+		tya 								; point temp2 to the actual name
+		clc 								; in memory of the variable being created
 		adc 	codePtr
 		sta 	temp2
 		lda 	codePtr+1
@@ -34,7 +35,7 @@ FindVariable:
 		lda 	hashList+1
 		sta 	temp0+1
 		;
-		;		Loop. First follow link (temp0)
+		;		Search Loop. First follow link (temp0), if MSB is zero, then end of list and fail.
 		;
 _FVNext:ldy 	#1 							; get MSB
 		lda 	(temp0),y
@@ -54,7 +55,7 @@ _FVNext:ldy 	#1 							; get MSB
 		;
 		;		Copy the name address into temp1.
 		;
-		dey 								; copy name pointer to temp1.
+		dey 								; copy name pointer (+2,+3) to temp1.
 		lda 	(temp0),y
 		sta 	temp1+1
 		dey

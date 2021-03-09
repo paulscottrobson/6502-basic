@@ -1,9 +1,10 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		find.asm
-;		Purpose:	Locate a variable
+;		Name:		create.asm
+;		Purpose:	Create a new variable.
 ;		Created:	1st March 2021
+;		Reviewed: 	9th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -26,11 +27,11 @@
 
 CreateVariable:
 		tya 								; push Y on the stack twice.
-		pha
+		pha									; position in code of the new variable.
 		pha
 
-		ldx 	varType 					; get var type 0-5
-		lda		_CVSize-$3A,x 				; the bytes for this new variable.
+		ldx 	varType 					; get var type 0-5 from the var type
+		lda		_CVSize-$3A,x 				; the bytes required for this new variable.
 		pha 								; save length
 		;
 		lda 	lowMemory 					; set low Memory ptr to temp0
@@ -61,7 +62,7 @@ _CVNoCarry:
 		sta 	(temp0),y
 		;
 		ldy 	#0 							; copy current hash pointer in link
-		lda 	(hashList),y
+		lda 	(hashList),y 				; so we're inserting it in the front of a linked list
 		sta 	(temp0),y
 		iny
 		lda 	(hashList),y
@@ -72,6 +73,7 @@ _CVNoCarry:
 		dey
 		lda 	temp0
 		sta 	(hashList),y
+
 		lda 	varType 					; type in A
 		ldy 	#5 							; offset in Y
 		jsr 	ZeroTemp0Y 					; zero (temp0),y with whatever type.
