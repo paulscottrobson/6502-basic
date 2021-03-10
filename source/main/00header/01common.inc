@@ -44,6 +44,8 @@ CodeStart = $1000
 ;
 ;		Data storage for work variables etc. starts here
 ;
+;		The Memory Storage block must be *BELOW* the BASIC program.
+;
 ; ************************************************************************************************
 
 MemoryStorage = $800

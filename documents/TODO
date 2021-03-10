@@ -5,10 +5,8 @@ Editing programs using line numbers.
 Load and Save
 Review newer stuff => 0.13
 
-Bugs
-====
-	a$="hello" doesn't work.
-		variable names not created properly when in buffer - need copying.
+Known Bugs
+==========
 
 Incomplete but hooked in for write and test
 ===========================================

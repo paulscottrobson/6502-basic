@@ -64,8 +64,7 @@ _EHFound:
 		.main_printstring		
 _EHNoLine: 									
 		.device_crlf
-		jmp 	WarmStart
-
+		.interaction_warmstart
 EHAtMsg:
 		.text 	3," @ "
 ;

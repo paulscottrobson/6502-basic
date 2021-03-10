@@ -2,6 +2,8 @@
 ;	Automatically generated
 ;
 	.include "cold.asm"
+	.include "delete.asm"
+	.include "insert.asm"
 	.include "warm.asm"
 
 .section code

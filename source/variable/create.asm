@@ -60,6 +60,10 @@ _CVNoCarry:
 		adc 	#0
 		iny
 		sta 	(temp0),y
+		cmp 	basePage+1 					; compare against the program base.
+		bcs 	_CVNotImmediate
+		jsr 	CloneVariableName 			; we need to clone the variable name (immediate mode)
+_CVNotImmediate:		
 		;
 		ldy 	#0 							; copy current hash pointer in link
 		lda 	(hashList),y 				; so we're inserting it in the front of a linked list
@@ -136,6 +140,45 @@ _ZTWriteFloat:
 		.pshx
 		.floatingpoint_setzero
 		.pulx
+		rts
+
+; ************************************************************************************************
+;
+;						Clone the variable name at (temp0),2/3
+;	Required when a new variable is defined from the command line, as we cannot then use the
+;	"in code" address.
+;
+; ************************************************************************************************
+
+CloneVariableName:
+		ldy 	#2 							; copy vname address to temp2
+		lda 	(temp0),y
+		sta 	temp2
+		iny
+		lda 	(temp0),y
+		sta 	temp2+1
+		;
+		lda 	lowMemory+1 				; copy lowMemory address to (temp0),2/3
+		sta 	(temp0),y
+		dey
+		lda 	lowMemory
+		sta 	(temp0),y
+		;
+		ldy 	#0 							; copy data from (temp2) to (lowMemory)
+_CVNCopy:
+		lda		(temp2),y
+		sta 	(lowMemory),y
+		iny
+		cmp 	#$3A 						; until the whole name has been copied.
+		bcc 	_CVNCopy
+		;
+		tya 								; add Y to low memory
+		clc
+		adc 	lowMemory
+		sta 	lowMemory
+		bcc 	_CVNNoCarry
+		inc 	lowMemory+1
+_CVNNoCarry:		
 		rts
 
 		.send 	code
