@@ -190,7 +190,6 @@ _CPHLoop:
 		cmp 	#$3A
 		bcc 	_CPHLoop
 		lda 	temp0
-		lda 	#$AA
 		rts
 
 		.send 	code

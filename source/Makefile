@@ -41,5 +41,5 @@ $(APPNAME) : basic.asm
 	python ..$(S)scripts$(S)errorgen.py
 	python ..$(S)scripts$(S)builder.py
 	python ..$(S)scripts$(S)tables.py
-	$(ASM) $(ASMOPTS) -o $@ $^
+	$(ASM) -D autorun=1 -D coldstartnew=0 $(ASMOPTS) -o $@ $^
 

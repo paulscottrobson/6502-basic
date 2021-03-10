@@ -1,44 +1,54 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		new.asm
-;		Purpose:	New program
-;		Created:	28th February 2021
-;		Reviewed: 	7th March 2021
+;		Name:		coldwarmstart.asm
+;		Purpose:	Handle cold/warm start
+;		Created:	10th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		.section code
+		.section code		
 
 ; ************************************************************************************************
 ;
-;										New command
+;										Cold Start
 ;
 ; ************************************************************************************************
 
-Command_New: ;; [new]
-Command_XNew: ;; <new>
+ColdStart:
+		ldx 	#$FF 						; clear the stack
+		txs	
+		.device_initialise 					; initialise any hardware devices
+		set16 	basePage,programMemory 		; where program code is stored
+		set16  	endMemory,$9800 			; top of memory used.
+		;
+		;		If interaction installed or built with autorun=1, execute cold start
+		;		otherwise go directly to run program.
+		;
+		.if installed_interaction == 1 && autorun == 0
+		.interaction_coldstart
+		.else
+		jmp 	Command_Run
+		.endif
 
-		jsr 	ResetCodeAddress 			; point to first line
-		ldy 	#0 							; and zap it.
-		tya
-		sta 	(codePtr),y
-		jsr 	CommandClear 				; clear everything down.
-		jmp 	CommandEND 					; do END code, as there's nothing to run.
+; ************************************************************************************************
+;
+;										Warm Start
+;
+; ************************************************************************************************
+
+WarmStart:
+		;
+		;		If interaction installed, execute warm start, otherwise
+		;		stop program running completely.
+		;
+		.if installed_interaction == 1		
+		.interaction_warmstart
+		.else
+_WSHalt:
+		jmp 	_WSHalt
+		.endif	
 
 		.send code
-
-; ************************************************************************************************
-;
-;									Changes and Updates
-;
-; ************************************************************************************************
-;
-;		Date			Notes
-;		==== 			=====
-;		07-Mar-21 		Pre code read v0.01
-;
-; ************************************************************************************************
-		

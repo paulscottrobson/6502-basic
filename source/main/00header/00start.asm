@@ -10,16 +10,8 @@
 ; ************************************************************************************************
 
 		.section code
-Start:	ldx 	#$FF
-		txs	
-		
-		.device_initialise
-		set16 	basePage,testBaseAddress
-		set16  	endMemory,$9800
-
-		jmp 	Command_Run
-
-		* = Start+$28
+Start:	
+		jmp 	ColdStart
 		jmp 	TokTest
 
 		.send code
@@ -29,7 +21,7 @@ Start:	ldx 	#$FF
 ;
 ReturnPos:
 		* = $5000
-testBaseAddress:		
+programMemory:		
 		.include "../../generated/testcode.inc"
 		* = ReturnPos
 

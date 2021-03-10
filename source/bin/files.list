@@ -13,6 +13,8 @@
 ../source/floatingpoint/loadstore.asm
 ../source/floatingpoint/muldiv.asm
 ../source/floatingpoint/unary.asm
+../source/interaction/cold.asm
+../source/interaction/warm.asm
 ../source/main/00header/00start.asm
 ../source/main/commands/assert.asm
 ../source/main/commands/clear.asm
@@ -56,6 +58,7 @@
 ../source/main/imath/int32tostr.asm
 ../source/main/imath/int32unary.asm
 ../source/main/utility/check.asm
+../source/main/utility/coldwarmstart.asm
 ../source/main/utility/scanner.asm
 ../source/main/utility/stack.asm
 ../source/string/chr.asm

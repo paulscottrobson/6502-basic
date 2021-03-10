@@ -19,6 +19,7 @@
 ; ************************************************************************************************
 
 CommandClear: 	;; [clear]
+XCommandClear:	;; <clear>
 		.pshy
 
 		lda 	endMemory					; set high memory = end of memory

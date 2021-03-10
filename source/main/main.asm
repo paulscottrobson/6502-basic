@@ -44,6 +44,7 @@
 	.include "imath/int32tostr.asm"
 	.include "imath/int32unary.asm"
 	.include "utility/check.asm"
+	.include "utility/coldwarmstart.asm"
 	.include "utility/scanner.asm"
 	.include "utility/stack.asm"
 
@@ -54,11 +55,13 @@ mainHandler:
 
 mainVectors:
 	.word CheckRightParen      ; index 0
-	.word LinkEvaluate         ; index 2
-	.word LinkEvaluateInteger  ; index 4
-	.word LinkEvaluateSmallInt ; index 6
-	.word LinkEvaluateTerm     ; index 8
-	.word MLInt32ToString      ; index 10
-	.word PrintString          ; index 12
-	.word LinkInt32FromString  ; index 14
+	.word XCommandClear        ; index 2
+	.word LinkEvaluate         ; index 4
+	.word LinkEvaluateInteger  ; index 6
+	.word LinkEvaluateSmallInt ; index 8
+	.word LinkEvaluateTerm     ; index 10
+	.word MLInt32ToString      ; index 12
+	.word Command_XNew         ; index 14
+	.word PrintString          ; index 16
+	.word LinkInt32FromString  ; index 18
 .send code
