@@ -23,7 +23,7 @@ CommandList:		;; [list]
 		;
 		lda 	(codePtr),y
 		cmp 	#TKW_COMMA 					; list ,xxxx
-		beq 	_CLEnd
+		beq 	_CLEndLine
 		cmp 	#0 							; list ... on its own.
 		bmi 	_CLDoListing
 		;
@@ -68,7 +68,7 @@ _CLNext:
 		jmp 	_CLCheckLoop
 
 _CLEnd:		
-		jmp 	_CLEnd
+		jmp 	WarmStart
 ;
 ;		Compare current line against low word of stack,x
 ;

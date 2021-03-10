@@ -19,6 +19,10 @@
 ; ************************************************************************************************
 
 ErrorHandler:		
+		.pshx
+		lda 	#1 							; red
+		.device_ink
+		.pulx
 		set16 	temp0,ErrorTextList 		; list of length-prefixed strings, scan down them.
 _EHFind:dex									; errors start at 1
 		beq 	_EHFound
@@ -35,6 +39,10 @@ _EHFound:
 		ldy 	#0 							; in a line, e.g. the offset to next is non zero.
 		lda 	(codePtr),y
 		beq 	_EHNoLine
+
+		lda 	codePtr+1 					; code running from the command line.
+		cmp 	basePage+1
+		bcc 	_EHNoLine
 
 		set16 	temp0,EHAtMsg 				; print " @ "
 		.main_printstring	
@@ -55,8 +63,8 @@ _EHFound:
 		.main_inttostr
 		.main_printstring		
 _EHNoLine: 									
-
-_EHHalt:jmp 	_EHHalt
+		.device_crlf
+		jmp 	WarmStart
 
 EHAtMsg:
 		.text 	3," @ "

@@ -1,11 +1,14 @@
 TODO
 ====
-Line Input in driver.
-Interactive stuff, typing commands in
 Editing programs using line numbers.
 => 0.12 sort of usable.
 Load and Save
 Review newer stuff => 0.13
+
+Bugs
+====
+	a$="hello" doesn't work.
+		variable names not created properly when in buffer - need copying.
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -32,6 +35,7 @@ Incomplete but hooked in for write and test
 Notes
 =====
 	Stack position fudged for readability.
+
 
 New commands/Changes to document
 ================================

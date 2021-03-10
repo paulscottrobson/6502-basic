@@ -22,4 +22,6 @@ tokeniserHandler:
 tokeniserVectors:
 	.word Detokenise           ; index 0
 	.word ListLine             ; index 2
+	.word Tokenise             ; index 4
+	.word TokeniseASCIIZ       ; index 6
 .send code

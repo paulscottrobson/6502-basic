@@ -15,9 +15,10 @@ deviceVectors:
 	.word IOInitialise         ; index 4
 	.word IOInk                ; index 6
 	.word IOInkey              ; index 8
-	.word IOLocate             ; index 10
-	.word IOPaper              ; index 12
-	.word IOPrintChar          ; index 14
-	.word IOTab                ; index 16
-	.word IOReadTimer          ; index 18
+	.word IOInput              ; index 10
+	.word IOLocate             ; index 12
+	.word IOPaper              ; index 14
+	.word IOPrintChar          ; index 16
+	.word IOTab                ; index 18
+	.word IOReadTimer          ; index 20
 .send code

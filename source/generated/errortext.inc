@@ -30,5 +30,6 @@ ErrorTextList:
 	.text 18,"DIM requires array"
 	.text 16,"Bad array index."
 	.text 11,"Out of data"
+	.text 21,"Cannot tokenise line."
 	.byte 0
 

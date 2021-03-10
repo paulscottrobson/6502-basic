@@ -12,4 +12,14 @@ tokeniser_list .macro
 	jsr	tokeniserHandler
 	.endm
 
+tokeniser_tokenise .macro
+	ldx	#4
+	jsr	tokeniserHandler
+	.endm
+
+tokeniser_tokenisez .macro
+	ldx	#6
+	jsr	tokeniserHandler
+	.endm
+
 .send code

@@ -63,5 +63,6 @@ mainVectors:
 	.word MLInt32ToString      ; index 12
 	.word Command_XNew         ; index 14
 	.word PrintString          ; index 16
-	.word LinkInt32FromString  ; index 18
+	.word Command_RunFrom      ; index 18
+	.word LinkInt32FromString  ; index 20
 .send code

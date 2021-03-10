@@ -10,6 +10,17 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+MaxLineInputSize = 240
+
+		.section storage
+
+bufferCount:	 							; chars in buffer
+		.fill 	0
+bufferStorage: 								; input buffer.
+		.fill 	MaxLineInputSize
+
+		.send storage
+
 		.section code	
 
 ; ************************************************************************************************
@@ -156,7 +167,7 @@ IOPaper: ;; <paper>
 		pla
 		rts
 
-; ************************************************************************************************
+; *************************************************************************************************
 ;
 ;									Set Cursor to (A,Y)
 ;
@@ -178,6 +189,29 @@ _IOLoc2:
 		bne 	_IOLoc2
 _IOLocExit:
 		rts				
+
+; *************************************************************************************************
+;
+;						Input Line, return buffer pointer in temp0
+;
+; *************************************************************************************************
+
+IOInput:	;; <inputline>
+		lda 	#0
+		sta 	bufferCount
+_IOILoop:
+		jsr 	$FFCF
+		cmp 	#13
+		beq 	_IOIExit
+		ldx 	bufferCount
+		cpx 	#MaxLineInputSize
+		beq 	_IOILoop
+		inc 	bufferCount
+		sta 	bufferStorage+1,x
+		jmp 	_IOILoop
+_IOIExit:		
+		set16 	temp0,bufferCount 
+		rts
 
 		.send 	code
 

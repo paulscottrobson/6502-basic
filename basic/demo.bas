@@ -1,6 +1,6 @@
 ' "This is a comment"
 ;a = sys(&1003)
-;list
+list ,1100
 a_1 = -99
 x = -2
 print a

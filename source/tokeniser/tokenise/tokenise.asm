@@ -10,7 +10,8 @@
 ; ************************************************************************************************
 
 		.section storage
-
+tokenHeader: 								; bytes (all zero) to create a fake 'program line'
+		.fill 	3
 tokenBuffer:								; token buffer.
 		.fill 	256
 tokenBufferIndex:							; count of characters in buffer.
@@ -27,13 +28,15 @@ tokenBufferIndex:							; count of characters in buffer.
 ;
 ; ************************************************************************************************
 
-Tokenise:
+Tokenise: ;; <tokenise>
 		jsr 	TokeniseMakeASCIIZ 			; convert to ASCIIZ string.
-TokeniseASCIIZ:
+TokeniseASCIIZ: ;; <tokenisez>
 		jsr 	TokeniseFixCase 			; remove controls and lower case outside quotes.
 		lda 	#0 							; reset the token buffer index
 		sta 	tokenBufferIndex
 		tay 								; start pointer
+		lda 	#$80 						; empty token buffer ($80 ends it)
+		sta 	tokenBuffer
 		;
 		;		Main tokenisation loop
 		;

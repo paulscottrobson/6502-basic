@@ -23,6 +23,7 @@ Command_Run: 	;; [run]
 		txs
 		jsr 	CommandClear 				; clear everything.
 		jsr 	ResetCodeAddress 			; back to the start.
+Command_RunFrom: ;; <runfrom>
 		ldy 	#3 							; over offset/line #
 		;
 		;		Come here to do next instruction.

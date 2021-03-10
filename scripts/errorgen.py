@@ -44,6 +44,7 @@ errorDef = """
 	NotArray:DIM requires array
 	ArrayIndex:Bad array index.
 	DataError:Out of data
+	Tokenise:Cannot tokenise line.
 """
 
 genDir = "../source/generated/".replace("/",os.sep)					

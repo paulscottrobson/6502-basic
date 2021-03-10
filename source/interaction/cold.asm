@@ -18,7 +18,6 @@ ColdStartEntry:	;; <coldstart>
 		;		If coldstartnew = 0 then a NEW command is executed on cold start
 		;		otherwise it just executes a CLEAR.		
 		;
-		.debug
 		.if coldstartnew == 1
 		.main_new	
 		.else
