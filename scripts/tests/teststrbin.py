@@ -23,7 +23,7 @@ class StrBinOpTest(Test):
 		s1 = self.getString()
 		s2 = self.getString()
 		if random.randint(0,1) == 0:
-			return '("{0}"+"{1}") = "{2}"'.format(s1,s2,s1+s2)
+			return 'assert ("{0}"+"{1}") = "{2}"'.format(s1,s2,s1+s2)
 		else:
 			op = ["=",">","<",">=","<=","<>"][random.randint(0,5)]
 			if op == "=":

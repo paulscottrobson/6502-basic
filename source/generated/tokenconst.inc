@@ -114,6 +114,7 @@ TKW_READ                     = $8c ; read
 TKW_RESTORE                  = $8d ; restore
 TKW_END                      = $8e ; end
 TKW_STOP                     = $8f ; stop
+TKW_XEMU                     = $90 ; xemu
 TKW_VPOKE                    = $86 ; vpoke
 TKW_VDOKE                    = $87 ; vdoke
 TKW_VPEEKLPAREN              = $86 ; vpeek(

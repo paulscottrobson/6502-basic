@@ -1,7 +1,5 @@
 TODO
 ====
-Replace END by XEMU (quit & dump) 
-Test all the test programs (not tokens, that's new)
 Warm start module in main, dependent on what's built in, 
 Line Input in driver.
 Interactive stuff, typing commands in

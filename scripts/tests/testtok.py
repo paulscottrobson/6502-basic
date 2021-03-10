@@ -17,9 +17,10 @@ from tokens import *
 
 class TokeniserTest(object):
 
-	def __init__(self,count,tgtFile):
+	def __init__(self,count,tgtFile,enableTest):
 		random.seed()
 		self.seed = random.randint(10000,99999)
+		self.enable = enableTest
 		#self.seed = 89671
 		random.seed(self.seed)
 		self.tokeniser = Tokeniser()
@@ -34,10 +35,12 @@ class TokeniserTest(object):
 		#print(line)
 		h.write("TokenText{0}:\n".format(stem))
 		bline = ",".join(["${0:02x}".format(x) for x in [ord(x) for x in line]])
-		h.write("\t.byte\t{0},{1},$FF\n".format(len(line),bline))
+		if self.enable:
+			h.write("\t.byte\t{0},{1},$FF\n".format(len(line),bline))
 		result = self.tokeniser.tokenise(line)+[0x80]
 		h.write("TokenBytes{0}:\n".format(stem))
-		h.write('\t.byte\t{0}\n'.format(",".join(["${0:02x}".format(c) for c in result])))
+		if self.enable:
+			h.write('\t.byte\t{0}\n'.format(",".join(["${0:02x}".format(c) for c in result])))
 		#
 	def createLine(self):
 		t = self.getElement()
@@ -115,4 +118,4 @@ class TokeniserTest(object):
 		return s[random.randint(0,len(s)-1)]
 
 if __name__ == "__main__":		
-	t = TokeniserTest(1,"../source/generated/toktest.inc")
+	t = TokeniserTest(1,"../source/generated/toktest.inc",len(sys.argv) == 1)

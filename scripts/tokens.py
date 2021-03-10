@@ -137,6 +137,7 @@ class Tokens(object):
 		[group1]
 			clear 	load	save 	list 	new 	
 			run 	read 	restore	end 	stop
+			xemu
 		#
 		#		System specific commands in group 2
 		#

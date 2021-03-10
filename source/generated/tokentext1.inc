@@ -12,5 +12,6 @@ Group1Text:
 	.byte $07,$52,$45,$53,$54,$4f,$52,$c5  ; $8d restore
 	.byte $03,$45,$4e,$c4                  ; $8e end
 	.byte $04,$53,$54,$4f,$d0              ; $8f stop
+	.byte $04,$58,$45,$4d,$d5              ; $90 xemu
 	.byte $00
 

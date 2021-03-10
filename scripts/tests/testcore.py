@@ -32,7 +32,7 @@ class Test(object):
 		for i in range(0,count):
 			h.write("{0}\n".format(self.getTest(i)))
 		self.postfixCode(h)
-		h.write("end\n")
+		h.write("xemu\n")
 	#
 	#		Dummy test
 	#

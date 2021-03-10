@@ -1,0 +1,12 @@
+#!/bin/bash
+make -Bs run
+make -Bs run
+make -Bs run
+make -Bs run
+make -Bs run
+
+make -Bs run
+make -Bs run
+make -Bs run
+make -Bs run
+make -Bs run

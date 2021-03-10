@@ -12,3 +12,4 @@ Group1Vectors:
 	.word	CommandRestore           ; $8d restore
 	.word	CommandEnd               ; $8e end
 	.word	CommandStop              ; $8f stop
+	.word	CommandXemu              ; $90 xemu

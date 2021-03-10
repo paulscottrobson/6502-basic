@@ -24,7 +24,7 @@ class ProgramBuilder(object):
 		self.tokens = Tokens()									
 		self.tokeniser = Tokeniser()
 		self.code = [] 											
-		self.nextLineNumber = 1
+		self.nextLineNumber = 1000
 	#
 	#		Convert line number + line text to byte sequence.
 	#
@@ -42,7 +42,7 @@ class ProgramBuilder(object):
 			lineNumber = self.nextLineNumber
 		else:
 			assert lineNumber >= self.nextLineNumber,"Line number sequence"
-		self.nextLineNumber = lineNumber+1
+		self.nextLineNumber = lineNumber+10	
 		#print(lineNumber,lineText)
 		self.code += self.makeLine(lineNumber,lineText)
 	#
