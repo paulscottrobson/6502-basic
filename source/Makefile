@@ -48,7 +48,7 @@ $(APPNAME) : basic.asm $(TESTDIR)makebasic.zip
 	python $(SCRIPTDIR)errorgen.py
 	python $(SCRIPTDIR)builder.py
 	python $(SCRIPTDIR)tables.py
-	$(ASM) -D autorun=0 -D coldstartnew=0 $(ASMOPTS) -o $(OBJDIR)stub.prg $<
+	$(ASM) -D autorun=1 -D coldstartnew=0 $(ASMOPTS) -o $(OBJDIR)stub.prg $<
 	$(CCOPY) $(OBJDIR)stub.prg $(TESTDIR)
 	$(MAKEPRG)
 

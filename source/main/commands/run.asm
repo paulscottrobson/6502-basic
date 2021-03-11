@@ -19,6 +19,7 @@
 ; ************************************************************************************************
 
 Command_Run: 	;; [run]
+XCommand_Run:	;; <run>
 		ldx 	#$FF
 		txs
 		jsr 	CommandClear 				; clear everything.

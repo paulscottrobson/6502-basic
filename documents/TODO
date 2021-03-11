@@ -1,11 +1,12 @@
 TODO
 ====
-Complete test workflow using Python/Editor/Runtime.
-Write something only using text I/O ? - the get-the-number game ?
+Write something only using text I/O ? - the get-the-numbers game ?
+Fix any bugs that arise.
 => 0.14
 Break option.
-VRAM Loader ?
+VRAM Loader
 Assembler
+Add in those memory checks, and the number stack overflow.
 => 0.15
 Rewrite array code
 => 0.16

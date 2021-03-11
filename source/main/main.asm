@@ -44,9 +44,9 @@
 	.include "imath/int32tostr.asm"
 	.include "imath/int32unary.asm"
 	.include "utility/check.asm"
-	.include "utility/coldwarmstart.asm"
 	.include "utility/scanner.asm"
 	.include "utility/stack.asm"
+	.include "utility/warmstart.asm"
 
 .section code
 
@@ -63,6 +63,7 @@ mainVectors:
 	.word MLInt32ToString      ; index 12
 	.word Command_XNew         ; index 14
 	.word PrintString          ; index 16
-	.word Command_RunFrom      ; index 18
-	.word LinkInt32FromString  ; index 20
+	.word XCommand_Run         ; index 18
+	.word Command_RunFrom      ; index 20
+	.word LinkInt32FromString  ; index 22
 .send code

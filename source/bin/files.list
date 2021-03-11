@@ -63,9 +63,9 @@
 ../source/main/imath/int32tostr.asm
 ../source/main/imath/int32unary.asm
 ../source/main/utility/check.asm
-../source/main/utility/coldwarmstart.asm
 ../source/main/utility/scanner.asm
 ../source/main/utility/stack.asm
+../source/main/utility/warmstart.asm
 ../source/string/chr.asm
 ../source/string/compare.asm
 ../source/string/concat.asm

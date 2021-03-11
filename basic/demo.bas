@@ -15,7 +15,7 @@ proc show()
 c1$ = "xxxxxxxxxxxxxAAAAAA"+"!"
 print c1$,len(c1$)
 proc show()
-repeat:until False
+end
 
 defproc demo(a_1,x,c1$)
 proc show()

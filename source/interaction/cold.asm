@@ -29,11 +29,17 @@ _CSBanner:
 		jmp 	_CSBanner
 _CSInk:	.device_ink
 		jmp 	_CSBanner		
+_CSStart:		
+		;
+		;		Autorun set, with interaction on.
+		;
+		.if autorun != 0
+		.main_run
+		.endif
 		;
 		;		If coldstartnew = 0 then a NEW command is executed on cold start
 		;		otherwise it just executes a CLEAR.		
 		;
-_CSStart:		
 		.if coldstartnew == 1
 		.main_new	
 		.else

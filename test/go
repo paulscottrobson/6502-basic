@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+python makebasic.zip test.bas
+cat stub.prg _basic.tokenised >basic.prg
+../bin/x16emu -keymap en-gb -debug  -run -scale 2 -prg basic.prg

@@ -21,11 +21,16 @@ Start:
 		.endif
 
 GoColdStart:
-		.set16 basePage,programMemory
-		.set16 endMemory,$9E00
-
-		.device_initialise
+		.set16 basePage,programMemory 		; set up
+		.set16 endMemory,endOfMemory
+		.device_initialise					; set up hardware
+		
+		.if installed_interaction == 0 && autorun != 0
+		.main_run
+		.else		
 		.interaction_coldstart
+		.endif
+
 
 GoTokTest:
 		.tokeniser_test
