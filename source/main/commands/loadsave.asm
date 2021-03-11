@@ -69,6 +69,17 @@ CLSParameters:
 		lda 	endProgram+1
 		sta 	esInt1+2
 		;
+		lda 	(codePtr),y 					; , following
+		cmp 	#TKW_COMMA
+		bne 	_CLSDefault
+		;
+		iny 									; skip comma
+		ldx 	#1 								; get numeric value.
+		jsr 	EvaluateInteger
+		sec
+		rts
+
+_CLSDefault:		
 		clc
 		rts
 
