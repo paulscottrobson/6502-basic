@@ -14,11 +14,12 @@
 ../source/floatingpoint/loadstore.asm
 ../source/floatingpoint/muldiv.asm
 ../source/floatingpoint/unary.asm
+../source/footer/99end.asm
+../source/header/00start.asm
 ../source/interaction/cold.asm
 ../source/interaction/delete.asm
 ../source/interaction/insert.asm
 ../source/interaction/warm.asm
-../source/main/00header/00start.asm
 ../source/main/commands/assert.asm
 ../source/main/commands/clear.asm
 ../source/main/commands/dim.asm

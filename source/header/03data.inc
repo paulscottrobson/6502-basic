@@ -110,7 +110,7 @@ convertBuffer:								; buffer for numeric conversions
 ;
 ;		Include constants associated with tokens.
 ;
-		.include "../../generated/tokenconst.inc"
+		.include "../generated/tokenconst.inc"
 
 TYPE_INT =		($3A) 						; type bytes that end identifier.
 TYPE_INTARRAY =	($3B)

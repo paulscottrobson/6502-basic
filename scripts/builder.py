@@ -10,10 +10,16 @@
 # *****************************************************************************
 # *****************************************************************************
 #
-#		Sort files so alphabetical, includes first, them main, then other assembler files.
+#		Sort files so alphabetical, includes first, then header, then other assembler files.
+#		then footer.
 #
 def sortFn(x):
-	x = ("0" if x.startswith("main") else "1")+x
+	if x.startswith("header"):
+		x = "0"+x
+	elif x.startswith("footer"):
+		x = "2"+x
+	else:
+		x = "1"+x
 	return ("0" if x.endswith(".inc") else "1")+x
 
 import re,os,sys
@@ -23,6 +29,7 @@ import re,os,sys
 #		than routine scanning.
 #
 groups = """
+	header			*
 	main 	
 	variable		
 	assembler 		
@@ -33,6 +40,7 @@ groups = """
 	floatingpoint	- 	
 	interaction
 	tokeniser
+	footer 			*
 """
 #
 sourceList = []															# list of asm files.

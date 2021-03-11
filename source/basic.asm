@@ -1,10 +1,10 @@
 ;
 ;	Automatically generated
 ;
-	.include "main/00header/01common.inc"
-	.include "main/00header/02macros.inc"
-	.include "main/00header/03data.inc"
-	.include "main/main.inc"
+	.include "header/01common.inc"
+	.include "header/02macros.inc"
+	.include "header/03data.inc"
+	.include "header/header.inc"
 	.include "assembler/assembler.inc"
 	.include "device/device.inc"
 	.include "error/error.inc"
@@ -12,17 +12,19 @@
 	.include "extension/extension.inc"
 	.include "floatingpoint/floatingpoint.inc"
 	.include "interaction/interaction.inc"
+	.include "main/main.inc"
 	.include "string/memory.inc"
 	.include "string/string.inc"
 	.include "tokeniser/detokenise/colouring.inc"
 	.include "tokeniser/tokeniser.inc"
 	.include "variable/variable.inc"
+	.include "footer/footer.inc"
 	.section code
-section_start_main:
+section_start_header:
 	.send code
-	.include "main/main.asm"
+	.include "header/header.asm"
 	.section code
-section_end_main:
+section_end_header:
 	.send code
 	.section code
 section_start_assembler:
@@ -67,6 +69,13 @@ section_start_interaction:
 section_end_interaction:
 	.send code
 	.section code
+section_start_main:
+	.send code
+	.include "main/main.asm"
+	.section code
+section_end_main:
+	.send code
+	.section code
 section_start_string:
 	.send code
 	.include "string/string.asm"
@@ -86,4 +95,11 @@ section_start_variable:
 	.include "variable/variable.asm"
 	.section code
 section_end_variable:
+	.send code
+	.section code
+section_start_footer:
+	.send code
+	.include "footer/footer.asm"
+	.section code
+section_end_footer:
 	.send code

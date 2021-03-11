@@ -12,13 +12,18 @@ tokeniser_list .macro
 	jsr	tokeniserHandler
 	.endm
 
-tokeniser_tokenise .macro
+tokeniser_test .macro
 	ldx	#4
 	jsr	tokeniserHandler
 	.endm
 
-tokeniser_tokenisez .macro
+tokeniser_tokenise .macro
 	ldx	#6
+	jsr	tokeniserHandler
+	.endm
+
+tokeniser_tokenisez .macro
+	ldx	#8
 	jsr	tokeniserHandler
 	.endm
 

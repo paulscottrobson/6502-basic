@@ -34,7 +34,6 @@ class TokeniserTest(object):
 		h.close()
 		#
 	def output(self,h,line,stem = ""):
-		#print(line)
 		h.write("TokenText{0}:\n".format(stem))
 		bline = ",".join(["${0:02x}".format(x) for x in [ord(x) for x in line]])
 		if self.enable:
@@ -46,7 +45,7 @@ class TokeniserTest(object):
 		#
 	def createLine(self):
 		t = self.getElement()
-		while len(t) < 140:
+		while len(t) < 100:
 			nt = self.getElement()
 			if self.isid(nt[0]) and self.isid(t[-1]):
 				t = t + " "

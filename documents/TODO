@@ -1,16 +1,14 @@
 TODO
 ====
-=> 0.12 sort of usable.
-Write Review checker program.
-Review newer stuff 
-=> 0.13 (asking for trouble ....)
-Develop a workflow using Python/Editor/Runtime.
+Complete test workflow using Python/Editor/Runtime.
 Write something only using text I/O ? - the get-the-number game ?
 => 0.14
 Break option.
 VRAM Loader ?
 Assembler
+=> 0.15
 Rewrite array code
+=> 0.16
 	
 Known Bugs
 ==========

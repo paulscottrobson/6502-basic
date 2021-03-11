@@ -75,8 +75,8 @@ class ProgramBuilder(object):
 		h.close()
 
 if __name__ == "__main__":
+	pb = ProgramBuilder()
 	for f in sys.argv[1:]:
-		pb = ProgramBuilder()
 		pb.load(f)
 		pb.exportAsm("../source/generated/testcode.inc".replace("/",os.sep))
 		pb.exportBin("../source/generated/testcode.bin".replace("/",os.sep))
