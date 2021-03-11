@@ -18,6 +18,9 @@
 ; ************************************************************************************************
 
 DeleteLine:
+		;
+		;		Find line to delete.
+		;
 		lda 	basePage 					; copy program base to temp0
 		sta 	temp0
 		lda 	basePage+1

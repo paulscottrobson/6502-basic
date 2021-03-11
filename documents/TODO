@@ -1,10 +1,13 @@
 TODO
 ====
-Editing programs using line numbers.
 => 0.12 sort of usable.
-Load and Save
-Review newer stuff => 0.13
-
+Load and Save (including to memory space)
+Review newer stuff 
+=> 0.13
+Assembler
+=> 0.14
+Write something only using text I/O ? - the get-the-number game ?
+	
 Known Bugs
 ==========
 
@@ -17,15 +20,18 @@ Incomplete but hooked in for write and test
 		pointer advance in clear.asm alloc
 		soft/hard memory allocation alloc() function.
 		creating procedure table.
-		creating arrays.
+		creating arrays (will be rewritten)
+		adding program code.
 		
-	Special case 1 in concrete ???
+	Special case 1 character in concrete ???
 
 	Number stack overflow.
 
 	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
 	need 6502 versions along with dispatch macro.
 	
+	Remove flag returns from cross module calls (tokenise ?)
+
 	scanner.asm skipping embedded float.
 
 	indent listing.
