@@ -49,8 +49,17 @@ _CCFoundEnd:
 		lda 	temp0+1
 		sta 	lowMemory+1
 
+		clc 								; put temp0+1 in endProgram
+		lda 	temp0
+		adc 	#1
+		sta 	endProgram
+		lda 	temp0+1
+		adc 	#0
+		sta 	endProgram+1
+
 		lda 	#4 							; skip low free memory clear, leave a gap.
 		jsr 	AdvanceLowMemoryByte		; need at least one here, to skip the end of program zero offset.
+
 
 		jsr 	RSReset 					; reset the return stack.
 

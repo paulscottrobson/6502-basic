@@ -8,6 +8,15 @@
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
+;
+;		Note:
+;
+;			At present it seems impossible to stop the X16 outputting the two byte header
+;			and simply writing the bloody contents of the file out. 
+;			Thus for compatibility reasons, all files must have a two byte header, which
+;	 		should be ignored.
+;
+		.section 	code
 
 ; ************************************************************************************************
 ;
@@ -16,7 +25,8 @@
 ; ************************************************************************************************
 
 ExternSave: ;; <save>
-		jsr 	ExternGetLength 			; get length of file into A
+		.pshy
+		jsr 	ExternGetLength 			; get length of file into A name YX
 		jsr 	$FFBD 						; set name
 		;
 		lda 	#1
@@ -34,7 +44,7 @@ ExternSave: ;; <save>
 		lda 	#temp0 						; ref to start address
 		jsr 	$FFD8 						; save
 		bcs 	_ESSave
-
+		.puly
 		rts
 
 _ESSave:
@@ -47,7 +57,8 @@ _ESSave:
 ; ************************************************************************************************
 
 ExternLoad: ;; <load>
-		jsr 	ExternGetLength 			; get length of file into A
+		.pshy
+		jsr 	ExternGetLength 			; get length of file into A name YX
 		jsr 	$FFBD 						; set name
 		;
 		lda 	#1
@@ -60,7 +71,7 @@ ExternLoad: ;; <load>
 		lda 	#0 							; load command
 		jsr 	$FFD5
 		bcs 	_ESLoad
-
+		.puly
 		rts
 
 _ESLoad:
@@ -75,15 +86,17 @@ _ESLoad:
 ExternGetLength:
 		lda 	esInt0 						; length into A.
 		sta 	temp0
-		lda 	esInt0+1
+		lda 	esInt1
 		sta 	temp0+1
 		ldy 	#0
 		lda 	(temp0),y
 		
 		ldx 	esInt0 						; name into YX
-		ldy 	esInt0+1
+		ldy 	esInt1
 		inx 								; advance over the length pointer.
 		bne 	_ESNoCarry
 		iny
 _ESNoCarry:		
 		rts
+
+		.send 	code

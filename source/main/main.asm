@@ -10,6 +10,7 @@
 	.include "commands/input.asm"
 	.include "commands/let.asm"
 	.include "commands/list.asm"
+	.include "commands/loadsave.asm"
 	.include "commands/local.asm"
 	.include "commands/new.asm"
 	.include "commands/poke.asm"

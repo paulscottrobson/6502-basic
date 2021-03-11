@@ -13,6 +13,11 @@
 Start:	
 		jmp 	ColdStart
 		jmp 	TokTest
+		.if 	installed_tokeniser==1
+		.word 	TokenTableAddress
+		else
+		.word 	0
+		.endif
 
 		.send code
 

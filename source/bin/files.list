@@ -27,6 +27,7 @@
 ../source/main/commands/input.asm
 ../source/main/commands/let.asm
 ../source/main/commands/list.asm
+../source/main/commands/loadsave.asm
 ../source/main/commands/local.asm
 ../source/main/commands/new.asm
 ../source/main/commands/poke.asm

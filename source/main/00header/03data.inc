@@ -93,6 +93,9 @@ hashTables:									; hash tables 6 x hashTableSize words.
 basePage: 									; start of program space.
 		.fill 	2
 
+endProgram: 								; byte after last program byte.
+		.fill 	2
+		
 endMemory: 									; end of memory.
 		.fill 	2
 
