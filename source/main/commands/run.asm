@@ -4,7 +4,7 @@
 ;		Name:		run.asm
 ;		Purpose:	Main Run Program
 ;		Created:	26th February 2021
-;		Reviewed: 	8th March 2021-
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************

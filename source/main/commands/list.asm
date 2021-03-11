@@ -4,6 +4,7 @@
 ;		Name:		list.asm
 ;		Purpose:	LIST command
 ;		Created:	7th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -16,31 +17,38 @@
 ; ************************************************************************************************
 
 CommandList:		;; [list]
-		ldx		#0 							; set start/end lines in stack 0/1
+		;
+		;		Get start and end range.
+		;
+		ldx		#0 							; set start/end lines in stack 0/1 to 0 and $FFFF
 		jsr 	MInt32False
 		inx
 		jsr 	MInt32True
 		;
-		lda 	(codePtr),y
+		lda 	(codePtr),y 				; look at first token
 		cmp 	#TKW_COMMA 					; list ,xxxx
 		beq 	_CLEndLine
 		cmp 	#0 							; list ... on its own.
-		bmi 	_CLDoListing
+		bmi 	_CLDoListing 				; do the whole lot.
 		;
-		ldx 	#0 							; get start
+		ldx 	#0 							; get start line at stack:0
 		jsr 	EvaluateInteger
-		lda 	(codePtr),y 				; , follows
+		lda 	(codePtr),y 				; , follows ?
 		cmp 	#TKW_COMMA
-		beq 	_CLEndLine
-		jsr 	MInt32CopyUp 				; copy first to second
-		jmp 	_CLDoListing
+		beq 	_CLEndLine   				
+		jsr 	MInt32CopyUp 				; copy first to second if just a line number on its
+		jmp 	_CLDoListing 				; own e.g. list 1100
 		;
 _CLEndLine:	
 		iny 								; skip comma		
-		lda 	(codePtr),y  				; no number follows.	
+		lda 	(codePtr),y  				; no number follows, then its list 1000,	
 		bmi 	_CLDoListing
-		ldx 	#1
+		ldx 	#1 							; get the last line to list
 		jsr 	EvaluateInteger				; get end
+		;
+		;		This does the actual listing, though most of the work is done by
+		;		the tokenise module.
+		;
 _CLDoListing:
 		jsr 	ResetCodeAddress 			; back to the start.
 _CLCheckLoop:
@@ -58,7 +66,7 @@ _CLCheckLoop:
 		beq 	_CLNext
 		.tokeniser_list 					; detokenise and list code at line (codePtr)
 _CLNext:	
-		ldy 	#0
+		ldy 	#0 							; go to next line.
 		lda 	(codePtr),y
 		clc
 		adc 	codePtr
@@ -68,10 +76,13 @@ _CLNext:
 		jmp 	_CLCheckLoop
 
 _CLEnd:		
-		jmp 	WarmStart
+		jmp 	WarmStart 					; warm start after list.
+; ************************************************************************************************
 ;
-;		Compare current line against low word of stack,x
+;						Compare current line against low word of stack,x
 ;
+; ************************************************************************************************
+
 CLCompareLineTOS:
 		ldy 	#1
 		lda 	(codePtr),y

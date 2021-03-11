@@ -27,6 +27,8 @@ class TokeniserTest(object):
 		self.tokens = Tokens().getAllTokens()
 		self.tokenKeys = [x for x in self.tokens.keys()]
 		h = open(tgtFile,"w")
+		header= ";\n;\tAutomatically generated\n;\n"							# header used.
+		h.write(header)
 		h.write(";\n;\tBuilt using seed {0}\n;\n".format(self.seed))
 		self.output(h,self.createLine(),"1")
 		h.close()

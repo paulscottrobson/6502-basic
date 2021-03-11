@@ -4,7 +4,7 @@
 ;		Name:		memory.asm
 ;		Purpose:	String memory handler
 ;		Created:	27th February 2021
-;		Reviewed: 	8th March 2021-
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************

@@ -4,7 +4,7 @@
 ;		Name:		print.asm
 ;		Purpose:	Print command
 ;		Created:	1st March 2021
-;		Reviewed: 	8th March 2021-
+;		Reviewed: 	8th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
