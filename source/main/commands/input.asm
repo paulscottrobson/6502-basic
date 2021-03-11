@@ -4,6 +4,7 @@
 ;		Name:		input.asm
 ;		Purpose:	Input command
 ;		Created:	7th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -12,9 +13,8 @@
 MaxInputSize = 32
 
 		.section Storage
-InputBuffer:
+InputBuffer:								; input text goes here.
 		.fill 	MaxInputSize+1
-
 		.send Storage
 		.section code
 
@@ -39,20 +39,28 @@ Command_Input: 	;; [input]
 		bcc 	_CIVariable
 		cmp 	#TOK_STR 				; if not quoted string syntax error.
 		bne 	_CISyntax
+		;
+		;		Handle the "prompt" bits.
+		;
 		ldx 	#0
 		jsr 	EvaluateString 			; evaluate and print string
 		jsr 	TOSToTemp0
 		jsr 	PrintString	
 		jmp 	Command_Input
 		;
+		;		Handle the variable bits. First identify the variable
+		;
 _CIVariable:
 		ldx 	#0 						; evaluate a reference.
-		jsr 	EvaluateReference 
+		jsr 	EvaluateReference  		; this is where its going
+		;
+		;		Get some input and try to convert to the write format.
+		;
 _CIRetry:		
-		lda 	#"?"
+		lda 	#"?"					; print prompt
 		.device_print
 		.pshy
-		jsr 	InputString 			; input a string.
+		jsr 	InputString 			; input a string (manually)
 		ldx 	#1
 		jsr 	BufferToStackX 			; make stack,x ref input string.
 		;
@@ -73,6 +81,9 @@ _CIRetry:
 		.floatingpoint_stringToFloat 
 		.endif
 		bcc		_CIRetry				; failed, try again.
+		;
+		;		If convert successfully write it to the reference.
+		;
 _CIWrite:
 		ldx 	#0
 		jsr 	WriteValue		

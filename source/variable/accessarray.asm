@@ -4,6 +4,7 @@
 ;		Name:		accessarray.asm
 ;		Purpose:	Access an array
 ;		Created:	6th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,16 +19,21 @@
 ; ************************************************************************************************
 
 AccessArray:
+		;
+		;		Get index and do simple check
+		;
 		inx
 		txa
 		.main_evaluateint 					; get array index in next slot up.
 		tax
 		dex		
-		.main_checkrightparen
+		.main_checkrightparen				; check )
 		;
-		lda 	esInt3+1,x 					; check index value
+		lda 	esInt3+1,x 					; check index value at least < 64k
 		ora 	esInt2+1,x
 		bne 	_AABadIndex
+		;
+		;		Check index in range.
 		;
 		.pshy
 		;
@@ -44,11 +50,15 @@ AccessArray:
 		sbc 	(temp0),y
 		bcs 	_AABadIndex 				; if >= then fail.
 		;
+		;		Work out the offset by data size x index
+		;
 		inx 								; point to index
 		ldy 	#4 							; get the size byte.
 		lda 	(temp0),y
 		jsr 	MultiplyTOSByA 				; specialist multiplier.
 		dex
+		;
+		;		Add start of the array space.
 		;
 		ldy 	#0 							; add this to the array base as the new address
 		clc

@@ -4,6 +4,7 @@
 ;		Name:		proc.asm
 ;		Purpose:	Proc handler/scanner
 ;		Created:	4th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -33,16 +34,20 @@ CallProc:	;; [proc]
 		lda 	temp0
 		pha
 		;
-		;		Point to the params in code and evaluate them on the stack.
+		;		Point to the params in code and evaluate them on the stack - 1st param goes
+		;		at stack:1, 2nd and stack:2 etc.
 		;
 		tya 								; calculate Y + length
 		clc
 		adc 	tempShort
 		tay
 		ldx 	#0 							; where the first parameter goes - 1
+		;
+		;		Parameter evaluation loop.
+		;
 _CallProcEvalParams:
 		inx
-		lda 	(codePtr),y 				; do we have ) ?
+		lda 	(codePtr),y 				; do we have ) , e.g. the end of the parameters ?
 		cmp 	#TKW_RPAREN
 		beq 	_CPDoneParams
 		jsr 	Evaluate 					; evaluate a parameter
@@ -78,7 +83,9 @@ _CPDoneParams:
 		adc 	#4
 		tay
 		;
-		;		Load the parameters back.
+		;		Load the parameters into the target variables. We put them on the
+		;		preceding stack elements, so first time we have stack:1, the parameter
+		;		variable goes in stack:0
 		;
 		ldx 	#$FF
 _CPLoadParameters:
@@ -88,7 +95,7 @@ _CPLoadParameters:
 		; 							
 		lda 	(codePtr),y					; what follows
 		cmp 	#TKW_RPAREN 				; is it the right bracket
-		beq 	_CPParamComplete 			; done all the parameters
+		beq 	_CPParamComplete 			; done all the parameters, perhaps.
 		;
 		jsr 	LocaliseVariable 			; make following variable local, ref in tos,x
 		jsr 	WriteValue 					; copy the evaluated parameter into there.
@@ -103,7 +110,7 @@ _CPLoadParameters:
 		;
 _CPParamComplete:
 		jsr 	CheckRightParen 			; check )
-		inx 								; check right number of parameters
+		inx 								; check right number of parameters have been consumed
 		cpx 	paramCount 		
 		bne 	_CPParamError
 		rts

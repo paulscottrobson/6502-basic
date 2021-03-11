@@ -4,6 +4,7 @@
 ;		Name:		readdata.asm
 ;		Purpose:	Read/Data/Restore
 ;		Created:	6th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -12,6 +13,7 @@
 		.section storage
 ;
 ;		Current position. Should rest on seperating , if not search forward for data.
+;		(this is swapped with (codePtr),y )
 ;
 dataPtr:									; codePointer and index for Data.
 		.fill 	2

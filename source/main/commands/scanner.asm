@@ -4,14 +4,15 @@
 ;		Name:		scanner.asm
 ;		Purpose:	Proc search/scanner
 ;		Created:	4th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
 		.section storage
-procList: 									; address of line pointer hi/low / hash for all proces
-		.fill 	2		 					; terminated by name high.
+procList: 									; address of line pointer hi/low / hash for all procs
+		.fill 	2		 					; terminated by name high being zero.
 
 yInLine:									; offset in codePtr. 				
 		.fill 	1		
@@ -28,7 +29,7 @@ yInLine:									; offset in codePtr.
 ; ************************************************************************************************
 
 FindProcedure:
-		sty 	yInLine 		
+		sty 	yInLine 					; save current position.
 		jsr 	CalculateProcedureHash		; calculate the hash of the procedure.
 		sta 	temp1
 		;
@@ -125,24 +126,31 @@ ScanProc:
 		lda 	lowMemory+1
 		sta 	procList+1
 		jsr 	ResetCodeAddress 			; back to the start.
+		;
+		;		Look at next line for DEFPROC
+		;
 _ScanLoop:
 		ldy 	#0 							; check reached program end
 		lda 	(codePtr),y
 		beq 	_ScanExit
 		ldy 	#3							; get first token
 		lda 	(codePtr),y 				
-		cmp 	#TKW_DEFPROC				; skip next if not DEFPROC
+		cmp 	#TKW_DEFPROC				; skip to next if not DEFPROC
 		bne 	_ScanNext
 		;
-		lda 	codePtr+1 					; write high and low
+		;		Found, write into table.
+		;
+		lda 	codePtr+1 					; write high and low address of this line.
 		jsr 	_ScanWrite
 		lda 	codePtr
 		jsr 	_ScanWrite
 		ldy 	#4 							; start of name part
 		jsr 	CalculateProcedureHash 		; calculate procedure hash
-		jsr 	_ScanWrite
-
-_ScanNext: 									; go to next line.
+		jsr 	_ScanWrite					; and write that
+		;
+		;		Go to next code line.
+		;
+_ScanNext: 									; go to next line, and loop round.
 		clc
 		ldy 	#0
 		lda 	(codePtr),y

@@ -4,6 +4,7 @@
 ;		Name:		locals.asm
 ;		Purpose:	Handle localising/delocalising.
 ;		Created:	4th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -28,7 +29,7 @@ CommandLocal:		;; [local]
 _CLCheckNext:
 		lda 	(codePtr),y 				; what follows ?
 		iny
-		cmp 	#TKW_EQUAL 					; local x = 2 ?
+		cmp 	#TKW_EQUAL 					; something local "x = 2" ?
 		beq 	_CLAssignment
 		cmp 	#TKW_COMMA 					; comma try again.
 		beq 	CommandLocal
@@ -44,7 +45,7 @@ _CLAssignment:
 
 ; ************************************************************************************************
 ;
-;					Get a variable reference, push current value on the stack.
+;			Get a variable reference tp stack:x, push current value on the return stack.
 ;		
 ; ************************************************************************************************
 
@@ -55,7 +56,7 @@ LocaliseVariable:
 		txa 								; get the address of that variable.
 		.variable_access
 		tax
-		.pshx
+		.pshx								; save X.
 		.pshy 								; save Y.
 		;
 		jsr 	TOSToTemp0 					; the address of the variable is now in temp0.
@@ -211,7 +212,7 @@ _RString:
 		txa
 		.string_write
 		;
-		;		Assign variable to string.
+		;		Drop the string record off the stack.
 		;
 		ldy 	#3 							; get string length
 		lda 	(rsPointer),y

@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -D autorun=0 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/basic.prg basic.asm
-; Thu Mar 11 11:43:53 2021
+; Thu Mar 11 14:48:34 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -364,8 +364,8 @@
 ;******  Processing file: main/00header/00start.asm
 
 .1000					Start:
-.1000	4c e3 22	jmp $22e3			jmp 	ColdStart
-.1003	4c d9 2e	jmp $2ed9			jmp 	TokTest
+.1000	4c e3 22	jmp $22e3			jmp 	ColdStart 					; +0 	boot BASIC
+.1003	4c d9 2e	jmp $2ed9			jmp 	TokTest						; +3 	run tokeniser test code.
 >1006	ff 30						.word 	TokenTableAddress
 .1008							else
 >1008	00 00						.word 	0
@@ -740,14 +740,14 @@
 .10e4	4c c1 10	jmp $10c1			jmp 	Command_Input
 .10e7					_CIVariable:
 .10e7	a2 00		ldx #$00			ldx 	#0 						; evaluate a reference.
-.10e9	20 27 1d	jsr $1d27			jsr 	EvaluateReference
+.10e9	20 27 1d	jsr $1d27			jsr 	EvaluateReference  		; this is where its going
 .10ec					_CIRetry:
-.10ec	a9 3f		lda #$3f			lda 	#"?"
+.10ec	a9 3f		lda #$3f			lda 	#"?"					; print prompt
 .10ee	a2 12		ldx #$12		ldx	#18
 .10f0	20 aa 24	jsr $24aa		jsr	deviceHandler
 .10f3	98		tya				tya
 .10f4	48		pha				pha
-.10f5	20 35 11	jsr $1135			jsr 	InputString 			; input a string.
+.10f5	20 35 11	jsr $1135			jsr 	InputString 			; input a string (manually)
 .10f8	a2 01		ldx #$01			ldx 	#1
 .10fa	20 22 11	jsr $1122			jsr 	BufferToStackX 			; make stack,x ref input string.
 .10fd	a5 40		lda $40				lda 	esType 					; if target type numeric
@@ -901,27 +901,27 @@
 ;******  Processing file: main/commands/list.asm
 
 .371c					CommandList:
-.371c	a2 00		ldx #$00			ldx		#0 							; set start/end lines in stack 0/1
+.371c	a2 00		ldx #$00			ldx		#0 							; set start/end lines in stack 0/1 to 0 and $FFFF
 .371e	20 56 22	jsr $2256			jsr 	MInt32False
 .3721	e8		inx				inx
 .3722	20 52 22	jsr $2252			jsr 	MInt32True
-.3725	b1 28		lda ($28),y			lda 	(codePtr),y
+.3725	b1 28		lda ($28),y			lda 	(codePtr),y 				; look at first token
 .3727	c9 c8		cmp #$c8			cmp 	#TKW_COMMA 					; list ,xxxx
 .3729	f0 15		beq $3740			beq 	_CLEndLine
 .372b	c9 00		cmp #$00			cmp 	#0 							; list ... on its own.
-.372d	30 1b		bmi $374a			bmi 	_CLDoListing
-.372f	a2 00		ldx #$00			ldx 	#0 							; get start
+.372d	30 1b		bmi $374a			bmi 	_CLDoListing 				; do the whole lot.
+.372f	a2 00		ldx #$00			ldx 	#0 							; get start line at stack:0
 .3731	20 f4 1c	jsr $1cf4			jsr 	EvaluateInteger
-.3734	b1 28		lda ($28),y			lda 	(codePtr),y 				; , follows
+.3734	b1 28		lda ($28),y			lda 	(codePtr),y 				; , follows ?
 .3736	c9 c8		cmp #$c8			cmp 	#TKW_COMMA
 .3738	f0 06		beq $3740			beq 	_CLEndLine
-.373a	20 94 21	jsr $2194			jsr 	MInt32CopyUp 				; copy first to second
-.373d	4c 4a 37	jmp $374a			jmp 	_CLDoListing
+.373a	20 94 21	jsr $2194			jsr 	MInt32CopyUp 				; copy first to second if just a line number on its
+.373d	4c 4a 37	jmp $374a			jmp 	_CLDoListing 				; own e.g. list 1100
 .3740					_CLEndLine:
 .3740	c8		iny				iny 								; skip comma
-.3741	b1 28		lda ($28),y			lda 	(codePtr),y  				; no number follows.
+.3741	b1 28		lda ($28),y			lda 	(codePtr),y  				; no number follows, then its list 1000,
 .3743	30 05		bmi $374a			bmi 	_CLDoListing
-.3745	a2 01		ldx #$01			ldx 	#1
+.3745	a2 01		ldx #$01			ldx 	#1 							; get the last line to list
 .3747	20 f4 1c	jsr $1cf4			jsr 	EvaluateInteger				; get end
 .374a					_CLDoListing:
 .374a	20 86 15	jsr $1586			jsr 	ResetCodeAddress 			; back to the start.
@@ -940,7 +940,7 @@
 .3764	a2 02		ldx #$02		ldx	#2
 .3766	20 0d 33	jsr $330d		jsr	tokeniserHandler
 .3769					_CLNext:
-.3769	a0 00		ldy #$00			ldy 	#0
+.3769	a0 00		ldy #$00			ldy 	#0 							; go to next line.
 .376b	b1 28		lda ($28),y			lda 	(codePtr),y
 .376d	18		clc				clc
 .376e	65 28		adc $28				adc 	codePtr
@@ -949,7 +949,7 @@
 .3774	e6 29		inc $29				inc 	codePtr+1
 .3776	4c 4d 37	jmp $374d			jmp 	_CLCheckLoop
 .3779					_CLEnd:
-.3779	4c 04 23	jmp $2304			jmp 	WarmStart
+.3779	4c 04 23	jmp $2304			jmp 	WarmStart 					; warm start after list.
 .377c					CLCompareLineTOS:
 .377c	a0 01		ldy #$01			ldy 	#1
 .377e	b1 28		lda ($28),y			lda 	(codePtr),y
@@ -1039,7 +1039,7 @@
 .124e					_CLCheckNext:
 .124e	b1 28		lda ($28),y			lda 	(codePtr),y 				; what follows ?
 .1250	c8		iny				iny
-.1251	c9 8d		cmp #$8d			cmp 	#TKW_EQUAL 					; local x = 2 ?
+.1251	c9 8d		cmp #$8d			cmp 	#TKW_EQUAL 					; something local "x = 2" ?
 .1253	f0 06		beq $125b			beq 	_CLAssignment
 .1255	c9 c8		cmp #$c8			cmp 	#TKW_COMMA 					; comma try again.
 .1257	f0 f0		beq $1249			beq 	CommandLocal
@@ -1379,7 +1379,7 @@
 .1442	a2 00		ldx #$00			ldx 	#0 							; where the first parameter goes - 1
 .1444					_CallProcEvalParams:
 .1444	e8		inx				inx
-.1445	b1 28		lda ($28),y			lda 	(codePtr),y 				; do we have ) ?
+.1445	b1 28		lda ($28),y			lda 	(codePtr),y 				; do we have ) , e.g. the end of the parameters ?
 .1447	c9 c6		cmp #$c6			cmp 	#TKW_RPAREN
 .1449	f0 0b		beq $1456			beq 	_CPDoneParams
 .144b	20 d5 1c	jsr $1cd5			jsr 	Evaluate 					; evaluate a parameter
@@ -1411,7 +1411,7 @@
 .1479	f0 1e		beq $1499			beq 	_CPParamError
 .147b	b1 28		lda ($28),y			lda 	(codePtr),y					; what follows
 .147d	c9 c6		cmp #$c6			cmp 	#TKW_RPAREN 				; is it the right bracket
-.147f	f0 0e		beq $148f			beq 	_CPParamComplete 			; done all the parameters
+.147f	f0 0e		beq $148f			beq 	_CPParamComplete 			; done all the parameters, perhaps.
 .1481	20 67 12	jsr $1267			jsr 	LocaliseVariable 			; make following variable local, ref in tos,x
 .1484	20 85 11	jsr $1185			jsr 	WriteValue 					; copy the evaluated parameter into there.
 .1487	b1 28		lda ($28),y			lda 	(codePtr),y 				; followed by a comma ?
@@ -1421,7 +1421,7 @@
 .148e	88		dey				dey 								; no, unconsume and check for )
 .148f					_CPParamComplete:
 .148f	20 c9 22	jsr $22c9			jsr 	CheckRightParen 			; check )
-.1492	e8		inx				inx 								; check right number of parameters
+.1492	e8		inx				inx 								; check right number of parameters have been consumed
 .1493	ec 15 0b	cpx $0b15			cpx 	paramCount
 .1496	d0 01		bne $1499			bne 	_CPParamError
 .1498	60		rts				rts
@@ -1769,11 +1769,11 @@
 ;******  Processing file: main/commands/scanner.asm
 
 .0b19					procList:
->0b19							.fill 	2		 					; terminated by name high.
+>0b19							.fill 	2		 					; terminated by name high being zero.
 .0b1b					yInLine:
 >0b1b							.fill 	1
 .1677					FindProcedure:
-.1677	8c 1b 0b	sty $0b1b			sty 	yInLine
+.1677	8c 1b 0b	sty $0b1b			sty 	yInLine 					; save current position.
 .167a	20 35 17	jsr $1735			jsr 	CalculateProcedureHash		; calculate the hash of the procedure.
 .167d	85 2c		sta $2c				sta 	temp1
 .167f	ad 19 0b	lda $0b19			lda		procList 					; put procList address in temp2
@@ -1851,15 +1851,15 @@
 .16f6	f0 2a		beq $1722			beq 	_ScanExit
 .16f8	a0 03		ldy #$03			ldy 	#3							; get first token
 .16fa	b1 28		lda ($28),y			lda 	(codePtr),y
-.16fc	c9 9d		cmp #$9d			cmp 	#TKW_DEFPROC				; skip next if not DEFPROC
+.16fc	c9 9d		cmp #$9d			cmp 	#TKW_DEFPROC				; skip to next if not DEFPROC
 .16fe	d0 12		bne $1712			bne 	_ScanNext
-.1700	a5 29		lda $29				lda 	codePtr+1 					; write high and low
+.1700	a5 29		lda $29				lda 	codePtr+1 					; write high and low address of this line.
 .1702	20 2a 17	jsr $172a			jsr 	_ScanWrite
 .1705	a5 28		lda $28				lda 	codePtr
 .1707	20 2a 17	jsr $172a			jsr 	_ScanWrite
 .170a	a0 04		ldy #$04			ldy 	#4 							; start of name part
 .170c	20 35 17	jsr $1735			jsr 	CalculateProcedureHash 		; calculate procedure hash
-.170f	20 2a 17	jsr $172a			jsr 	_ScanWrite
+.170f	20 2a 17	jsr $172a			jsr 	_ScanWrite					; and write that
 .1712					_ScanNext:
 .1712	18		clc				clc
 .1713	a0 00		ldy #$00			ldy 	#0
@@ -4639,7 +4639,7 @@
 >2850	20 62 79 20 50 61 75 6c 20 52 6f 62 73 6f 6e 20
 >2860	32 30 32 31 0d 0d
 >2866	02 42 61 73 69 63 20				.text 	2,"Basic "
->286d	30 2e 31 32					.text "0.12"
+>286d	30 2e 31 33					.text "0.13"
 >2871	20 28						.text 	" ("
 >2873	31 31 2d 4d 61 72 2d 32				.text "11-Mar-21"
 >287b	31
@@ -6421,7 +6421,7 @@
 .33c4	ca		dex				dex
 .33c5	a2 00		ldx #$00		ldx	#0
 .33c7	20 65 23	jsr $2365		jsr	mainHandler
-.33ca	b5 61		lda $61,x			lda 	esInt3+1,x 					; check index value
+.33ca	b5 61		lda $61,x			lda 	esInt3+1,x 					; check index value at least < 64k
 .33cc	15 59		ora $59,x			ora 	esInt2+1,x
 .33ce	d0 33		bne $3403			bne 	_AABadIndex
 .33d0	98		tya				tya

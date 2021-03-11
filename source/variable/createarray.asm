@@ -4,6 +4,7 @@
 ;		Name:		createarray.asm
 ;		Purpose:	Create an array
 ;		Created:	6th March 2021
+;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -19,6 +20,9 @@
 ; ************************************************************************************************
 
 CreateArray:	;; <createarray>
+		;
+		;		Create the basic array element, checking it doesn't already exist.
+		;
 		jsr 	AccessSetup 				; set up the basic stuff.
 		;
 		lda 	varType 					; is the variable type an array
@@ -37,6 +41,8 @@ CreateArray:	;; <createarray>
 		pha
 		lda 	varType 					; push variable type on the stack.
 		pha
+		;
+		;		Work out array element size.
 		;
 		lda 	#0 							; work out the array dimension on TOS.
 		.main_evaluateint 
@@ -61,7 +67,9 @@ _CAFound:
 		error 	DupArray
 _CANotArray:		
 		error 	NotArray
-
+		;
+		;		Now allocate memory by creating (size+1) blanks.
+		;
 _CASizeOk:
 		;
 		inc 	esInt0 						; bump it by one, as we index from 0
