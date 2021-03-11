@@ -1,6 +1,7 @@
 ;
 ;	Automatically generated
 ;
+../source/device/option_x16/x16file.asm
 ../source/device/option_x16/x16io.asm
 ../source/device/option_x16/x16timer.asm
 ../source/error/errorhandler.asm

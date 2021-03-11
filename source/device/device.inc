@@ -32,28 +32,38 @@ device_inputline .macro
 	jsr	deviceHandler
 	.endm
 
-device_locate .macro
+device_load .macro
 	ldx	#12
 	jsr	deviceHandler
 	.endm
 
-device_paper .macro
+device_locate .macro
 	ldx	#14
 	jsr	deviceHandler
 	.endm
 
-device_print .macro
+device_paper .macro
 	ldx	#16
 	jsr	deviceHandler
 	.endm
 
-device_tab .macro
+device_print .macro
 	ldx	#18
 	jsr	deviceHandler
 	.endm
 
-device_timer .macro
+device_save .macro
 	ldx	#20
+	jsr	deviceHandler
+	.endm
+
+device_tab .macro
+	ldx	#22
+	jsr	deviceHandler
+	.endm
+
+device_timer .macro
+	ldx	#24
 	jsr	deviceHandler
 	.endm
 

@@ -10,42 +10,12 @@
 # *****************************************************************************
 
 import re,os,sys
-#
-#		Syntax Error, name : text (default text is name)
-#
-#		Called with Error macro e.g. Error BadType
-#
-errorDef = """
-	Missing:Feature not Present
-	Syntax:Syntax Error
-	NoModule:Module disabled
-	Assert:Assertion failed
-	DivZero:Divide By Zero 
-	Stop
-	BadType:Type Mismatch
-	BadValue:Illegal Value
-	MissingRP:Missing right bracket
-	MissingComma:Missing comma
-	NoReference:Missing reference
-	LineNumber:Line Number not found
-	StrLen:String too long.
-	ReturnErr:RETURN without GOSUB
-	UntilErr:UNTIL without REPEAT
-	NextErr:NEXT without FOR
-	WendErr:WEND without WHILE
-	endprocErr:ENDPROC without PROC
-	BadIndex:Bad NEXT index
-	Struct:Structures nested wrong
-	NoAuto:Cannot create variable
-	RetStack:Return stack out of space.
-	NoProc:Unknown Procedure
-	Params:Parameters do not match.
-	DupArray:Array already defined
-	NotArray:DIM requires array
-	ArrayIndex:Bad array index.
-	DataError:Out of data
-	Tokenise:Cannot tokenise line.
-"""
+
+languageFile = "english.txt"
+
+errorDef = open("../scripts/languages/"+languageFile).readlines()		# Load error file
+errorDef = [x.strip() for x in errorDef if x.strip() != ""]
+errorDef = [x.replace("\t"," ") for x in errorDef if not x.startswith(";")]
 
 genDir = "../source/generated/".replace("/",os.sep)					
 header = ";\n;\tAutomatically generated\n;\n"							# header used.
@@ -53,7 +23,7 @@ header = ";\n;\tAutomatically generated\n;\n"							# header used.
 errors = []
 errID = 1
 
-for s in [x.strip().replace("\t"," ") for x in errorDef.split("\n") if x.strip() != ""]:
+for s in errorDef:
 	s = s.split(":")
 	s = s if len(s) == 2 else s + s
 	errors.append({ "ID":errID,"Label":s[0],"Text":s[1] })

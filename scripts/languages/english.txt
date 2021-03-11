@@ -1,0 +1,48 @@
+; *****************************************************************************
+; *****************************************************************************
+;
+;		Name:		english.txt
+;		Author:		Paul Robson (paul@robsons.org.uk)
+;		Created:	11th March 2021
+;		Purpose:	English language error messages
+;
+; *****************************************************************************
+; *****************************************************************************
+
+;
+;		Syntax Error, name : text (default text is name)
+;
+;		Called with Error macro e.g. Error BadType
+;
+
+Missing:Feature not Present
+Syntax:Syntax Error
+NoModule:Module disabled
+Assert:Assertion failed
+DivZero:Divide By Zero 
+Stop
+BadType:Type Mismatch
+BadValue:Illegal Value
+MissingRP:Missing right bracket
+MissingComma:Missing comma
+NoReference:Missing reference
+LineNumber:Line Number not found
+StrLen:String too long.
+ReturnErr:RETURN without GOSUB
+UntilErr:UNTIL without REPEAT
+NextErr:NEXT without FOR
+WendErr:WEND without WHILE
+endprocErr:ENDPROC without PROC
+BadIndex:Bad NEXT index
+Struct:Structures nested wrong
+NoAuto:Cannot create variable
+RetStack:Return stack out of space.
+NoProc:Unknown Procedure
+Params:Parameters do not match.
+DupArray:Array already defined
+NotArray:DIM requires array
+ArrayIndex:Bad array index.
+DataError:Out of data
+Tokenise:Cannot tokenise line.
+Save:Save failed
+Load:Load failed

@@ -30,3 +30,5 @@ ErrorID_NotArray = 26 ; DIM requires array
 ErrorID_ArrayIndex = 27 ; Bad array index.
 ErrorID_DataError = 28 ; Out of data
 ErrorID_Tokenise = 29 ; Cannot tokenise line.
+ErrorID_Save = 30 ; Save failed
+ErrorID_Load = 31 ; Load failed

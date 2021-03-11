@@ -31,5 +31,7 @@ ErrorTextList:
 	.text 16,"Bad array index."
 	.text 11,"Out of data"
 	.text 21,"Cannot tokenise line."
+	.text 11,"Save failed"
+	.text 11,"Load failed"
 	.byte 0
 

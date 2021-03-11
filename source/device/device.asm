@@ -1,6 +1,7 @@
 ;
 ;	Automatically generated
 ;
+	.include "option_x16/x16file.asm"
 	.include "option_x16/x16io.asm"
 	.include "option_x16/x16timer.asm"
 
@@ -16,9 +17,11 @@ deviceVectors:
 	.word IOInk                ; index 6
 	.word IOInkey              ; index 8
 	.word IOInput              ; index 10
-	.word IOLocate             ; index 12
-	.word IOPaper              ; index 14
-	.word IOPrintChar          ; index 16
-	.word IOTab                ; index 18
-	.word IOReadTimer          ; index 20
+	.word ExternLoad           ; index 12
+	.word IOLocate             ; index 14
+	.word IOPaper              ; index 16
+	.word IOPrintChar          ; index 18
+	.word ExternSave           ; index 20
+	.word IOTab                ; index 22
+	.word IOReadTimer          ; index 24
 .send code
