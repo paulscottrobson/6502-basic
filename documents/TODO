@@ -1,10 +1,10 @@
 TODO
 ====
-Write something only using text I/O ? - the get-the-numbers game ?
-Fix any bugs that arise.
+Break option - external driver.
+BREAK TRUE/FALSE
 => 0.14
-Break option.
 VRAM Loader
+INKEY$ and GET$
 Assembler
 Add in those memory checks, and the number stack overflow.
 => 0.15
@@ -42,7 +42,6 @@ Incomplete but hooked in for write and test
 Notes
 =====
 	Stack position fudged for readability.
-
 
 New commands/Changes to document
 ================================

@@ -25,9 +25,11 @@ AccessArray:
 		inx
 		txa
 		.main_evaluateint 					; get array index in next slot up.
+		pha
+		.main_checkrightparen				; check )
+		pla
 		tax
 		dex		
-		.main_checkrightparen				; check )
 		;
 		lda 	esInt3+1,x 					; check index value at least < 64k
 		ora 	esInt2+1,x
