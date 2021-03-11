@@ -1,13 +1,14 @@
 TODO
 ====
 => 0.12 sort of usable.
-VRAM Loader ?
 Write Review checker program.
 Review newer stuff 
 => 0.13 (asking for trouble ....)
 Develop a workflow using Python/Editor/Runtime.
 Write something only using text I/O ? - the get-the-number game ?
 => 0.14
+Break option.
+VRAM Loader ?
 Assembler
 	
 Known Bugs

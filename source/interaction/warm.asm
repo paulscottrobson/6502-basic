@@ -54,8 +54,8 @@ WSEError:
 		;											
 HasLineNumber:
 		ldy 	#3 							; get line number
-		ldx 	#0
-		jsr 	EvaluateInteger
+		lda 	#0
+		.main_evaluateint
 		lda 	esInt2		 				; check in range.
 		ora 	esInt3
 		bne 	WSEError
@@ -81,7 +81,7 @@ _HLNNoDelete:
 		beq 	_HLMEditDone
 		jsr 	InsertLine 					; insert the line in
 _HLMEditDone:
-		jsr 	CommandClear 				; clear all variables etc.
+		.main_clear							; clear all variables etc.
 		jmp 	WarmStartEntry		
 
 		.send 	code
