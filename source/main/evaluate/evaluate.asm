@@ -163,7 +163,7 @@ _ELCheckUnary:
 		cmp 	#TOK_TOKENS
 		bcc 	_ELExecuteA 				; if so do that token.
 _ELUSyntax:		
-		error 	Syntax 						; we've no idea.
+		.throw 	Syntax 						; we've no idea.
 		;
 		;		Handle -term.
 		;

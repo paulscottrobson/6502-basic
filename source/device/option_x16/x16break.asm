@@ -22,6 +22,6 @@ X16Break: ;; <break>
 		beq 	_IsBreak
 		rts
 _IsBreak:
-		error 	Break
+		.throw 	Break
 
 		.send 	code		

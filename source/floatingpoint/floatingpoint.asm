@@ -5,5 +5,5 @@
 .section code
 
 floatingpointHandler:
-	error NoModule
+	.throw NoModule
 .send code

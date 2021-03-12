@@ -100,12 +100,12 @@ _SFNLNoCarry:
 		lda 	temp1
 		cmp 	#TKW_DATA 					; if searching for Data different error.
 		bne 	_SFError 					; read uses this to search for data statements
-		error 	DataError 					; so we want an appropriate error.
+		.throw 	DataError 					; so we want an appropriate error.
 		;
 		;		Structure error
 		;
 _SFError:
-		error 	Struct		
+		.throw 	Struct		
 		;
 		;		Skip embedded floating point (FP not done yet)
 		;

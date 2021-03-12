@@ -2,3 +2,12 @@ Changes
 =======
 
 This is a list of changes made post release 0.14 (prior to that it was too fluid)
+
+12/3/2021
+=========
+- Uses .throw rather than error for error macro which behaved oddly in 64tass
+- I/O added ASCII out, which is used by the interpreter and can convert to upper case (say)
+  and normal out, which is used for PRINT, INPUT etc. Fix for default CBM character set issues.
+- Add Get$() and Inkey$()
+- Break now works on Get$(),Get() and Input (if it is turned on)
+- Added Mem function

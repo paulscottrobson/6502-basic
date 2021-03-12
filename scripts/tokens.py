@@ -121,6 +121,7 @@ class Tokens(object):
 			val(	peek( 	deek(	leek( 	asc(
 			int(	float( 	isval(	upper$(	lower$(
 			@		~ 		&		get$(	inkey$(
+			mem
 		#
 		#		Then command and syntax and so on.
 		#

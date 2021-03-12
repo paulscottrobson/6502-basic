@@ -68,7 +68,7 @@ _PCIsString: 								; string compare
 		rts
 
 _PCError:									; mixed types - strings and numbers
-		error 	BadType
+		.throw 	BadType
 
 ; ************************************************************************************************
 ;

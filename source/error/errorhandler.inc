@@ -28,8 +28,7 @@
 ;
 ;		Standard dispatcher is disabled, the errorcode is passed straight through the handler.
 ;
-error 	.macro
+throw 	.macro
 		ldx 	#ErrorID_\1 			
 		.error_execown
 		.endm
-		

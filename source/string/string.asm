@@ -18,8 +18,9 @@ stringVectors:
 	.word StringChrs           ; index 0
 	.word StrClone             ; index 2
 	.word StringConcat         ; index 4
-	.word STRCompare           ; index 6
-	.word CaseString           ; index 8
-	.word StringSubstring      ; index 10
-	.word StringWrite          ; index 12
+	.word StringNull           ; index 6
+	.word STRCompare           ; index 8
+	.word CaseString           ; index 10
+	.word StringSubstring      ; index 12
+	.word StringWrite          ; index 14
 .send code

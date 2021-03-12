@@ -101,7 +101,7 @@ _LOCCallVector:
 deTokenPrint:
 		cmp 	#0
 		bmi 	_dtpInk
-		.device_print
+		.device_printascii
 		rts
 _dtpInk:cmp 	#255
 		beq 	_dtpCR

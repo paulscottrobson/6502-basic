@@ -62,11 +62,11 @@ CreateArray:	;; <createarray>
 		beq 	_CASizeOk
 
 _CASize:		
-		error 	BadValue
+		.throw 	BadValue
 _CAFound:	
-		error 	DupArray
+		.throw 	DupArray
 _CANotArray:		
-		error 	NotArray
+		.throw 	NotArray
 		;
 		;		Now allocate memory by creating (size+1) blanks.
 		;

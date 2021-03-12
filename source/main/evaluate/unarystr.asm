@@ -20,8 +20,9 @@
 ; ************************************************************************************************
 
 ExecChr:	;; [chr$(]
-		jsr 	EvaluateSmallInteger		; character number 0-255
+		jsr 	EvaluateSmallInteger		; character number 0-255		
 		jsr 	CheckRightParen				; right bracket
+ChrCode:		
 		.pshy 								; save Y
 		txa 								; A = stack
 		ldy 	esInt0,x					; Y = character
@@ -106,7 +107,7 @@ ExecMid:	;; [mid$(]
 		jmp 	ExecSubString
 
 _EMValue:
-		error 	BadValue
+		.throw 	BadValue
 		
 ; ************************************************************************************************
 ;

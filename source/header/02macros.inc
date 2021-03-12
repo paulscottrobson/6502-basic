@@ -80,6 +80,6 @@ rsCheck .macro
 		lda 	(rsPointer,x) 		
 		cmp 	#\1 						; does it match
 		beq 	_isok
-		error 	\2 							; no report error.
+		.throw 	\2 							; no report error.
 _isok:		
 		.endm

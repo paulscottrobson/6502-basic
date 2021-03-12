@@ -58,7 +58,7 @@ RSClaim:
 		rts
 
 _RSCOverflow:
-		error 	RetStack
+		.throw 	RetStack
 		
 ; *****************************************************************************
 ;

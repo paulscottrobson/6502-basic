@@ -1,3 +1,8 @@
+while true
+print len(inkey$()),
+wend
+end
+
 list
 dim x(4):x(1)=11:x(2)=22
 repeat

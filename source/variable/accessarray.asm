@@ -76,7 +76,7 @@ AccessArray:
 		rts
 
 _AABadIndex:
-		error 	ArrayIndex		
+		.throw 	ArrayIndex		
 
 ; ************************************************************************************************
 ;

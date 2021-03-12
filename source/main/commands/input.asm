@@ -90,7 +90,7 @@ _CIWrite:
 		jmp 	Command_Input
 		
 _CISyntax:
-		error 	Syntax
+		.throw 	Syntax
 _CIExit:		
 		rts
 
@@ -122,6 +122,7 @@ InputString:
 		lda 	#0
 		sta 	InputBuffer
 _InputLoop:
+		.device_break
 		.device_inkey
 		cmp 	#0
 		beq 	_InputLoop

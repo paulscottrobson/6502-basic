@@ -25,7 +25,7 @@ _CSBanner:
 		beq 	_CSStart		
 		cmp 	#8
 		bcc 	_CSInk
-		.device_print
+		.device_printascii
 		jmp 	_CSBanner
 _CSInk:	.device_ink
 		jmp 	_CSBanner		

@@ -45,7 +45,7 @@ StringConcat:	;; <concat>
 		rts
 
 _SCError:
-		error 	StrLen		
+		.throw 	StrLen		
 
 ;
 ;		Copy string at temp0 to current soft string

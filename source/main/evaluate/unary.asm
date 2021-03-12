@@ -51,7 +51,7 @@ UnaryAsc:	;; [asc(]
 		iny 		 						; point to first character, we can do LEN code after that
 		cmp 	#0  	
 		bne 	ULFinish 					; if length = 0 then error : asc("") -> error.
-		error 	BadValue
+		.throw 	BadValue
 
 ; ************************************************************************************************
 ;
@@ -182,7 +182,7 @@ _UnaryMLoop:
 		beq 	_UnaryMExit 
 		cmp 	#TKW_COMMA 					; found , indicates more.
 		beq 	_UnaryMCompare
-		error 	Syntax 						; syntax error.
+		.throw 	Syntax 						; syntax .throw.
 		;
 _UnaryMExit:
 		pla 								; done so throw comparator and return.
@@ -232,7 +232,7 @@ UnaryReference: ;; [@]
 		sta 	esType,x
 		rts
 
-UType:	error 	BadType
+UType:	.throw 	BadType
 
 ; ************************************************************************************************
 ;
@@ -317,7 +317,7 @@ UnaryAlloc: ;; [alloc(]
 		rts
 
 _UABadValue:
-		error	BadValue		
+		.throw	BadValue		
 		.send code
 
 ; ************************************************************************************************

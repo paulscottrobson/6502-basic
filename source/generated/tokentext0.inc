@@ -66,34 +66,37 @@ Group0Text:
 	.byte $01,$c0                          ; $c3 @
 	.byte $01,$fe                          ; $c4 ~
 	.byte $01,$a6                          ; $c5 &
-	.byte $01,$a9                          ; $c6 )
-	.byte $01,$ba                          ; $c7 :
-	.byte $01,$ac                          ; $c8 ,
-	.byte $01,$bb                          ; $c9 ;
-	.byte $01,$a7                          ; $ca '
-	.byte $02,$54,$cf                      ; $cb to
-	.byte $04,$53,$54,$45,$d0              ; $cc step
-	.byte $04,$50,$52,$4f,$c3              ; $cd proc
-	.byte $05,$4c,$4f,$43,$41,$cc          ; $ce local
-	.byte $03,$44,$49,$cd                  ; $cf dim
-	.byte $03,$52,$45,$cd                  ; $d0 rem
-	.byte $03,$4c,$45,$d4                  ; $d1 let
-	.byte $05,$49,$4e,$50,$55,$d4          ; $d2 input
-	.byte $04,$45,$4c,$53,$c5              ; $d3 else
-	.byte $03,$56,$44,$d5                  ; $d4 vdu
-	.byte $05,$50,$52,$49,$4e,$d4          ; $d5 print
-	.byte $04,$47,$4f,$54,$cf              ; $d6 goto
-	.byte $05,$47,$4f,$53,$55,$c2          ; $d7 gosub
-	.byte $06,$52,$45,$54,$55,$52,$ce      ; $d8 return
-	.byte $04,$44,$41,$54,$c1              ; $d9 data
-	.byte $06,$41,$53,$53,$45,$52,$d4      ; $da assert
-	.byte $04,$50,$4f,$4b,$c5              ; $db poke
-	.byte $04,$44,$4f,$4b,$c5              ; $dc doke
-	.byte $04,$4c,$4f,$4b,$c5              ; $dd loke
-	.byte $03,$49,$4e,$cb                  ; $de ink
-	.byte $05,$50,$41,$50,$45,$d2          ; $df paper
-	.byte $03,$43,$4c,$d3                  ; $e0 cls
-	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e1 locate
-	.byte $05,$42,$52,$45,$41,$cb          ; $e2 break
+	.byte $05,$47,$45,$54,$24,$a8          ; $c6 get$(
+	.byte $07,$49,$4e,$4b,$45,$59,$24,$a8  ; $c7 inkey$(
+	.byte $03,$4d,$45,$cd                  ; $c8 mem
+	.byte $01,$a9                          ; $c9 )
+	.byte $01,$ba                          ; $ca :
+	.byte $01,$ac                          ; $cb ,
+	.byte $01,$bb                          ; $cc ;
+	.byte $01,$a7                          ; $cd '
+	.byte $02,$54,$cf                      ; $ce to
+	.byte $04,$53,$54,$45,$d0              ; $cf step
+	.byte $04,$50,$52,$4f,$c3              ; $d0 proc
+	.byte $05,$4c,$4f,$43,$41,$cc          ; $d1 local
+	.byte $03,$44,$49,$cd                  ; $d2 dim
+	.byte $03,$52,$45,$cd                  ; $d3 rem
+	.byte $03,$4c,$45,$d4                  ; $d4 let
+	.byte $05,$49,$4e,$50,$55,$d4          ; $d5 input
+	.byte $04,$45,$4c,$53,$c5              ; $d6 else
+	.byte $03,$56,$44,$d5                  ; $d7 vdu
+	.byte $05,$50,$52,$49,$4e,$d4          ; $d8 print
+	.byte $04,$47,$4f,$54,$cf              ; $d9 goto
+	.byte $05,$47,$4f,$53,$55,$c2          ; $da gosub
+	.byte $06,$52,$45,$54,$55,$52,$ce      ; $db return
+	.byte $04,$44,$41,$54,$c1              ; $dc data
+	.byte $06,$41,$53,$53,$45,$52,$d4      ; $dd assert
+	.byte $04,$50,$4f,$4b,$c5              ; $de poke
+	.byte $04,$44,$4f,$4b,$c5              ; $df doke
+	.byte $04,$4c,$4f,$4b,$c5              ; $e0 loke
+	.byte $03,$49,$4e,$cb                  ; $e1 ink
+	.byte $05,$50,$41,$50,$45,$d2          ; $e2 paper
+	.byte $03,$43,$4c,$d3                  ; $e3 cls
+	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e4 locate
+	.byte $05,$42,$52,$45,$41,$cb          ; $e5 break
 	.byte $00
 

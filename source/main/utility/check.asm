@@ -24,7 +24,7 @@ CheckToken:
 		iny
 		rts
 _CTError:
-		error 	Syntax
+		.throw 	Syntax
 		
 ; ************************************************************************************************
 ;
@@ -39,7 +39,7 @@ CheckRightParen: ;; <checkrightparen>
 		bne 	_CRPError
 		rts
 _CRPError:
-		error 	MissingRP
+		.throw 	MissingRP
 
 ; ************************************************************************************************
 ;
@@ -54,7 +54,7 @@ CheckComma:
 		bne 	_CCError
 		rts
 _CCError:
-		error 	MissingComma
+		.throw 	MissingComma
 
 		.send code		
 		

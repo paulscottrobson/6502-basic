@@ -47,7 +47,7 @@ WarmStartEntry:	;; <warmstart>
 											; and then a new warm start.
 
 WSEError:
-		error 	Tokenise
+		.throw 	Tokenise
 
 		;
 		;		Line Number prefixes the line.

@@ -64,7 +64,7 @@ SetUpTOSVRamAddress:
 		sta 	$9F22
 		rts		
 CVWValue:
-		error 	BadValue
+		.throw 	BadValue
 
 ; ************************************************************************************************
 ;

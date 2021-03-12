@@ -127,7 +127,7 @@ _CGBDone:
 		rts
 
 _CGBValue:
-		error 	BadValue
+		.throw 	BadValue
 
 		.send code
 

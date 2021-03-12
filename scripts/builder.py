@@ -106,7 +106,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 				h.write("\t.word {0:20} ; index {1}\n".format(vectors[k],ix))
 				ix += 2
 		else:
-			h.write("\terror NoModule\n")
+			h.write("\t.throw NoModule\n")
 	h.write(".send code\n")
 	h.close()
 	#

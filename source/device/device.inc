@@ -57,18 +57,23 @@ device_print .macro
 	jsr	deviceHandler
 	.endm
 
-device_save .macro
+device_printascii .macro
 	ldx	#22
 	jsr	deviceHandler
 	.endm
 
-device_tab .macro
+device_save .macro
 	ldx	#24
 	jsr	deviceHandler
 	.endm
 
-device_timer .macro
+device_tab .macro
 	ldx	#26
+	jsr	deviceHandler
+	.endm
+
+device_timer .macro
+	ldx	#28
 	jsr	deviceHandler
 	.endm
 

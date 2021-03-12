@@ -1,9 +1,7 @@
 TODO
 ====
 => 0.14
-Rename error
 VRAM Loader
-INKEY$ and GET$
 Add in those memory checks, and the number stack overflow.
 => 0.15
 Assembler
@@ -46,3 +44,5 @@ Notes
 
 New commands/Changes to document
 ================================
+INKEY$() GET$() MEM
+Break works in LIST INPUT GET$ GET

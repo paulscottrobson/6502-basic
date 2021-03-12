@@ -86,7 +86,7 @@ _GotoFound:
 		rts		
 
 _GotoError:
-		error 	LineNumber
+		.throw 	LineNumber
 
 		.send code
 

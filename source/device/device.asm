@@ -23,7 +23,8 @@ deviceVectors:
 	.word IOLocate             ; index 16
 	.word IOPaper              ; index 18
 	.word IOPrintChar          ; index 20
-	.word ExternSave           ; index 22
-	.word IOTab                ; index 24
-	.word IOReadTimer          ; index 26
+	.word IOPrintAscii         ; index 22
+	.word ExternSave           ; index 24
+	.word IOTab                ; index 26
+	.word IOReadTimer          ; index 28
 .send code

@@ -24,10 +24,23 @@ StringChrs:	;; <chrs>
 		jsr 	AllocateSoftString
 		tya
 		jsr 	WriteSoftString
+StringUpdate:		
 		jsr 	ReturnSoftString
 		txa
 		rts
 
+; ************************************************************************************************
+;
+;									Null string on stack.
+;
+; ************************************************************************************************
+
+StringNull:	;; <null>
+		tax
+		lda 	#1
+		jsr 	AllocateSoftString
+		jmp 	StringUpdate
+		
 ; ************************************************************************************************
 ;
 ;							Put value of current soft string on stack.

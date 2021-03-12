@@ -54,12 +54,34 @@ UnaryInkey:		;; [inkey(]
 UnaryGet:		;; [get(]
 		jsr 	CheckRightParen
 		stx 	temp0
-_UGLoop:		
+_UGLoop:
+		.device_break		
 		.device_inkey		
 		cmp 	#0
 		beq 	_UGLoop
 		ldx 	temp0
 		jsr 	MInt32Set8Bit
+		rts
+
+; ************************************************************************************************
+;
+;				String versions of Inkey and Get, that use the CHR$() code
+;							INKEY$() returns "" if no key pressed.
+;
+; ************************************************************************************************
+
+UnaryGetString:	;; [get$(]
+		jsr 	UnaryGet
+UGSDoChr:		
+		jmp 	ChrCode
+
+UnaryInkeyString: ;; [inkey$(]		
+		jsr 	UnaryInkey
+		lda 	esInt0,x
+		bne 	UGSDoChr
+		txa
+		.string_null
+		tax
 		rts
 
 ; ************************************************************************************************
@@ -89,6 +111,23 @@ UnarySys: 		;; [sys(]
 
 _CallTemp0:
 		jmp 	(temp0)
+
+; ************************************************************************************************
+;
+;									Get free memory count
+;
+; ************************************************************************************************
+
+UnaryMem: 	;; [mem]
+		jsr 	MInt32False 					; set to false (e.g. 0)
+		sec
+		lda 	highMemory 						; calculate value
+		sbc 	lowMemory
+		sta 	esInt0,x
+		lda 	highMemory+1
+		sbc 	lowMemory+1
+		sta 	esInt1,x
+		rts
 
 		.send 	code
 

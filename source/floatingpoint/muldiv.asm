@@ -20,7 +20,7 @@ FPDivide:	;; <fDivide>
 		jmp 	FPDivide
 
 FPImpossible:	;; <fImpossible>
-		error 	BadType 					; can't do FP modulus/and/or/xor. Makes no sense.
+		.throw 	BadType 					; can't do FP modulus/and/or/xor. Makes no sense.
 
 FPPower:	;; <fpower>		
 		debug

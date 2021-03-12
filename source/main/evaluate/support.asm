@@ -38,7 +38,7 @@ EvaluateIntegerTerm:
 		rts
 
 ENTType:
-		error 	BadType
+		.throw 	BadType
 
 ; ************************************************************************************************
 ;
@@ -88,7 +88,7 @@ EvaluateSmallInteger:
 		rts
 
 _ESIValue:
-		error 	BadValue
+		.throw 	BadValue
 
 ; ************************************************************************************************
 ;
@@ -138,7 +138,7 @@ EvaluateReference:
 		bpl 	_ERFail
 		rts
 _ERFail:
-		error 	NoReference		
+		.throw 	NoReference		
 
 		.send 	code
 		

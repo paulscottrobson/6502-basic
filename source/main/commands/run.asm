@@ -157,7 +157,7 @@ ResetCodeAddress:
 ; ************************************************************************************************
 
 Unimplemented:
-		error 	Missing
+		.throw 	Missing
 
 ; ************************************************************************************************
 ;
@@ -175,7 +175,7 @@ TKErr07:	;; [TO]
 TKErr08:	;; [[[STR]]]
 TKErr09:	;; [[[SH3]]]
 TKErr10:	;; [[[FPC]]]
-		error 	Syntax
+		.throw 	Syntax
 
 		.include "../../generated/tokenvectors0.inc"
 		.include "../../generated/tokenvectors1.inc"

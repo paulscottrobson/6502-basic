@@ -17,23 +17,28 @@ string_concat .macro
 	jsr	stringHandler
 	.endm
 
-string_sCompare .macro
+string_null .macro
 	ldx	#6
 	jsr	stringHandler
 	.endm
 
-string_setcase .macro
+string_sCompare .macro
 	ldx	#8
 	jsr	stringHandler
 	.endm
 
-string_substring .macro
+string_setcase .macro
 	ldx	#10
 	jsr	stringHandler
 	.endm
 
-string_write .macro
+string_substring .macro
 	ldx	#12
+	jsr	stringHandler
+	.endm
+
+string_write .macro
+	ldx	#14
 	jsr	stringHandler
 	.endm
 

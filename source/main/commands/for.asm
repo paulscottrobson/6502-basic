@@ -95,7 +95,7 @@ _CFDone:
 		rts
 
 _CFType:
-		error	BadType
+		.throw	BadType
 
 ; *****************************************************************************
 ;
@@ -216,7 +216,7 @@ _CNLoopRound:
 		rts			
 
 _CNBadIndex:
-		error 	BadIndex
+		.throw 	BadIndex
 
 		;
 		;		Test for negative steps

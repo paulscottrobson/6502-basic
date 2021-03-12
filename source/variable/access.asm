@@ -71,7 +71,7 @@ _AVLong:
 		lda 	varType 					; otherwise, is the variable type an array
 		lsr 	a 						
 		bcc 	_AVCanCreate 				; if not, we can autocreate 
-		error 	noauto 						; but we do not autocreate arrays.
+		.throw 	noauto 						; but we do not autocreate arrays.
 		;
 _AVCanCreate:		
 		jsr 	CreateVariable 				; variable does not exist, create it.

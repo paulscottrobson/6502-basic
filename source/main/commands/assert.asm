@@ -24,7 +24,7 @@ Command_Assert: ;; [assert]
 		beq 	_CAError
 		rts
 _CAError:
-		error 	Assert		
+		.throw 	Assert		
 
 		.send code
 

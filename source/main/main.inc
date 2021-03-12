@@ -42,23 +42,18 @@ main_new .macro
 	jsr	mainHandler
 	.endm
 
-main_printstring .macro
+main_run .macro
 	ldx	#16
 	jsr	mainHandler
 	.endm
 
-main_run .macro
+main_runfrom .macro
 	ldx	#18
 	jsr	mainHandler
 	.endm
 
-main_runfrom .macro
-	ldx	#20
-	jsr	mainHandler
-	.endm
-
 main_strtoint .macro
-	ldx	#22
+	ldx	#20
 	jsr	mainHandler
 	.endm
 

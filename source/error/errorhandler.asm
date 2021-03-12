@@ -35,7 +35,7 @@ _EHFind:dex									; errors start at 1
 		inc 	temp0+1
 		jmp 	_EHFind
 _EHFound:
-		.main_printstring 					; print the string "temp0" now points to.
+		jsr 	EHPrintAscii 				; print the string "temp0" now points to.
 		ldy 	#0 							; in a line, e.g. the offset to next is non zero.
 		lda 	(codePtr),y
 		beq 	_EHNoLine
@@ -45,7 +45,7 @@ _EHFound:
 		bcc 	_EHNoLine
 
 		set16 	temp0,EHAtMsg 				; print " @ "
-		.main_printstring	
+		jsr 	EHPrintAscii
 
 		ldy 	#1 							; set up line number in TOS
 		ldx 	#0
@@ -61,7 +61,7 @@ _EHFound:
 		ldy 	#10 						; in base 10.
 		lda 	#0							; stack position zero.
 		.main_inttostr
-		.main_printstring		
+		jsr 	EHPrintAscii	
 _EHNoLine: 									
 		.device_crlf
 		.interaction_warmstart
@@ -71,6 +71,25 @@ EHAtMsg:
 ;		List of error messages in order.
 ;
 		.include "../generated/errortext.inc"
+
+;
+;		String printer for ASCII output.
+;
+EHPrintAscii:
+		ldy 	#0
+		lda 	(temp0),y
+		tax
+		beq 	_EHPExit
+_EHPLoop:
+		iny
+		.pshx
+		lda 	(temp0),y
+		.device_printascii
+		.pulx
+		dex
+		bne 	_EHPLoop
+_EHPExit:
+		rts
 
 		.send code
 

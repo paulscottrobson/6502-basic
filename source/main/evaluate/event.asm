@@ -76,9 +76,9 @@ _EFFail:
 		rts
 
 _EFValue:
-		error 	BadValue
+		.throw 	BadValue
 _EFType:
-		error 	BadType		
+		.throw 	BadType		
 ;
 ;		Add the event rate to the current clock value.
 ;
