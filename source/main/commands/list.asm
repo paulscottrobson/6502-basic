@@ -54,6 +54,7 @@ _CLEndLine:
 _CLDoListing:
 		jsr 	ResetCodeAddress 			; back to the start.
 _CLCheckLoop:
+		.device_break 						; break out of this.
 		ldy 	#0							; check end.
 		lda 	(codePtr),y
 		beq 	_CLEnd

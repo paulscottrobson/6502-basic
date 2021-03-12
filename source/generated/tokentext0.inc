@@ -94,5 +94,6 @@ Group0Text:
 	.byte $05,$50,$41,$50,$45,$d2          ; $df paper
 	.byte $03,$43,$4c,$d3                  ; $e0 cls
 	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e1 locate
+	.byte $05,$42,$52,$45,$41,$cb          ; $e2 break
 	.byte $00
 

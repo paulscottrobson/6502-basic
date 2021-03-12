@@ -1,23 +1,25 @@
 TODO
 ====
-Break option - external driver.
-BREAK TRUE/FALSE
 => 0.14
+Rename error
 VRAM Loader
 INKEY$ and GET$
-Assembler
 Add in those memory checks, and the number stack overflow.
 => 0.15
-Rewrite array code
+Assembler
+List indentation
 => 0.16
-	
+Rewrite array code
+=> 0.17
+
 Known Bugs
 ==========
+Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 
 Incomplete but hooked in for write and test
 ===========================================
 
-	All floating point operations.
+	Number stack overflow.
 
 	Out of memory in 
 		pointer advance in clear.asm alloc
@@ -25,19 +27,18 @@ Incomplete but hooked in for write and test
 		creating procedure table.
 		creating arrays (will be rewritten)
 		adding program code.
+
+	Remove flag returns from cross module calls (tokenise ?)
 		
 	Special case 1 character in concrete ???
 
-	Number stack overflow.
+	All floating point operations.
 
 	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
 	need 6502 versions along with dispatch macro.
-	
-	Remove flag returns from cross module calls (tokenise ?)
 
 	scanner.asm skipping embedded float.
 
-	indent listing.
 	
 Notes
 =====

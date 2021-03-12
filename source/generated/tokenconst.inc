@@ -104,6 +104,7 @@ TKW_INK                      = $de ; ink
 TKW_PAPER                    = $df ; paper
 TKW_CLS                      = $e0 ; cls
 TKW_LOCATE                   = $e1 ; locate
+TKW_BREAK                    = $e2 ; break
 TKW_CLEAR                    = $86 ; clear
 TKW_LOAD                     = $87 ; load
 TKW_SAVE                     = $88 ; save

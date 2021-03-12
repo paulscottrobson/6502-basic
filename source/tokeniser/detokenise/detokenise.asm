@@ -134,6 +134,7 @@ _DTIsString:
 		.main_evaluateterm
 		tax
 		jsr 	TOSToTemp0
+		lda 	#0 							; don't capitalise.
 		jsr 	DTPrintLengthPrefix
 		lda 	#'"'
 		jsr 	ListOutputCharacter

@@ -46,3 +46,4 @@ DataError:Out of data
 Tokenise:Cannot tokenise line.
 Save:Save failed
 Load:Load failed
+Break:Break

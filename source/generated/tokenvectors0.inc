@@ -100,3 +100,4 @@ Group0Vectors:
 	.word	Command_Paper            ; $df paper
 	.word	Command_CLS              ; $e0 cls
 	.word	Command_Locate           ; $e1 locate
+	.word	CommandBreak             ; $e2 break

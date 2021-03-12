@@ -77,8 +77,10 @@ _DTIsPunctuation:
 		jsr 	DTSwitchMode
 		setType LTYPunctuation
 _DTPrint:		
+		;
+		lda 	#1 							; fix case.
 		jsr 	DTPrintLengthPrefix 		; print it out.
-		ldy 	#0 							; get last character		
+		ldy 	#0 						
 		lda 	(temp0),y
 		tay
 		lda 	(temp0),y

@@ -33,5 +33,6 @@ ErrorTextList:
 	.text 21,"Cannot tokenise line."
 	.text 11,"Save failed"
 	.text 11,"Load failed"
+	.text 5,"Break"
 	.byte 0
 

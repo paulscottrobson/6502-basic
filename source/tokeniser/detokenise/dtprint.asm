@@ -9,6 +9,11 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+		.section storage
+tPrintCount:
+		.fill 	1
+		.send storage
+
 		.section code
 
 ; ************************************************************************************************
@@ -32,17 +37,26 @@ DTPrintInteger:
 ; ************************************************************************************************
 
 DTPrintLengthPrefix:
+		tax
 		.pshy
 		ldy 	#0
 		lda 	(temp0),y
-		tax
+		sta 	tPrintCount
 		beq 	_DTPLPExit
 _DTPLPLoop:		
 		iny
 		lda 	(temp0),y
 		and 	#$7F	
+		cpx 	#0
+		beq 	_DTPLPNoCase
+		cmp 	#"A"
+		bcc 	_DTPLPNoCase
+		cmp 	#"Z"+1
+		bcs 	_DTPLPNoCase
+		eor 	#"A"^"a"
+_DTPLPNoCase		
 		jsr 	ListOutputCharacter
-		dex
+		dec 	tPrintCount
 		bne 	_DTPLPLoop		
 _DTPLPExit:	
 		.puly			

@@ -10,6 +10,15 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+		.section storage
+
+breakCounter: 								; counter, carries whenever break is tested
+			.fill 	1
+breakIncrement: 							; increment for counter, zero to disable break.
+			.fill 	1		
+
+		.send storage
+
 		.section code
 
 ; ************************************************************************************************
@@ -20,8 +29,9 @@
 
 Command_Run: 	;; [run]
 XCommand_Run:	;; <run>
-		ldx 	#$FF
+		ldx 	#$FF 						; reset the stack.
 		txs
+		jsr 	BreakOn 					; turn break on
 		jsr 	CommandClear 				; clear everything.
 		jsr 	ResetCodeAddress 			; back to the start.
 Command_RunFrom: ;; <runfrom>
@@ -31,6 +41,14 @@ Command_RunFrom: ;; <runfrom>
 		;
 CRNextInstruction:
 		.StringSoftReset 					; reset the soft string pointer.
+
+		lda 	breakCounter 				; check for break.
+		adc 	breakIncrement
+		sta 	breakCounter
+		bcc 	_CRNoChecks
+		.device_break
+_CRNoChecks
+
 		lda 	(codePtr),y 				; get next token.
 		bpl 	_CRNotToken
 		cmp 	#TOK_TOKENS 				; if in the tokens then do that token.
@@ -100,6 +118,22 @@ CommandShift2:	;; [[[SH2]]]
 ; ************************************************************************************************
 
 CommandColon:	;; [:]
+		rts
+
+; ************************************************************************************************
+;
+;								Break Command
+;
+; ************************************************************************************************
+
+CommandBreak:	;; [break]
+		jsr 	EvaluateRootInteger
+		jsr 	MInt32Zero
+		beq 	BreakOff
+BreakOn:		
+		ldx 	#8	
+BreakOff:			
+		stx 	breakIncrement
 		rts
 
 ; ************************************************************************************************

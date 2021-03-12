@@ -120,7 +120,7 @@ class Tokens(object):
 			chr$(	left$(	mid$(	right$(	str$(
 			val(	peek( 	deek(	leek( 	asc(
 			int(	float( 	isval(	upper$(	lower$(
-			@		~ 		&
+			@		~ 		&		get$(	inkey$(
 		#
 		#		Then command and syntax and so on.
 		#
@@ -130,7 +130,7 @@ class Tokens(object):
 			rem 	let 	input	else	vdu 	
 			print	goto 	gosub 	return 	data	 	
 			assert 	poke 	doke 	loke 	ink
-			paper 	cls 	locate 
+			paper 	cls 	locate 	break
 		#
 		#		Put these in group 1.
 		#
@@ -142,7 +142,7 @@ class Tokens(object):
 		#		System specific commands in group 2
 		#
 		[group2]
-			vpoke	vdoke
+			vpoke	vdoke	vload
 		#
 		#		Floating point functions and system unary functions in group 3.
 		#
