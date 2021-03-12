@@ -101,15 +101,12 @@ CommandShift1:	;; [[[SH1]]]
 		asl 	a 							; double into X
 		tax
 		iny 								; advance over it.
-		jsr 	_RunIt 						; we have no jsr (aaaa,X)
-		jmp 	CRNextInstruction
-_RunIt:		
 		jmp 	(Group1Vectors-12,x) 		; and do the code.	
 
 CommandShift2:	;; [[[SH2]]]
 		lda 	#$FF 						; $FF means command not unary function.
 		.extension_execown
-		jmp 	CRNextInstruction
+		rts
 
 ; ************************************************************************************************
 ;

@@ -50,7 +50,7 @@ class ProgramBuilder(object):
 	#
 	def load(self,srcFile):
 		for l in open(srcFile).readlines():
-			if not l.startswith(";"):
+			if not l.strip().startswith(";"):
 				m = re.match("^(\\d+)(.*)$",l)
 				if m is not None:
 					self.add(int(m.group(1)),m.group(2).strip())

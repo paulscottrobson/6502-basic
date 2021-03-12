@@ -13,4 +13,4 @@ This is a list of changes made post release 0.14 (prior to that it was too fluid
 - Added Mem function
 - Added some out of memory checks.
 - Added number stack overflow check.
-
+- BUG: X1/X2 instructions were chewing up the stack (jump to execute rather than rts)
