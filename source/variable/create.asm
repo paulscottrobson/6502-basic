@@ -45,6 +45,9 @@ CreateVariable:
 		sta 	lowMemory
 		bcc 	_CVNoCarry
 		inc 	lowMemory+1
+		lda 	lowMemory+1 				; check out of memory.
+		cmp 	highMemory+1
+		bcs 	_CVMemory
 _CVNoCarry:
 
 		lda 	varHash 					; store hash at offset 4.
@@ -83,6 +86,9 @@ _CVNotImmediate:
 		jsr 	ZeroTemp0Y 					; zero (temp0),y with whatever type.
 		.puly 								; restore Y
 		rts
+
+_CVMemory:
+		.throw 	Memory		
 ;
 ;		Size look up table.
 ;

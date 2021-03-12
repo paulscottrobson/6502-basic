@@ -314,10 +314,12 @@ UnaryAlloc: ;; [alloc(]
 		adc 	esInt1+1,x
 		sta 	lowMemory+1
 		bcs		_UABadValue 				; overflow definitely bad.
+		cmp 	highMemory+1 		
+		bcs 	_UABadValue 				; out of memory bad.
 		rts
 
 _UABadValue:
-		.throw	BadValue		
+		.throw	Memory		
 		.send code
 
 ; ************************************************************************************************

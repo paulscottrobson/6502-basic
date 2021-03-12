@@ -57,9 +57,13 @@ _CCFoundEnd:
 		adc 	#0
 		sta 	endProgram+1
 
-		lda 	#4 							; skip low free memory clear, leave a gap.
-		jsr 	AdvanceLowMemoryByte		; need at least one here, to skip the end of program zero offset.
-
+		clc 								; put a bit of space in.
+		lda 	lowMemory
+		adc 	#4
+		sta 	lowMemory
+		bcc 	_CCNoCarry
+		inc 	lowMemory+1
+_CCNoCarry:		
 
 		jsr 	RSReset 					; reset the return stack.
 
@@ -71,20 +75,6 @@ _CCFoundEnd:
 		.puly
 		rts
 
-; ************************************************************************************************
-;
-;								Advance low memory pointer by A
-;
-; ************************************************************************************************
-
-AdvanceLowMemoryByte:		
-		clc
-		adc 	lowMemory
-		sta 	lowMemory
-		bcc 	_ALMBExit
-		inc 	lowMemory+1
-_ALMBExit:		
-		rts
 
 		.send 	code
 

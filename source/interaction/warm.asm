@@ -79,10 +79,20 @@ _HLNNoDelete:
 		lda 	tokenBufferIndex 			; if line was empty, then don't insert
 		cmp 	#1 							; (the one character is the EOL marker)
 		beq 	_HLMEditDone
+		;
+		lda 	lowMemory+1 				; is there space, if we allow a little bit of
+		clc 								; workspace (1k)
+		adc 	#4
+		cmp 	highMemory+1
+		bcs 	_HLMMemory
+		;
 		jsr 	InsertLine 					; insert the line in
 _HLMEditDone:
 		.main_clear							; clear all variables etc.
 		jmp 	WarmStartEntry		
+
+_HLMMemory:
+		.throw 	Memory
 
 		.send 	code
 

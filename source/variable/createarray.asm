@@ -120,6 +120,8 @@ _CAInitialiseArray:
 		adc 	#0
 		sta 	temp0+1
 		sta 	lowMemory+1
+		cmp 	highMemory+1				; out of memory check
+		bcs 	_CAMemory
 		;
 		inc 	temp1 						; bump the counter.
 		bne 	_CAIANoCarry
@@ -139,6 +141,9 @@ _CAActualSize:
 		.byte 	VarSSize,0
 		.byte 	VarFSize,0
 		.debug
+
+_CAMemory:
+		.throw 	Memory
 
 		.send 	code
 

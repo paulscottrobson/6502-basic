@@ -19,6 +19,8 @@
 ; ************************************************************************************************
 
 EvaluateLevel:
+		cpx 	#StackSize 					; check stack overflow
+		bcs 	_ELStack
 		pha 								; save precedence level.
 		;
 		lda 	#0 							; zero the current stack level.
@@ -39,6 +41,11 @@ EvaluateLevel:
 		.variable_access  					; access the variable reference.
 		tax
 		jmp		_ELHasTerm 	
+		;
+		;		Expression too complex
+		;
+_ELStack:
+		.throw 	NumStack		
 		;
 		;		Found a constant.
 		;

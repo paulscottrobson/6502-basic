@@ -2,7 +2,6 @@ TODO
 ====
 => 0.14
 VRAM Loader
-Add in those memory checks, and the number stack overflow.
 => 0.15
 Assembler
 List indentation
@@ -16,15 +15,6 @@ Tokeniser/Detokeniser needs to support % and a default type, which is hard coded
 
 Incomplete but hooked in for write and test
 ===========================================
-
-	Number stack overflow.
-
-	Out of memory in 
-		pointer advance in clear.asm alloc
-		soft/hard memory allocation alloc() function.
-		creating procedure table.
-		creating arrays (will be rewritten)
-		adding program code.
 
 	Remove flag returns from cross module calls (tokenise ?)
 		

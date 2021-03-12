@@ -1,18 +1,3 @@
-while true
-print len(inkey$()),
-wend
-end
-
-list
-dim x(4):x(1)=11:x(2)=22
-repeat
-proc test(x(1),x(2))
-until false
-:
-defproc test(n,zzz)
-print n,zzz
-endproc
-
 a1 = -99
 x = -2
 c1$ = "SAVEME"
