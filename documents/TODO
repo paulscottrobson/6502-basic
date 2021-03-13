@@ -1,10 +1,9 @@
 TODO
 ====
-=> 0.14
-VRAM Loader
+VRAM Loader design and implementation (partial)
 => 0.15
 Assembler
-List indentation
+Check outstanding review
 => 0.16
 Rewrite array code
 => 0.17
@@ -12,6 +11,7 @@ Rewrite array code
 Known Bugs
 ==========
 Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
+DATA in odd places in structures won't work 	
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -25,14 +25,10 @@ Incomplete but hooked in for write and test
 	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
 	need 6502 versions along with dispatch macro.
 
-	scanner.asm skipping embedded float.
 
-	
 Notes
 =====
 	Stack position fudged for readability.
 
 New commands/Changes to document
 ================================
-INKEY$() GET$() MEM
-Break works in LIST INPUT GET$ GET

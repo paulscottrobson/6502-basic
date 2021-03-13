@@ -17,6 +17,8 @@ deTokeniseVector:
 lastCharacterClass:			; 0 identifier or constant 1 punctuation or string.
 		.fill 	1
 
+indent: 					; current indent total including line #
+		.fill 	1
 		.send storage
 
 		.section code		
@@ -28,8 +30,13 @@ lastCharacterClass:			; 0 identifier or constant 1 punctuation or string.
 ; ************************************************************************************************
 
 ListLine: ;; <list>
+		pha
 		set16 	deTokeniseVector,deTokenPrint
+		pla
 Detokenise: ;; <detokenise>	
+		clc
+		adc 	#6
+		sta 	indent
 		lda 	#$FF 					; last thing printed is a dummy value.
 		sta 	lastCharacterClass
 		;
@@ -50,10 +57,10 @@ Detokenise: ;; <detokenise>
 		lda 	(temp0),y 				; into X
 		tax
 _DTPadOut:
-		lda 	#" "
+		lda 	#" " 					; pad out to indent.
 		jsr 	ListOutputCharacter
 		inx
-		cpx 	#6
+		cpx 	indent
 		bne 	_DTPadOut		
 		ldy 	#3 						; start position.
 		;

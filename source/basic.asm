@@ -10,6 +10,7 @@
 	.include "error/error.inc"
 	.include "error/errorhandler.inc"
 	.include "extension/extension.inc"
+	.include "floatingpoint/float.inc"
 	.include "floatingpoint/floatingpoint.inc"
 	.include "interaction/interaction.inc"
 	.include "main/main.inc"

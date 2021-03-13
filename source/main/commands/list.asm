@@ -10,6 +10,11 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
+		.section storage
+structIndent:
+		.fill 	1
+		.send storage
+
 		.section 	code
 
 ; ************************************************************************************************
@@ -23,6 +28,7 @@ CommandList:		;; [list]
 		;		Get start and end range.
 		;
 		ldx		#0 							; set start/end lines in stack 0/1 to 0 and $FFFF
+		stx 	structIndent
 		jsr 	MInt32False
 		inx
 		jsr 	MInt32True
@@ -67,7 +73,12 @@ _CLCheckLoop:
 		jsr 	CLCompareLineTOS 			; compare vs higher
 		cmp 	#1
 		beq 	_CLNext
+		lda 	#$80 						; undo any down indents this line.
+		jsr 	CLStructureCheck
+		lda 	structIndent 				; indent level.
 		.tokeniser_list 					; detokenise and list code at line (codePtr)
+		lda 	#$82 						; up indents from this point on.
+		jsr 	CLStructureCheck
 _CLNext:	
 		ldy 	#0 							; go to next line.
 		lda 	(codePtr),y
@@ -80,6 +91,7 @@ _CLNext:
 
 _CLEnd:		
 		jmp 	WarmStart 					; warm start after list.
+
 ; ************************************************************************************************
 ;
 ;						Compare current line against low word of stack,x
@@ -107,6 +119,50 @@ CLCompareLineTOS:
 		bcc 	_CLCLTExit
 		lda 	#1
 _CLCLTExit:
+		rts
+
+; ************************************************************************************************
+;
+;		Scan through line at (codePtr) looking for structure adjuster A, and adjust 
+;		structIndent accordingly, setting to zero when it goes -ve
+;
+; ************************************************************************************************
+
+CLStructureCheck:
+		sta 	temp0
+		ldy 	#3
+_CLSCLoop:
+		lda 	(codePtr),y 				; get and consume token.
+		iny
+		cmp 	#$80 						
+		bcc 	_CLSCLoop 					; $00-$7F just step over.
+		beq		_CLSCExit					; EOL return
+		cmp 	#$86 						; special handler
+		bcc 	_CLSCSpecial
+		cmp 	#TOK_STRUCTST 				; check if structure changer.
+		bcc 	_CLSCLoop
+		cmp 	#TOK_UNARYST
+		bcs 	_CLSCLoop
+		;
+		tax 								; get adjustment
+		lda 	ELBinaryOperatorInfo-TOK_BINARYST,x
+		cmp 	temp0	 					; if what we're searching for
+		bne 	_CLSCLoop 
+		sec
+		sbc 	#$81 						; convert to offset
+		asl 	a 							; double indent step
+		clc 	
+		adc 	structIndent 				; add to structure indent
+		bpl 	_CLSCNoUnder 				; no underflow
+		lda 	#0
+_CLSCNoUnder:
+		sta 	structIndent
+		jmp 	_CLSCLoop		
+
+_CLSCSpecial:								; handle specials (not $80)
+		jsr 	ScannerSkipSpecial
+		jmp 	_CLSCLoop
+_CLSCExit:
 		rts
 
 		.send 	code

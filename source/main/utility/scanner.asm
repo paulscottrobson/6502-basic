@@ -58,14 +58,32 @@ _SFNoCheck:
 		adc 	temp2
 		sta 	temp2
 		bpl 	_SFLoop 					; +ve okay to continue
-		bmi 	_SFError 					; if gone -ve then we have a nesting error
+		bmi 	SFError 					; if gone -ve then we have a nesting error
 		;
 		;		Done it, so exit.
 		;
 _SFExit:rts
 		;
 		;		Skipping specials.
-_SFSpecials:
+		;
+_SFSpecials:		
+		jsr 	ScannerSkipSpecial
+		jmp 	_SFLoop
+
+		;
+		;		Structure error
+		;
+SFError:
+		.throw 	Struct		
+
+; ************************************************************************************************
+;
+;				Special skips. Token is in A and has already been consumed.
+;									Handles $80-$85
+;
+; ************************************************************************************************
+
+ScannerSkipSpecial:
 		cmp 	#TOK_EOL 					; $80, advance to next line.
 		beq 	_SFNextLine
 		cmp 	#TOK_FPC					; $84, skip embedded float
@@ -73,7 +91,7 @@ _SFSpecials:
 		cmp 	#TOK_STR 					; $85, skip string
 		beq 	_SFSkipString
 		iny									; $81,$82,$83 shift, so just advance over the shifted
-		jmp 	_SFLoop 					; token.
+		rts 								; token.
 		;
 		;		Inline string - advance over it.
 		;
@@ -82,7 +100,8 @@ _SFSkipString:
 		sec
 		adc 	(codePtr),y
 		tay
-		jmp 	_SFLoop		
+_SFReturn:		
+		rts
 		;
 		;		End of line.
 		;
@@ -96,22 +115,20 @@ _SFNextLine:
 		inc 	codePtr+1
 _SFNLNoCarry:
 		lda 	(codePtr),y 				; reached the end of the program.
-		bne		_SFLoop 					; no go round again
+		bne		_SFReturn 					; no go round again
 		lda 	temp1
 		cmp 	#TKW_DATA 					; if searching for Data different error.
-		bne 	_SFError 					; read uses this to search for data statements
+		bne 	SFError 					; read uses this to search for data statements
 		.throw 	DataError 					; so we want an appropriate error.
-		;
-		;		Structure error
-		;
-_SFError:
-		.throw 	Struct		
 		;
 		;		Skip embedded floating point (FP not done yet)
 		;
 _SFFloatSkip:
-		jmp 	Unimplemented
-
+		tya 								; skip over an embedded float.
+		clc
+		adc 	#FloatEmbeddedSize
+		tay
+		rts
 		.send 	code
 
 ; ************************************************************************************************
