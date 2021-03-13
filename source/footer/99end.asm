@@ -9,8 +9,15 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		.section code
+		.section zeropage
+endZeroPage:
+		.send zeropage
+		
+		.section storage
+endStorage:
+		.send storage
 
+		.section code
 		.align 	256
 programMemory:		
 		* = programMemory-1

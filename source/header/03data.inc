@@ -37,11 +37,32 @@ lowMemory:									; bottom of memory available.
 		.send zeropage
 
 ; ************************************************************************************************
+; ************************************************************************************************
 ;
 ;											Non-Zero page code
 ;
 ; ************************************************************************************************
+; ************************************************************************************************
 
+; ************************************************************************************************
+;
+;										Aligned parts
+;
+; ************************************************************************************************
+
+		.section storage
+
+		.align	256
+
+returnStack: 									; return stack, starts on a page boundary 
+		.fill 	retStackSizePages * 256
+
+retStackSize = retStackSizePages * 256
+	
+SingleLetterVar:							; storage for variable A-Z. starts on page boundary.
+ 		.fill 	26*4 	
+
+		.send 	storage
 
 ; ************************************************************************************************
 ;
@@ -54,9 +75,15 @@ lowMemory:									; bottom of memory available.
 ;
 ; ************************************************************************************************
 
-		.section zeropage
+		.section storage
+currentStorage:
+		.send storage
 
-		* = $40
+		.if StackAddress == 0
+		* = currentStorage	
+		.else
+		* = StackAddress
+		.endif
 
 esType:	.fill 	StackSize  					; type byte (see above)					
 
@@ -68,24 +95,20 @@ esInt3:	.fill 	StackSize
 esExp:	.fill 	StackSize 					; exponent ($80 = 0)
 esZSign:.fill 	StackSize 					; for floating point - sign (bit 7) isZero (bit 6)
 
-		.send zeropage
+endOfStack:
 
 esMant0 = esInt0 							; synonyms.
 esMant1 = esInt1
 esMant2 = esInt2
 esMant3 = esInt3
 
+		.if StackAddress == 0
 		.section storage
+		* = endOfStack
+		.send storage
+		.endif
 
-		.align	256
-
-returnStack: 								; return stack, starts on a page boundary 
-		.fill 	retStackSize
-
-		.align	256 					
-
-SingleLetterVar:							; storage for variable A-Z. starts on page boundary.
- 		.fill 	26*4 	
+		.section storage
 
 hashTables:									; hash tables 6 x hashTableSize words.
 		.fill 	6*2*hashTableSize 		

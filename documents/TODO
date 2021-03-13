@@ -1,7 +1,7 @@
 TODO
 ====
 Assembler
-Check outstanding review
+Check outstanding reviews
 => 0.16
 Rewrite array code
 => 0.17
@@ -26,7 +26,7 @@ Incomplete but hooked in for write and test
 
 Notes
 =====
-	Stack position fudged for readability.
+	
 
 New commands/Changes to document
 ================================
