@@ -100,7 +100,6 @@ _SFSkipString:
 		sec
 		adc 	(codePtr),y
 		tay
-_SFReturn:		
 		rts
 		;
 		;		End of line.
@@ -115,11 +114,13 @@ _SFNextLine:
 		inc 	codePtr+1
 _SFNLNoCarry:
 		lda 	(codePtr),y 				; reached the end of the program.
-		bne		_SFReturn 					; no go round again
+		bne		_SFXNL 						; no go round again
 		lda 	temp1
 		cmp 	#TKW_DATA 					; if searching for Data different error.
 		bne 	SFError 					; read uses this to search for data statements
 		.throw 	DataError 					; so we want an appropriate error.
+_SFXNL:	ldy 	#3
+		rts		
 		;
 		;		Skip embedded floating point (FP not done yet)
 		;

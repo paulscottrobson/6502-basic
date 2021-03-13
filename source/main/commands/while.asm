@@ -35,7 +35,7 @@ Command_While: 	;; [While]
 _CWFail:
 		lda 	#4
 		jsr 	RSFree 						; close the just opened position.		
-		lda 	#TKW_WEND 					; scan forward past WEND.
+		lda 	#TKW_WEND 					; scan forward past WEND.		
 		tax
 		jsr 	ScanForward
 		rts

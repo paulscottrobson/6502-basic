@@ -3,7 +3,8 @@
 '	"the numbers on the grid over 60 seconds"
 '
 cls
-xSize = 32:ySize = 24:proc frame()
+xSize = 32:ySize = 24
+proc frame()
 dim xc(9),yc(9)
 for i = 1 to 9:proc setup(i):next i
 xPlayer = xSize/2:yPlayer = ySize/2
@@ -20,6 +21,7 @@ while clock < 60
 	if c$ = "K" and yPlayer > 0 then proc move(0,-1)
 	if c$ = "M" and yPlayer < ySize-1 then proc move(0,1)
 wend
+list ,1400
 end
 '
 defproc setup(n)
