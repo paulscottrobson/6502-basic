@@ -76,9 +76,16 @@ _CLCheckLoop:
 		lda 	#$80 						; undo any down indents this line.
 		jsr 	CLStructureCheck
 		lda 	structIndent 				; indent level.
+		bpl 	_CLPositive
+		lda 	#0
+_CLPositive:		
 		.tokeniser_list 					; detokenise and list code at line (codePtr)
 		lda 	#$82 						; up indents from this point on.
 		jsr 	CLStructureCheck
+		lda 	structIndent
+		bpl 	_CLNext
+		lda 	#0
+		sta 	structIndent
 _CLNext:	
 		ldy 	#0 							; go to next line.
 		lda 	(codePtr),y
@@ -124,7 +131,7 @@ _CLCLTExit:
 ; ************************************************************************************************
 ;
 ;		Scan through line at (codePtr) looking for structure adjuster A, and adjust 
-;		structIndent accordingly, setting to zero when it goes -ve
+;		structIndent accordingly.
 ;
 ; ************************************************************************************************
 
@@ -153,9 +160,6 @@ _CLSCLoop:
 		asl 	a 							; double indent step
 		clc 	
 		adc 	structIndent 				; add to structure indent
-		bpl 	_CLSCNoUnder 				; no underflow
-		lda 	#0
-_CLSCNoUnder:
 		sta 	structIndent
 		jmp 	_CLSCLoop		
 
