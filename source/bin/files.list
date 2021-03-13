@@ -7,7 +7,9 @@
 ../source/device/option_x16/x16timer.asm
 ../source/error/errorhandler.asm
 ../source/extension/extensionhandler.asm
+../source/extension/option_x16/vload.asm
 ../source/extension/option_x16/vpeekpoke.asm
+../source/extension/option_x16/vramprocess.asm
 ../source/floatingpoint/addsub.asm
 ../source/floatingpoint/compare.asm
 ../source/floatingpoint/convert.asm

@@ -20,4 +20,5 @@ This is a list of changes made post release 0.14 (prior to that it was too fluid
 - LIST now indents structures/procedures.
 - BUG: Structure Scanner moving forward to next line was using Y=0 not Y=3, causing spurious 
 	   scanning and indenting.
+- VLOAD very simple implementation no compression etc.
 
