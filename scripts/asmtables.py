@@ -21,7 +21,7 @@ h = open(genDir+"asmconst.inc","w")
 h.write(header)
 h.close()
 #
-#		Create the text table to extend the tokens for Group 1.
+#		Create the data tables for assembler.
 #
 h = open(genDir+"asmtext.inc","w")
 h.write(header)

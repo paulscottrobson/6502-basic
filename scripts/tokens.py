@@ -9,6 +9,8 @@
 # *****************************************************************************
 # *****************************************************************************
 
+import re,os,sys
+
 # *****************************************************************************
 #
 #				Class encapsulating 4 groups of rokens $80-$FF
@@ -19,6 +21,10 @@ class Tokens(object):
 	def __init__(self):
 		self.tokens = { }													# token long ID -> data
 		self.tokenToInfo = { } 												# token text -> data
+		self.loadTokens()
+		self.appendAssemblerTokens()
+
+	def loadTokens(self):
 		tokenID = [ 0x80 ] 													# current token for each group
 		groupID = 0x00														# current group
 		currentMode = Tokens.SYSTEM 										# what analysing
@@ -50,6 +56,22 @@ class Tokens(object):
 			else:
 				self.defineToken(groupID,tokenID[groupID],t,currentMode)
 				tokenID[groupID] += 1
+		#
+		self.firstAsmToken = tokenID[1]										# asm mnemonics start here
+
+	def appendAssemblerTokens(self):
+		src = [x for x in self.getAsmSource().split("\n") if x.strip() != ""]
+		src = [x.strip().replace(" ","").replace("\t","") for x in src if not x.startswith(":")]
+		self.assemblerInfo = {}
+		t = self.firstAsmToken
+		for s in src:
+			e = s.strip().lower().split(":")
+			if e[2] != '5':
+				assert e[1] not in self.assemblerInfo,"Duplicate "+s
+				m = e[1] if e[1] != "and" else "(and)"
+				self.assemblerInfo[e[1]] = e 
+				self.defineToken(1,t,m.upper(),Tokens.STANDARD)
+				t += 1
 	#
 	#		Add a new token.
 	#
@@ -78,6 +100,8 @@ class Tokens(object):
 		return self.firstUnary
 	def getStandardStart(self):
 		return self.firstStdToken
+	def getBaseAsmToken(self):
+		return self.firstAsmToken
 	#
 	def getFromToken(self,token):
 		token = token.strip().upper()
@@ -89,7 +113,7 @@ class Tokens(object):
 	def getAllTokens(self):
 		return self.tokens
 	#
-	#		Source
+	#		Tokens Source. Currently done by hand.
 	#
 	def getSource(self):
 		return """
@@ -150,6 +174,95 @@ class Tokens(object):
 		[group3]
 			vpeek( 	vdeek(
 """		
+	#
+	#		CSV export of assembler.ods using colon
+	#
+	def getAsmSource(self):
+		return """
+:::0:1:2:3:4:5:6:7:8:::::
+:::(ZP,X):ZP:#:ABS:(ZP,Y):ZP,X:ABS,Y:ABS,X:(ZP):::::
+:::0:4:8:C:10:14:10:1C:11:::::
+1:ora:1::::::::::::::
+21:and:1::::::::::::::
+41:eor:1::::::::::::::
+61:adc:1::::::::::::::
+81:sta :1:::No !:::::::::::
+a1 :lda:1::::::::::::::
+c1 :cmp:1::::::::::::::
+e1 :sbc:1::::::::::::::
+:::0:1:2:3:4:5:6:7:8:9:10:11:12:13
+:::#:ZP:ACC:ABS:(ZP,Y):ZP,X:ABS,Y:ABS,X:(ZP):ZP,Y:(ABS):(ABS,X):REL:(ZP,X)
+:::0:4:8:C:10:14:10:1C:11:-:-:-:-:-
+02 :asl:2::X:X:X::X::X::::::
+22 :rol:2::X:X:X::X::X::::::
+42 :lsr :2::X:X:X::X::X::::::
+62 :ror :2::X:X:X::X::X::::::
+82 :stx :2::X::X::::::::::
+a2 :ldx:2:X:X::X::::::::::
+c2 :dec:2::X::X::X::X::::::
+e2 :inc:2::X::X::X::X::::::
+60:stz :2::X:: ::X::::::::
+20 :bit:2::X::X::X::X::::::
+80 :sty:2::X::X::::::::::
+a0:ldy :2:X:X::X::X::X::::::
+c0 :cpy:2:X:X::X::X::::::::
+e0 :cpx:2:X:X::X::::::::::
+00:tsb:2::X::X::::::::::
+10:trb:2::X::X::::::::::
+14:jsr :2::::X::::::::::
+40 :jmp:2::::X::::::::::
+::::::::::::::::
+10:bpl:3:: ::::::::::::
+30:bmi:3::::::::::::::
+50:bvc:3::::::::::::::
+70:bvs:3::::::::::::::
+90:bcc:3::::::::::::::
+b0:bcs :3::::::::::::::
+d0:bne:3:::::Group 1:Main Instructions::::::::
+f0:beq:3:::::Group 2:Common but patterned::::::::
+80 :bra:3:::::Group 3:Relative addressng::::::::
+:::::::Group 4:Implied::::::::
+0 :brk:4:::::Group 5:Special cases::::::::
+08 :php:4::::::::::::::
+18 :clc:4::::::::::::::
+28 :plp:4::::::::::::::
+38:sec:4::::::::::::::
+40 :rti:4::::::::::::::
+48 :pha:4::::::::::::::
+58 :cli:4::::::::::::::
+5a :phy :4::::::::::::::
+60:rts:4::::::::::::::
+68 :pla:4::::::::::::::
+78 :sei:4::::::::::::::
+7a :ply :4::::::::::::::
+88 :dey:4::::::::::::::
+8A:txa:4::::::::::::::
+98 :tya:4::::::::::::::
+9A:txs:4::::::::::::::
+a8 :tay:4::::::::::::::
+AA :tax :4::::::::::::::
+b8 :clv:4::::::::::::::
+BA :tsx:4::::::::::::::
+c8 :iny:4::::::::::::::
+CA :dex:4::::::::::::::
+d8 :cld:4::::::::::::::
+da :phx :4::::::::::::::
+e8 :inx:4::::::::::::::
+EA :nop:4::::::::::::::
+f8 :sed:4::::::::::::::
+fa :plx:4::::::::::::::
+::::::::::::::::
+6c :jmp:5:(abs):::::::::::::
+7C :jmp :5:(abs,x):::::::::::::
+BE:ldx:5:abs,y:::::::::::::
+B6:ldx:5:zp,y:::::::::::::
+96:stx :5:zp,y:::::::::::::
+1a:inc:5:acc:::::::::::::
+3a:dec:5:acc:::::::::::::
+89:bit:5:#:::::::::::::
+9c:stz :5:abs:::::::::::::
+9e:stz :5:abs,x:::::::::::::
+"""
 
 Tokens.SYSTEM =   0x40								# shifts, eol etc.
 Tokens.BINARY =   0x00 								# binary operator 00-0F
@@ -157,7 +270,6 @@ Tokens.UNARY =    0x10 								# unary function
 Tokens.INCDEPTH = 0x82 								# structure level adjusters
 Tokens.DECDEPTH = 0x80
 Tokens.STANDARD = 0x20 								# ordinary token.
-
 
 if __name__ == "__main__":
 	t = Tokens()			
@@ -176,3 +288,4 @@ if __name__ == "__main__":
 	for t1 in keys:
 		print(t1,t.tokens[t1])
 
+	print(t.getBaseAsmToken())

@@ -13,6 +13,69 @@ Group1Text:
 	.byte $03,$45,$4e,$c4                  ; $8e end
 	.byte $04,$53,$54,$4f,$d0              ; $8f stop
 	.byte $04,$58,$45,$4d,$d5              ; $90 xemu
-	.include	"asmtext.inc"
+	.byte $03,$4f,$52,$c1                  ; $91 ora
+	.byte $05,$28,$41,$4e,$44,$a9          ; $92 (and)
+	.byte $03,$45,$4f,$d2                  ; $93 eor
+	.byte $03,$41,$44,$c3                  ; $94 adc
+	.byte $03,$53,$54,$c1                  ; $95 sta
+	.byte $03,$4c,$44,$c1                  ; $96 lda
+	.byte $03,$43,$4d,$d0                  ; $97 cmp
+	.byte $03,$53,$42,$c3                  ; $98 sbc
+	.byte $03,$41,$53,$cc                  ; $99 asl
+	.byte $03,$52,$4f,$cc                  ; $9a rol
+	.byte $03,$4c,$53,$d2                  ; $9b lsr
+	.byte $03,$52,$4f,$d2                  ; $9c ror
+	.byte $03,$53,$54,$d8                  ; $9d stx
+	.byte $03,$4c,$44,$d8                  ; $9e ldx
+	.byte $03,$44,$45,$c3                  ; $9f dec
+	.byte $03,$49,$4e,$c3                  ; $a0 inc
+	.byte $03,$53,$54,$da                  ; $a1 stz
+	.byte $03,$42,$49,$d4                  ; $a2 bit
+	.byte $03,$53,$54,$d9                  ; $a3 sty
+	.byte $03,$4c,$44,$d9                  ; $a4 ldy
+	.byte $03,$43,$50,$d9                  ; $a5 cpy
+	.byte $03,$43,$50,$d8                  ; $a6 cpx
+	.byte $03,$54,$53,$c2                  ; $a7 tsb
+	.byte $03,$54,$52,$c2                  ; $a8 trb
+	.byte $03,$4a,$53,$d2                  ; $a9 jsr
+	.byte $03,$4a,$4d,$d0                  ; $aa jmp
+	.byte $03,$42,$50,$cc                  ; $ab bpl
+	.byte $03,$42,$4d,$c9                  ; $ac bmi
+	.byte $03,$42,$56,$c3                  ; $ad bvc
+	.byte $03,$42,$56,$d3                  ; $ae bvs
+	.byte $03,$42,$43,$c3                  ; $af bcc
+	.byte $03,$42,$43,$d3                  ; $b0 bcs
+	.byte $03,$42,$4e,$c5                  ; $b1 bne
+	.byte $03,$42,$45,$d1                  ; $b2 beq
+	.byte $03,$42,$52,$c1                  ; $b3 bra
+	.byte $03,$42,$52,$cb                  ; $b4 brk
+	.byte $03,$50,$48,$d0                  ; $b5 php
+	.byte $03,$43,$4c,$c3                  ; $b6 clc
+	.byte $03,$50,$4c,$d0                  ; $b7 plp
+	.byte $03,$53,$45,$c3                  ; $b8 sec
+	.byte $03,$52,$54,$c9                  ; $b9 rti
+	.byte $03,$50,$48,$c1                  ; $ba pha
+	.byte $03,$43,$4c,$c9                  ; $bb cli
+	.byte $03,$50,$48,$d9                  ; $bc phy
+	.byte $03,$52,$54,$d3                  ; $bd rts
+	.byte $03,$50,$4c,$c1                  ; $be pla
+	.byte $03,$53,$45,$c9                  ; $bf sei
+	.byte $03,$50,$4c,$d9                  ; $c0 ply
+	.byte $03,$44,$45,$d9                  ; $c1 dey
+	.byte $03,$54,$58,$c1                  ; $c2 txa
+	.byte $03,$54,$59,$c1                  ; $c3 tya
+	.byte $03,$54,$58,$d3                  ; $c4 txs
+	.byte $03,$54,$41,$d9                  ; $c5 tay
+	.byte $03,$54,$41,$d8                  ; $c6 tax
+	.byte $03,$43,$4c,$d6                  ; $c7 clv
+	.byte $03,$54,$53,$d8                  ; $c8 tsx
+	.byte $03,$49,$4e,$d9                  ; $c9 iny
+	.byte $03,$44,$45,$d8                  ; $ca dex
+	.byte $03,$43,$4c,$c4                  ; $cb cld
+	.byte $03,$50,$48,$d8                  ; $cc phx
+	.byte $03,$49,$4e,$d8                  ; $cd inx
+	.byte $03,$4e,$4f,$d0                  ; $ce nop
+	.byte $03,$53,$45,$c4                  ; $cf sed
+	.byte $03,$50,$4c,$d8                  ; $d0 plx
 	.byte $00
 

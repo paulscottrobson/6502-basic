@@ -1,8 +1,8 @@
 TODO
 ====
 Assembler
-	- Update tokens.py to include asm mnemonics,renaming AND
-	- Method of getting associated data for those tokens and first assembly token.
+	- Generate associated constants/tables.
+	- Work on assembler (including AND issue)
 Check outstanding reviews
 => 0.16
 Rewrite array code

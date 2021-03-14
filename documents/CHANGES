@@ -3,6 +3,9 @@ Changes
 
 This is a list of changes made post release 0.14 (prior to that it was too fluid)
 
+It is not practical yet to keep code in binary (e.g. tokenised) form because the token values
+vary too much. Text source only.
+
 12/3/2021
 =========
 - Uses .throw rather than error for error macro which behaved oddly in 64tass
@@ -22,3 +25,6 @@ This is a list of changes made post release 0.14 (prior to that it was too fluid
 	   scanning and indenting.
 - VLOAD very simple implementation no compression etc.
 
+14/3/2021
+=========
+- Table and Token generators now produce tables/constants for Assembler.

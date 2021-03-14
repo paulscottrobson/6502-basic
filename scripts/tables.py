@@ -82,11 +82,13 @@ for group in range(0,4):
 			if not tt.startswith("[["):									# add to name list if not special
 				tokenText[group].append(tt)
 			if tt in handlers: 
-				handler = handlers[tt] 										# what to run, then output table.
+				handler = handlers[tt] 									# what to run, then output table.
 			else:
 				handler = "Unimplemented"
-				undefined.append(tt.lower())				
-			h.write("\t.word\t{0:24} ; ${1:02x} {2}\n".format(handler,token["id"],tt.lower()))
+				if group != 1 or n < t.getBaseAsmToken():				# no assembler undefined.
+					undefined.append(tt.lower())				
+			if group != 1 or n < t.getBaseAsmToken():					# no assembler vectors.
+				h.write("\t.word\t{0:24} ; ${1:02x} {2}\n".format(handler,token["id"],tt.lower()))
 		n += 1
 	h.close()
 #
@@ -115,8 +117,6 @@ for group in range(0,4):												# for each group
 		bList = ",".join(["${0:02x}".format(c) for c in bList])			# reformat and write out.
 		h.write("\t.byte {0:32} ; ${1:02x} {2}\n".format(bList,n,token.lower()))
 		n += 1
-	if group == 1:														# add in asm extension.
-		h.write('\t.include\t"asmtext.inc"\n')
 	h.write("\t.byte $00\n\n")											# marks end of list.
 #
 #		List undefined keywords

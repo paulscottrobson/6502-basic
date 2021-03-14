@@ -1,7 +1,7 @@
 ; *****************************************************************************
 ; *****************************************************************************
 ;
-;		Name:		englishtxt
+;		Name:		english.txt
 ;		Author:		Paul Robson (paul@robsonsorguk)
 ;		Created:	11th March 2021
 ;		Purpose:	English language error messages
