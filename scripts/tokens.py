@@ -174,10 +174,5 @@ if __name__ == "__main__":
 	keys = [x for x in t.tokens.keys()]
 	keys.sort()
 	for t1 in keys:
-		print(t.tokens[t1])
+		print(t1,t.tokens[t1])
 
-
-	print(t.getFromToken("option"))
-	print(t.getFromID(1,134))
-	print(t.getFromToken("optionx"))
-	print(t.getFromID(5,134))

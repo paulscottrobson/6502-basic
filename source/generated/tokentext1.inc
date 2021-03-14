@@ -13,5 +13,6 @@ Group1Text:
 	.byte $03,$45,$4e,$c4                  ; $8e end
 	.byte $04,$53,$54,$4f,$d0              ; $8f stop
 	.byte $04,$58,$45,$4d,$d5              ; $90 xemu
+	.include	"asmtext.inc"
 	.byte $00
 

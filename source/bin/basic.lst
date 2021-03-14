@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -D autorun=1 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
-; Sat Mar 13 21:05:19 2021
+; Sun Mar 14 00:21:37 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -6538,6 +6538,12 @@
 >3740	03 45 4e c4				.byte $03,$45,$4e,$c4                  ; $8e end
 >3744	04 53 54 4f d0				.byte $04,$53,$54,$4f,$d0              ; $8f stop
 >3749	04 58 45 4d d5				.byte $04,$58,$45,$4d,$d5              ; $90 xemu
+
+;******  Processing file: tokeniser/../generated/asmtext.inc
+
+
+;******  Return to file: tokeniser/../generated/tokentext1.inc
+
 >374e	00					.byte $00
 
 ;******  Return to file: tokeniser/tokentext.asm
