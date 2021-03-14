@@ -14,7 +14,7 @@ vary too much. Text source only.
 - Add Get$() and Inkey$()
 - Break now works on Get$(),Get() and Input (if it is turned on)
 - Added Mem function
-- Added some out of memory checks.
+- Added out of memory checks.
 - Added number stack overflow check.
 - BUG: X1/X2 instructions were chewing up the stack (jump to execute rather than rts)
 
@@ -27,4 +27,6 @@ vary too much. Text source only.
 
 14/3/2021
 =========
+- Worked on analysis of 65C02 Opcodes
 - Table and Token generators now produce tables/constants for Assembler.
+- Put empty hooks in run to link to assembler module.

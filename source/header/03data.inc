@@ -142,3 +142,7 @@ TYPE_STRARRAY =	($3D)
 TYPE_FLOAT =	($3E)
 TYPE_FLOATARRAY=($3F)
 
+;
+;		Include assembler constants
+;
+		.include "../generated/asmconst.inc"

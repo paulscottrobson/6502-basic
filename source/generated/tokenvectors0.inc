@@ -104,3 +104,4 @@ Group0Vectors:
 	.word	Command_CLS              ; $e3 cls
 	.word	Command_Locate           ; $e4 locate
 	.word	CommandBreak             ; $e5 break
+	.word	CommandAssemblerLabel    ; $e6 .

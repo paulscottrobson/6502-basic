@@ -13,3 +13,5 @@ Group1Vectors:
 	.word	CommandEnd               ; $8e end
 	.word	CommandStop              ; $8f stop
 	.word	CommandXemu              ; $90 xemu
+	.word	Unimplemented            ; $91 code
+	.word	Unimplemented            ; $92 pass

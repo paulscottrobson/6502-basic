@@ -166,14 +166,14 @@ class Tokens(object):
 			rem 	let 	input	else	vdu 	
 			print	goto 	gosub 	return 	data	 	
 			assert 	poke 	doke 	loke 	ink
-			paper 	cls 	locate 	break
+			paper 	cls 	locate 	break	.
 		#
 		#		Put these in group 1.
 		#
 		[group1]
 			clear 	load	save 	list 	new 	
 			run 	read 	restore	end 	stop
-			xemu
+			xemu 	code 	pass
 		#
 		#		System specific commands in group 2
 		#

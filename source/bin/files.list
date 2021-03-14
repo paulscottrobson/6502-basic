@@ -1,6 +1,8 @@
 ;
 ;	Automatically generated
 ;
+../source/assembler/assemblecmd.asm
+../source/assembler/assemblelabel.asm
 ../source/device/option_x16/x16break.asm
 ../source/device/option_x16/x16file.asm
 ../source/device/option_x16/x16io.asm

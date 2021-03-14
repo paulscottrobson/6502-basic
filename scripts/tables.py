@@ -45,6 +45,7 @@ for k in keys:
 		s2 = s2.replace("!","PLING").replace("?","QMARK").replace("~","WAVY").replace("$","DOLLAR")
 		s2 = s2.replace("^","HAT").replace("#","HASH").replace("%","PERCENT").replace("&","AMP")
 		s2 = s2.replace(":","COLON").replace(";","SEMICOLON").replace(",","COMMA").replace("'","QUOTE")
+		s2 = s2.replace(".","PERIOD")
 		#s2 = s2.replace("","").replace("","").replace("","").replace("","")
 		assert re.match("^([A-Z]+)$",s2) is not None,"Fail on "+s2 		# check it's just words.
 		h.write("TKW_{0:24} = ${1:02x} ; {2}\n".format(s2,allTokens[k]["id"],s.lower()))

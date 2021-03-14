@@ -58,7 +58,7 @@ _CRNoChecks
 		cmp 	#TOK_STRUCTST 				; execute structures.
 		bcs 	_CRExecute
 		cmp 	#TOK_BINARYST 				; if one of the system tokens $80-$85 do that
-		bcs 	_CRCheckIndirect 			; if in that unused range check for ! or ?
+		bcs 	_CRCheckIndirect 			; if in that unused range check for ! or ? or AND
 		;
 		;		Execute token A
 		;
@@ -83,12 +83,20 @@ _CRDefaultLet:
 		;		Bad but there are two extra defaults ! and ?
 		;				
 _CRCheckIndirect:
+		cmp 	#TKW_AND 					; AND (assembler)
+		beq 	_CRAndCommand
 		cmp 	#TKW_PLING 					; !<term> = 
 		beq 	_CRDefaultLet
 		cmp 	#TKW_QMARK 					; ?<term> =
 		beq 	_CRDefaultLet
 		bne 	Unimplemented
 		
+_CRAndCommand:
+		iny 								; skip over the AND token
+		lda 	#TKW_LPARENANDRPAREN 		; replace it with the pseudo-and
+		jsr 	CommandAssembler 			; do the assembler command
+		jmp 	CRNextInstruction 			; and loop round.
+
 ; ************************************************************************************************
 ;
 ;								   Handle $81 and $82 shifts
@@ -98,14 +106,24 @@ _CRCheckIndirect:
 CommandShift1:	;; [[[SH1]]]
 		lda 	(codePtr),y 				; get shifted value		
 		bpl 	Unimplemented 				; we have an error as this should not happen.
+		iny 								; advance over it.
+		cmp 	#TKA_GROUP1 				; is it an assembler constant ?
+		bcs 	CommandAssembler
 		asl 	a 							; double into X
 		tax
-		iny 								; advance over it.
 		jmp 	(Group1Vectors-12,x) 		; and do the code.	
 
 CommandShift2:	;; [[[SH2]]]
 		lda 	#$FF 						; $FF means command not unary function.
 		.extension_execown
+		rts
+
+CommandAssembler:							; run the assembler, opcode code is in A.
+		.assembler_assemble 				; assemble an instruction.
+		rts
+		
+CommandAssemblerLabel: ;; [.]
+		.assembler_label
 		rts
 
 ; ************************************************************************************************

@@ -98,5 +98,6 @@ Group0Text:
 	.byte $03,$43,$4c,$d3                  ; $e3 cls
 	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e4 locate
 	.byte $05,$42,$52,$45,$41,$cb          ; $e5 break
+	.byte $01,$ae                          ; $e6 .
 	.byte $00
 

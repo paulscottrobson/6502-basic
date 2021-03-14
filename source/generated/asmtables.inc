@@ -2,100 +2,100 @@
 ;	Automatically generated
 ;
 OpcodeTable:
-	.byte	$01			; $91 ora
-	.byte	$21			; $92 (and)
-	.byte	$41			; $93 eor
-	.byte	$61			; $94 adc
-	.byte	$81			; $95 sta
-	.byte	$a1			; $96 lda
-	.byte	$c1			; $97 cmp
-	.byte	$e1			; $98 sbc
-	.byte	$02			; $99 asl
-	.byte	$22			; $9a rol
-	.byte	$42			; $9b lsr
-	.byte	$62			; $9c ror
-	.byte	$82			; $9d stx
-	.byte	$a2			; $9e ldx
-	.byte	$c2			; $9f dec
-	.byte	$e2			; $a0 inc
-	.byte	$60			; $a1 stz
-	.byte	$20			; $a2 bit
-	.byte	$80			; $a3 sty
-	.byte	$a0			; $a4 ldy
-	.byte	$c0			; $a5 cpy
-	.byte	$e0			; $a6 cpx
-	.byte	$00			; $a7 tsb
-	.byte	$10			; $a8 trb
-	.byte	$14			; $a9 jsr
-	.byte	$40			; $aa jmp
-	.byte	$10			; $ab bpl
-	.byte	$30			; $ac bmi
-	.byte	$50			; $ad bvc
-	.byte	$70			; $ae bvs
-	.byte	$90			; $af bcc
-	.byte	$b0			; $b0 bcs
-	.byte	$d0			; $b1 bne
-	.byte	$f0			; $b2 beq
-	.byte	$80			; $b3 bra
-	.byte	$00			; $b4 brk
-	.byte	$08			; $b5 php
-	.byte	$18			; $b6 clc
-	.byte	$28			; $b7 plp
-	.byte	$38			; $b8 sec
-	.byte	$40			; $b9 rti
-	.byte	$48			; $ba pha
-	.byte	$58			; $bb cli
-	.byte	$5a			; $bc phy
-	.byte	$60			; $bd rts
-	.byte	$68			; $be pla
-	.byte	$78			; $bf sei
-	.byte	$7a			; $c0 ply
-	.byte	$88			; $c1 dey
-	.byte	$8a			; $c2 txa
-	.byte	$98			; $c3 tya
-	.byte	$9a			; $c4 txs
-	.byte	$a8			; $c5 tay
-	.byte	$aa			; $c6 tax
-	.byte	$b8			; $c7 clv
-	.byte	$ba			; $c8 tsx
-	.byte	$c8			; $c9 iny
-	.byte	$ca			; $ca dex
-	.byte	$d8			; $cb cld
-	.byte	$da			; $cc phx
-	.byte	$e8			; $cd inx
-	.byte	$ea			; $ce nop
-	.byte	$f8			; $cf sed
-	.byte	$fa			; $d0 plx
+	.byte	$01			; $93 ora
+	.byte	$21			; $94 (and)
+	.byte	$41			; $95 eor
+	.byte	$61			; $96 adc
+	.byte	$81			; $97 sta
+	.byte	$a1			; $98 lda
+	.byte	$c1			; $99 cmp
+	.byte	$e1			; $9a sbc
+	.byte	$02			; $9b asl
+	.byte	$22			; $9c rol
+	.byte	$42			; $9d lsr
+	.byte	$62			; $9e ror
+	.byte	$82			; $9f stx
+	.byte	$a2			; $a0 ldx
+	.byte	$c2			; $a1 dec
+	.byte	$e2			; $a2 inc
+	.byte	$60			; $a3 stz
+	.byte	$20			; $a4 bit
+	.byte	$80			; $a5 sty
+	.byte	$a0			; $a6 ldy
+	.byte	$c0			; $a7 cpy
+	.byte	$e0			; $a8 cpx
+	.byte	$00			; $a9 tsb
+	.byte	$10			; $aa trb
+	.byte	$14			; $ab jsr
+	.byte	$40			; $ac jmp
+	.byte	$10			; $ad bpl
+	.byte	$30			; $ae bmi
+	.byte	$50			; $af bvc
+	.byte	$70			; $b0 bvs
+	.byte	$90			; $b1 bcc
+	.byte	$b0			; $b2 bcs
+	.byte	$d0			; $b3 bne
+	.byte	$f0			; $b4 beq
+	.byte	$80			; $b5 bra
+	.byte	$00			; $b6 brk
+	.byte	$08			; $b7 php
+	.byte	$18			; $b8 clc
+	.byte	$28			; $b9 plp
+	.byte	$38			; $ba sec
+	.byte	$40			; $bb rti
+	.byte	$48			; $bc pha
+	.byte	$58			; $bd cli
+	.byte	$5a			; $be phy
+	.byte	$60			; $bf rts
+	.byte	$68			; $c0 pla
+	.byte	$78			; $c1 sei
+	.byte	$7a			; $c2 ply
+	.byte	$88			; $c3 dey
+	.byte	$8a			; $c4 txa
+	.byte	$98			; $c5 tya
+	.byte	$9a			; $c6 txs
+	.byte	$a8			; $c7 tay
+	.byte	$aa			; $c8 tax
+	.byte	$b8			; $c9 clv
+	.byte	$ba			; $ca tsx
+	.byte	$c8			; $cb iny
+	.byte	$ca			; $cc dex
+	.byte	$d8			; $cd cld
+	.byte	$da			; $ce phx
+	.byte	$e8			; $cf inx
+	.byte	$ea			; $d0 nop
+	.byte	$f8			; $d1 sed
+	.byte	$fa			; $d2 plx
 
 Group2OpcodeAvailability:
-	.byte	$57			; $99 asl $02
-	.byte	$57			; $9a rol $22
-	.byte	$57			; $9b lsr $42
-	.byte	$57			; $9c ror $62
-	.byte	$05			; $9d stx $82
-	.byte	$05			; $9e ldx $a2
-	.byte	$55			; $9f dec $c2
-	.byte	$55			; $a0 inc $e2
-	.byte	$11			; $a1 stz $60
-	.byte	$55			; $a2 bit $20
-	.byte	$05			; $a3 sty $80
-	.byte	$55			; $a4 ldy $a0
-	.byte	$15			; $a5 cpy $c0
-	.byte	$05			; $a6 cpx $e0
-	.byte	$05			; $a7 tsb $00
-	.byte	$05			; $a8 trb $10
-	.byte	$04			; $a9 jsr $14
-	.byte	$04			; $aa jmp $40
+	.byte	$57			; $9b asl $02
+	.byte	$57			; $9c rol $22
+	.byte	$57			; $9d lsr $42
+	.byte	$57			; $9e ror $62
+	.byte	$05			; $9f stx $82
+	.byte	$05			; $a0 ldx $a2
+	.byte	$55			; $a1 dec $c2
+	.byte	$55			; $a2 inc $e2
+	.byte	$11			; $a3 stz $60
+	.byte	$55			; $a4 bit $20
+	.byte	$05			; $a5 sty $80
+	.byte	$55			; $a6 ldy $a0
+	.byte	$15			; $a7 cpy $c0
+	.byte	$05			; $a8 cpx $e0
+	.byte	$05			; $a9 tsb $00
+	.byte	$05			; $aa trb $10
+	.byte	$04			; $ab jsr $14
+	.byte	$04			; $ac jmp $40
 
 AssemblerSpecialCases:
-	.byte	$aa,10,$6c		; jmp (abs)
-	.byte	$aa,11,$7c		; jmp (abs,x)
-	.byte	$9e,6,$be		; ldx abs,y
-	.byte	$9e,9,$b6		; ldx zp,y
-	.byte	$9d,9,$96		; stx zp,y
-	.byte	$a0,2,$1a		; inc acc
-	.byte	$9f,2,$3a		; dec acc
-	.byte	$a2,0,$89		; bit #
-	.byte	$a1,3,$9c		; stz abs
-	.byte	$a1,7,$9e		; stz abs,x
+	.byte	$ac,10,$6c		; jmp (abs)
+	.byte	$ac,11,$7c		; jmp (abs,x)
+	.byte	$a0,6,$be		; ldx abs,y
+	.byte	$a0,9,$b6		; ldx zp,y
+	.byte	$9f,9,$96		; stx zp,y
+	.byte	$a2,2,$1a		; inc acc
+	.byte	$a1,2,$3a		; dec acc
+	.byte	$a4,0,$89		; bit #
+	.byte	$a3,3,$9c		; stz abs
+	.byte	$a3,7,$9e		; stz abs,x
 	.byte	0

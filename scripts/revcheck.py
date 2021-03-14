@@ -41,6 +41,6 @@ for root,dirs,files in os.walk("../source"):
 
 for s in sources:
 	if sources[s]["review"] is None:
-		print(s," not reviewed")
+		print(s,sources[s]["create"])
 
 	

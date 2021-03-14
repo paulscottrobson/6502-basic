@@ -1,8 +1,9 @@
 TODO
 ====
 Assembler
-	- Work on assembler (including AND issue)
-Check outstanding reviews
+	- Add CODE and PASS instructions, and initialise when compiled in.
+	- Work on assembler command, assembler label
+Check outstanding reviews (see review.txt)
 => 0.16
 Rewrite array code
 => 0.17
