@@ -1,7 +1,6 @@
 TODO
 ====
 Assembler
-	- Generate associated constants/tables.
 	- Work on assembler (including AND issue)
 Check outstanding reviews
 => 0.16

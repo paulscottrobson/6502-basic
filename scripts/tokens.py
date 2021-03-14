@@ -63,15 +63,19 @@ class Tokens(object):
 		src = [x for x in self.getAsmSource().split("\n") if x.strip() != ""]
 		src = [x.strip().replace(" ","").replace("\t","") for x in src if not x.startswith(":")]
 		self.assemblerInfo = {}
+		self.specialCases = []
 		t = self.firstAsmToken
 		for s in src:
 			e = s.strip().lower().split(":")
 			if e[2] != '5':
 				assert e[1] not in self.assemblerInfo,"Duplicate "+s
 				m = e[1] if e[1] != "and" else "(and)"
-				self.assemblerInfo[e[1]] = e 
+				self.assemblerInfo[m] = e 
 				self.defineToken(1,t,m.upper(),Tokens.STANDARD)
 				t += 1
+			else:
+				assert e[1] in self.assemblerInfo,"New code in Group 5 "+s
+				self.specialCases.append(e)
 	#
 	#		Add a new token.
 	#
@@ -112,6 +116,13 @@ class Tokens(object):
 		return self.tokens[n] if n in self.tokens else None
 	def getAllTokens(self):
 		return self.tokens
+	#
+	def getAsmInfo(self,m):
+		m = m.strip().lower()
+		return self.assemblerInfo[m] if m in self.assemblerInfo else None
+	#
+	def getAsmSpecialCases(self):
+		return self.specialCases
 	#
 	#		Tokens Source. Currently done by hand.
 	#
@@ -252,16 +263,17 @@ EA :nop:4::::::::::::::
 f8 :sed:4::::::::::::::
 fa :plx:4::::::::::::::
 ::::::::::::::::
-6c :jmp:5:(abs):::::::::::::
-7C :jmp :5:(abs,x):::::::::::::
-BE:ldx:5:abs,y:::::::::::::
-B6:ldx:5:zp,y:::::::::::::
-96:stx :5:zp,y:::::::::::::
-1a:inc:5:acc:::::::::::::
-3a:dec:5:acc:::::::::::::
-89:bit:5:#:::::::::::::
-9c:stz :5:abs:::::::::::::
-9e:stz :5:abs,x:::::::::::::
+6c :jmp:5:10:(abs)::::::::::::
+7C :jmp :5:11:(abs,x)::::::::::::
+BE:ldx:5:6:abs,y::::::::::::
+B6:ldx:5:9:zp,y::::::::::::
+96:stx :5:9:zp,y::::::::::::
+1a:inc:5:2:acc::::::::::::
+3a:dec:5:2:acc::::::::::::
+89:bit:5:0:#::::::::::::
+9c:stz :5:3:abs::::::::::::
+9e:stz :5:7:abs,x::::::::::::
+
 """
 
 Tokens.SYSTEM =   0x40								# shifts, eol etc.
