@@ -2,8 +2,10 @@
 ;	Automatically generated
 ;
 	.include "asmoperand.asm"
+	.include "asmwrite.asm"
 	.include "assemblecmd.asm"
 	.include "assemblelabel.asm"
+	.include "subgroup.asm"
 
 .section code
 

@@ -35,3 +35,4 @@ ErrorID_Load = 31 ; Load failed
 ErrorID_Break = 32 ; Break
 ErrorID_Memory = 33 ; Out of memory
 ErrorID_NumStack = 34 ; Expression too complex
+ErrorID_Assembler = 35 ; Bad Operand/Mode

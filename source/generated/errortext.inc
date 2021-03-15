@@ -36,5 +36,6 @@ ErrorTextList:
 	.text 5,"Break"
 	.text 13,"Out of memory"
 	.text 22,"Expression too complex"
+	.text 16,"Bad Operand/Mode"
 	.byte 0
 

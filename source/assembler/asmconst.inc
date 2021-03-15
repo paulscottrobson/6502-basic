@@ -14,6 +14,7 @@
 ;										Address Mode
 ;
 ;		 Constants 0-7 are determined by the structure of the 65C02 instruction set
+;		   This ordering is also used in several lookup tables in assemblecmd.asm
 ;		
 ; ************************************************************************************************
 
