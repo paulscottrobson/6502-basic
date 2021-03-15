@@ -105,3 +105,4 @@ Group0Vectors:
 	.word	Command_Locate           ; $e4 locate
 	.word	CommandBreak             ; $e5 break
 	.word	CommandAssemblerLabel    ; $e6 .
+	.word	TKErr11                  ; $e7 #

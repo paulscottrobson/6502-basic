@@ -1,6 +1,7 @@
 ;
 ;	Automatically generated
 ;
+../source/assembler/asmoperand.asm
 ../source/assembler/assemblecmd.asm
 ../source/assembler/assemblelabel.asm
 ../source/device/option_x16/x16break.asm
@@ -32,6 +33,7 @@
 ../source/main/commands/if.asm
 ../source/main/commands/input.asm
 ../source/main/commands/let.asm
+../source/main/commands/link.asm
 ../source/main/commands/list.asm
 ../source/main/commands/loadsave.asm
 ../source/main/commands/local.asm

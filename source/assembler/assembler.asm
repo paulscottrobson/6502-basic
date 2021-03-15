@@ -1,6 +1,7 @@
 ;
 ;	Automatically generated
 ;
+	.include "asmoperand.asm"
 	.include "assemblecmd.asm"
 	.include "assemblelabel.asm"
 

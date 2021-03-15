@@ -1,8 +1,7 @@
 TODO
 ====
 Assembler
-	- Add CODE and PASS instructions, and initialise when compiled in.
-	- Work on assembler command, assembler label
+	- Work on assembler zero/abs, assembler label
 Check outstanding reviews (see review.txt)
 => 0.16
 Rewrite array code
@@ -25,10 +24,10 @@ Incomplete but hooked in for write and test
 	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
 	need 6502 versions along with dispatch macro.
 
-
 Notes
 =====
 	
 
 New commands/Changes to document
 ================================
+How the assembler works.

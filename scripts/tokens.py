@@ -35,7 +35,7 @@ class Tokens(object):
 		tokenID += [tokenID[0],tokenID[0],tokenID[0]]						# start all at the same.
 		#
 		toks = [x.strip() for x in self.getSource().upper().split("\n")]	# get the source and split into words
-		toks = [s for s in toks if not s.startswith("#")]
+		toks = [s for s in toks if not s.startswith("##")]
 		toks = [x.strip() for x in (" ".join(toks)).split() if x.strip() != ""]
 		for t in toks:
 			if t.startswith("[") and t.endswith("]"):						# [x] is some sort of switch
@@ -128,25 +128,25 @@ class Tokens(object):
 	#
 	def getSource(self):
 		return """
-		#
-		#		Binary operators, must be first.
-		#
+		##
+		##		Binary operators, must be first.
+		##
 		[1] and or xor
 		[2] >= <= > < = <>
 		[3] + -
 		[4] >> << * / mod
 		[5] ^
 		[6] ! ?
-		#
-		#		Operators that effect the structure depth follow.
+		##
+		##		Operators that effect the structure depth follow.
 		[+] 
 			repeat 	while 	for 	if 		defproc
 		[-] 
 			until 	wend 	next 	then 	endif 	endproc
-		#
-		#
-		#		Then unary functions follow (not floating point ones.)
-		#
+		##
+		##
+		##		Then unary functions follow (not floating point ones.)
+		##
 		[unary]
 			(
 			len( 	sgn( 	abs( 	random(	page	
@@ -157,9 +157,9 @@ class Tokens(object):
 			int(	float( 	isval(	upper$(	lower$(
 			@		~ 		&		get$(	inkey$(
 			mem
-		#
-		#		Then command and syntax and so on.
-		#
+		##
+		##		Then command and syntax and so on.
+		##
 		[command]
 			) 		: 		, 		; 		'
 			to 		step 	proc 	local	dim		
@@ -167,21 +167,22 @@ class Tokens(object):
 			print	goto 	gosub 	return 	data	 	
 			assert 	poke 	doke 	loke 	ink
 			paper 	cls 	locate 	break	.
-		#
-		#		Put these in group 1.
-		#
+			#
+		##
+		##		Put these in group 1.
+		##
 		[group1]
 			clear 	load	save 	list 	new 	
 			run 	read 	restore	end 	stop
-			xemu 	code 	pass
-		#
-		#		System specific commands in group 2
-		#
+			xemu 	
+		##
+		##		System specific commands in group 2
+		##
 		[group2]
 			vpoke	vdoke	vload
-		#
-		#		Floating point functions and system unary functions in group 3.
-		#
+		##
+		##		Floating point functions and system unary functions in group 3.
+		##
 		[group3]
 			vpeek( 	vdeek(
 """		

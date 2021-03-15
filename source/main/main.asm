@@ -8,6 +8,7 @@
 	.include "commands/if.asm"
 	.include "commands/input.asm"
 	.include "commands/let.asm"
+	.include "commands/link.asm"
 	.include "commands/list.asm"
 	.include "commands/loadsave.asm"
 	.include "commands/local.asm"

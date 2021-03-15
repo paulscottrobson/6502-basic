@@ -23,13 +23,9 @@ compressMode:
 ; ************************************************************************************************
 
 LoadVRAMFile:
-		lda 	#0 							; defaults
-		sta 	$9F20
-		sta 	$9F21
-		sta 	compressMode
-		lda 	#$10
-		sta 	$9F22
-
+		;
+		;		VRAM Load loop. Defaults removed so VRAM files can be split up arbitrarily.
+		;
 _LVRLoop:
 		jsr 	LVFGet 						; get the next (never access direct)
 		cmp 	#$80 						; exit ?

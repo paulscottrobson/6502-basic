@@ -5,6 +5,7 @@
 	.include "header/02macros.inc"
 	.include "header/03data.inc"
 	.include "header/header.inc"
+	.include "assembler/asmconst.inc"
 	.include "assembler/assembler.inc"
 	.include "device/device.inc"
 	.include "error/error.inc"

@@ -30,3 +30,9 @@ vary too much. Text source only.
 - Worked on analysis of 65C02 Opcodes
 - Table and Token generators now produce tables/constants for Assembler.
 - Put empty hooks in run to link to assembler module.
+
+15/3/2021
+=========
+- VLOAD no longer defaults so VRAM files can be chunked if required, so VRAM files must set
+  initial load and data type.
+  

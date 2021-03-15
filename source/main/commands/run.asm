@@ -190,6 +190,8 @@ TKErr07:	;; [TO]
 TKErr08:	;; [[[STR]]]
 TKErr09:	;; [[[SH3]]]
 TKErr10:	;; [[[FPC]]]
+TKErr11:	;; [#]
+
 		.throw 	Syntax
 
 		.include "../../generated/tokenvectors0.inc"

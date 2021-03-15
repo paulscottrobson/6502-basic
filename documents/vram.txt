@@ -4,9 +4,8 @@ VRAM File Format
 2 byte header (dummy)
 
 00000xxx xxxxxxxx 		2 byte instruction, sets the write address to x x 64.
-						Default value 0
 
-00001nnn 				Set decompression type to nnn. Default value 0 (uncompressed)
+00001nnn 				Set decompression type to nnn. 
 
 10000000 				End of data.
 
