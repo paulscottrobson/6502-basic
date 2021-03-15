@@ -58,7 +58,7 @@ for i in range(groupStart[2],groupStart[3]):
 	opcode = int(info[0],16)
 	bitMask = 0
 	for b in range(0,8):
-		if info[b+4] != "":
+		if info[b+3] != "":
 			bitMask += (1 << b)
 	h.write("\t.byte\t${0:02x}\t\t\t; ${1:02x} {2} ${3:02x}\n".format(bitMask,i,m["token"].lower(),opcode))
 h.write("\n")

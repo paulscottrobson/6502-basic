@@ -1,14 +1,15 @@
 TODO
 ====
-Assembler
-	- Groups 2 and 5.
 Check outstanding reviews (see review.txt)
+Check assembler output vs 64tass
 => 0.16
 Rewrite array code
 => 0.17
 
 Known Bugs
 ==========
+asl &34 detokenises as asl& 34 and will not retokenise, though it can be edited ok.
+
 Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 DATA in odd places in structures won't work 	
 
@@ -29,4 +30,4 @@ Notes
 
 New commands/Changes to document
 ================================
-How the assembler works, O and P. Note on use of "A"
+How the assembler works, O and P. Note on use of "A", Labels.

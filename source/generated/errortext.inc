@@ -38,5 +38,6 @@ ErrorTextList:
 	.text 22,"Expression too complex"
 	.text 16,"Bad Operand/Mode"
 	.text 19,"Branch out of range"
+	.text 19,"Label changed value"
 	.byte 0
 

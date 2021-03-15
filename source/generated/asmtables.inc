@@ -68,24 +68,24 @@ OpcodeTable:
 	.byte	$fa			; $d0 plx
 
 Group2OpcodeAvailability:
-	.byte	$57			; $99 asl $02
-	.byte	$57			; $9a rol $22
-	.byte	$57			; $9b lsr $42
-	.byte	$57			; $9c ror $62
-	.byte	$05			; $9d stx $82
-	.byte	$05			; $9e ldx $a2
-	.byte	$55			; $9f dec $c2
-	.byte	$55			; $a0 inc $e2
-	.byte	$11			; $a1 stz $60
-	.byte	$55			; $a2 bit $20
-	.byte	$05			; $a3 sty $80
-	.byte	$55			; $a4 ldy $a0
-	.byte	$15			; $a5 cpy $c0
-	.byte	$05			; $a6 cpx $e0
-	.byte	$05			; $a7 tsb $00
-	.byte	$05			; $a8 trb $10
-	.byte	$04			; $a9 jsr $14
-	.byte	$04			; $aa jmp $40
+	.byte	$ae			; $99 asl $02
+	.byte	$ae			; $9a rol $22
+	.byte	$ae			; $9b lsr $42
+	.byte	$ae			; $9c ror $62
+	.byte	$0a			; $9d stx $82
+	.byte	$0b			; $9e ldx $a2
+	.byte	$aa			; $9f dec $c2
+	.byte	$aa			; $a0 inc $e2
+	.byte	$22			; $a1 stz $60
+	.byte	$aa			; $a2 bit $20
+	.byte	$0a			; $a3 sty $80
+	.byte	$ab			; $a4 ldy $a0
+	.byte	$2b			; $a5 cpy $c0
+	.byte	$0b			; $a6 cpx $e0
+	.byte	$0a			; $a7 tsb $00
+	.byte	$0a			; $a8 trb $10
+	.byte	$08			; $a9 jsr $14
+	.byte	$08			; $aa jmp $40
 
 AssemblerSpecialCases:
 	.byte	$aa,10,$6c		; jmp (abs)

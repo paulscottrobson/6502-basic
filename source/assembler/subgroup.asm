@@ -42,20 +42,21 @@ _AG1NotImmediate:		 					; does it, rather illogically.
 		bne 	_AG1NotZX
 		ldx 	#0
 _AG1NotZX:		
-		cpx 	#9 							; anything > 8 fails.
-		bcs 	_AG1Fail
-		;
 		pla 								; restore length
-		sta 	tempShort
+		cpx 	#9 							; anything > 8 fails.
+		bcs 	AG1Fail
+		;
+AG1ReturnValue:
+		sta 	tempShort 					; save size of operand
 		clc
-		lda 	AMDOffsetFromBase,X 				; get the offset
+		lda 	AMDOffsetFromBase,X 		; get the offset for the address mode.
 		adc 	asmBaseOpcode 				; add the base opcode.
 		ldx 	tempShort 					; length in X
 		jsr 	AsmWriteInstruction 		; output instruction.
 		sec
 		rts
 
-_AG1Fail:
+AG1Fail:
 		clc		
 		rts
 
@@ -93,7 +94,24 @@ AMDOffsetFromBase:
 ; ************************************************************************************************
 
 AssembleGroup2:
-		.debug
+		lda 	asmMode 					; get the mode; if >= 8 cannot be a legit group 2
+		cmp 	#8
+		bcs 	_AG2Fail
+		sta 	temp0 						; save in temp9
+		;
+		ldx 	asmToken					; get token in X, then get the availability flags for it
+		lda 	Group2OpcodeAvailability-TKA_GROUP2,x
+_AG2Shift: 									; do Y+1 shifts, so availability bit will be in C
+		lsr 	a
+		dec 	temp0
+		bpl 	_AG2Shift
+		bcc 	_AG2Fail 					; cannot do that instruction w/that opcode.
+		;
+		ldx  	asmMode 					; mode in X
+		lda		AMDOperandSize,X 			; get the size of the operand in A
+		jmp 	AG1ReturnValue 				; and use that with Group 1's exit code
+
+_AG2Fail:		
 		clc
 		rts
 
@@ -166,10 +184,34 @@ AG4Write:
 ; ************************************************************************************************
 
 AssembleSpecialCase:
-		.debug
+		ldx 	#0 						
+_ASCScan:
+		lda 	AssemblerSpecialCases,x 	; scan token and mode for match
+		cmp 	asmToken
+		bne 	_ASCNext		
+		lda 	AssemblerSpecialCases+1,x
+		cmp 	asmMode
+		beq 	_ASCFound
+_ASCNext:
+		inx									; next entry
+		inx		
+		inx		
+		lda 	AssemblerSpecialCases,x 	; until table ends
+		bne 	_ASCScan
 		clc
 		rts
 
+_ASCFound:
+		lda 	AssemblerSpecialCases+2,x 	; get the new opcode.
+		pha
+		ldx  	asmMode 					; mode in X
+		lda		AMDOperandSize,X 			; get the size of the operand in X
+		tax
+		pla 								; opcode back
+		jsr 	AsmWriteInstruction 		; output instruction.
+		sec
+		rts
+		
 		.send 	code		
 
 
