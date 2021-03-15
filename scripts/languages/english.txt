@@ -50,3 +50,5 @@ Break:Break
 Memory:Out of memory
 NumStack:Expression too complex
 Assembler:Bad Operand/Mode
+Branch:Branch out of range 
+Label:Label changed value

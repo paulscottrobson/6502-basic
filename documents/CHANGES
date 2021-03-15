@@ -35,4 +35,5 @@ vary too much. Text source only.
 =========
 - VLOAD no longer defaults so VRAM files can be chunked if required, so VRAM files must set
   initial load and data type.
-- Inline assembler under development.  
+- Inline assembler progressing.
+  

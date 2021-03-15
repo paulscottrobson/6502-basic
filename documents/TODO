@@ -1,7 +1,7 @@
 TODO
 ====
 Assembler
-	- Groups 1,2,3 and 5.
+	- Groups 2 and 5.
 Check outstanding reviews (see review.txt)
 => 0.16
 Rewrite array code
@@ -26,8 +26,7 @@ Incomplete but hooked in for write and test
 
 Notes
 =====
-	
 
 New commands/Changes to document
 ================================
-How the assembler works.
+How the assembler works, O and P. Note on use of "A"

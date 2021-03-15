@@ -37,5 +37,6 @@ ErrorTextList:
 	.text 13,"Out of memory"
 	.text 22,"Expression too complex"
 	.text 16,"Bad Operand/Mode"
+	.text 19,"Branch out of range"
 	.byte 0
 

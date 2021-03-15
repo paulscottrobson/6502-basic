@@ -23,3 +23,5 @@ AssembleLabel:	;; <label>
 		rts
 
 		.send 	code		
+
+; In pass 2, a label cannot change value. 

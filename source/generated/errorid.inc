@@ -36,3 +36,4 @@ ErrorID_Break = 32 ; Break
 ErrorID_Memory = 33 ; Out of memory
 ErrorID_NumStack = 34 ; Expression too complex
 ErrorID_Assembler = 35 ; Bad Operand/Mode
+ErrorID_Branch = 36 ; Branch out of range
