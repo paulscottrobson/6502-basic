@@ -4,6 +4,7 @@
 ;		Name:		dtprint.asm
 ;		Purpose:	Printing functions for detokenising.
 ;		Created:	7th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -23,12 +24,12 @@ tPrintCount:
 ; ************************************************************************************************
 
 DTPrintInteger:
-		pha
-		set16 	temp0,convertBuffer
-		.puly
+		pha									; save base
+		set16 	temp0,convertBuffer 		; set convert buffer addr
+		.puly 								; base in Y and convert stack level in A.
 		txa
 		.main_inttostr
-		tax
+		tax 								; then drop through here.
 
 ; ************************************************************************************************
 ;
@@ -37,26 +38,26 @@ DTPrintInteger:
 ; ************************************************************************************************
 
 DTPrintLengthPrefix:
-		tax
-		.pshy
-		ldy 	#0
+		tax 								; A = 0 = don't case convert.
+		.pshy 								; save Y
+		ldy 	#0 							; get string length = chars to print.
 		lda 	(temp0),y
 		sta 	tPrintCount
-		beq 	_DTPLPExit
+		beq 	_DTPLPExit 					; empty string
 _DTPLPLoop:		
-		iny
+		iny 								; get next.
 		lda 	(temp0),y
 		and 	#$7F	
-		cpx 	#0
+		cpx 	#0 							; skip if not case converting
 		beq 	_DTPLPNoCase
-		cmp 	#"A"
+		cmp 	#"A" 						; if converting UC -> LC
 		bcc 	_DTPLPNoCase
 		cmp 	#"Z"+1
 		bcs 	_DTPLPNoCase
 		eor 	#"A"^"a"
 _DTPLPNoCase		
-		jsr 	ListOutputCharacter
-		dec 	tPrintCount
+		jsr 	ListOutputCharacter 		; call handler
+		dec 	tPrintCount 				; do all the characters
 		bne 	_DTPLPLoop		
 _DTPLPExit:	
 		.puly			
@@ -73,23 +74,23 @@ ListOutputCharacter:
 		pha
 		.pshx
 		.pshy
-		lda 	tempShort
+		lda 	tempShort 					; convert ASCII 6 bit (0-31) to 7 bit.
 		cmp 	#32
 		bcs		_LOCHiBit
-		ora 	#64
-		cmp 	#64
+		ora 	#64 						; conversion
+		cmp 	#64							; make l/c
 		beq 	_LOCHiBit
 		cmp 	#65+26
 		bcs 	_LOCHiBit
 		adc 	#32
 _LOCHiBit:				
-		jsr 	_LOCCallVector
+		jsr 	_LOCCallVector				; call o/p handler routine
 		.puly
 		.pulx
 		pla
 _LOCExit:		
 		rts
-_LOCCallVector:
+_LOCCallVector: 							; allow detokenising to other places.
 		jmp 	(deTokeniseVector)
 
 ; ************************************************************************************************
@@ -99,12 +100,12 @@ _LOCCallVector:
 ; ************************************************************************************************
 
 deTokenPrint:
-		cmp 	#0
+		cmp 	#0 							; if bit 7 sets ink colour
 		bmi 	_dtpInk
 		.device_printascii
 		rts
-_dtpInk:cmp 	#255
-		beq 	_dtpCR
+_dtpInk:cmp 	#255 						; e.g. herhe, get ink and set it
+		beq 	_dtpCR						; except $FF => CRLF
 		and 	#7
 		.device_ink
 		rts
@@ -118,14 +119,14 @@ _dtpCR:	.device_crlf
 ; ************************************************************************************************
 
 DTSwitchMode:
-		cmp 	LastCharacterClass
+		cmp 	LastCharacterClass 			; if changed, update character class
 		beq 	_DTSMNoChange
 		sta 	LastCharacterClass
 _DTSMExit:		
 		rts
 _DTSMNoChange:
-		cmp 	#1
-		beq 	_DTSMExit
+		cmp 	#1 							; if didn't change to punctuation, two identifiers so we
+		beq 	_DTSMExit 					; need a space.
 		lda 	#" "
 		jmp 	ListOutputCharacter
 

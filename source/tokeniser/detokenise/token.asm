@@ -4,6 +4,7 @@
 ;		Name:		token.asm
 ;		Purpose:	Detokenise a single token
 ;		Created:	7th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -29,6 +30,9 @@ DTDecodeToken:
 		asl 	a 							; put 2 x in X
 		tax
 		iny
+		;
+		;		Get token table address into temp0
+		;
 _DTNotShift:
 		lda 	TokenTableAddress,x 		; get the token table to use to decode it.
 		sta 	temp0 						; point into temp0
@@ -49,7 +53,7 @@ _DTFindText:
 		beq 	_DTFoundText
 		dex
 		;
-		ldy 	#0
+		ldy 	#0 							; add length+1 to temp0
 		sec
 		lda 	(temp0),y
 		adc 	temp0

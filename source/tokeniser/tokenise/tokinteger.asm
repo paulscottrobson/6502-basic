@@ -4,6 +4,7 @@
 ;		Name:		tokint.asm
 ;		Purpose:	Tokenise an integer
 ;		Created:	8th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -13,7 +14,7 @@
 
 ; ************************************************************************************************
 ;
-;					Tokenise string at (codePtr) into an integer
+;					Tokenise string at (codePtr) into an integer base A
 ;								CS if tokenising successful.
 ;
 ; ************************************************************************************************
@@ -24,6 +25,9 @@ TokeniseInteger:
 		;
 		sta 	temp1 						; save base
 		ldx 	#0							; count of chars so far
+		;
+		;		Copy allowed characters into the buffer.
+		;
 		stx 	convertBuffer
 _TIGetChars:
 		lda 	(codePtr),y 				; check character is numeric
@@ -48,13 +52,15 @@ _TIHaveChar:
 		iny 								; next char
 		jmp 	_TIGetChars
 		;
+		;		Convert to integer if one character was tokenised
+		;
 _TIEndGet:		
 		cpx 	#0 							; no char acquired.
 		beq 	_TIFail
 
 		.pshy
 		set16 	temp0,convertBuffer 		; convert to integer
-		lda 	#0 							; stack 0
+		lda 	#0 							; stack level 0
 		ldy 	temp1 						; base Y
 		.main_strtoint
 		.puly

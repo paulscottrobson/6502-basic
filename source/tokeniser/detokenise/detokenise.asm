@@ -4,6 +4,7 @@
 ;		Name:		detokenise.asm
 ;		Purpose:	Detokenise/List a line.
 ;		Created:	7th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -25,16 +26,16 @@ indent: 					; current indent total including line #
 		
 ; ************************************************************************************************
 ;
-;									List Line at (codePtr),y
+;							List Line at (codePtr),y indent A
 ;
 ; ************************************************************************************************
 
 ListLine: ;; <list>
-		pha
+		pha								; enter here to list to console. sets the output vector
 		set16 	deTokeniseVector,deTokenPrint
 		pla
 Detokenise: ;; <detokenise>	
-		clc
+		clc 							; space required for line number.
 		adc 	#6
 		sta 	indent
 		lda 	#$FF 					; last thing printed is a dummy value.
@@ -44,7 +45,7 @@ Detokenise: ;; <detokenise>
 		;
 		ldx 	#2 						
 		jsr 	MInt32False
-		ldy 	#1 						; copy line number to stack,2 (as using stack 0,1)
+		ldy 	#1 						; copy line number to stack,2 (as using stack 0,1 for list range)
 		lda 	(codePtr),y
 		sta 	esInt0,x
 		iny
@@ -79,13 +80,15 @@ _DTListLoop
 		lda 	#255 					; print CR
 		jsr 	ListOutputCharacter
 		rts
-
+		;
+		;		Dispatch token (-ve) identifier (0-3F) number (40-7F)
+		;
 _DTNotEnd:
 		cmp 	#0
 		bmi 	_DTIsToken
 		cmp 	#$40
 		bcc 	_DTIsIdentifier
-		lda 	#10 					; this is the base
+		lda 	#10 					; this is the base, unsigned decimal
 		bne 	_DTConstant
 		;
 		;		Hex constant
@@ -94,26 +97,25 @@ _DTHexConstant:
 		lda 	#"&"
 		jsr 	ListOutputCharacter
 		iny
-		lda 	#16		
+		lda 	#16						; print line unsigned hex
 		;
 		;		Handle constant base A.
 		;		
 _DTConstant:
 		pha
-		lda 	#0 							; now constant, may need spaces
+		lda 	#0 						; now constant, may need spaces
 		jsr 	DTSwitchMode
-		settype LTYConstant
-		ldx 	#2
+		settype LTYConstant 			; set display type
+		ldx 	#2 						; get its value
 		txa
 		.main_evaluateterm
 		tax
-		jsr 	TOSToTemp0
-		pla
-		sta 	tempShort
-		.pshy
-		lda 	tempShort
+		pla 							; get base back
+		sta 	tempShort 				
+		.pshy 							; save Y
+		lda 	tempShort 				; print in base A stck level X
 		jsr 	DTPrintInteger
-		.puly
+		.puly 							; restore Y and go round.
 		jmp 	_DTListLoop
 		;
 		;		Handle token, could be punctuation or text.
@@ -140,7 +142,12 @@ _DTIsString:
 		txa
 		.main_evaluateterm
 		tax
-		jsr 	TOSToTemp0
+
+		lda 	esInt0,x 					; copy string address to temp0
+		sta 	temp0
+		lda 	esInt1,x
+		sta 	temp0+1
+
 		lda 	#0 							; don't capitalise.
 		jsr 	DTPrintLengthPrefix
 		lda 	#'"'

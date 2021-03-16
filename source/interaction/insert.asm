@@ -4,6 +4,7 @@
 ;		Name:		insert.asm
 ;		Purpose:	Insert line number esint0/1, at (codePtr), length tokenBufferIndex
 ;		Created:	10th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -20,7 +21,8 @@
 
 InsertLine:
 		;
-		;		Find insert point.
+		;		Find insert point. which is first line# > insert line#. Cannot be equal
+		; 		already would have been deleted.
 		;
 		lda 	basePage 					; copy program base to temp0
 		sta 	temp0
@@ -41,32 +43,32 @@ _ILFound:									; (temp0) points to the insert point.
 		;		Make space for new line.
 		;
 		lda 	lowMemory 					; shift lowMemory up to make space for it.
-		sta 	temp1
+		sta 	temp1             			; this pointer goes backwards
 		lda 	lowMemory+1
 		sta 	temp1+1
 		;
 		lda 	tokenBufferIndex 			; space to make in Y, 0 in X.
-		clc
-		adc 	#3
+		clc 								; add 3 for the line number and offset. 
+		adc 	#3 							; tokenbuffer already has $80
 		tay
 		ldx 	#0 									
-_ILMove:lda 	(temp1,x)					
+_ILMove:lda 	(temp1,x)					; shift up
 		sta 	(temp1),y
 		;
-		lda 	temp1
+		lda 	temp1 						; check reached the insert point ?
 		cmp 	temp0
 		bne 	_ILMNext
 		lda 	temp1+1
 		cmp 	temp0+1
 		beq 	_ILMCopy
 		;
-_ILMNext:									; decrement temp1 copying pointer.
+_ILMNext:									; decrement temp1 copying pointer if not
 		lda 	temp1
 		bne 	_ILNoBorrow
 		dec 	temp1+1
 _ILNoBorrow:	
 		dec 	temp1
-		jmp 	_ILMove
+		jmp 	_ILMove 					; and go round again
 		;
 		;		Copy code into new line.
 		;		
@@ -95,3 +97,4 @@ _ILMCopy2:
 		rts
 
 		.send code
+		

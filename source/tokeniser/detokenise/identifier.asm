@@ -4,6 +4,7 @@
 ;		Name:		identifier.asm
 ;		Purpose:	Detokenise an identifier
 ;		Created:	7th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -21,6 +22,9 @@ DTIdentifier:
 		lda 	#0 							; now text, may need spaces
 		jsr 	DTSwitchMode
 		settype LTYIdentifier
+		;
+		;		ID output loop. _ maps onto -
+		;
 _DTILoop:
 		lda 	(codePtr),y 				; output main bit of identifier.
 		cmp 	#"-"						; make - back to _

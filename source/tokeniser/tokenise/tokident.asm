@@ -4,6 +4,7 @@
 ;		Name:		tokident.asm
 ;		Purpose:	Tokenise identifier
 ;		Created:	9th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -48,7 +49,8 @@ _TICopyIn:
 		jmp 	_TICopyID 					; loop round
 _TIEndCopy:
 		;
-		;		Check if followed by $/# then (, copy as is.
+		;		Check if followed by $/# then (, copy as is. We check the 'full ASCII' against
+		;		the token tables, and convert to the $3A-$3F endings later.
 		;
 		lda 	#"$"
 		jsr 	TIDCheckCopy
@@ -123,4 +125,5 @@ TIDCheckCopy:
 		iny
 _TIDCCExit:
 		rts		
+		
 		.send 	code

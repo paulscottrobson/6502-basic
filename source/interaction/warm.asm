@@ -4,12 +4,19 @@
 ;		Name:		warm.asm
 ;		Purpose:	Warm start
 ;		Created:	10th March 2021
+;		Reviewed: 	16th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
 		.section code
+
+; ************************************************************************************************
+;
+;								Interactive warm start comes here
+;
+; ************************************************************************************************
 
 WarmStartEntry:	;; <warmstart>
 		ldx 	#$FF
@@ -26,7 +33,7 @@ WarmStartEntry:	;; <warmstart>
 		.device_crlf
 		;
 		.tokeniser_tokenise 				; tokenise the line.
-		bcc 	WSEError 					; failed.
+		bcc 	WSEError 					; failed (tokenise can fail if it doesn't know a character e.g. |)
 		;
 		set16 	codePtr,tokenHeader 		; set the exec pointer to the token buffer.
 		;
@@ -34,7 +41,7 @@ WarmStartEntry:	;; <warmstart>
 		cmp 	#$80
 		beq 	WarmStartEntry 				
 		and 	#$C0						; does it start with a number
-		cmp 	#$40
+		cmp 	#$40 						; e.g. is it 01xx xxxx
 		beq 	HasLineNumber
 		;
 		lda 	#0 							; zero the token header, so it will look like a
@@ -56,12 +63,12 @@ HasLineNumber:
 		ldy 	#3 							; get line number
 		lda 	#0
 		.main_evaluateint
-		lda 	esInt2		 				; check in range.
+		lda 	esInt2		 				; check in range (only 2 bytes)
 		ora 	esInt3
 		bne 	WSEError
 		;
 		tya 								; make codePtr point to code after the line number.
-		clc
+		clc 								; by skipping over the tokenised number.
 		adc 	codePtr
 		sta 	codePtr
 		bcc		_HLNNoCarry
@@ -74,6 +81,7 @@ _HLNNoCarry:
 		clc 								; add space allowing for header & $80 trailer
 		adc 	#4
 		sta 	tokenBufferIndex 			; this is the number of bytes occupied.
+		;
 		jsr 	DeleteLine 					; always delete the line, it's deleted and reinserted.
 _HLNNoDelete:	
 		lda 	tokenBufferIndex 			; if line was empty, then don't insert
@@ -82,9 +90,9 @@ _HLNNoDelete:
 		;
 		lda 	lowMemory+1 				; is there space, if we allow a little bit of
 		clc 								; workspace (1k)
-		adc 	#4
+		adc 	#4 							; e.g. 4 x 256
 		cmp 	highMemory+1
-		bcs 	_HLMMemory
+		bcs 	_HLMMemory 					; nope, won't allowit.
 		;
 		jsr 	InsertLine 					; insert the line in
 _HLMEditDone:
@@ -95,4 +103,3 @@ _HLMMemory:
 		.throw 	Memory
 
 		.send 	code
-

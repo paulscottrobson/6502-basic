@@ -2,8 +2,11 @@ TODO
 ====
 Check outstanding reviews (see review.txt)
 => 0.16
+Fix asl &34 bug.
 Rewrite array code
 => 0.17
+Sprite Instructions
+Look at X16 GFX API
 
 Known Bugs
 ==========

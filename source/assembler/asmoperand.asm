@@ -29,7 +29,11 @@
 
 AsmGetOperand:
 		ldx 	#0 							; clear the operand.
-		jsr 	MInt32False
+		txa
+		sta 	esInt0,x
+		sta 	esInt1,x
+		sta 	esInt2,x
+		sta 	esInt3,x
 		
 		lda 	(codePtr),y 				; first into X
 		tax

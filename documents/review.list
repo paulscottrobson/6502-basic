@@ -1,23 +1,8 @@
 Review List
 ===========
 ;
-;		Reviewed: 	15th March 2021
+;		Reviewed: 	16th March 2021
 ;
 ;		These are very recent so are delayed a few days.
 ;
-tokeniser/detokenise/dtprint.asm [7, 3, 2021]
-tokeniser/detokenise/token.asm [7, 3, 2021]
-tokeniser/detokenise/colouring.inc [7, 3, 2021]
-tokeniser/detokenise/identifier.asm [7, 3, 2021]
-tokeniser/detokenise/detokenise.asm [7, 3, 2021]
-tokeniser/tokenise/test.asm [8, 3, 2021]
-tokeniser/tokenise/tokstring.asm [9, 3, 2021]
-tokeniser/tokenise/tokenise.asm [8, 3, 2021]
-tokeniser/tokenise/tokident.asm [9, 3, 2021]
-tokeniser/tokenise/search.asm [8, 3, 2021]
-tokeniser/tokenise/tokinteger.asm [8, 3, 2021]
-tokeniser/tokenise/tokpunct.asm [8, 3, 2021]
-interaction/delete.asm [10, 3, 2021]
-interaction/cold.asm [10, 3, 2021]
-interaction/insert.asm [10, 3, 2021]
-interaction/warm.asm [10, 3, 2021]
+
