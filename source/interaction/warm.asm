@@ -33,7 +33,8 @@ WarmStartEntry:	;; <warmstart>
 		.device_crlf
 		;
 		.tokeniser_tokenise 				; tokenise the line.
-		bcc 	WSEError 					; failed (tokenise can fail if it doesn't know a character e.g. |)
+		cmp 	#0
+		beq 	WSEError 					; failed (tokenise can fail if it doesn't know a character e.g. |)
 		;
 		set16 	codePtr,tokenHeader 		; set the exec pointer to the token buffer.
 		;

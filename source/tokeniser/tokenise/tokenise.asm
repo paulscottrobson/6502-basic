@@ -25,7 +25,7 @@ tokenBufferIndex:							; count of characters in buffer.
 ; ************************************************************************************************
 ;
 ;					Tokenise string at (codePtr) into tokenising buffer
-;								CS if tokenising successful.
+;								A != 0 if tokenising successful.
 ;
 ; ************************************************************************************************
 
@@ -100,11 +100,11 @@ _TokIdentifier:
 		bcc 	_TokFail
 
 _TokExit:		
-		sec
+		lda 	#1
 		rts
 
 _TokFail:
-		clc
+		lda 	#0
 		rts
 
 ; ************************************************************************************************

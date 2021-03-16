@@ -97,6 +97,8 @@ _DTHexConstant:
 		lda 	#"&"
 		jsr 	ListOutputCharacter
 		iny
+		lda 	#1 						; switch to spaces so &xxxx is treated like a number.
+		jsr 	DTSwitchMode
 		lda 	#16						; print line unsigned hex
 		;
 		;		Handle constant base A.
@@ -130,6 +132,12 @@ _DTIsIdentifier:
 		jsr 	DTIdentifier
 		jmp 	_DTListLoop
 		;
+		;		Inline float (TODO)
+		;
+_DTIsFloat:
+		.debug
+		jmp 	_DTIsFloat
+		;
 		;		Inline string.
 		;
 _DTIsString:
@@ -153,12 +161,6 @@ _DTIsString:
 		lda 	#'"'
 		jsr 	ListOutputCharacter
 		jmp 	_DTListLoop		
-		;
-		;		Inline float (TODO)
-		;
-_DTIsFloat:
-		.debug
-		jmp 	_DTIsFloat
 		.send code
 
 ; ************************************************************************************************

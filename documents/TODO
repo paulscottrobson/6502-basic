@@ -1,25 +1,29 @@
 TODO
 ====
-Check outstanding reviews (see review.txt)
-=> 0.16
-Fix asl &34 bug.
-Rewrite array code
+Rewrite array code/Recursive list design.
 => 0.17
-Sprite Instructions
-Look at X16 GFX API
+Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
+have to experiment I think ....
+
+- some sort of clock read function ?
+- MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
+- JOYSTICK (n) and JOYX() JOYY() JOYB(n)
+- PALETTE (?)
+- SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> INK<x> PAPER <x> STROKE <x>
+
+=> 0.18
+
+Something like AMOS's Animation thing.
 
 Known Bugs
 ==========
-asl &34 detokenises as asl& 34 and will not retokenise, though it can be edited ok.
 
-Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
-DATA in odd places in structures won't work 	
+	Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
+
+	DATA in odd places in structures won't work. May need own scanner.
 
 Incomplete but hooked in for write and test
 ===========================================
-
-	Remove flag returns from cross module calls (tokenise ?)
-		
 	Special case 1 character in concrete ???
 
 	All floating point operations.
@@ -32,4 +36,3 @@ Notes
 
 New commands/Changes to document
 ================================
-How the assembler works, O and P. Note on use of "A", Labels.

@@ -41,3 +41,5 @@ vary too much. Text source only.
 =========
 - Assembler compiles all 65C02 instructions correctly
 - More code reviews
+- asl &34 lists and retokenises properly.
+- tokenisers_tokenise does not use CS/CC to return success/fail.
