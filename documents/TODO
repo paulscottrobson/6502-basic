@@ -1,7 +1,6 @@
 TODO
 ====
 Check outstanding reviews (see review.txt)
-Check assembler output vs 64tass
 => 0.16
 Rewrite array code
 => 0.17

@@ -78,7 +78,7 @@ Group2OpcodeAvailability:
 	.byte	$aa			; $a0 inc $e2
 	.byte	$22			; $a1 stz $60
 	.byte	$aa			; $a2 bit $20
-	.byte	$0a			; $a3 sty $80
+	.byte	$2a			; $a3 sty $80
 	.byte	$ab			; $a4 ldy $a0
 	.byte	$2b			; $a5 cpy $c0
 	.byte	$0b			; $a6 cpx $e0

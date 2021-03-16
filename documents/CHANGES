@@ -37,4 +37,7 @@ vary too much. Text source only.
   initial load and data type.
 - Assembler is complete and working, but obviously very alpha :)
 
-
+16/3/2021
+=========
+- Assembler compiles all 65C02 instructions correctly
+- More code reviews
