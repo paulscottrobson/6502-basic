@@ -51,15 +51,14 @@ class Dumper(object):
 		s = self.getName(self.deek(p+2))+self.tails[t]
 		v = "."
 		if (t % 2) == 1:
-			s = s + str(self.deek(p+7)-1)+")"
-			v = "@${0:04x} ({1})".format(self.deek(p+5),self.peek(p+9))
+			s = s + ")"
+			v = "@${0:04x}".format(self.deek(p+5))
 		else:
 			v = self.getSimpleValue(p+5,t)
 		h.write("\t\tRecord @${0:04x} : [${3:02x}] {1:10} = {2}\n".format(p,s,v,self.peek(p+4)))
 		if t % 2 == 1:
-			for x in range(0,self.deek(p+7)):
-				a = x * self.peek(p+9)+self.deek(p+5)
-				h.write("\t\t\t({0}) = {1} (${2:04x})\n".format(x,self.getSimpleValue(a,t-1),a))
+			l = self.renderArray(self.deek(p+5),t)
+			h.write("\t\t\t{0}\n".format(l))
 	#
 	def getName(self,a):
 		s = ""
@@ -72,14 +71,33 @@ class Dumper(object):
 	def getString(self,a):
 		return '"'+("".join([chr(self.peek(a+i+1)) for i in range(0,self.peek(a))]))+'"'
 	#
-	def getSimpleValue(self,p,t):
+	def getSimpleValue(self,p,t,aShow = False):
 		if t == 0:
 			n = self.leek(p)
 			v = str(n if n <= 0x7FFFFFFF else n-0x100000000)
 		if t == 2:
 			a = self.deek(p)
-			v = self.getString(a)+" (${0:04x})".format(a)
+			v = self.getString(a)
+			if not aShow:
+				v += " (${0:04x})".format(a)
 		return v
+	#
+	def renderArray(self,p,t):
+		array = []
+		sz = 2
+		if t == 1:
+			sz = 4
+		if t == 5:
+			sz = 6
+		for i in range(0,(self.deek(p) & 0x7FFF)+1):
+			if (self.deek(p) & 0x8000) == 0:
+				p2 = p + 2 + i * sz
+				array.append(self.getSimpleValue(p2,t-1,True))
+			else:
+				p2 = p + 2 + i * 2
+				array.append(self.renderArray(self.deek(p2),t))
+#				array.append("{0:x}".format(self.deek(p2)))
+		return "("+",".join(array)+")"
 
 Dumper().dump(sys.stdout)	
 

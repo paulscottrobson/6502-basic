@@ -123,7 +123,8 @@ markerINT = '%'
 ; ************************************************************************************************
 
 VarHSize = 5 								; header (2 link, 2 name, 1 hash)
-VarASize = 5 								; array [address,size,byteSize]
+;
+VarASize = 2 								; array [address of first level]
 ;
 ;		Note, if these change, the dedicated multiplier in the ArrayAccess code needs
 ;		changing. 

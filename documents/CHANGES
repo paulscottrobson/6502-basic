@@ -48,3 +48,4 @@ vary too much. Text source only.
 17/3/2021
 =========
 - Reorganised the source files and added option for "unused"
+- DIM works with multiple array indices, but you can't access them yet :)

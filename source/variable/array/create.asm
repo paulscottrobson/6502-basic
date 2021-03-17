@@ -3,15 +3,19 @@
 ;
 ;		Name:		create.asm
 ;		Purpose:	Create an array
-;		Created:	6th March 2021
-;		Reviewed: 	11th March 2021
+;		Created:	17th March 2021 (version 2)
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-		.section code		
+		.section storage
 
+elementSize:								; size of one element in array storage
+		.fill	 1
+		.send 	 storage
+
+		.section code		
 
 ; ************************************************************************************************
 ;
@@ -33,7 +37,6 @@ CreateArray:	;; <createarray>
 		bcs 	_CAFound 					; cannot redefine it.
 		;
 		jsr 	CreateVariable 				; create the variable entry.
-		ldy 	varEnd 						; point Y to the end of the variable entry.
 		;
 		lda 	temp0 						; push address of new variable entry on the stack
 		pha
@@ -42,24 +45,53 @@ CreateArray:	;; <createarray>
 		lda 	varType 					; push variable type on the stack.
 		pha
 		;
-		;		Work out array element size.
-		;
-		lda 	#0 							; work out the array dimension on TOS.
+		ldx 	#0 							; start index position.
+		ldy 	varEnd
+_CAGetDimensions:
+		txa 								; get the next level
 		.main_evaluateint 
-		.main_checkrightparen
+		tax				
 		;
-		pla 		 						; restore type and position.						
-		sta 	varType
-		pla
+		lda 	esInt1,x 					; index must be < 8192
+		and 	#$E0
+		ora 	esInt2,x
+		ora 	esInt3,x
+		bne 	_CASize 						
+		;
+		inx 								; next level.
+		lda 	(codePtr),y 				; get/consume following character
+		iny
+		cmp 	#TKW_COMMA 					; loop back if more dimensions
+		beq 	_CAGetDimensions
+		;
+		cmp 	#TKW_RPAREN 				; right bracket ?
+		bne 	_CASize
+		;
+		lda 	#$FF 						; set the type past the end to $FF so we know how many
+		sta 	esType,x 					; dimensions there are.
+
+		pla 								; restore the variable type ($3A-$3F)
+		sta 	varType 					
+		sty 	varEnd 						; save exit Y value, after dimensions
+
+		ldx 	#0 							; create at level $00
+		jsr 	CreateArrayLevel 			; level to YA
+		tax 								; level now in YX
+		;
+		pla 								; get address back to temp0 to write.
 		sta 	temp0+1
 		pla
 		sta 	temp0
 		;
-		lda 	esInt1 						; limit array max to 4096.
-		and 	#$E0
-		ora 	esInt2
-		ora 	esInt3
-		beq 	_CASizeOk
+		tya 								; write YX there.
+		ldy 	#6
+		sta 	(temp0),y
+		dey
+		txa
+		sta 	(temp0),y
+
+		ldy 	varEnd 						; restore Y and exit.
+		rts
 
 _CASize:		
 		.throw 	BadValue
@@ -67,83 +99,202 @@ _CAFound:
 		.throw 	DupArray
 _CANotArray:		
 		.throw 	NotArray
-		;
-		;		Now allocate memory by creating (size+1) blanks.
-		;
-_CASizeOk:
-		;
-		inc 	esInt0 						; bump it by one, as we index from 0
-		bne 	_CANoCarry 					; e.g. DIM A(10) ... A(0) - A(10)
-		inc 	esInt0+1
-_CANoCarry:		
-		;
-		.pshy
-		ldy 	#5
-		lda 	lowMemory 					; copy low memory address in +5,+6
-		sta 	(temp0),y 					; this is where it will come from
-		iny
-		lda 	lowMemory+1
-		sta 	(temp0),y
-		iny
-		lda 	esInt0 						; copy maximum index value to +7,+8
-		sta 	(temp0),y
-		iny
-		lda 	esInt1
-		sta 	(temp0),y
-		iny
-		;
-		ldx 	varType 					; get the length per element
-		lda 	_CAActualSize-$3A-1,x
-		sta 	(temp0),y
-		tax 								; save size in X
-		;
-		lda 	lowMemory 					; set temp0 to low memory.
+
+; ************************************************************************************************
+;
+;		Create an array block at level X. The array highest index is in esInt0,x esInt1,x
+;
+; ************************************************************************************************
+
+CreateArrayLevel:
+		ldy 	varType
+		lda 	CAActualSize-$3A,y
+		sta 	elementSize 				; get element size this level.
+		ldy 	esType+1,x 					; is it top level
+		bmi 	_CANotPointer
+		lda 	#2 							; array of pointers is 2.
+		sta 	elementSize
+_CANotPointer:
+
+		lda 	lowMemory 					; start creating at temp0, saving start on stack.
 		sta 	temp0
+		pha
 		lda 	lowMemory+1
 		sta 	temp0+1
+		pha
 		;
-		lda 	#0 							; temp1 is the counter.
-		sta 	temp1
-		sta 	temp1+1
-_CAInitialiseArray:
-		ldy 	#0 							; write a null record at temp0
-		lda 	varType 					; base type of array in A.
-		and 	#$FE
-		jsr 	ZeroTemp0Y
+		jsr 	AllocateArraySpace 			; allocate space for all array stuff at this level.
 		;
-		txa 								; add X to temp0, also updating lowMemory
-		clc
-		adc 	temp0 					
-		sta 	temp0
-		sta 	lowMemory
+		ldy 	#0 							; copy line number in.
+		lda 	esInt0,x
+		sta 	(temp0),y
+		iny
+		lda 	esInt1,x
+		sta 	(temp0),y
+		;
+		lda 	esType+1,x 					; do we have another level ?
+		bmi 	_CALNotLast
+		;
+		lda 	(temp0),y 					; set bit 7, indicates an array of pointers to other levels.
+		ora 	#$80
+		sta 	(temp0),y
+_CALNotLast:		
+		;
+		lda 	#2
+		jsr 	_CALAddTemp0
+		;
+		lda 	esInt0,x 					; copy stack:01 to stack:23 so we can use it to 
+		sta 	esInt2,x 					; count.
+		lda 	esInt1,x
+		sta 	esInt3,x
+		;
+_CALClear:
+		lda 	esType+1,x 					; is this a list of sub arrays
+		bpl 	_CALSubArray
+		;
+		ldy 	#0 							; write the empty variable value out.
+		lda 	varType
+		jsr 	ZeroTemp0Y		
+		jmp 	_CALNext
+		;
+_CALSubArray:		
+		lda 	temp0 						; save temp0
+		pha
 		lda 	temp0+1
-		adc 	#0
+		pha
+		lda 	elementSize 				; save element size
+		pha
+
+		inx 								; create at next level
+		jsr 	CreateArrayLevel
+		dex
+
+		sta 	tempShort 					; save A
+		pla  								; restore element size.
+		sta 	elementSize 
+		pla 								; restore temp0
 		sta 	temp0+1
-		sta 	lowMemory+1
-		cmp 	highMemory+1				; out of memory check
-		bcs 	_CAMemory
+		pla 
+		sta 	temp0
+		tya 								; store Y/A there
+		ldy 	#1
+		sta 	(temp0),y
+		lda 	tempShort
+		dey
+		sta 	(temp0),y
 		;
-		inc 	temp1 						; bump the counter.
-		bne 	_CAIANoCarry
-		inc 	temp1+1
-_CAIANoCarry:
-		lda 	esInt0 						; counter reached max index
-		cmp 	temp1
-		bne 	_CAInitialiseArray
-		lda 	esInt1
-		cmp 	temp1+1
-		bne 	_CAInitialiseArray		
-		.puly
+_CALNext:		
+		lda 	elementSize 				; move to next element
+		jsr 	_CALAddTemp0
+		;
+		lda 	esInt2,x 					; decrement counter
+		bne 	_CALNoBorrow
+		dec 	esInt3,x
+_CALNoBorrow:
+		dec 	esInt2,x
+
+		lda 	esInt3,x 					; loop back if > 0 
+		bpl 	_CALClear
+
+		pla
+		tay
+		pla
+		rts
+;
+;		Add A to temp0
+;
+_CALAddTemp0:
+		clc
+		adc 	temp0
+		sta 	temp0
+		bcc 	_CALANoCarry
+		inc 	temp0+1
+_CALANoCarry:
 		rts
 
-_CAActualSize:
-		.byte 	VarISize,0
-		.byte 	VarSSize,0
-		.byte 	VarFSize,0
-		.debug
+CAActualSize:
+		.byte 	VarISize,VarISize
+		.byte 	VarSSize,VarSSize
+		.byte 	VarFSize,VarFSize
 
-_CAMemory:
-		.throw 	Memory
+; ************************************************************************************************
+;
+;					Allocate space for array size esInt0,x esInt1,x 
+;
+; ************************************************************************************************
+
+AllocateArraySpace:			
+		clc 								; element count + 1 => temp2.
+		lda 	esInt0,x
+		adc 	#1
+		sta 	temp2
+		lda 	esInt1,x
+		adc 	#0
+		sta 	temp2+1
+		;
+		lda 	elementSize 				; bytes per element
+		jsr 	MultiplyTemp2ByA 			; temp2 = (count + 1) x bytes per element.
+		;
+		clc 								; add 2 for 'max element' byte.
+		lda 	temp2
+		adc 	#2
+		sta 	temp2
+		bcc 	_AASNoCarry
+		inc 	temp2+1
+_AASNoCarry:
+		clc 								; add to low memory
+		lda 	lowMemory
+		adc 	temp2
+		sta 	lowMemory
+		lda 	lowMemory+1
+		adc 	temp2+1
+		sta 	lowMemory+1
+		bcs 	_AASFail 					; out of memory
+		cmp 	highMemory+1
+		bcs 	_AASFail
+		rts	
+_AASFail:
+		.throw	Memory
+
+; ************************************************************************************************
+;
+;							Specialist 2,4 and 6 multipliers
+;
+; ************************************************************************************************
+
+		.if VarISize * VarFSize * VarSSize != 48
+		Fix Me ! You have changed the variable sizes so this function now won't work properly.
+		.endif
+
+MultiplyTemp2ByA:
+		pha
+		lda 	temp2 						; copy temp2 to temp3.
+		sta 	temp3
+		lda 	temp2+1
+		sta 	temp3+1
+		pla
+		;
+		asl 	temp2 						; double it.
+		rol 	temp2+1
+		cmp 	#2 							; if x 2 then exit.
+		beq 	_MTBAExit
+		cmp 	#6 							; if x 6 then add temp3 to temp2
+		bne 	_MTBANotFloat
+		;
+		clc 								; so this will make it x 3
+		lda 	temp2
+		adc 	temp3
+		sta 	temp2
+		lda 	temp2+1
+		adc 	temp3+1
+		sta 	temp2+1
+		;
+_MTBANotFloat:		
+		asl 	temp2 						; double it.
+		rol 	temp2+1
+_MTBAExit:		
+		rts
+
 
 		.send 	code
 
@@ -155,6 +306,6 @@ _CAMemory:
 ;
 ;		Date			Notes
 ;		==== 			=====
-;		07-Mar-21 		Pre code read v0.01
+;		17-Mar-21 		Pre code read v0.01
 ;
 ; ************************************************************************************************

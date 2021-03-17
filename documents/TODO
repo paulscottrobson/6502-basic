@@ -1,6 +1,10 @@
 TODO
 ====
-Rewrite array code/Recursive list design.
+- access new arrays
+- run the array tests
+- test for big single dimension arrays.
+- modify for multi dimension and run them.
+
 => 0.17
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
 have to experiment I think ....
