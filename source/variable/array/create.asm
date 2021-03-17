@@ -31,10 +31,10 @@ CreateArray:	;; <createarray>
 		;
 		lda 	varType 					; is the variable type an array
 		lsr 	a
-		bcc 	_CANotArray 				; no, cause an error.
+		bcc 	CANotArray 					; no, cause an error.
 		;
 		jsr 	FindVariable 				; does the variable exist already
-		bcs 	_CAFound 					; cannot redefine it.
+		bcs 	CAFound 					; cannot redefine it.
 		;
 		jsr 	CreateVariable 				; create the variable entry.
 		;
@@ -42,38 +42,11 @@ CreateArray:	;; <createarray>
 		pha
 		lda 	temp0+1
 		pha
-		lda 	varType 					; push variable type on the stack.
-		pha
+		jsr 	GetArrayDimensions 			; get the array dimensions
 		;
-		ldx 	#0 							; start index position.
-		ldy 	varEnd
-_CAGetDimensions:
-		txa 								; get the next level
-		.main_evaluateint 
-		tax				
+		;		Create array at level 0. This function calls itself recursively to create
+		; 		other levels.
 		;
-		lda 	esInt1,x 					; index must be < 8192
-		and 	#$E0
-		ora 	esInt2,x
-		ora 	esInt3,x
-		bne 	_CASize 						
-		;
-		inx 								; next level.
-		lda 	(codePtr),y 				; get/consume following character
-		iny
-		cmp 	#TKW_COMMA 					; loop back if more dimensions
-		beq 	_CAGetDimensions
-		;
-		cmp 	#TKW_RPAREN 				; right bracket ?
-		bne 	_CASize
-		;
-		lda 	#$FF 						; set the type past the end to $FF so we know how many
-		sta 	esType,x 					; dimensions there are.
-
-		pla 								; restore the variable type ($3A-$3F)
-		sta 	varType 					
-		sty 	varEnd 						; save exit Y value, after dimensions
-
 		ldx 	#0 							; create at level $00
 		jsr 	CreateArrayLevel 			; level to YA
 		tax 								; level now in YX
@@ -93,12 +66,56 @@ _CAGetDimensions:
 		ldy 	varEnd 						; restore Y and exit.
 		rts
 
-_CASize:		
+CASize:		
 		.throw 	BadValue
-_CAFound:	
+CAFound:	
 		.throw 	DupArray
-_CANotArray:		
+CANotArray:		
 		.throw 	NotArray
+
+; ************************************************************************************************
+;
+;		Get array dimensions into stack. the type for the level above the last has the
+;		type set to $FF
+;
+; ************************************************************************************************
+
+GetArrayDimensions:
+		lda 	varType 					; push variable type on the stack.
+		pha
+		;
+		ldx 	#0 							; start index position.
+		ldy 	varEnd
+		;
+		;		Get next index loop,
+		;
+_CAGetDimensions:
+		txa 								; get the next level
+		.main_evaluateint 
+		tax				
+		;
+		lda 	esInt1,x 					; index must be < 8192
+		and 	#$E0
+		ora 	esInt2,x
+		ora 	esInt3,x
+		bne 	CASize 						
+		;
+		inx 								; next level.
+		lda 	(codePtr),y 				; get/consume following character
+		iny
+		cmp 	#TKW_COMMA 					; loop back if more dimensions
+		beq 	_CAGetDimensions
+		;
+		cmp 	#TKW_RPAREN 				; right bracket ?
+		bne 	CASize
+		;
+		lda 	#$FF 						; set the type past the end to $FF so we know how many
+		sta 	esType,x 					; dimensions there are.
+
+		pla 								; restore the variable type ($3A-$3F)
+		sta 	varType 					
+		sty 	varEnd 						; save exit Y value, after dimensions
+		rts
 
 ; ************************************************************************************************
 ;
@@ -107,6 +124,9 @@ _CANotArray:
 ; ************************************************************************************************
 
 CreateArrayLevel:
+		;
+		;		Get the size of the element this level.
+		;
 		ldy 	varType
 		lda 	CAActualSize-$3A,y
 		sta 	elementSize 				; get element size this level.
@@ -115,7 +135,9 @@ CreateArrayLevel:
 		lda 	#2 							; array of pointers is 2.
 		sta 	elementSize
 _CANotPointer:
-
+		;
+		;		Copy lowMemory to temp0 and save on stack
+		;
 		lda 	lowMemory 					; start creating at temp0, saving start on stack.
 		sta 	temp0
 		pha
@@ -123,14 +145,21 @@ _CANotPointer:
 		sta 	temp0+1
 		pha
 		;
+		;		Allocate memory for new level.
+		;
 		jsr 	AllocateArraySpace 			; allocate space for all array stuff at this level.
 		;
-		ldy 	#0 							; copy line number in.
+		;		Copy the size of this level of the array into offsets+0,+1
+		;
+		ldy 	#0 					
 		lda 	esInt0,x
 		sta 	(temp0),y
 		iny
 		lda 	esInt1,x
 		sta 	(temp0),y
+		;		
+		;		If this is an array of pointers, e.g. sub levels, then set bit 15 of the
+		;		maximum index.
 		;
 		lda 	esType+1,x 					; do we have another level ?
 		bmi 	_CALNotLast
@@ -140,50 +169,22 @@ _CANotPointer:
 		sta 	(temp0),y
 _CALNotLast:		
 		;
+		;		Advance pointer (temp0) past the size word.
+		;
 		lda 	#2
 		jsr 	_CALAddTemp0
+		;
+		;		stack2,x and stack3,x are used as a down counter.
 		;
 		lda 	esInt0,x 					; copy stack:01 to stack:23 so we can use it to 
 		sta 	esInt2,x 					; count.
 		lda 	esInt1,x
 		sta 	esInt3,x
 		;
+		;		Initialises all the elements in this level.
+		;		
 _CALClear:
-		lda 	esType+1,x 					; is this a list of sub arrays
-		bpl 	_CALSubArray
-		;
-		ldy 	#0 							; write the empty variable value out.
-		lda 	varType
-		jsr 	ZeroTemp0Y		
-		jmp 	_CALNext
-		;
-_CALSubArray:		
-		lda 	temp0 						; save temp0
-		pha
-		lda 	temp0+1
-		pha
-		lda 	elementSize 				; save element size
-		pha
-
-		inx 								; create at next level
-		jsr 	CreateArrayLevel
-		dex
-
-		sta 	tempShort 					; save A
-		pla  								; restore element size.
-		sta 	elementSize 
-		pla 								; restore temp0
-		sta 	temp0+1
-		pla 
-		sta 	temp0
-		tya 								; store Y/A there
-		ldy 	#1
-		sta 	(temp0),y
-		lda 	tempShort
-		dey
-		sta 	(temp0),y
-		;
-_CALNext:		
+		jsr 	EraseOneElement
 		lda 	elementSize 				; move to next element
 		jsr 	_CALAddTemp0
 		;
@@ -193,10 +194,10 @@ _CALNext:
 _CALNoBorrow:
 		dec 	esInt2,x
 
-		lda 	esInt3,x 					; loop back if > 0 
-		bpl 	_CALClear
+		lda 	esInt3,x 					; loop back if >= 0 - we need +1 because indices
+		bpl 	_CALClear 					; start at 0 e.g. x(10) is actually 11 array entries.
 
-		pla
+		pla 								; restore the start of this into YA.
 		tay
 		pla
 		rts
@@ -216,6 +217,54 @@ CAActualSize:
 		.byte 	VarISize,VarISize
 		.byte 	VarSSize,VarSSize
 		.byte 	VarFSize,VarFSize
+
+; ************************************************************************************************
+;
+;								Erase the element at temp0
+;
+; ************************************************************************************************
+
+EraseOneElement:
+		lda 	esType+1,x 					; is this a list of sub arrays
+		bpl 	_EOESubArray
+		;
+		;		Erase a value - string/float/integer
+		;
+		ldy 	#0 							; write the empty variable value out.
+		lda 	varType
+		jsr 	ZeroTemp0Y		
+		rts
+		;
+		;		Create a sub-array here - this calls CreateArrayLevel recursively.
+		;
+_EOESubArray:		
+		lda 	temp0 						; save temp0, these are effectively locals.
+		pha
+		lda 	temp0+1
+		pha
+		lda 	elementSize 				; save element size
+		pha
+
+		inx 								; create at next level
+		jsr 	CreateArrayLevel
+		dex
+
+		sta 	tempShort 					; save A
+		;
+		pla  								; restore element size.
+		sta 	elementSize 
+		pla 								; restore temp0, which is where this new array level goes.
+		sta 	temp0+1
+		pla 
+		sta 	temp0
+		;
+		tya 								; store Y/A there
+		ldy 	#1
+		sta 	(temp0),y
+		lda 	tempShort
+		dey
+		sta 	(temp0),y
+		rts
 
 ; ************************************************************************************************
 ;
@@ -242,15 +291,15 @@ AllocateArraySpace:
 		bcc 	_AASNoCarry
 		inc 	temp2+1
 _AASNoCarry:
-		clc 								; add to low memory
+		clc 								; add to low memory, allocating space.
 		lda 	lowMemory
 		adc 	temp2
 		sta 	lowMemory
 		lda 	lowMemory+1
 		adc 	temp2+1
 		sta 	lowMemory+1
-		bcs 	_AASFail 					; out of memory
-		cmp 	highMemory+1
+		bcs 	_AASFail 					; out of memory as adding causes wrapround
+		cmp 	highMemory+1 				; >= high memory pointer.
 		bcs 	_AASFail
 		rts	
 _AASFail:
@@ -294,7 +343,6 @@ _MTBANotFloat:
 		rol 	temp2+1
 _MTBAExit:		
 		rts
-
 
 		.send 	code
 

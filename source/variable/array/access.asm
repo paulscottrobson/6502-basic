@@ -2,7 +2,7 @@
 ; ************************************************************************************************
 ;
 ;		Name:		access.asm
-;		Purpose:	Access an array
+;		Purpose:	Access an array (multidimensional version)
 ;		Created:	17th March 2021 (version 2)
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
@@ -76,7 +76,6 @@ AccessArray:
 
 _AABadIndex:
 		.throw 	ArrayIndex		
-
 
 		.send code
 
