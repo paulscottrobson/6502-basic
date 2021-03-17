@@ -1,8 +1,8 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		scanner.asm
-;		Purpose:	Proc search/scanner
+;		Name:		proctable.asm
+;		Purpose:	Procedure search/scan and table build
 ;		Created:	4th March 2021
 ;		Reviewed: 	11th March 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)

@@ -15,7 +15,7 @@
 	.include "floatingpoint/floatingpoint.inc"
 	.include "interaction/interaction.inc"
 	.include "main/main.inc"
-	.include "string/memory.inc"
+	.include "string/functions/memory.inc"
 	.include "string/string.inc"
 	.include "tokeniser/detokenise/colouring.inc"
 	.include "tokeniser/tokeniser.inc"

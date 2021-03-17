@@ -71,7 +71,7 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	comFiles = []														# files in this list.
 	vectors = {} 														# hash of name => label
 	for root,dirs,files in os.walk(localDir):							# scan for files.
-		for f in files:
+		for f in [x for x in files if root.find("unused") < 0]:
 			if f.split(".")[0] != section:								# don't include the composite
 				fn = root+os.sep+f 										# full file name
 				if fn.endswith(".inc"):									# include file.

@@ -1,12 +1,12 @@
 ;
 ;	Automatically generated
 ;
-	.include "access.asm"
-	.include "accessarray.asm"
-	.include "create.asm"
-	.include "createarray.asm"
-	.include "find.asm"
-	.include "reset.asm"
+	.include "array/access.asm"
+	.include "array/create.asm"
+	.include "variable/access.asm"
+	.include "variable/create.asm"
+	.include "variable/find.asm"
+	.include "variable/reset.asm"
 
 .section code
 

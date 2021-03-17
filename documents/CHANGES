@@ -33,7 +33,7 @@ vary too much. Text source only.
 
 15/3/2021
 =========
-- VLOAD no longer defaults so VRAM files can be chunked if required, so VRAM files must set
+- VLOAD no longer defaults so VRAM files can be chunked if required, so VRAM addr/type etc. must be initialised
   initial load and data type.
 - Assembler is complete and working, but obviously very alpha :)
 
@@ -41,5 +41,10 @@ vary too much. Text source only.
 =========
 - Assembler compiles all 65C02 instructions correctly
 - More code reviews
-- asl &34 lists and retokenises properly.
+- BUG: asl &34 lists and retokenises properly.
 - tokenisers_tokenise does not use CS/CC to return success/fail.
+- Version 0.16
+
+17/3/2021
+=========
+- Reorganised the source files and added option for "unused"

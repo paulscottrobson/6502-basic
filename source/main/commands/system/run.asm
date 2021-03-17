@@ -194,8 +194,8 @@ TKErr11:	;; [#]
 
 		.throw 	Syntax
 
-		.include "../../generated/tokenvectors0.inc"
-		.include "../../generated/tokenvectors1.inc"
+		.include "../../../generated/tokenvectors0.inc"
+		.include "../../../generated/tokenvectors1.inc"
 
 		.send code
 

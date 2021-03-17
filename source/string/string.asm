@@ -1,13 +1,13 @@
 ;
 ;	Automatically generated
 ;
-	.include "chr.asm"
-	.include "compare.asm"
-	.include "concat.asm"
-	.include "memory.asm"
-	.include "setcase.asm"
-	.include "substring.asm"
-	.include "write.asm"
+	.include "functions/chr.asm"
+	.include "functions/compare.asm"
+	.include "functions/concat.asm"
+	.include "functions/memory.asm"
+	.include "functions/setcase.asm"
+	.include "functions/substring.asm"
+	.include "functions/write.asm"
 
 .section code
 
