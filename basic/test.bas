@@ -1,504 +1,612 @@
+dim s0luhf(6)
+dim f0hedb$(9)
+dim h0a(7)
+dim c0pl$(8)
+dim g0idp(2)
+dim f$(1)
+dim a0fij(2)
+dim l0duja$(8)
+dim u(9)
+dim m0qoa$(1)
+dim g0fih(2)
+dim b0p$(7)
+dim m0uu(7)
+dim k0bri$(1)
+dim e0qj(3)
+dim a0qrir$(5)
+dim b0q(3)
+dim u0l$(4)
+dim e0hhf(7)
 ;
-;	Built using seed 74677
+;	Built using seed 84458
 ;
-assert ("b"+"c") = "bc"
-assert ("a"+"cc") = "acc"
-assert ("baab"+"") = "baab"
-assert (""+"") = ""
-assert ("bcab"+"c") = "bcabc"
-assert ("da" = "dc") = 0
-assert ("cca"+"b") = "ccab"
-assert ("bbcb" > "b") = -1
-assert ("bc"+"addc") = "bcaddc"
-assert ("aa" <= "ccb") = -1
-assert ("d"+"aabd") = "daabd"
-assert ("adb" > "bbb") = 0
-assert ("c" <> "adbd") = -1
-assert ("d" = "cd") = 0
-assert ("cdca" <> "abb") = -1
-assert ("cacb"+"aad") = "cacbaad"
-assert ("d"+"") = "d"
-assert ("bcbd"+"c") = "bcbdc"
-assert ("" < "") = 0
-assert ("baaa" = "bbcc") = 0
-assert (""+"") = ""
-assert ("ba" > "") = -1
-assert ("ddd" = "") = 0
-assert ("c"+"b") = "cb"
-assert ("c"+"") = "c"
-assert ("c"+"aad") = "caad"
-assert ("" > "") = 0
-assert ("b" <= "ddb") = -1
-assert ("bdd"+"b") = "bddb"
-assert ("c" < "") = 0
-assert ("b"+"") = "b"
-assert (""+"cddd") = "cddd"
-assert ("b" <= "dca") = -1
-assert ("d" > "") = -1
-assert ("dc" <> "cacb") = -1
-assert (""+"ac") = "ac"
-assert ("" < "bb") = -1
-assert ("a" = "cb") = 0
-assert ("dcbd" <= "c") = 0
-assert ("abbb"+"cabb") = "abbbcabb"
-assert ("bacb" >= "dda") = 0
-assert ("c"+"aacd") = "caacd"
-assert ("ca" = "") = 0
-assert ("aadb" <> "ba") = -1
-assert ("" <> "cbb") = -1
-assert ("cb"+"cd") = "cbcd"
-assert ("cbc"+"acc") = "cbcacc"
-assert ("ab"+"") = "ab"
-assert ("bbaa" > "bc") = 0
-assert ("cdaa"+"b") = "cdaab"
-assert ("bdb" > "bcbc") = -1
-assert (""+"ad") = "ad"
-assert (""+"bb") = "bb"
-assert ("adb"+"c") = "adbc"
-assert ("dcd" >= "") = -1
-assert ("ddb" >= "a") = -1
-assert ("bdcc" >= "") = -1
-assert ("" < "dac") = -1
-assert ("dbcb"+"") = "dbcb"
-assert ("c" > "badc") = -1
-assert ("caa"+"c") = "caac"
-assert ("a" > "cada") = 0
-assert ("cccd" >= "cdc") = 0
-assert ("cd" = "dcc") = 0
-assert ("" <= "dbcd") = -1
-assert ("" > "") = 0
-assert ("c"+"d") = "cd"
-assert ("a" < "cda") = -1
-assert ("cb"+"dac") = "cbdac"
-assert ("aa" <= "ca") = -1
-assert ("cba"+"bdb") = "cbabdb"
-assert ("c"+"cdc") = "ccdc"
-assert ("cdc"+"dab") = "cdcdab"
-assert ("d" <= "cdd") = 0
-assert ("b" >= "d") = 0
-assert (""+"cda") = "cda"
-assert ("bd"+"") = "bd"
-assert ("bd" > "") = -1
-assert ("bc" <> "") = -1
-assert ("b"+"") = "b"
-assert ("bbaa"+"d") = "bbaad"
-assert ("" <= "aadc") = -1
-assert ("ccb"+"") = "ccb"
-assert ("dbc" < "bdd") = 0
-assert ("dba"+"aa") = "dbaaa"
-assert (""+"") = ""
-assert ("da"+"bd") = "dabd"
-assert (""+"bd") = "bd"
-assert ("ac" <> "dba") = -1
-assert ("cddb"+"c") = "cddbc"
-assert ("bbb" > "") = -1
-assert ("dc"+"b") = "dcb"
-assert ("dbbc" = "c") = 0
-assert ("cad"+"bbdc") = "cadbbdc"
-assert ("b"+"bb") = "bbb"
-assert ("bdbb" <= "bb") = 0
-assert (""+"") = ""
-assert ("abcc" > "d") = 0
-assert ("ada"+"dbc") = "adadbc"
-assert ("abc"+"dadb") = "abcdadb"
-assert (""+"bcd") = "bcd"
-assert ("ab" <> "") = -1
-assert ("ab"+"c") = "abc"
-assert ("dcd"+"bccc") = "dcdbccc"
-assert ("d"+"a") = "da"
-assert ("bb"+"dcc") = "bbdcc"
-assert ("c"+"adac") = "cadac"
-assert ("ddcc"+"") = "ddcc"
-assert (""+"db") = "db"
-assert ("" > "bb") = 0
-assert ("cbd" > "aab") = -1
-assert ("cdc" <> "") = -1
-assert ("acbc" > "cdc") = 0
-assert ("dc" >= "") = -1
-assert ("ac"+"c") = "acc"
-assert ("aad" >= "db") = 0
-assert ("dbbd"+"dc") = "dbbddc"
-assert ("bd" <= "b") = 0
-assert ("cd"+"a") = "cda"
-assert (""+"d") = "d"
-assert ("cd"+"") = "cd"
-assert ("b" >= "aacd") = -1
-assert ("ba" <> "b") = -1
-assert ("c" >= "cb") = 0
-assert ("bcb" = "bda") = 0
-assert ("bba"+"aaa") = "bbaaaa"
-assert ("da" <> "d") = -1
-assert ("bbd" = "adda") = 0
-assert ("aada"+"") = "aada"
-assert ("da"+"adbd") = "daadbd"
-assert ("" = "") = -1
-assert ("d"+"bdad") = "dbdad"
-assert ("d"+"") = "d"
-assert ("bbab" = "dcaa") = 0
-assert ("ac" <= "cd") = -1
-assert ("ada" = "d") = 0
-assert ("ccad" <= "") = 0
-assert ("" >= "bacb") = 0
-assert ("" <> "cdcc") = -1
-assert ("aaab" < "dc") = -1
-assert ("cad"+"d") = "cadd"
-assert ("d"+"") = "d"
-assert ("ba"+"cba") = "bacba"
-assert ("cbd" <> "ddc") = -1
-assert ("d"+"") = "d"
-assert ("cb"+"addd") = "cbaddd"
-assert ("" <> "daac") = -1
-assert ("bdb"+"b") = "bdbb"
-assert ("daa" <> "") = -1
-assert ("aba"+"adca") = "abaadca"
-assert ("dcc"+"da") = "dccda"
-assert ("ba" <> "cdbb") = -1
-assert ("cbda"+"dac") = "cbdadac"
-assert ("abbc" > "c") = 0
-assert ("acc" <> "b") = -1
-assert ("bb"+"dc") = "bbdc"
-assert ("cccc" > "ab") = -1
-assert ("cdcc" <= "") = 0
-assert ("bdad" = "") = 0
-assert ("bda" < "b") = 0
-assert (""+"c") = "c"
-assert ("d"+"cbbd") = "dcbbd"
-assert (""+"dbcc") = "dbcc"
-assert ("abdb"+"d") = "abdbd"
-assert ("ccc" > "bad") = -1
-assert ("" <= "cdc") = -1
-assert ("aca"+"bda") = "acabda"
-assert ("c" <> "d") = -1
-assert ("cdb" = "") = 0
-assert ("a" >= "baa") = 0
-assert ("c"+"d") = "cd"
-assert ("ab" < "dd") = -1
-assert ("bba"+"cdd") = "bbacdd"
-assert ("a" < "cbdc") = -1
-assert (""+"b") = "b"
-assert (""+"dbb") = "dbb"
-assert ("a"+"ccd") = "accd"
-assert ("ddca" <> "ccca") = -1
-assert ("cdd" >= "bac") = -1
-assert ("bab"+"ab") = "babab"
-assert ("b" <> "") = -1
-assert ("dc" >= "") = -1
-assert ("dbbd" > "cc") = -1
-assert ("cdc" <> "caa") = -1
-assert (""+"cdcb") = "cdcb"
-assert ("bad"+"") = "bad"
-assert ("cb"+"d") = "cbd"
-assert ("c" > "dcda") = 0
-assert ("a"+"ab") = "aab"
-assert (""+"") = ""
-assert ("b"+"c") = "bc"
-assert ("dab" <= "") = 0
-assert ("baab" < "bc") = -1
-assert ("aa"+"c") = "aac"
-assert ("b" <> "") = -1
-assert ("aaab"+"d") = "aaabd"
-assert ("ab" <> "db") = -1
-assert (""+"babb") = "babb"
-assert ("ada"+"") = "ada"
-assert ("d" > "bd") = -1
-assert ("c"+"dabd") = "cdabd"
-assert ("c"+"cbd") = "ccbd"
-assert ("bcda"+"cca") = "bcdacca"
-assert (""+"cba") = "cba"
-assert ("ab" > "c") = 0
-assert ("dcdc" > "") = -1
-assert ("b"+"bb") = "bbb"
-assert ("d" < "ca") = 0
-assert (""+"") = ""
-assert ("bcbb" <= "cd") = -1
-assert ("abcc"+"caca") = "abcccaca"
-assert ("acd" > "ac") = -1
-assert (""+"abcd") = "abcd"
-assert ("cad"+"bdcc") = "cadbdcc"
-assert ("aaa" > "bc") = 0
-assert ("ca" >= "adb") = -1
-assert ("a"+"") = "a"
-assert ("" = "d") = 0
-assert ("cda" = "") = 0
-assert ("cdba" <= "ccc") = 0
-assert ("d" > "cadb") = -1
-assert ("b" <> "aca") = -1
-assert ("ac"+"acad") = "acacad"
-assert ("ccab"+"aa") = "ccabaa"
-assert ("ccbb"+"") = "ccbb"
-assert ("" < "cb") = -1
-assert ("ab" >= "b") = 0
-assert ("cdc" = "d") = 0
-assert ("dcaa" <= "cbc") = 0
-assert ("dcdb" > "abba") = -1
-assert ("aaad" = "b") = 0
-assert ("bad"+"a") = "bada"
-assert ("ccdd" >= "dadb") = 0
-assert ("cc"+"ab") = "ccab"
-assert ("cbb" >= "b") = -1
-assert ("bbc" > "da") = 0
-assert ("bbd" < "bb") = 0
-assert ("bb"+"") = "bb"
-assert ("" >= "dcd") = 0
-assert ("a"+"cd") = "acd"
-assert ("c"+"d") = "cd"
-assert ("" < "c") = -1
-assert ("bdca" >= "ccdd") = 0
-assert ("bc" >= "dbcb") = 0
-assert ("dd" >= "bbcc") = -1
-assert ("c" <= "") = 0
-assert ("bd"+"b") = "bdb"
-assert ("cbdc"+"cca") = "cbdccca"
-assert ("bac"+"acbd") = "bacacbd"
-assert ("cbc"+"bbaa") = "cbcbbaa"
-assert ("aac"+"bbd") = "aacbbd"
-assert (""+"") = ""
-assert ("d" >= "dadc") = 0
-assert ("c" <> "d") = -1
-assert ("bc"+"d") = "bcd"
-assert ("a" = "c") = 0
-assert ("cbba" >= "bdb") = -1
-assert ("" = "bb") = 0
-assert ("bbca" = "cdc") = 0
-assert ("aca"+"bacd") = "acabacd"
-assert ("dbdd"+"bc") = "dbddbc"
-assert ("a" <= "adc") = -1
-assert ("ccb"+"dcab") = "ccbdcab"
-assert ("dc"+"") = "dc"
-assert ("bba"+"dacc") = "bbadacc"
-assert ("" < "bba") = -1
-assert ("" = "acda") = 0
-assert ("ad"+"b") = "adb"
-assert ("caca" < "") = 0
-assert (""+"") = ""
-assert (""+"bcad") = "bcad"
-assert ("ab" < "bbaa") = -1
-assert ("aa"+"") = "aa"
-assert ("ada" >= "ab") = -1
-assert ("c" <> "dc") = -1
-assert (""+"") = ""
-assert ("cdb"+"a") = "cdba"
-assert ("addd" = "bdc") = 0
-assert (""+"db") = "db"
-assert ("cbcb"+"ccad") = "cbcbccad"
-assert ("bbb"+"cda") = "bbbcda"
-assert ("a"+"dd") = "add"
-assert ("dd"+"ba") = "ddba"
-assert ("" >= "ab") = 0
-assert (""+"") = ""
-assert ("bcad"+"bbd") = "bcadbbd"
-assert ("baad"+"ddcb") = "baadddcb"
-assert ("c"+"dcdc") = "cdcdc"
-assert ("dbad" <> "cdbb") = -1
-assert ("d" = "ddd") = 0
-assert ("dd"+"a") = "dda"
-assert (""+"b") = "b"
-assert ("" >= "bda") = 0
-assert ("cc" >= "d") = 0
-assert ("abb" < "cba") = -1
-assert ("c" >= "") = -1
-assert ("cbdb" <= "") = 0
-assert ("bdcd"+"addb") = "bdcdaddb"
-assert ("dc" < "bd") = 0
-assert ("c" < "d") = -1
-assert ("a" <> "a") = 0
-assert ("dda" = "bbc") = 0
-assert ("dbdd" >= "dc") = 0
-assert ("adc" > "aadc") = -1
-assert ("d"+"") = "d"
-assert ("d" >= "cab") = -1
-assert ("" <> "d") = -1
-assert ("dcba"+"ccad") = "dcbaccad"
-assert ("adbc"+"dd") = "adbcdd"
-assert (""+"da") = "da"
-assert ("bd" < "") = 0
-assert ("bccc" <= "cb") = -1
-assert ("adbd"+"a") = "adbda"
-assert ("adb"+"ac") = "adbac"
-assert ("bab" >= "dccc") = 0
-assert ("b" = "") = 0
-assert ("d"+"cab") = "dcab"
-assert ("dcab"+"a") = "dcaba"
-assert ("bcca"+"ac") = "bccaac"
-assert ("" > "bac") = 0
-assert (""+"abdb") = "abdb"
-assert ("d"+"bd") = "dbd"
-assert ("" <> "caab") = -1
-assert ("cda" < "") = 0
-assert ("ba"+"a") = "baa"
-assert (""+"daa") = "daa"
-assert ("dcd" > "bdc") = -1
-assert (""+"dcad") = "dcad"
-assert ("aba" <> "bc") = -1
-assert ("cdcb"+"bd") = "cdcbbd"
-assert (""+"abbb") = "abbb"
-assert ("" >= "dc") = 0
-assert ("bdcb" > "dcaa") = 0
-assert ("acb"+"dd") = "acbdd"
-assert ("ca"+"") = "ca"
-assert ("c"+"") = "c"
-assert ("a" <= "dbbd") = -1
-assert ("" <= "ddd") = -1
-assert ("aa"+"bdac") = "aabdac"
-assert ("cbc"+"bdbc") = "cbcbdbc"
-assert ("" <> "dc") = -1
-assert ("" >= "daad") = 0
-assert ("ccab" >= "cad") = -1
-assert ("d" > "c") = -1
-assert ("db"+"bcbc") = "dbbcbc"
-assert ("cbd"+"") = "cbd"
-assert ("bbbb"+"") = "bbbb"
-assert ("db"+"ab") = "dbab"
-assert ("cbcb" < "bd") = 0
-assert ("bbdb" <= "ddb") = -1
-assert ("" > "dddd") = 0
-assert ("a" <> "abcb") = -1
-assert ("db" >= "d") = -1
-assert ("bdac" <= "ba") = 0
-assert ("dcda" = "ccda") = 0
-assert ("c"+"cc") = "ccc"
-assert ("dda"+"d") = "ddad"
-assert ("dcca" <= "ca") = 0
-assert ("dbb" >= "a") = -1
-assert ("acad"+"") = "acad"
-assert ("a"+"ccc") = "accc"
-assert (""+"ddad") = "ddad"
-assert (""+"dcac") = "dcac"
-assert ("d" = "cb") = 0
-assert ("cbd" >= "bdc") = -1
-assert ("bd" > "cdcb") = 0
-assert ("" <= "") = -1
-assert ("dcb"+"aacd") = "dcbaacd"
-assert (""+"da") = "da"
-assert ("aad" > "bd") = 0
-assert ("baac"+"b") = "baacb"
-assert ("caa" >= "ad") = -1
-assert ("acca" <= "a") = 0
-assert ("b" <= "b") = -1
-assert ("ccda"+"") = "ccda"
-assert ("ad" < "") = 0
-assert ("cacb"+"") = "cacb"
-assert ("bd"+"aad") = "bdaad"
-assert ("acad" < "ca") = -1
-assert ("cba" < "ddc") = -1
-assert ("abda"+"bdb") = "abdabdb"
-assert ("a"+"bbcb") = "abbcb"
-assert ("bdcb"+"") = "bdcb"
-assert ("c" > "ccac") = 0
-assert ("c" < "da") = -1
-assert ("d"+"") = "d"
-assert (""+"cd") = "cd"
-assert ("baab" < "") = 0
-assert ("caa" >= "bacb") = -1
-assert (""+"ac") = "ac"
-assert ("" <= "bddd") = -1
-assert ("c"+"bccc") = "cbccc"
-assert ("cda"+"bbdb") = "cdabbdb"
-assert (""+"") = ""
-assert ("a" <> "c") = -1
-assert ("dd" = "bbb") = 0
-assert (""+"bb") = "bb"
-assert ("c" >= "") = -1
-assert ("ccb"+"a") = "ccba"
-assert ("add" <= "dc") = -1
-assert ("ab"+"c") = "abc"
-assert ("ddac" > "bca") = -1
-assert ("dab" = "cd") = 0
-assert ("cbdb"+"c") = "cbdbc"
-assert ("ad"+"bbcb") = "adbbcb"
-assert ("" < "a") = -1
-assert ("a"+"dad") = "adad"
-assert ("dad" < "d") = 0
-assert ("dada"+"bad") = "dadabad"
-assert ("ddcd"+"dbd") = "ddcddbd"
-assert ("aaa"+"aaad") = "aaaaaad"
-assert ("b" <> "d") = -1
-assert ("dda" = "d") = 0
-assert ("cdc"+"da") = "cdcda"
-assert ("b"+"") = "b"
-assert ("abb"+"baba") = "abbbaba"
-assert ("ccd"+"bacb") = "ccdbacb"
-assert ("babc" > "dddd") = 0
-assert ("addc" > "baa") = 0
-assert ("" <> "") = 0
-assert ("aac" >= "aac") = -1
-assert ("ac" >= "") = -1
-assert ("acab"+"dcd") = "acabdcd"
-assert (""+"d") = "d"
-assert ("dabc" > "c") = -1
-assert ("d" <> "dadb") = -1
-assert ("cd" <= "ddc") = -1
-assert ("ddbc"+"bba") = "ddbcbba"
-assert ("d"+"b") = "db"
-assert ("bcc"+"dd") = "bccdd"
-assert ("bddc"+"ac") = "bddcac"
-assert (""+"d") = "d"
-assert ("" <= "cbbb") = -1
-assert ("bcda" <> "a") = -1
-assert ("bad"+"a") = "bada"
-assert ("b"+"d") = "bd"
-assert ("bcdd" = "ddcb") = 0
-assert ("cab"+"cabc") = "cabcabc"
-assert ("b"+"aca") = "baca"
-assert ("cd" < "cabc") = 0
-assert ("bbab"+"aad") = "bbabaad"
-assert ("b"+"d") = "bd"
-assert ("ca"+"c") = "cac"
-assert ("ddab" = "d") = 0
-assert ("d" <= "adad") = 0
-assert ("" >= "abad") = 0
-assert (""+"bb") = "bb"
-assert ("" >= "") = -1
-assert ("c"+"d") = "cd"
-assert ("ba"+"cd") = "bacd"
-assert ("adca"+"bbd") = "adcabbd"
-assert ("a" = "db") = 0
-assert ("bda"+"b") = "bdab"
-assert ("ccab"+"d") = "ccabd"
-assert ("cc" = "bdc") = 0
-assert ("bcbc" < "cdc") = -1
-assert ("bd"+"acab") = "bdacab"
-assert ("" <= "cbab") = -1
-assert ("d" > "cad") = -1
-assert ("aacc" = "baac") = 0
-assert ("cbdb" = "da") = 0
-assert ("daab"+"d") = "daabd"
-assert ("dadb" < "cdca") = 0
-assert ("dbb"+"abbd") = "dbbabbd"
-assert ("da" >= "aada") = -1
-assert ("cb"+"b") = "cbb"
-assert ("ccb" = "abc") = 0
-assert ("cbab"+"") = "cbab"
-assert ("ada" <= "adc") = -1
-assert ("cbcd"+"") = "cbcd"
-assert ("aad" < "cab") = -1
-assert ("cd"+"a") = "cda"
-assert ("ddca"+"") = "ddca"
-assert ("aadc"+"") = "aadc"
-assert ("bc" <> "b") = -1
-assert ("a" <= "babd") = -1
-assert ("cd" <= "bdd") = 0
-assert ("bbd" < "bbbc") = 0
-assert ("b" = "ca") = 0
-assert ("" > "ba") = 0
-assert ("c"+"a") = "ca"
-assert ("dccc"+"cdb") = "dccccdb"
-assert ("b"+"b") = "bb"
-assert ("adc" > "") = -1
-assert ("dca" > "dbcd") = -1
-assert ("aaa" = "") = 0
-assert ("" > "") = 0
-assert ("bdc" = "b") = 0
-assert ("db"+"") = "db"
-assert ("" <= "adb") = -1
-assert ("bbc"+"cc") = "bbccc"
-assert ("baab" <> "") = -1
-assert ("acc"+"aaca") = "accaaca"
-assert ("d"+"") = "d"
-assert ("c" > "cb") = 0
-assert ("ccab" <> "cad") = -1
-assert ("bcac"+"bb") = "bcacbb"
-assert ("cbad" <= "ac") = 0
-assert ("ada" < "ad") = 0
-assert ("dd"+"acb") = "ddacb"
+g0fih(0) = 752
+h0a(2) = 771
+a0qrir$(2) = "THATDJP"
+l0duja$(2) = "RBMHECT"
+h0a(5) = 769
+g0idp(1) = 848
+u0l$(0) = "GCQNM"
+b0p$(6) = "CSQO"
+f0hedb$(8) = "OJ"
+h0a(1) = 738
+a0qrir$(0) = "QJQNJR"
+f$(0) = "OSN"
+b0p$(4) = "SNALS"
+a0qrir$(2) = "JCB"
+e0qj(2) = 936
+b0p$(1) = "ND"
+s0luhf(4) = 279
+l0duja$(0) = "UK"
+c0pl$(0) = ""
+e0qj(2) = 36
+h0a(5) = 968
+g0fih(1) = 852
+b0p$(2) = "DF"
+m0uu(0) = 775
+b0q(1) = 734
+k0bri$(0) = "QTUL"
+f$(0) = ""
+u0l$(0) = "EUK"
+l0duja$(2) = "EKUMT"
+b0p$(2) = "HFPP"
+b0q(0) = 142
+g0fih(1) = 404
+b0q(2) = 611
+e0hhf(6) = 824
+e0hhf(4) = 475
+h0a(4) = 947
+c0pl$(2) = "PMKFODB"
+e0qj(2) = 461
+c0pl$(2) = "GAD"
+k0bri$(0) = "DOASPPE"
+u(4) = 112
+h0a(4) = 567
+b0q(2) = 482
+g0fih(0) = 129
+a0fij(1) = 452
+u(3) = 858
+f0hedb$(5) = "OUBACQH"
+b0q(0) = 19
+b0p$(2) = "HMFRNIM"
+m0qoa$(0) = "ALGA"
+m0qoa$(0) = "EQDN"
+a0qrir$(0) = "OR"
+g0idp(0) = 599
+b0p$(5) = "GC"
+f$(0) = "MCLKKQ"
+h0a(2) = 643
+m0uu(0) = 95
+g0idp(1) = 369
+l0duja$(6) = "BDAJA"
+b0q(1) = 207
+h0a(6) = 639
+u0l$(0) = "LJAQOQR"
+a0fij(1) = 42
+u0l$(2) = "QQQJIFT"
+u(2) = 691
+u(3) = 872
+s0luhf(2) = 240
+s0luhf(4) = 261
+c0pl$(6) = "E"
+g0fih(1) = 771
+e0qj(1) = 475
+e0qj(0) = 333
+s0luhf(3) = 160
+l0duja$(2) = "PKBFDHB"
+m0qoa$(0) = "QFJOLUO"
+c0pl$(0) = "NEM"
+b0p$(3) = "JEMB"
+f0hedb$(5) = "BFRNO"
+g0idp(1) = 656
+f0hedb$(2) = "Q"
+b0p$(1) = "MSK"
+e0hhf(4) = 324
+a0fij(1) = 904
+c0pl$(6) = "KMEOBP"
+l0duja$(7) = "M"
+u(0) = 840
+g0idp(1) = 949
+u(6) = 167
+b0q(1) = 934
+s0luhf(3) = 237
+e0hhf(2) = 958
+f0hedb$(4) = "HBMD"
+u0l$(1) = "EOTKNDT"
+b0p$(4) = "DQ"
+c0pl$(6) = "SHLDRC"
+g0idp(1) = 330
+e0qj(2) = 756
+e0hhf(5) = 827
+g0idp(1) = 747
+a0qrir$(4) = "FSMKP"
+e0qj(2) = 0
+b0q(2) = 804
+e0hhf(2) = 97
+l0duja$(0) = "QF"
+a0qrir$(1) = "J"
+m0qoa$(0) = "JT"
+a0qrir$(1) = "QM"
+a0qrir$(2) = "FRB"
+f$(0) = "BHDKIKP"
+e0hhf(5) = 148
+k0bri$(0) = "TUSSP"
+g0idp(0) = 902
+u(5) = 159
+f0hedb$(0) = "FCFIC"
+e0qj(2) = 221
+u(2) = 243
+e0qj(1) = 447
+e0qj(0) = 462
+a0qrir$(1) = "JLGSUIR"
+e0qj(2) = 776
+m0qoa$(0) = "PCNTDQ"
+m0qoa$(0) = "DRJAS"
+g0idp(0) = 455
+c0pl$(3) = "LTIP"
+u(2) = 849
+b0q(2) = 612
+l0duja$(2) = ""
+h0a(0) = 686
+f$(0) = "UJMH"
+c0pl$(3) = "LNDDJT"
+b0q(2) = 147
+b0p$(5) = "CTCU"
+g0idp(0) = 307
+g0idp(1) = 655
+u0l$(0) = "P"
+g0idp(0) = 818
+l0duja$(1) = ""
+e0qj(0) = 566
+g0idp(1) = 611
+b0q(1) = 805
+u0l$(1) = "AEQJCNG"
+u0l$(1) = "RNMF"
+e0hhf(4) = 643
+a0qrir$(0) = "LM"
+g0fih(0) = 12
+g0idp(1) = 794
+c0pl$(4) = "DQLS"
+m0uu(5) = 629
+a0qrir$(3) = "BB"
+u0l$(3) = "UF"
+u(0) = 406
+b0q(2) = 206
+b0q(1) = 142
+c0pl$(7) = "PONUK"
+e0hhf(4) = 634
+a0fij(1) = 581
+k0bri$(0) = ""
+u0l$(2) = "LACGQ"
+m0uu(0) = 344
+a0fij(0) = 879
+u0l$(3) = ""
+e0qj(0) = 222
+m0uu(2) = 927
+s0luhf(3) = 753
+e0qj(1) = 596
+h0a(5) = 697
+m0uu(6) = 629
+f$(0) = "IISUP"
+e0hhf(6) = 208
+c0pl$(2) = "NLAE"
+b0q(2) = 157
+u0l$(3) = "EGABJ"
+k0bri$(0) = "PD"
+m0uu(1) = 721
+a0fij(1) = 186
+a0fij(0) = 643
+m0qoa$(0) = ""
+b0q(1) = 581
+g0fih(0) = 776
+u0l$(3) = "BCL"
+a0fij(1) = 387
+s0luhf(0) = 690
+b0q(1) = 417
+c0pl$(0) = "NNRQJ"
+h0a(5) = 673
+g0fih(1) = 867
+f$(0) = "PCEECE"
+s0luhf(2) = 885
+b0p$(4) = "ON"
+b0q(0) = 273
+e0qj(0) = 660
+a0fij(0) = 577
+s0luhf(0) = 468
+u(3) = 605
+f0hedb$(5) = "TQJR"
+a0qrir$(3) = "O"
+s0luhf(5) = 561
+s0luhf(0) = 948
+a0qrir$(1) = "UUMJBE"
+e0qj(1) = 529
+h0a(6) = 235
+u(7) = 459
+f$(0) = "EDN"
+e0hhf(6) = 61
+b0q(1) = 892
+m0qoa$(0) = "HGK"
+a0fij(0) = 252
+e0hhf(3) = 704
+k0bri$(0) = ""
+c0pl$(1) = "J"
+c0pl$(3) = "CEC"
+g0idp(1) = 12
+s0luhf(0) = 442
+k0bri$(0) = "UE"
+e0qj(1) = 846
+b0q(0) = 936
+g0fih(1) = 552
+g0idp(0) = 524
+f0hedb$(4) = "D"
+g0fih(0) = 341
+m0qoa$(0) = "LU"
+f0hedb$(7) = "FPH"
+m0qoa$(0) = "KB"
+m0qoa$(0) = "NL"
+s0luhf(4) = 584
+u0l$(2) = "OI"
+a0qrir$(2) = ""
+b0q(0) = 242
+g0idp(1) = 997
+f$(0) = "KPPHP"
+a0qrir$(0) = "SPKM"
+u0l$(0) = "SCHA"
+g0idp(0) = 884
+e0hhf(0) = 437
+h0a(1) = 988
+b0p$(6) = ""
+g0idp(1) = 768
+k0bri$(0) = "TSEKD"
+g0fih(1) = 879
+b0q(2) = 189
+e0hhf(1) = 450
+b0p$(2) = "OU"
+g0idp(1) = 394
+a0qrir$(0) = "IDPS"
+l0duja$(6) = "GBEJOUO"
+e0hhf(1) = 740
+g0idp(0) = 154
+u0l$(2) = "GUKUNTE"
+m0qoa$(0) = "Q"
+b0p$(3) = "Q"
+e0hhf(6) = 301
+a0fij(1) = 654
+l0duja$(5) = ""
+l0duja$(6) = "FPR"
+k0bri$(0) = "ECLL"
+u(3) = 918
+f$(0) = "LSKDTL"
+k0bri$(0) = "IDG"
+a0qrir$(0) = "E"
+f$(0) = "HQTU"
+c0pl$(1) = ""
+a0fij(0) = 360
+g0fih(0) = 327
+a0qrir$(1) = "FINPPAF"
+a0fij(0) = 328
+f0hedb$(5) = "MS"
+m0qoa$(0) = "RDLTTL"
+a0fij(1) = 928
+m0uu(4) = 776
+b0q(2) = 706
+a0fij(1) = 69
+m0qoa$(0) = "SDU"
+a0fij(1) = 950
+u0l$(3) = "D"
+b0q(1) = 146
+c0pl$(5) = "QKQLP"
+m0uu(4) = 919
+g0fih(1) = 177
+a0fij(0) = 412
+m0uu(6) = 513
+b0q(0) = 657
+k0bri$(0) = ""
+s0luhf(4) = 832
+f$(0) = "UP"
+e0qj(0) = 332
+h0a(3) = 533
+e0qj(1) = 431
+u(2) = 728
+l0duja$(1) = "MJDAGC"
+g0idp(1) = 379
+e0hhf(1) = 63
+g0idp(1) = 571
+f0hedb$(5) = "QMNJBM"
+f$(0) = "LJB"
+s0luhf(4) = 827
+k0bri$(0) = "RLB"
+g0idp(0) = 196
+u0l$(1) = "QIG"
+a0fij(1) = 72
+f$(0) = ""
+m0qoa$(0) = "HLIOCOO"
+a0fij(0) = 502
+a0qrir$(0) = "DPPO"
+s0luhf(5) = 647
+m0qoa$(0) = "O"
+g0fih(1) = 603
+a0fij(0) = 908
+u0l$(3) = "HM"
+u(8) = 937
+k0bri$(0) = "G"
+b0p$(1) = "FDDAN"
+a0fij(0) = 800
+l0duja$(6) = "RQLRS"
+h0a(0) = 593
+l0duja$(0) = "HOM"
+l0duja$(1) = "KIEOS"
+f0hedb$(4) = "HAEJS"
+s0luhf(5) = 384
+f$(0) = "GQUO"
+b0p$(3) = "SUNI"
+f$(0) = "IK"
+f$(0) = "BFDR"
+e0hhf(1) = 284
+c0pl$(2) = "GKCE"
+f0hedb$(4) = "GFGRNO"
+c0pl$(0) = "CQFDJSA"
+h0a(2) = 941
+h0a(2) = 528
+g0idp(1) = 384
+h0a(3) = 758
+f$(0) = "UDUPR"
+m0qoa$(0) = "UJRAMH"
+e0hhf(3) = 996
+u(5) = 484
+b0q(2) = 52
+a0fij(0) = 844
+m0qoa$(0) = "SOKDOH"
+c0pl$(0) = "TCO"
+s0luhf(4) = 428
+e0hhf(3) = 820
+u0l$(3) = "FJEG"
+c0pl$(4) = "PIPGPP"
+c0pl$(5) = "JEA"
+u0l$(3) = "UG"
+a0qrir$(2) = "QTQ"
+g0idp(0) = 642
+e0qj(0) = 515
+e0qj(2) = 74
+a0fij(1) = 154
+h0a(6) = 516
+e0hhf(2) = 635
+s0luhf(2) = 946
+m0qoa$(0) = "L"
+b0p$(0) = ""
+s0luhf(1) = 807
+f0hedb$(6) = "MGGND"
+a0qrir$(4) = "RG"
+c0pl$(7) = ""
+f$(0) = ""
+e0qj(1) = 561
+f$(0) = "K"
+m0qoa$(0) = "TPJ"
+a0qrir$(4) = ""
+c0pl$(2) = "F"
+e0hhf(2) = 842
+u(2) = 554
+f0hedb$(5) = "JCBTB"
+m0uu(3) = 257
+c0pl$(5) = "FQHDPEU"
+u(8) = 90
+f$(0) = "NFRH"
+a0qrir$(3) = "KBEFH"
+m0uu(1) = 320
+u0l$(3) = ""
+u0l$(2) = "EFNF"
+a0qrir$(3) = ""
+l0duja$(3) = "GQIULID"
+m0uu(1) = 336
+b0q(0) = 356
+f0hedb$(2) = "GGAFE"
+u(1) = 338
+c0pl$(4) = "DQLC"
+l0duja$(0) = "CH"
+u(5) = 22
+u(5) = 9
+e0hhf(1) = 207
+u0l$(1) = "POSDN"
+f$(0) = "LOBEFNE"
+m0qoa$(0) = "G"
+m0uu(4) = 558
+m0qoa$(0) = "SGA"
+m0uu(5) = 517
+e0qj(0) = 78
+m0uu(3) = 555
+k0bri$(0) = "JI"
+e0qj(0) = 943
+a0qrir$(4) = "UJEE"
+l0duja$(6) = "LAK"
+f0hedb$(7) = ""
+a0fij(1) = 478
+h0a(5) = 208
+l0duja$(5) = "EFHBE"
+a0fij(1) = 411
+s0luhf(1) = 819
+a0qrir$(1) = "CSPQUTC"
+a0fij(1) = 220
+k0bri$(0) = "HQRMQAT"
+s0luhf(5) = 220
+b0q(2) = 608
+e0hhf(1) = 103
+k0bri$(0) = "DIHPROC"
+k0bri$(0) = ""
+m0uu(0) = 264
+c0pl$(0) = "TRPG"
+u0l$(2) = "MERFF"
+m0uu(3) = 949
+b0q(0) = 423
+h0a(5) = 964
+m0uu(3) = 506
+a0fij(1) = 395
+g0idp(1) = 700
+u0l$(1) = "ESN"
+b0q(0) = 66
+a0qrir$(3) = "OHGSDEL"
+f$(0) = "N"
+b0q(1) = 239
+s0luhf(0) = 353
+g0idp(0) = 488
+b0p$(6) = "SMKTOQD"
+f$(0) = "KT"
+f$(0) = "OEILDD"
+e0qj(2) = 656
+b0q(1) = 598
+b0q(2) = 595
+l0duja$(0) = ""
+u0l$(2) = "RIST"
+g0fih(1) = 553
+m0uu(4) = 364
+f0hedb$(8) = "JDD"
+e0hhf(5) = 78
+l0duja$(0) = "B"
+c0pl$(2) = ""
+b0p$(6) = "QOFBEQ"
+m0uu(3) = 218
+a0fij(0) = 659
+k0bri$(0) = "NQ"
+f$(0) = "TSH"
+m0uu(0) = 1
+u0l$(3) = ""
+m0qoa$(0) = "KKU"
+f$(0) = "KO"
+h0a(0) = 267
+u0l$(0) = "S"
+s0luhf(1) = 826
+g0idp(0) = 50
+l0duja$(6) = "C"
+b0p$(1) = ""
+a0fij(1) = 236
+f$(0) = "LC"
+f$(0) = "U"
+b0q(1) = 960
+h0a(4) = 96
+e0qj(2) = 271
+a0fij(0) = 499
+f0hedb$(2) = "FO"
+g0fih(0) = 268
+l0duja$(2) = "ISEFGEN"
+l0duja$(1) = "P"
+f0hedb$(4) = ""
+s0luhf(2) = 63
+g0fih(0) = 783
+e0qj(2) = 148
+b0p$(3) = "BNBMBNN"
+f0hedb$(7) = "LIA"
+b0p$(3) = "GEUF"
+g0fih(0) = 199
+g0idp(0) = 480
+g0fih(1) = 892
+u(0) = 401
+s0luhf(4) = 399
+m0qoa$(0) = "ATGL"
+c0pl$(7) = "F"
+e0qj(2) = 406
+e0qj(0) = 10
+s0luhf(1) = 959
+b0q(2) = 866
+f$(0) = ""
+g0idp(0) = 947
+m0qoa$(0) = "PJD"
+b0p$(6) = ""
+h0a(4) = 243
+a0fij(0) = 661
+l0duja$(6) = "JEP"
+m0uu(0) = 620
+g0idp(1) = 830
+s0luhf(5) = 704
+h0a(3) = 775
+e0qj(2) = 491
+a0qrir$(3) = "BMGI"
+b0q(2) = 210
+assert s0luhf(0) = 353
+assert s0luhf(1) = 959
+assert s0luhf(2) = 63
+assert s0luhf(3) = 753
+assert s0luhf(4) = 399
+assert s0luhf(5) = 704
+assert f0hedb$(0) = "FCFIC"
+assert f0hedb$(2) = "FO"
+assert f0hedb$(4) = ""
+assert f0hedb$(5) = "JCBTB"
+assert f0hedb$(6) = "MGGND"
+assert f0hedb$(7) = "LIA"
+assert f0hedb$(8) = "JDD"
+assert h0a(0) = 267
+assert h0a(1) = 988
+assert h0a(2) = 528
+assert h0a(3) = 775
+assert h0a(4) = 243
+assert h0a(5) = 964
+assert h0a(6) = 516
+assert c0pl$(0) = "TRPG"
+assert c0pl$(1) = ""
+assert c0pl$(2) = ""
+assert c0pl$(3) = "CEC"
+assert c0pl$(4) = "DQLC"
+assert c0pl$(5) = "FQHDPEU"
+assert c0pl$(6) = "SHLDRC"
+assert c0pl$(7) = "F"
+assert g0idp(0) = 947
+assert g0idp(1) = 830
+assert f$(0) = ""
+assert a0fij(0) = 661
+assert a0fij(1) = 236
+assert l0duja$(0) = "B"
+assert l0duja$(1) = "P"
+assert l0duja$(2) = "ISEFGEN"
+assert l0duja$(3) = "GQIULID"
+assert l0duja$(5) = "EFHBE"
+assert l0duja$(6) = "JEP"
+assert l0duja$(7) = "M"
+assert u(0) = 401
+assert u(1) = 338
+assert u(2) = 554
+assert u(3) = 918
+assert u(4) = 112
+assert u(5) = 9
+assert u(6) = 167
+assert u(7) = 459
+assert u(8) = 90
+assert m0qoa$(0) = "PJD"
+assert g0fih(0) = 199
+assert g0fih(1) = 892
+assert b0p$(0) = ""
+assert b0p$(1) = ""
+assert b0p$(2) = "OU"
+assert b0p$(3) = "GEUF"
+assert b0p$(4) = "ON"
+assert b0p$(5) = "CTCU"
+assert b0p$(6) = ""
+assert m0uu(0) = 620
+assert m0uu(1) = 336
+assert m0uu(2) = 927
+assert m0uu(3) = 218
+assert m0uu(4) = 364
+assert m0uu(5) = 517
+assert m0uu(6) = 513
+assert k0bri$(0) = "NQ"
+assert e0qj(0) = 10
+assert e0qj(1) = 561
+assert e0qj(2) = 491
+assert a0qrir$(0) = "DPPO"
+assert a0qrir$(1) = "CSPQUTC"
+assert a0qrir$(2) = "QTQ"
+assert a0qrir$(3) = "BMGI"
+assert a0qrir$(4) = "UJEE"
+assert b0q(0) = 66
+assert b0q(1) = 960
+assert b0q(2) = 210
+assert u0l$(0) = "S"
+assert u0l$(1) = "ESN"
+assert u0l$(2) = "RIST"
+assert u0l$(3) = ""
+assert e0hhf(0) = 437
+assert e0hhf(1) = 103
+assert e0hhf(2) = 842
+assert e0hhf(3) = 820
+assert e0hhf(4) = 634
+assert e0hhf(5) = 78
+assert e0hhf(6) = 301
 xemu

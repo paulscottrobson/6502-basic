@@ -19,61 +19,113 @@
 
 AccessArray:
 		;
-		;		Get index and do simple check
+		;		Get the indices of the array
 		;
+		.pshx 								; preserve X
 		inx
-		txa
-		.main_evaluateint 					; get array index in next slot up.
-		pha
-		.main_checkrightparen				; check )
-		pla
-		tax
-		dex		
+		jsr 	GetArrayDimensions 			; get the array dimensions one up from here.
+		.pulx
 		;
-		lda 	esInt3+1,x 					; check index value at least < 64k
-		ora 	esInt2+1,x
-		bne 	_AABadIndex
+		;		Copy address of first array block => temp0
 		;
-		;		Check index in range.
-		;
-		.pshy
-		;
-		lda 	esInt0,x 					; put array info ptr in temp0 - this points to the
-		sta 	temp0 						; address (+0) max (+2) and size (+4)
+		lda 	esInt0,x 					; restore address to follow in temp0.
+		sta 	temp0
 		lda 	esInt1,x
 		sta 	temp0+1
+		.pshx 								; save XY
+		.pshy
 		;
-		ldy 	#2 							; check out of range, compare against max index.
-		lda 	esInt0+1,x
-		cmp 	(temp0),y
-		iny
-		lda 	esInt1+1,x
-		sbc 	(temp0),y
-		bcs 	_AABadIndex 				; if >= then fail.
+		;		Follow the array indices - main loop
 		;
-		;		Work out the offset by data size x index
+_AAFollow:
 		;
-		inx 								; point to index
-		ldy 	#4 							; get the size byte.
+		;		do (temp0) => temp0, e.g. follow link to array block.
+		;
+		ldy 	#0 							
 		lda 	(temp0),y
-;		jsr 	MultiplyTOSByA 				; specialist multiplier.
-		dex
-		;
-		;		Add start of the array space.
-		;
-		ldy 	#0 							; add this to the array base as the new address
-		clc
-		lda 	esInt0+1,x
-		adc 	(temp0),y
-		sta 	esInt0,x
-		lda 	esInt1+1,x
+		pha
 		iny
-		adc 	(temp0),y
-		sta 	esInt1,x
+		lda 	(temp0),y
+		sta 	temp0+1
+		pla
+		sta 	temp0
 		;
-		.puly 
+		;		Check the relevant index in the next stack slot
+		;		
+		inx 								; advance to next stack slot.
+		ldy 	#0
+		lda 	(temp0),y 					; compare max index vs required index
+		cmp 	esInt0,x
+		iny
+		lda 	(temp0),y 					; drop bit 7 of the size, indicates follow.
+		sta 	temp1 						; save the size in temp1 for later use.
+		and 	#$7F
+		sbc 	esInt1,x
+		bcc 	_AABadIndex 				; failed on index if max index < required.
+		;
+		;		Advance temp0 by 2, skipping the size word
+		;
+		clc
+		lda 	temp0
+		adc 	#2
+		sta 	temp0
+		bcc 	_AANoCarry
+		inc 	temp0+1
+_AANoCarry:
+		;
+		;		Copy the index into temp2
+		;
+		lda 	esInt0,x
+		sta 	temp2
+		lda 	esInt1,x
+		sta 	temp2+1
+		;
+		;		Calculate size of data type.
+		;
+		ldy 	varType
+		lda 	CAActualSize-$3A,y
+		ldy 	esType+1,x 					; is it top level
+		bmi 	_AANotPointer
+		lda 	#2 							; array of pointers is 2.
+_AANotPointer:
+		;
+		;		Multiply by index and add to temp0
+		;
+		jsr 	MultiplyTemp2ByA 			; multiply the index by the data size, in temp2.
+		clc
+		lda 	temp0
+		adc 	temp2
+		sta 	temp0
+		lda 	temp0+1
+		adc 	temp2+1
+		sta 	temp0+1
+		;
+		;		Check if there is another 
+		;
+		lda 	esType+1,x 					
+		bmi 	_AAUsedAllIndices
+		;
+		;		Check if we can go round again, and if so do so.
+		;
+		lda 	temp1 						; check if this is a pointer array e.g. there are subarrays
+		bpl 	_AABadDepth 				; no, too many indexes.
+		jmp 	_AAFollow 					; otherwise follow them.
+		;
+		;		Reached the end, check all indices have been used
+		;
+_AAUsedAllIndices:		
+		lda 	temp1 						; get original high length byte.
+		bmi 	_AABadDepth 				; if -ve then this is an array of pointers.		
+		.puly 								; restore YX
+		.pulx
+		lda 	temp0 						; copy address of array element to stack,x
+		sta 	esInt0,x
+		lda 	temp0+1
+		sta 	esInt1,x
 		rts
 
+_AABadDepth:
+		.throw 	ArrayDepth
 _AABadIndex:
 		.throw 	ArrayIndex		
 

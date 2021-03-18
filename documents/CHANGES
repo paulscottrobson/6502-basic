@@ -50,3 +50,7 @@ vary too much. Text source only.
 - Reorganised the source files and added option for "unused"
 - DIM works with multiple array indices, but you can't access them yet :)
 - Tidied up array create. Had AZN vaccine today and it's made me a bit dozy.
+
+18/3/2021
+=========
+- Written access code for multidimensional arrays & tested it.

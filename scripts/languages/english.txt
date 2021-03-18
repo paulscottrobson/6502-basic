@@ -42,6 +42,7 @@ Params:Parameters do not match
 DupArray:Array already defined
 NotArray:DIM requires array
 ArrayIndex:Bad array index
+ArrayDepth:Wrong number of array indices
 DataError:Out of data
 Tokenise:Cannot tokenise line
 Save:Save failed

@@ -1,11 +1,8 @@
 TODO
 ====
-- access new arrays
-- run the array tests
-- test for big single dimension arrays.
-- modify for multi dimension and run them.
 
-=> 0.17
+Update array tests for multidimensional
+
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
 have to experiment I think ....
 

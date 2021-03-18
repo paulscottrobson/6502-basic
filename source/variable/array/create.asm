@@ -42,6 +42,7 @@ CreateArray:	;; <createarray>
 		pha
 		lda 	temp0+1
 		pha
+		ldx 	#0
 		jsr 	GetArrayDimensions 			; get the array dimensions
 		;
 		;		Create array at level 0. This function calls itself recursively to create
@@ -75,7 +76,7 @@ CANotArray:
 
 ; ************************************************************************************************
 ;
-;		Get array dimensions into stack. the type for the level above the last has the
+;		Get array dimensions into stack,X the type for the level above the last has the
 ;		type set to $FF
 ;
 ; ************************************************************************************************
@@ -84,7 +85,6 @@ GetArrayDimensions:
 		lda 	varType 					; push variable type on the stack.
 		pha
 		;
-		ldx 	#0 							; start index position.
 		ldy 	varEnd
 		;
 		;		Get next index loop,

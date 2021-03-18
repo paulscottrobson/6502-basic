@@ -29,6 +29,7 @@ ErrorTextList:
 	.text 21,"Array already defined"
 	.text 18,"DIM requires array"
 	.text 15,"Bad array index"
+	.text 29,"Wrong number of array indices"
 	.text 11,"Out of data"
 	.text 20,"Cannot tokenise line"
 	.text 11,"Save failed"
