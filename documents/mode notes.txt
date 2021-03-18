@@ -1,0 +1,45 @@
+
+$9F29: (3)
+	Sprites enable bit (bit 6)
+	Layer 1 enable bit (bit 5)
+	Layer 0 enable bit (bit 4)
+
+$9F2A: H-Scale (4)
+$9F29: V-Scale (4)
+	4 bits each (00 $80 to 11 $10)
+
+
+Display Config
+==============
+Bits 6,5,4 of byte 3 is copied to $9F29 with output mode set.
+
+If all three are zero then byte 0 specifies a predefined mode looked up from a table.
+Mode 0 is the default 80x60 mode.
+
+Bits 3 and 2 set the VScale ($80 >> n) Bits 1 and 0 the H Scale ($80 >> n)
+
+Bit 7 and Byte 2 are all set to zero, this is for expansion.
+
+Lx config (byte 1 is L1,byte 0 is L0)
+=====================================
+
+[Map Height:2] [Map Width:2] [Tile Size:1] [Bitmap Mode:1] [Colour Depth:1]
+
+The byte with Tile Size cleared is copied into LX_Config
+Map Base address is as default
+Tile Base address is as default with the tile size bits copied into bits 0 & 1
+Scroll is zeroed.
+
+L1 default tilebase is $7C (w/h = 0)
+L1 map config is $60 
+
+
+Default Mode 0 
+
+$9F29 = $21 (display config) $20 $00 $60 $00
+$9F2A/B = $80
+$9F2D = 0 all zeros.
+$9F34 = L1_Config = $60
+$9F36 = $7C (default value, tile address)
+
+Switches back to mode 0 if not selected.

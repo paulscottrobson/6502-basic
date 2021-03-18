@@ -1,0 +1,9 @@
+const spr.g1a 2049
+const spr.g2a 2053
+const spr.g3a 2057
+const spr.g1b 2061
+const spr.g2b 2065
+const spr.g3b 2069
+const spr.g4a 2073
+const spr.ship 2077
+const spr.bytes 1440

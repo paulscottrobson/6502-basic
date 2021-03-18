@@ -1,0 +1,19 @@
+#
+#		Sprites Definition file.
+#
+size = 16 							# sets the target sprite size to 16x16 (default 16)
+pos = C 							# centre position (B is centre bottom) (default B)
+scale = 0.3							# scale if not fitted (default 0 to fit)
+
+g1a.png
+g2a.png
+g3a.png
+g1b.png
+g2b.png
+g3b.png
+g4a.png
+
+size = 32
+scale = 0.32
+
+ship.png

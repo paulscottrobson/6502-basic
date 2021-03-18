@@ -1,0 +1,200 @@
+# ***********************************************************************************
+#
+#									Globals
+#
+# ***********************************************************************************
+
+struct enemy {
+	state,										# 0 in formation, 1 attacking, -1 dead
+	sprite.addr, 								# sprite structure address
+	graphic.0,graphic.1,	 					# address of graphics.
+	xOffset,yOffset,							# formation,offset position in from top left, pixels
+	x,y,xi,yi									# position when attacking.
+}	
+
+var enemy.list 									# 10 x 6 list of enemies in the structure.
+var enemy.alive 								# number alive.
+var enemy.frm.x 								# x formation position
+var enemy.frm.dx 								# dx formation
+
+const ENEMY.MAX 60 								# how many to allow for.
+const ENEMY.FORM.Y 20							# top position when in formation
+
+# ***********************************************************************************
+#
+#									Set up Data Structures
+#
+# ***********************************************************************************
+
+proc enemy.list.initialise() {
+	var n,p,g1,g2,row
+	alloc(ENEMY.MAX<<) => enemy.list			# 60 elements.
+	ENEMY.MAX => enemy.alive 					# reset count.
+	times(ENEMY.MAX,n) {
+		enemy.new() => p 						# create new enemy
+		poke.w(enemy.list[n],p)					# store in array.
+		enemy.w_sprite.addr(n << << << +$FC00)	# save sprite address.
+		n/10 -> row
+		spr.g1a -> g1 spr.g1b -> g2 			# figure out sprite graphic
+		if (row==0) { spr.g4a->g1->g2  }
+		if (row==1) { spr.g3a->g1 spr.g3b->g2  }
+		if (row==2) { spr.g2a->g1 spr.g2b->g2  }
+		enemy.w_graphic.0(g1)					# set sprite gfx (test)
+		enemy.w_graphic.1(g2)
+		enemy.w_yOffset(row*12)
+		enemy.w_xOffset(n%10*14-63)
+	}
+}
+
+# ***********************************************************************************
+#
+#						Update position and graphic position
+#
+# ***********************************************************************************
+
+fast 
+
+proc enemy.update(xo,gSel) {
+	var s,g,i
+	enemy.r_graphic.0() -> g 					# select which of two graphics
+
+	if (enemy.r_state() >= 0) { 				# if alive.
+		enemy.r_sprite.addr() -> s 				# get sprite address
+		if (enemy.r_state() == 0) { 			# if in formation
+			enemy.w_x(enemy.r_xOffset()+xo)		# update x,y pos.
+			enemy.w_y(enemy.r_yOffset()+ENEMY.FORM.Y)
+			if (gSel <> 0) { enemy.r_graphic.1() -> g}
+		}
+		poke.vw(1,s,g)							# update sprites
+		poke.vw(1,s+2,enemy.r_x())
+		poke.vw(1,s+4,enemy.r_y())
+		poke.vw(1,s+6,$500C)						
+	}
+}
+slow
+
+# ***********************************************************************************
+#
+#							Kill enemy by position #
+#
+# ***********************************************************************************
+
+proc enemy.kill(p) {
+	var s
+	enemy.use(peek.w(enemy.list[p]))			# set current
+	enemy.w_state($FFFF) 						# set status to dead.
+	poke.vw(1,enemy.r_sprite.addr()+6,0)
+	enemy.alive -- => enemy.alive
+}
+
+# ***********************************************************************************
+#
+#						Remove enemy and mirror by position #
+#
+# ***********************************************************************************
+
+proc enemy.remove(x,y) {
+	enemy.kill(y*10+x)
+	enemy.kill(y*10+9-x)
+}
+
+# ***********************************************************************************
+#
+#								Reset the enemy ranks
+#
+# ***********************************************************************************
+
+proc enemy.list.reset() {
+	var p,n
+	160 -> enemy.frm.x
+	2 -> enemy.frm.dx
+	times(ENEMY.MAX,n) {
+		peek.w(enemy.list[n]) -> p 				# get address
+		enemy.use(p)							# operate on it.
+		enemy.w_state(0)						# state to in enemy.frm.
+		enemy.update(enemy.frm.x,0)
+	}
+	enemy.remove(0,0) enemy.remove(0,1)	enemy.remove(0,2)
+	enemy.remove(1,0) enemy.remove(1,1)	
+	enemy.remove(2,0) enemy.remove(4,0)
+}
+
+# ***********************************************************************************
+#
+#								Move all enemies in formation
+#
+# ***********************************************************************************
+
+proc enemy.move.formation() {
+	var n,g
+	abs(enemy.frm.x-160) >> >> >> & 1 => g 					# causes animation
+	enemy.frm.x +enemy.frm.dx -> enemy.frm.x 				# move base position
+	if (abs(enemy.frm.x-160) >= 60) 						# bounce off side
+			{ neg(enemy.frm.dx) => enemy.frm.dx }
+	times(ENEMY.MAX,n) {									# update every one
+		enemy.use(peek.w(enemy.list[n]))
+		enemy.update(enemy.frm.x,g)
+	}	
+}
+
+# ***********************************************************************************
+#
+#								Move all enemies in attack mode
+#
+# ***********************************************************************************
+
+proc enemy.move.attackers() {
+	var n,xn,i
+	times(ENEMY.MAX,n) {
+		enemy.use(peek.w(enemy.list[n]))					# make current
+		if (enemy.r_state() == 1) {							# if in attack state
+			enemy.r_yi() -> i enemy.w_y(enemy.r_y()+i)		# advance position
+			enemy.r_xi() -> i enemy.w_x(enemy.r_x()+i->xn)	
+			if (abs(xn-152) >= 150) {						# bounce off walls
+				enemy.w_xi(neg(enemy.r_xi()))
+			}
+			if (enemy.r_y() >= 240) {						# off the bottom.
+				enemy.w_state(0)
+			}
+			enemy.update(0,0)								# repaint
+		}
+	}
+}
+
+# ***********************************************************************************
+#
+#								Make given enemy attack
+#
+# ***********************************************************************************
+
+proc enemy.attack(id) {
+	var ok false->ok
+	enemy.use(peek.w(enemy.list[id])) 						# select object
+	if (enemy.r_state() == 0) { 							# in formation ?
+		enemy.w_state(1)									# attacking ?
+		enemy.w_xi(4) 										# direction.
+		if (enemy.r_x() < 160) { enemy.w_xi(0-4) }
+		enemy.w_yi(2)
+		true -> ok
+	}
+	ok
+}
+
+# ***********************************************************************************
+#
+#				Pick random galaxian and launch attack with wingmen
+#
+# ***********************************************************************************
+
+proc enemy.launch.attack() {
+	var n,x
+	random() & 63 -> n 										# pick one.
+	if (n-ENEMY.MAX < 0) { 									# BUG: Can't use RHS constants
+		enemy.attack(n)										# start an attack
+		if (n < 50) { 										# not the bottom row.
+			n % 10 -> x 									# horizontal row position.
+			if (x >= 1) { enemy.attack(n+10-1) }			# wingmen.
+			if (x < 9) { enemy.attack(n+10+1) }
+		}
+	}
+}

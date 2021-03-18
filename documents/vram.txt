@@ -1,5 +1,5 @@
-VRAM File Format
-================
+VRAM Data File Format
+=====================
 
 2 byte header (dummy)
 
@@ -7,9 +7,24 @@ VRAM File Format
 
 00001nnn 				Set decompression type to nnn. 
 
+001bhhww nnnnnnnn 		Define sprite data as being here (alignd to 32 bytes automatically)
+						wwhh is size (as defined in Vera docs)
+						b is the mode bit (0 = 4 bit,1 = 8 bit.)
+						4 bit sprites are expected to use the standard palette (240-255)
+						8 bit sprites obviously use the whole palette.
+
 10000000 				End of data.
 
 1nnnnnnn 				Block of data size n bytes follows, using current compression,
 						expand at current address.
 
-												
+
+
+VRAM Source file format
+=======================												
+;
+;		Comments
+;				
+* = <const>
+COMPRESS <const>
+SPRITE n,w,h,bpp		n can be + indicating next. w/h can be 8,16,32,64. bpp is 4 or 8

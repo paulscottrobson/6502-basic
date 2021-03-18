@@ -1,0 +1,26 @@
+var formation.event 							# formation event timer
+var dive.event 
+var attack.event 
+
+slow proc main() {
+
+	initialise.display()
+	enemy.list.initialise()
+	enemy.list.reset()
+	missile.reset(10)
+
+	0 -> formation.event -> dive.event -> attack.event
+	while (0 == 0) {
+		if (event(@formation.event,10) < 0) {
+			enemy.move.formation()
+			missile.fire()
+		}
+		if (event(@dive.event,3) < 0) {
+			enemy.move.attackers()
+			missile.move.all()
+		}
+		if (event(@attack.event,120) < 0) {
+			enemy.launch.attack()
+		}
+	}
+}

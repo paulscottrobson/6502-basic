@@ -3,15 +3,23 @@ TODO
 
 Update array tests for multidimensional
 
+Derive some method for calling forcemode etc. Dummy routine probably.
+
+PALETTE
+
+Sprite system for VRAM. Check it works with VPOKEing.
+
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
 have to experiment I think ....
+- SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> 
+- SPRITE TRUE|FALSE
+
+
 
 - some sort of clock read function ?
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
 - JOYSTICK (n) and JOYX() JOYY() JOYB(n)
 - PALETTE (?)
-- SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> INK<x> PAPER <x> STROKE <x>
-
 => 0.18
 
 Something like AMOS's Animation thing.
@@ -37,3 +45,4 @@ Notes
 
 New commands/Changes to document
 ================================
+MODE .... which is a bit complicated , and not :)

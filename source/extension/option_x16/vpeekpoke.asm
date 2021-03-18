@@ -51,7 +51,7 @@ _CVWExit:
 
 SetUpTOSVRamAddress:
 		lda 	esInt2,x 			; check range of address, data to $FFFF
-		and 	#1
+		and 	#$FE
 		ora 	esInt3,x
 		bne 	CVWValue
 		lda 	esInt0,x			; set address up

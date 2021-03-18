@@ -54,3 +54,4 @@ vary too much. Text source only.
 18/3/2021
 =========
 - Written access code for multidimensional arrays & tested it.
+- Added Mode which squeezes the screen set up into a 32 bit integer (which has simple versions)

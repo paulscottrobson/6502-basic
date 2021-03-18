@@ -1,0 +1,82 @@
+# ***********************************************************************************
+#
+#									Globals
+#
+# ***********************************************************************************
+
+struct missile {
+	x,y, 													# position (x < 0 = unused)
+	sprite.addr												# sprite address.
+}
+
+const MISSILE.MAX 16
+
+var missile.list 											# array of missiles.
+var missile.count 											# active missiles.
+
+# ***********************************************************************************
+#
+#								Reset missiles
+#
+# ***********************************************************************************
+
+proc missile.reset(c) {
+	var n,a
+	c -> missile.count
+	if (missile.list == 0) {
+		alloc(MISSILE.MAX*2) => missile.list
+		times(MISSILE.MAX,n) {
+			poke.w(missile.list[n],missile.new())
+			missile.w_x(0)
+			missile.w_sprite.addr(n << << << +$FE00=>a)
+			poke.vw(1,a+6,0)
+		}
+	}
+}
+
+# ***********************************************************************************
+#
+#							Fire missile from random enemy
+#
+# ***********************************************************************************
+
+proc missile.fire() {
+	var a,n
+	times(missile.count,n) { 
+		missile.use(peek.w(missile.list[n]))
+		if (missile.r_x() == 0) {
+			random() & 63 -> a
+			if (a-ENEMY.MAX < 0) {
+				enemy.use(peek.w(enemy.list[a]))
+				if (enemy.r_state() >= 0) {
+					missile.w_x(enemy.r_x())
+					missile.w_y(enemy.r_y())
+				}
+			}
+		}
+	}
+}
+	
+# ***********************************************************************************
+#
+#								Move all missiles
+#
+# ***********************************************************************************
+
+fast 
+proc missile.move.all() {
+	var n,s,x
+	times(missile.count,n) {
+		missile.use(peek.w(missile.list[n]))
+		if (missile.r_x() <> 0) {
+			missile.r_sprite.addr() -> s
+			missile.w_y(missile.r_y()+5)
+			poke.vw(1,s,spr.bullet)
+			poke.vw(1,s+2,missile.r_x())
+			poke.vw(1,s+4,missile.r_y())
+			poke.vw(1,s+6,$500c)
+			if (missile.r_y() >= 240) { missile.w_x(0) }
+		}
+	}
+}
+slow
