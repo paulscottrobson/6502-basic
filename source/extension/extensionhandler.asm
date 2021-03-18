@@ -13,9 +13,10 @@
 		.section code
 
 ExtensionHandler:
+		cmp 	#$FE 						; check for force mode 0
+		beq 	_ExtensionForce
 		cmp 	#$FF						; A = $FF command, otherwise unary function stack level.
 		bne 	_ExtensionUnary 			; is passed in A.
-
 		lda 	(codePtr),y 				; so this is a command, using Group 2.
 		iny
 		asl 	a
@@ -30,6 +31,10 @@ _ExtensionUnary:
 		tax
 		pla 								; restore stack pos and call group3 command.
 		jmp 	(Group3Vectors-12,X)
+
+_ExtensionForce:
+		jmp 	ForceMode0
+
 		;
 		;		Vectors for system specific commands
 		;

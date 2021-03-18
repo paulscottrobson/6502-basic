@@ -3,10 +3,7 @@ TODO
 
 Update array tests for multidimensional
 
-Derive some method for calling forcemode etc. Dummy routine probably.
-
-PALETTE
-
+PALETTE added to VRAM specification.
 Sprite system for VRAM. Check it works with VPOKEing.
 
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
