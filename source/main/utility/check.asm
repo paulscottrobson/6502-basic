@@ -47,7 +47,7 @@ _CRPError:
 ;	
 ; ************************************************************************************************
 
-CheckComma:
+CheckComma: ;; <checkcomma>
 		lda 	(codePtr),y
 		iny
 		cmp 	#TKW_COMMA

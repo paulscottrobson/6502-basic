@@ -179,7 +179,7 @@ class Tokens(object):
 		##		System specific commands in group 2
 		##
 		[group2]
-			vpoke	vdoke	vload	mode
+			vpoke	vdoke	vload	mode 	palette
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##

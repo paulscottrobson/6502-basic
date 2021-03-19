@@ -55,15 +55,16 @@ mainHandler:
 	dispatch mainVectors
 
 mainVectors:
-	.word CheckRightParen      ; index 0
-	.word XCommandClear        ; index 2
-	.word LinkEvaluate         ; index 4
-	.word LinkEvaluateInteger  ; index 6
-	.word LinkEvaluateSmallInt ; index 8
-	.word LinkEvaluateTerm     ; index 10
-	.word MLInt32ToString      ; index 12
-	.word Command_XNew         ; index 14
-	.word XCommand_Run         ; index 16
-	.word Command_RunFrom      ; index 18
-	.word LinkInt32FromString  ; index 20
+	.word CheckComma           ; index 0
+	.word CheckRightParen      ; index 2
+	.word XCommandClear        ; index 4
+	.word LinkEvaluate         ; index 6
+	.word LinkEvaluateInteger  ; index 8
+	.word LinkEvaluateSmallInt ; index 10
+	.word LinkEvaluateTerm     ; index 12
+	.word MLInt32ToString      ; index 14
+	.word Command_XNew         ; index 16
+	.word XCommand_Run         ; index 18
+	.word Command_RunFrom      ; index 20
+	.word LinkInt32FromString  ; index 22
 .send code

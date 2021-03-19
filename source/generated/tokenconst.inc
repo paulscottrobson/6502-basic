@@ -189,5 +189,6 @@ TKW_VPOKE                    = $86 ; vpoke
 TKW_VDOKE                    = $87 ; vdoke
 TKW_VLOAD                    = $88 ; vload
 TKW_MODE                     = $89 ; mode
+TKW_PALETTE                  = $8a ; palette
 TKW_VPEEKLPAREN              = $86 ; vpeek(
 TKW_VDEEKLPAREN              = $87 ; vdeek(
