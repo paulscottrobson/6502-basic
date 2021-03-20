@@ -21,14 +21,7 @@
 WarmStartEntry:	;; <warmstart>
 		ldx 	#$FF
 		txs
-		;
-		;		Allow unpicking strange mode settings etc. 
-		;
-		.if installed_extension==1
-		lda 	#$FE
-		.extension_execown
-		.endif
-
+		jsr 	ForceStandardMode
 		lda 	#2							; green text.
 		.device_ink
 		.device_inputline					; input line, put address in temp0

@@ -13,3 +13,6 @@ Group1Vectors:
 	.word	CommandEnd               ; $8e end
 	.word	CommandStop              ; $8f stop
 	.word	CommandXemu              ; $90 xemu
+	.word	CommandGOTO              ; $91 goto
+	.word	CommandGOSUB             ; $92 gosub
+	.word	CommandRETURN            ; $93 return

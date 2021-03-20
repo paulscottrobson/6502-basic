@@ -114,6 +114,7 @@ class Tokeniser(object):
 if __name__ == "__main__":
 	tw = Tokeniser()
 	if True:
+		tw.test("loke assert")	
 		tw.test("4169302")
 		tw.test("42 67 &2A &43")		
 		tw.test('"" "Hello"')

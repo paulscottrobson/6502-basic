@@ -1,10 +1,12 @@
-
-for y = 0 to 15
-palette y,random()
-for x = 0 to 24
-	p = x * 2 + y * 256
-	vpoke p,42:vpoke p+1,y
-next:next:locate 0,20
+mode &60006000
+vload "test.vram"
+s = &1FC00
+vdoke s,0
+vdoke s+4,100
+vdoke s+2,240
+vpoke s+6,12
+vpoke s+7,&50
+a$ = get$()
 end
 
 

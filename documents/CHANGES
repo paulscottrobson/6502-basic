@@ -60,3 +60,7 @@ vary too much. Text source only.
 19/3/2021
 =========
 - Added MODE and PALETTE
+
+20/3/2021
+=========
+- Coldstart forces correct mode as well

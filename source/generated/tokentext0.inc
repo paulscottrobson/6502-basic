@@ -85,10 +85,10 @@ Group0Text:
 	.byte $04,$45,$4c,$53,$c5              ; $d6 else
 	.byte $03,$56,$44,$d5                  ; $d7 vdu
 	.byte $05,$50,$52,$49,$4e,$d4          ; $d8 print
-	.byte $04,$47,$4f,$54,$cf              ; $d9 goto
-	.byte $05,$47,$4f,$53,$55,$c2          ; $da gosub
-	.byte $06,$52,$45,$54,$55,$52,$ce      ; $db return
-	.byte $04,$44,$41,$54,$c1              ; $dc data
+	.byte $04,$44,$41,$54,$c1              ; $d9 data
+	.byte $05,$49,$4d,$41,$47,$c5          ; $da image
+	.byte $02,$41,$d4                      ; $db at
+	.byte $04,$46,$4c,$49,$d0              ; $dc flip
 	.byte $06,$41,$53,$53,$45,$52,$d4      ; $dd assert
 	.byte $04,$50,$4f,$4b,$c5              ; $de poke
 	.byte $04,$44,$4f,$4b,$c5              ; $df doke

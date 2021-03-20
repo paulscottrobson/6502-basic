@@ -164,17 +164,17 @@ class Tokens(object):
 			) 		: 		, 		; 		'
 			to 		step 	proc 	local	dim		
 			rem 	let 	input	else	vdu 	
-			print	goto 	gosub 	return 	data	 	
+			print	data	image 	at 		flip
 			assert 	poke 	doke 	loke 	ink
 			paper 	cls 	locate 	break	.
-			#
+			# 		
 		##
 		##		Put these in group 1.
 		##
 		[group1]
 			clear 	load	save 	list 	new 	
 			run 	read 	restore	end 	stop
-			xemu 	
+			xemu 	goto 	gosub 	return
 		##
 		##		System specific commands in group 2
 		##

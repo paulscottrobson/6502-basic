@@ -41,7 +41,7 @@ for k in keys:
 	if not s.startswith("[["):											# convert puncuation to words
 		s2 = s.replace("+","PLUS").replace("-","MINUS").replace("*","STAR").replace("/","SLASH")
 		s2 = s2.replace("(","LPAREN").replace(")","RPAREN").replace("[","LSQPAREN").replace("]","RSQPAREN")
-		s2 = s2.replace(">","GREATER").replace("=","EQUAL").replace("<","LESS").replace("@","AT")
+		s2 = s2.replace(">","GREATER").replace("=","EQUAL").replace("<","LESS").replace("@","ATC")
 		s2 = s2.replace("!","PLING").replace("?","QMARK").replace("~","WAVY").replace("$","DOLLAR")
 		s2 = s2.replace("^","HAT").replace("#","HASH").replace("%","PERCENT").replace("&","AMP")
 		s2 = s2.replace(":","COLON").replace(";","SEMICOLON").replace(",","COMMA").replace("'","QUOTE")

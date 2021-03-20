@@ -21,6 +21,7 @@
 ColdStartEntry:	;; <coldstart>
 		ldx 	#$FF
 		txs
+		jsr 	ForceStandardMode
 		;
 		;		Print the banner
 		;
@@ -63,6 +64,19 @@ Intro:	.text 	6,"*** 6502 Extended BASIC ***",13,13
 		.text 	" ("
 		.VersionDate
 		.text 	")",13,13,0
+
+; ************************************************************************************************
+;
+;							Force into Mode 0 if not already in mode 0
+;
+; ************************************************************************************************
+
+ForceStandardMode:
+		.if installed_extension==1
+		lda 	#$FE
+		.extension_execown
+		.endif
+		rts
 
 		.send code
 

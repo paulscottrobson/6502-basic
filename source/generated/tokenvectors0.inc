@@ -91,10 +91,10 @@ Group0Vectors:
 	.word	Command_ELSE             ; $d6 else
 	.word	Command_VDU              ; $d7 vdu
 	.word	Command_Print            ; $d8 print
-	.word	CommandGOTO              ; $d9 goto
-	.word	CommandGOSUB             ; $da gosub
-	.word	CommandRETURN            ; $db return
-	.word	CommandData              ; $dc data
+	.word	CommandData              ; $d9 data
+	.word	Unimplemented            ; $da image
+	.word	Unimplemented            ; $db at
+	.word	Unimplemented            ; $dc flip
 	.word	Command_Assert           ; $dd assert
 	.word	Command_Poke             ; $de poke
 	.word	Command_Doke             ; $df doke

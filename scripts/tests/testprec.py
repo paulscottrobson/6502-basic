@@ -20,7 +20,7 @@ from testcore import *
 
 class PrecedenceTest(Test):
 	def getTest(self,n):
-		expr = self.term(4)
+		expr = self.term(3)
 		return "assert ({0}) = {1}".format(expr,eval(expr))		
 	#
 	def term(self,n):

@@ -1,17 +1,16 @@
 TODO
 ====
 
-Update array tests for multidimensional
-
 PALETTE added to VRAM specification.
 Sprite system for VRAM. Check it works with VPOKEing.
 
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
 have to experiment I think ....
-- SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> 
+Sprite initialise on sprite ON/TRUE
+- SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> AT <pos>
 - SPRITE TRUE|FALSE
 
-
+=> 0.18
 
 - some sort of clock read function ?
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)

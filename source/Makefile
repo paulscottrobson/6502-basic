@@ -56,6 +56,10 @@ $(APPNAME) : basic.asm $(TESTDIR)makebasic.zip
 test: 
 	python $(SCRIPTDIR)tests$(S)$(TEST) >$(BASICDIR)test.bas
 	python $(SCRIPTDIR)makepgm.py $(BASICDIR)test.bas
+	python $(SCRIPTDIR)errorgen.py
+	python $(SCRIPTDIR)builder.py
+	python $(SCRIPTDIR)asmtables.py
+	python $(SCRIPTDIR)tables.py
 	$(ASSEMBLESRC) 
 	$(MAKEPRG)
 	$(CDEL) dump.bin $(CDELQ)

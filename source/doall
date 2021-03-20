@@ -5,6 +5,7 @@
 #
 while true; do
 	make -B test TEST=testarr.py
+	make -B test TEST=testarr2.py
 	make -B test TEST=testbin.py
 	make -B test TEST=testcore.py
 	make -B test TEST=testprec.py
