@@ -1,14 +1,19 @@
 TODO
 ====
+Check the interface and make it more stable. Must use X as entrance value. $80-$FF for user functions
+$00-7F for system functions. All modules must work like this.
+Add automatic calls to initialise/closedown for modules.
+Check documentation.
 
-PALETTE added to VRAM specification.
-Sprite system for VRAM. Check it works with VPOKEing.
 
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
 have to experiment I think ....
 Sprite initialise on sprite ON/TRUE
 - SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> AT <pos>
 - SPRITE TRUE|FALSE
+
+PALETTE added to VRAM specification. Loads and uses the default palette.
+Sprite system for VRAM. Check it works with VPOKEing.
 
 => 0.18
 
