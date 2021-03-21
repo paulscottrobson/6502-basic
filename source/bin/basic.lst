@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
-; 64tass -D autorun=1 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
-; Sat Mar 20 08:02:10 2021
+; 64tass -D autorun=1 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ..\source\bin\basic.lst -l ..\source\bin\basic.lbl -Wall -o ..\source\bin\stub.prg basic.asm
+; Sun Mar 21 07:19:13 2021
 
 ;Offset	;Hex		;Monitor	;Source
 

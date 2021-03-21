@@ -7,7 +7,7 @@ VRAM Data File Format
 
 00001nnn 				Set decompression type to nnn. 
 
-001bhhww nnnnnnnn 		Define sprite data as being here (alignd to 32 bytes automatically)
+001bhhww nnnnnnnn 		Define sprite data image n as being here (aligned to 32 bytes automatically)
 						wwhh is size (as defined in Vera docs)
 						b is the mode bit (0 = 4 bit,1 = 8 bit.)
 						4 bit sprites are expected to use the standard palette (240-255)

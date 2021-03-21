@@ -5,6 +5,7 @@ $00-7F for system functions. All modules must work like this.
 Add automatic calls to initialise/closedown for modules.
 Check documentation.
 
+VRAM Loader update to support sprite input.
 
 Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
 have to experiment I think ....
@@ -13,15 +14,15 @@ Sprite initialise on sprite ON/TRUE
 - SPRITE TRUE|FALSE
 
 PALETTE added to VRAM specification. Loads and uses the default palette.
-Sprite system for VRAM. Check it works with VPOKEing.
+Import proper sprites.
 
 => 0.18
 
 - some sort of clock read function ?
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
 - JOYSTICK (n) and JOYX() JOYY() JOYB(n)
-- PALETTE (?)
-=> 0.18
+
+=> 0.19
 
 Something like AMOS's Animation thing.
 
