@@ -14,7 +14,10 @@ variableHandler:
 	dispatch variableVectors
 
 variableVectors:
-	.word AccessVariable       ; index 0
-	.word CreateArray          ; index 2
-	.word HashTableReset       ; index 4
+	.word _DummyControlHandler ; index 0
+	.word AccessVariable       ; index 2
+	.word CreateArray          ; index 4
+	.word HashTableReset       ; index 6
+_DummyControlHandler:
+	rts
 .send code

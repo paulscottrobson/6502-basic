@@ -2,22 +2,22 @@
 ;	Automatically generated
 ;
 .section code
-device_break .macro
+device_controlhandler .macro
 	ldx	#0
 	jsr	deviceHandler
 	.endm
 
-device_clear .macro
+device_break .macro
 	ldx	#2
 	jsr	deviceHandler
 	.endm
 
-device_crlf .macro
+device_clear .macro
 	ldx	#4
 	jsr	deviceHandler
 	.endm
 
-device_initialise .macro
+device_crlf .macro
 	ldx	#6
 	jsr	deviceHandler
 	.endm

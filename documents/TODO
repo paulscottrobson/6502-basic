@@ -1,28 +1,26 @@
 TODO
 ====
-Check the interface and make it more stable. Must use X as entrance value. $80-$FF for user functions
-$00-7F for system functions. All modules must work like this.
-Add automatic calls to initialise/closedown for modules.
-Check documentation.
 
-VRAM Loader update to support sprite input.
-
-Sprite Instructions/Look at X16 GFX API/Implement via Extensions.
-have to experiment I think ....
 Sprite initialise on sprite ON/TRUE
 - SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> AT <pos>
-- SPRITE TRUE|FALSE
+- SPRITE <n> <anything other than FALSE> turns it off, <TRUE> just turns sprite <n> on.
+- SPRITE TRUE|FALSE toggles bit 6
 
 PALETTE added to VRAM specification. Loads and uses the default palette.
-Import proper sprites.
 
 => 0.18
 
+Write a proper VRAM file creator, Import proper sprites add compression ?
+Rewrite the builder program as it's getting out of control.
+
+=> 0.19
+
 - some sort of clock read function ?
+- Sprite collision function.
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
 - JOYSTICK (n) and JOYX() JOYY() JOYB(n)
 
-=> 0.19
+=> 0.20
 
 Something like AMOS's Animation thing.
 

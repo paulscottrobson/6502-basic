@@ -12,6 +12,9 @@ interactionHandler:
 	dispatch interactionVectors
 
 interactionVectors:
-	.word ColdStartEntry       ; index 0
-	.word WarmStartEntry       ; index 2
+	.word _DummyControlHandler ; index 0
+	.word ColdStartEntry       ; index 2
+	.word WarmStartEntry       ; index 4
+_DummyControlHandler:
+	rts
 .send code

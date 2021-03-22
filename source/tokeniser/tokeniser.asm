@@ -20,9 +20,12 @@ tokeniserHandler:
 	dispatch tokeniserVectors
 
 tokeniserVectors:
-	.word Detokenise           ; index 0
-	.word ListLine             ; index 2
-	.word TokTest              ; index 4
-	.word Tokenise             ; index 6
-	.word TokeniseASCIIZ       ; index 8
+	.word _DummyControlHandler ; index 0
+	.word Detokenise           ; index 2
+	.word ListLine             ; index 4
+	.word TokTest              ; index 6
+	.word Tokenise             ; index 8
+	.word TokeniseASCIIZ       ; index 10
+_DummyControlHandler:
+	rts
 .send code

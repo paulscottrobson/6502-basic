@@ -12,6 +12,14 @@
 		.section storage
 compressMode:
 		.fill 	1
+
+imageInfo:									; image info (the first byte) for sprites
+		.fill 	X16MaxImages
+imageAddr2Low: 								; image VRAM address divided by 2 to fit in 16 bits.
+		.fill  	X16MaxImages
+imageAddr2High:		
+		.fill  	X16MaxImages
+
 		.send storage
 
 		.section code	
@@ -23,6 +31,8 @@ compressMode:
 ; ************************************************************************************************
 
 LoadVRAMFile:
+		.pshx
+		.pshy
 		;
 		;		VRAM Load loop. Defaults removed so VRAM files can be split up arbitrarily.
 		;
@@ -35,6 +45,8 @@ _LVRLoop:
 		bcc 	_LVRSetAddress
 		cmp 	#$10 						; is it set compression type ?
 		bcc 	_LVRSetCompress
+		cmp 	#$64 						; is it set sprite type.
+		bcc 	_LVRSetSprite
 		.throw 	missing
 		;
 		;		Set address
@@ -70,6 +82,8 @@ _LVRSetCompress:
 		;		End decoding
 		;
 _LVRExit:
+		.puly
+		.pulx
 		rts
 		;
 		;		Load A & 7F bytes of data in (no decompression yet)
@@ -83,6 +97,49 @@ _LVRLCopy:
 		dex
 		bne 	_LVRLCopy
 		beq 	_LVRLoop
+		;
+		;		Set sprite to current address
+		;
+_LVRSetSprite:
+		pha 								; save on stack
+		jsr 	LVFGet 						; get the sprite number into X
+		tax
+		cmp 	#X16MaxImages				; too high ?
+		bcs 	_LVRSSValue
+		pla 								; restore the data held in the first byte
+		sta 	imageInfo,x 				; and write into the sprite image table.
+_LVRAlignVRAM:
+		lda 	$9F20 						; check VRAM on 32 byte boundary
+		and 	#$1F
+		beq 	_LVRAligned
+		lda 	#$00
+		sta 	$9F23
+		beq 	_LVRAlignVRAM
+_LVRAligned:
+		lda 	$9F22 						; put address/32 in sprite image table
+		lsr 	a 	 						; first halve into temp1						
+		lda 	$9F21
+		ror 	a
+		sta 	temp1+1
+		lda 	$9F20
+		ror 	a
+		sta 	temp1
+		;
+		ldy 	#4 							; divide it by 16 in temp1
+_LVRShift:
+		lsr 	temp1+1
+		ror 	temp1
+		dey
+		bne 	_LVRShift
+		;
+		lda 	temp1+1 					; copy result.
+		sta 	imageAddr2High,x		
+		lda 	temp1
+		sta 	imageAddr2Low,x		
+		jmp 	_LVRLoop
+
+_LVRSSValue:
+		.throw 	BadValue
 
 ; ************************************************************************************************
 ;

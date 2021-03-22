@@ -23,18 +23,20 @@ Start:
 GoColdStart:
 		.set16 basePage,programMemory 		; set up
 		.set16 endMemory,endOfMemory
-		.device_initialise					; set up hardware
-		
+		jsr 	InitialiseAll 				; initialise everything.
+
 		.if installed_interaction == 0 && autorun != 0
 		.main_run
 		.else		
 		.interaction_coldstart
 		.endif
 
+		.include "../generated/initialiseall.asm"
 
 GoTokTest:
 		.tokeniser_test
 		.send code
+
 
 ; ************************************************************************************************
 ;

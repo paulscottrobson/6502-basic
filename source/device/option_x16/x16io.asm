@@ -25,11 +25,13 @@ bufferStorage: 								; input buffer.
 
 ; ************************************************************************************************
 ;
-;											Initialise
+;										Control Handler
 ;
 ; ************************************************************************************************
 
-IOInitialise: ;; <initialise>
+IOControlHandler: ;; <controlhandler>
+		cmp 	#0
+		bne		_CHExit
 		lda 	#15 						; switch to upper/lower case mode
 		jsr 	IOPrintChar
 		lda 	#2 							; green on black and clear screen
@@ -37,6 +39,7 @@ IOInitialise: ;; <initialise>
 		lda 	#0
 		jsr 	IOPaper
 		jsr 	IOClearScreen
+_CHExit:		
 		rts
 		
 ; ************************************************************************************************

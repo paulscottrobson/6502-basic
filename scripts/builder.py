@@ -50,6 +50,7 @@ mainIncludes = [] 														# includes for root assembler file
 header = ";\n;\tAutomatically generated\n;\n"							# header used.
 #
 isEnabled = {}															# modules enabled/not enabled
+isDispatched = {} 														# modules that are dispatched.
 #
 for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() != ""]:
 	section = s 														# check if dispatched manually.
@@ -89,6 +90,11 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 	#
 	vectorKeys = [x for x in vectors.keys()]							# put routine keys into working order
 	vectorKeys.sort()
+	if "controlhandler" in vectorKeys:
+		vectorKeys = [x for x in vectorKeys if x != "controlhandler"]
+	else:
+		vectors["controlhandler"] = "_DummyControlHandler"
+	vectorKeys.insert(0,"controlhandler")	
 	#
 	h = open(localDir+os.sep+section+".asm","w")						# create the file for this level.
 	h.write(header)
@@ -105,6 +111,8 @@ for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() !
 			for k in vectorKeys:
 				h.write("\t.word {0:20} ; index {1}\n".format(vectors[k],ix))
 				ix += 2
+			h.write("_DummyControlHandler:\n\trts\n")
+			isDispatched[section] = True
 		else:
 			h.write("\t.throw NoModule\n")
 	h.write(".send code\n")
@@ -134,6 +142,17 @@ h = open(sourceDir+os.sep+"generated"+os.sep+"installed.inc","w")
 h.write(header)
 for k in isEnabled.keys():
 	h.write("installed_{0} = {1}\n".format(k,1 if isEnabled[k] else 0)) 
+h.close()
+#
+#		Write out initialise/terminate macro.
+#
+h = open(sourceDir+os.sep+"generated"+os.sep+"initialiseall.asm","w")
+h.write("InitialiseAll:\n")
+dk = [x for x in isDispatched.keys()]
+dk.sort()
+for k in dk:
+	h.write("\tlda #0\n\t.{0}_controlhandler\n".format(k))
+h.write("\trts\n")
 h.close()
 #
 #		Write out main program.

@@ -13,6 +13,9 @@ assemblerHandler:
 	dispatch assemblerVectors
 
 assemblerVectors:
-	.word AssembleOneInstruction ; index 0
-	.word AssembleLabel        ; index 2
+	.word _DummyControlHandler ; index 0
+	.word AssembleOneInstruction ; index 2
+	.word AssembleLabel        ; index 4
+_DummyControlHandler:
+	rts
 .send code

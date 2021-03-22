@@ -17,12 +17,17 @@ ExtensionHandler:
 		beq 	_ExtensionForce
 		cmp 	#$FF						; A = $FF command, otherwise unary function stack level.
 		bne 	_ExtensionUnary 			; is passed in A.
+		;
+		;		Handle Command Shift for extensions
+		;
 		lda 	(codePtr),y 				; so this is a command, using Group 2.
 		iny
 		asl 	a
 		tax
 		jmp 	(Group2Vectors-12,x)
-
+		;
+		;		Handle unary functions for extensions.
+		;
 _ExtensionUnary:
 		pha 								; save stack pos in A
 		lda 	(codePtr),y 				; get shifted token, double into X

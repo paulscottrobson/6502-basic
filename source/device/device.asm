@@ -12,10 +12,10 @@ deviceHandler:
 	dispatch deviceVectors
 
 deviceVectors:
-	.word X16Break             ; index 0
-	.word IOClearScreen        ; index 2
-	.word IONewLine            ; index 4
-	.word IOInitialise         ; index 6
+	.word IOControlHandler     ; index 0
+	.word X16Break             ; index 2
+	.word IOClearScreen        ; index 4
+	.word IONewLine            ; index 6
 	.word IOInk                ; index 8
 	.word IOInkey              ; index 10
 	.word IOInput              ; index 12
@@ -27,4 +27,6 @@ deviceVectors:
 	.word ExternSave           ; index 24
 	.word IOTab                ; index 26
 	.word IOReadTimer          ; index 28
+_DummyControlHandler:
+	rts
 .send code

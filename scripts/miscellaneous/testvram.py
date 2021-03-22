@@ -13,12 +13,12 @@ def add(data,text,x,y,colour):
 		data.append(colour)
 
 fileData = [0,0,0x08]						# at 0,0, comrpession 0
-#add(fileData,"Hemmo world!",1,0,4)
+add(fileData,"Hemmo world!",1,0,4)
 #add(fileData,"Hexxo world!",2,2,5)
 #add(fileData,"Heyyo world!",0,3,6)
 
 fileData.append(0x25)						# 0010 0101 => Size 16x16 sprite, 4 bpp.
-fileData.eppend(2)
+fileData.append(2)
 
 fileData.append(0xFF)						# 127 bytes of data, fake sprite.
 for i in range(0,127):
