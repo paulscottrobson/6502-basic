@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
-; 64tass -D autorun=1 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ..\source\bin\basic.lst -l ..\source\bin\basic.lbl -Wall -o ..\source\bin\stub.prg basic.asm
-; Sun Mar 21 07:19:13 2021
+; 64tass -D autorun=1 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
+; Mon Mar 22 06:47:37 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -3906,6 +3906,9 @@
 .2651					TKErr09:
 .2651					TKErr10:
 .2651					TKErr11:
+.2651					TKErr12:
+.2651					TKErr13:
+.2651					TKErr14:
 .2651	a2 02		ldx #$02			ldx 	#ErrorID_Syntax
 .2653	20 e0 14	jsr $14e0		jsr	errorHandler
 
@@ -4002,9 +4005,9 @@
 >2704	5e 1e					.word	Command_VDU              ; $d7 vdu
 >2706	8d 1d					.word	Command_Print            ; $d8 print
 >2708	3f 1c					.word	CommandData              ; $d9 data
->270a	4c 26					.word	Unimplemented            ; $da image
->270c	4c 26					.word	Unimplemented            ; $db at
->270e	4c 26					.word	Unimplemented            ; $dc flip
+>270a	51 26					.word	TKErr13                  ; $da image
+>270c	51 26					.word	TKErr12                  ; $db at
+>270e	51 26					.word	TKErr14                  ; $dc flip
 >2710	7f 1e					.word	Command_Assert           ; $dd assert
 >2712	19 1f					.word	Command_Poke             ; $de poke
 >2714	1d 1f					.word	Command_Doke             ; $df doke

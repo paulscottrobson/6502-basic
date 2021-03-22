@@ -191,6 +191,9 @@ TKErr08:	;; [[[STR]]]
 TKErr09:	;; [[[SH3]]]
 TKErr10:	;; [[[FPC]]]
 TKErr11:	;; [#]
+TKErr12:	;; [at]
+TKErr13:	;; [image]
+TKErr14:	;; [flip]
 
 		.throw 	Syntax
 

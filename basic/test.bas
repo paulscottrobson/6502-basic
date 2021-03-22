@@ -1,504 +1,504 @@
 ;
-;	Built using seed 27794
+;	Built using seed 67418
 ;
-assert (5801475 >> 2) = 1450368
-assert (9675924 >> 10) = 9449
-assert (-227033 - 8779407) = -9006440
-assert (3658452 - 7085565) = -3427113
-assert (551951 <= 6960238) = -1
-assert (-5212227 / 3208194) = -1
-assert (-137287 >= 4320664) = 0
-assert (1585164 or 2395247) = 3980399
-assert (8807331 mod 5199227) = 3608104
-assert (-5131416 xor -2101111) = 7226337
-assert (4913155 >> 30) = 0
-assert (-5063715 > 3205112) = 0
-assert (-1236724 + -7180066) = -8416790
-assert (2743652 <= -7470795) = 0
-assert (-3302296 / 2677401) = -1
-assert (8977096 xor -3257912) = -12143872
-assert (-1605521 or 1603500) = -2065
-assert (-1027230 = 5415838) = 0
-assert (-885417 + -578342) = -1463759
-assert (-7859116 xor 3873053) = -5042871
-assert (-1449017 < -3244602) = 0
-assert (-9155287 - -1029965) = -8125322
-assert (1859213 > 5343810) = 0
-assert (7661967 xor 7101393) = 1618526
-assert (-933108 and -2064178) = -2064372
-assert (-7402596 >= -3312679) = 0
-assert (8209492 / 9843895) = 0
-assert (6655752 > 3842921) = -1
-assert (6019316 << 6) = 385236224
-assert (-8382663 and 5398533) = 1
-assert (-1896023 > -9896899) = -1
-assert (4661891 >> 26) = 0
-assert (2217760 > -6289299) = -1
-assert (2562901 <= -5352187) = 0
-assert (6774047 mod 9704575) = 6774047
-assert (-6424305 <= 983105) = -1
-assert (4791135 + 4658768) = 9449903
-assert (-9964515 < 3119288) = -1
-assert (8825036 mod 652819) = 338389
-assert (-3736644 = -4466489) = 0
-assert (-9196801 >= -5130770) = 0
-assert (2230483 << 9) = 1142007296
-assert (6553381 > 8209083) = 0
-assert (-5054961 or 5526216) = -598321
-assert (8301253 + -1166980) = 7134273
-assert (2472485 = -3164329) = 0
-assert (-3747735 / -3736793) = 1
-assert (-2205906 <> -7518340) = -1
-assert (8161166 <> -4678851) = -1
-assert (3799225 and -4911188) = 3213480
-assert (7035514 = -8099787) = 0
-assert (5190031 <> 4332831) = -1
-assert (-5683210 >= -1312367) = 0
-assert (-1171820 xor 8503861) = -9446239
-assert (-386406 and -4368281) = -4712446
-assert (-5572704 = 5935694) = 0
-assert (-9437975 xor 2260451) = -11697910
-assert (5335312 <> 440482) = -1
-assert (-8655330 and -5187517) = -13580286
-assert (8965126 and 9034898) = 8965122
-assert (4470119 = -4693801) = 0
-assert (6118263 or 5653964) = 6250495
-assert (1184899 mod 4124717) = 1184899
-assert (7498656 <= -3758505) = 0
-assert (2364725 / 9998411) = 0
-assert (-4186946 and -8107535) = -8386384
-assert (5385747 <> 2139504) = -1
-assert (5612410 = -137667) = 0
-assert (1259990 or -8984673) = -8912929
-assert (6359043 xor -6758797) = -403856
-assert (5109950 - 1143178) = 3966772
-assert (-8149939 > 495380) = 0
-assert (5237398 mod 9395390) = 5237398
-assert (2318446 = 1703102) = 0
-assert (-6614636 + -747694) = -7362330
-assert (7797745 mod 7505775) = 291970
-assert (3590412 - 7274181) = -3683769
-assert (7761388 / 9549954) = 0
-assert (-5570731 <> -7783466) = -1
-assert (-7998703 xor -9527422) = 15428755
-assert (1879914 << 4) = 30078624
-assert (-4336100 = 9340802) = 0
-assert (-8986759 and 7255583) = 6723097
-assert (9980973 / 566003) = 17
-assert (8324990 >= -115005) = -1
-assert (8964691 <> -4036341) = -1
-assert (1137294 / 2888777) = 0
-assert (-8274670 and 4792292) = 72960
-assert (-108993 and -9228819) = -9305043
-assert (65001 <> 7291207) = -1
-assert (6661243 <> -1640884) = -1
-assert (2838688 << 3) = 22709504
-assert (-7482604 <= 4641804) = -1
-assert (-2868186 <> -7462531) = -1
-assert (4064461 / 8537945) = 0
-assert (9400306 - -7562929) = 16963235
-assert (2149645 <> -9495455) = -1
-assert (8650832 = -5551858) = 0
-assert (5323901 = -2926241) = 0
-assert (-7048801 < 4302387) = -1
-assert (8575033 mod 2685208) = 519409
-assert (-536330 <= 4177868) = -1
-assert (602657 and 8461024) = 70176
-assert (5620403 or 930840) = 6289083
-assert (-8790902 or -4962196) = -140050
-assert (5661378 - -5325186) = 10986564
-assert (745277 <= 4021968) = -1
-assert (71150 = -9365595) = 0
-assert (-7652997 < -6112743) = -1
-assert (-4460905 < -2543282) = -1
-assert (-8070096 and -8490942) = -16494592
-assert (-4892319 - -9199620) = 4307301
-assert (4534206 <= 7952313) = -1
-assert (-3181886 / 3750007) = 0
-assert (2604423 / -1693149) = -1
-assert (-3347040 > 5098665) = 0
-assert (954234 > 1398239) = 0
-assert (-9974452 = 9220248) = 0
-assert (-2443843 > 7587902) = 0
-assert (2892610 = 1865478) = 0
-assert (9577937 xor 5488566) = 12687975
-assert (1241402 or 6627558) = 7860734
-assert (9392368 <= 7341615) = 0
-assert (-2472137 - -7949643) = 5477506
-assert (4223393 = 1074829) = 0
-assert (143059 mod 9313644) = 143059
-assert (2824528 << 1) = 5649056
-assert (3074381 >= 2513370) = -1
-assert (-5862425 >= -39875) = 0
-assert (-5424994 + 3299975) = -2125019
-assert (1068463 or -877061) = -860673
-assert (-3304086 xor 8468877) = -11752217
-assert (-6408637 >= -2988001) = 0
-assert (-4150362 = -9029690) = 0
-assert (8065961 - -744489) = 8810450
-assert (-5844656 >= -1774992) = 0
-assert (-3222470 / 7574075) = 0
-assert (8255537 and -2410060) = 5847088
-assert (7180901 or -597125) = -3201
-assert (4080564 / -4632991) = 0
-assert (-7104049 / -5513270) = 1
-assert (-1929822 xor 4794383) = -5528147
-assert (-922180 < 5571000) = -1
-assert (9635272 < 6784176) = 0
-assert (-5568205 < 669055) = -1
-assert (4635673 >= 1374035) = -1
-assert (7748915 / -8747401) = 0
-assert (1599016 and -2643755) = 1056768
-assert (-3433926 >= -557280) = 0
-assert (7706917 < 1453437) = 0
-assert (-1370335 + -6516721) = -7887056
-assert (-9858471 or 1403947) = -8520069
-assert (2805220 / 966975) = 2
-assert (-9231881 + 1350640) = -7881241
-assert (78773 - -4417049) = 4495822
-assert (698054 / -9620931) = 0
-assert (1149654 - 1378751) = -229097
-assert (4475696 <> -2190395) = -1
-assert (-1253773 - -2640769) = 1386996
-assert (2526187 <> 2338789) = -1
-assert (-4998920 and -9970867) = -14444472
-assert (7234133 mod 2475604) = 2282925
-assert (-1306775 = -1657721) = 0
-assert (-7806156 < -9679726) = 0
-assert (8557754 mod 6545649) = 2012105
-assert (-9183088 < -4790681) = -1
-assert (5436087 - 1067264) = 4368823
-assert (6765115 << 4) = 108241840
-assert (5338117 or -9890939) = -8816763
-assert (5542015 < 4496469) = 0
-assert (-5491612 < 6453521) = -1
-assert (-9983469 xor 9536764) = -643345
-assert (-8408901 or -5147212) = -2625
-assert (1377554 <> -5088038) = -1
-assert (1023524 < -6893559) = 0
-assert (-7998269 <= -1468073) = -1
-assert (9564929 - 8502344) = 1062585
-assert (-1714945 <> -59848) = -1
-assert (-2345487 or -8690578) = -35329
-assert (4126377 and -878617) = 3315361
-assert (2862883 << 2) = 11451532
-assert (4605422 - -9414403) = 14019825
-assert (-3340867 >= 2014075) = 0
-assert (-8668605 / 9202295) = 0
-assert (-7386350 = -8102385) = 0
-assert (8909964 and 688308) = 163972
-assert (-1493567 / 4543708) = 0
-assert (-1837860 + 1798672) = -39188
-assert (215451 + 3542024) = 3757475
-assert (-4546712 > 7663133) = 0
-assert (-2577736 < -9945544) = 0
-assert (1599257 mod 9479388) = 1599257
-assert (-3368646 <= 8544630) = -1
-assert (-1528930 <= -1641035) = 0
-assert (-8751474 or -9296307) = -8751409
-assert (-8329181 = 2662061) = 0
-assert (-3180982 > -6872994) = -1
-assert (-28952 = 7908640) = 0
-assert (1087474 <> -8133754) = -1
-assert (7882526 <> -9541696) = -1
-assert (3141442 >> 24) = 0
-assert (1046140 mod 2149736) = 1046140
-assert (-4529893 < -6957035) = 0
-assert (8610930 <> 160234) = -1
-assert (9734758 << 4) = 155756128
-assert (-8561819 > -2761450) = 0
-assert (-108640 < -9067390) = 0
-assert (1137038 <= 236204) = 0
-assert (-3155576 <> -1342279) = -1
-assert (-2278056 <= -9919256) = 0
-assert (-4358530 <> 8558050) = -1
-assert (4178433 >= -792209) = -1
-assert (9792939 and 7822592) = 1395968
-assert (-2431630 <= 3280067) = -1
-assert (-4914214 >= 9355254) = 0
-assert (-8267176 <> -8284156) = -1
-assert (-7530376 or 2910659) = -5408261
-assert (-4329237 + 2420288) = -1908949
-assert (-13321 <> 3357591) = -1
-assert (-5616230 = 5047922) = 0
-assert (4589556 = 7506321) = 0
-assert (-8415597 > 1619463) = 0
-assert (7426265 - 5013721) = 2412544
-assert (-4894918 and 1923481) = 1394968
-assert (7397674 and -7170385) = 1081386
-assert (9910458 and -7846882) = 8388634
-assert (722257 or -8686192) = -8686127
-assert (-8579245 > -3300904) = 0
-assert (-5546063 = -9384005) = 0
-assert (7457050 / -3977228) = -1
-assert (1700526 <> -7542633) = -1
-assert (-184022 or 2761787) = -51909
-assert (-2143834 / 2500589) = 0
-assert (3245120 + 9984385) = 13229505
-assert (-4428886 + 1745284) = -2683602
-assert (2707004 - 1660058) = 1046946
-assert (8748145 >> 25) = 0
-assert (-5815650 or -44728) = -44066
-assert (-3580166 or -7577291) = -3309569
-assert (-5618837 and -8998933) = -14548117
-assert (-7984194 < 5672717) = -1
-assert (-1099246 / 164329) = -6
-assert (1602243 < 1034723) = 0
-assert (5560132 > -9956182) = -1
-assert (9427096 - 5971584) = 3455512
-assert (278277 and -5245100) = 276228
-assert (8299286 or 4800858) = 8381278
-assert (-5022049 and 8738796) = 8476300
-assert (3954662 > 232862) = -1
-assert (-6012830 < 8822441) = -1
-assert (7717037 > 8141929) = 0
-assert (-4540942 or 8828006) = -4278794
-assert (5753985 > 6286504) = 0
-assert (7194825 > -523672) = -1
-assert (-6670377 / 2827371) = -2
-assert (8069715 >> 12) = 1970
-assert (534172 and -8386262) = 8
-assert (9879400 and 1061917) = 1061896
-assert (1782469 or 5741988) = 6275045
-assert (-3724610 <= -3710549) = -1
-assert (-7036909 <> -3493414) = -1
-assert (-1720902 or 5058870) = -1196610
-assert (7025478 > 8859382) = 0
-assert (3901485 >> 17) = 29
-assert (2527459 or 5255816) = 7779051
-assert (1161811 or -1192587) = -131209
-assert (-8666057 + -4555224) = -13221281
-assert (-7299060 < 6081877) = -1
-assert (7428111 > 5812421) = -1
-assert (215653 + -7860545) = -7644892
-assert (-5163507 and 1159014) = 1123844
-assert (7158861 <= 5474976) = 0
-assert (9279085 mod 1212926) = 788603
-assert (-9531479 - -1931959) = -7599520
-assert (-7092622 - 5689080) = -12781702
-assert (-6486102 / 5175607) = -1
-assert (5834326 <= -4153946) = 0
-assert (-4813161 / 147687) = -32
-assert (9106520 and 1048486) = 717824
-assert (8231850 >= -3962788) = -1
-assert (8680321 + 309464) = 8989785
-assert (5154372 = 507440) = 0
-assert (564683 / 5176419) = 0
-assert (9126246 and -3944754) = 8601670
-assert (9464256 >> 29) = 0
-assert (1647800 <= 697625) = 0
-assert (8609432 <> -6766647) = -1
-assert (-3789517 > -216112) = 0
-assert (7885111 - -403556) = 8288667
-assert (-3946424 - -7081275) = 3134851
-assert (-8105099 <= 4257642) = -1
-assert (1060397 <> 5055304) = -1
-assert (4273556 <> -734966) = -1
-assert (-1380799 >= 6218904) = 0
-assert (8305910 >= 313889) = -1
-assert (3567600 and 7417133) = 3157280
-assert (2381633 <= -3807073) = 0
-assert (9788493 >> 5) = 305890
-assert (-9818237 + -1384417) = -11202654
-assert (3116800 / -7825327) = 0
-assert (2538356 <= 6856586) = -1
-assert (5475378 and 9751592) = 1084448
-assert (-3247515 or -5676665) = -1084441
-assert (7851461 or 5855369) = 8379853
-assert (552648 > 4326207) = 0
-assert (-4900992 < 2648438) = -1
-assert (99290 or 3020991) = 3120127
-assert (6895513 + -4423526) = 2471987
-assert (9733492 or 4644541) = 14082045
-assert (2850122 xor 470883) = 2904617
-assert (9234788 = 1131321) = 0
-assert (-9646707 / -2436578) = 3
-assert (3243311 = 6983098) = 0
-assert (1184901 or 9431805) = 10485501
-assert (-8672771 <> -6087565) = -1
-assert (5041581 / -7788454) = 0
-assert (-2583892 < 5769904) = -1
-assert (9935725 mod 149024) = 100141
-assert (4117697 >> 10) = 4021
-assert (9590710 < -1671915) = 0
-assert (-4352482 or -629892) = -2178
-assert (772117 >> 12) = 188
-assert (-9296872 <> 4075461) = -1
-assert (-8483316 + 662726) = -7820590
-assert (9759700 / 3023215) = 3
-assert (9459744 <> -9386018) = -1
-assert (-8522859 <= 3319482) = -1
-assert (-4613998 = 4958268) = 0
-assert (202006 = 8301222) = 0
-assert (-2587130 - -3497040) = 909910
-assert (920195 >> 6) = 14378
-assert (-3298506 or 9962385) = -2249801
-assert (5156845 or 7513893) = 8302573
-assert (-673898 and 2718615) = 2175894
-assert (-8440549 / 4985351) = -1
-assert (8363859 and -174070) = 8198146
-assert (3760671 mod 4687418) = 3760671
-assert (3349599 or 5392967) = 7560799
-assert (-8435066 < 8213374) = -1
-assert (1401630 > 9982063) = 0
-assert (-8558177 >= 2697226) = 0
-assert (-930092 < -3702943) = 0
-assert (9531517 < 4028096) = 0
-assert (9592400 >= 5165456) = -1
-assert (-9032861 - -5156021) = -3876840
-assert (-6577307 or 4181414) = -4198425
-assert (-8147539 >= -9499316) = -1
-assert (-5918732 > 9840697) = 0
-assert (-5950329 >= 3439061) = 0
-assert (-4570035 / -9296549) = 0
-assert (970504 mod 6004505) = 970504
-assert (9639163 <> 9447498) = -1
-assert (5838119 >> 0) = 5838119
-assert (1771504 mod 7532914) = 1771504
-assert (9169145 mod 3636073) = 1896999
-assert (-9850888 and -624493) = -10475376
-assert (5936720 << 0) = 5936720
-assert (6886043 >= -7651659) = -1
-assert (-8853590 < 4591519) = -1
-assert (9505386 or -4923529) = -4857985
-assert (-2916474 / 9175789) = 0
-assert (-7568701 <> -7847274) = -1
-assert (67696 > -9278) = -1
-assert (-3618299 >= 2183665) = 0
-assert (-5064977 xor 2985047) = -6341960
-assert (6716557 mod 4519415) = 2197142
-assert (9868249 <> -6678270) = -1
-assert (1696186 <= 7202425) = -1
-assert (-8477687 + 1768476) = -6709211
-assert (-5602425 >= -2523206) = 0
-assert (-164281 and 543148) = 542724
-assert (1118178 = -4303257) = 0
-assert (-6392822 / -3216117) = 1
-assert (-9434099 > 6766238) = 0
-assert (6153389 <= 7929707) = -1
-assert (8791200 >= -1589539) = -1
-assert (1548396 + 3122844) = 4671240
-assert (-6929722 = 1968964) = 0
-assert (4799723 xor -4854260) = -208153
-assert (2936225 xor 2591858) = 737747
-assert (8347729 > 7020016) = -1
-assert (-898785 >= -3612735) = -1
-assert (-5668180 and -2636847) = -8289664
-assert (4523593 xor -3640313) = -7507378
-assert (3789151 <= -6383051) = 0
-assert (-3856563 <> 2254591) = -1
-assert (-9211419 = -596751) = 0
-assert (7543768 mod 8539393) = 7543768
-assert (7283656 xor -6833569) = -484969
-assert (2923397 - 5727381) = -2803984
-assert (5899574 mod 6921867) = 5899574
-assert (-571099 / 5648977) = 0
-assert (8436309 >> 9) = 16477
-assert (-8869383 < 4579748) = -1
-assert (5867303 >= 8623523) = 0
-assert (3449388 - 5379389) = -1930001
-assert (3108034 or -448982) = -37142
-assert (7858347 + 5957793) = 13816140
-assert (-4240740 > 8055323) = 0
-assert (-3545172 < 6910227) = -1
-assert (9304291 or 4477141) = 13498615
-assert (-8584174 > 6096692) = 0
-assert (257049 >> 19) = 0
-assert (9573663 mod 7948751) = 1624912
-assert (-9645050 - 8718135) = -18363185
-assert (3820838 / 6307686) = 0
-assert (7996851 >> 19) = 15
-assert (-4607515 <> -6707933) = -1
-assert (-981708 - -6136030) = 5154322
-assert (5812400 mod 8803535) = 5812400
-assert (50305 / -1278995) = 0
-assert (-2837600 - -2876875) = 39275
-assert (3655185 <> 2233886) = -1
-assert (-4456476 or 6748836) = -28
-assert (4367156 = -1242322) = 0
-assert (8528800 <> 7262850) = -1
-assert (-790702 or 9165088) = -262286
-assert (-354143 + 6973147) = 6619004
-assert (-9483674 / -7425256) = 1
-assert (-2981565 > 409086) = 0
-assert (5714799 = 4092394) = 0
-assert (6642459 >> 20) = 6
-assert (5519621 > -8040816) = -1
-assert (1577400 >= -3044242) = -1
-assert (1137770 / 4666810) = 0
-assert (-2039253 > 3737125) = 0
-assert (-1110631 >= 9066187) = 0
-assert (8677244 < -794001) = 0
-assert (6445334 and -1269470) = 6291714
-assert (-1296518 + 9698539) = 8402021
-assert (2322563 = 8658975) = 0
-assert (6091385 <= 4555646) = 0
-assert (-4544128 / -9069327) = 0
-assert (8740500 >= -6671472) = -1
-assert (-5164127 xor -2886068) = 6473197
-assert (-9202103 / -5827654) = 1
-assert (2286332 << 0) = 2286332
-assert (7423046 mod 1393505) = 455521
-assert (16979 + -7524462) = -7507483
-assert (4387676 / 6070695) = 0
-assert (2302679 / -9662876) = 0
-assert (2181705 / 7355424) = 0
-assert (-4849055 = 819439) = 0
-assert (-3758743 - -27952) = -3730791
-assert (2132252 <> -5688251) = -1
-assert (-2220088 >= -7799569) = -1
-assert (3282750 > -5589637) = -1
-assert (-1888170 >= 5990225) = 0
-assert (-2335083 and -6482904) = -6548480
-assert (6387256 xor -9314370) = -15685242
-assert (3102002 <= -1107337) = 0
-assert (-7767935 < 491200) = -1
-assert (-9760159 - -8241372) = -1518787
-assert (-8496727 > -1835236) = 0
-assert (-100023 <> -4586046) = -1
-assert (-6736344 = 6424824) = 0
-assert (-6673774 < -1787050) = -1
-assert (7556866 > -4829550) = -1
-assert (8143728 < -6917346) = 0
-assert (-9385809 <> -111601) = -1
-assert (5921864 <> 6862555) = -1
-assert (-2550729 <= 6920772) = -1
-assert (5709668 or 3267465) = 7856109
-assert (4213871 = -1210297) = 0
-assert (1084590 >> 25) = 0
-assert (7257159 >= -5936002) = -1
-assert (5395671 >= 8235925) = 0
-assert (-1584029 or -5206199) = -532629
-assert (-7893528 + 1741602) = -6151926
-assert (-6863999 and -7747900) = -8306048
-assert (3061279 + -5203693) = -2142414
-assert (-5290706 = -6301448) = 0
-assert (-5751011 <> 1461082) = -1
-assert (9055702 >> 17) = 69
-assert (3190160 = 4669355) = 0
-assert (-9703727 or -6381438) = -4397
-assert (2985023 >= -5359570) = -1
-assert (-5750994 xor 5182125) = -1626749
-assert (6619975 or 2755318) = 7277559
-assert (8282207 > 4803345) = -1
-assert (-8067601 and 5905030) = 134
-assert (2238100 >> 9) = 4371
-assert (3399970 mod 4890555) = 3399970
-assert (2371253 >> 0) = 2371253
-assert (-8444044 < 5252349) = -1
-assert (1840564 and -8654862) = 1574320
-assert (-5604101 >= 3134131) = 0
-assert (2456365 - -3474492) = 5930857
-assert (3653138 and -8727010) = 3315218
-assert (1176215 = 5064849) = 0
-assert (6180091 mod 8108708) = 6180091
-assert (3803687 + -2020076) = 1783611
-assert (9229100 > 6678678) = -1
-assert (2627150 << 7) = 336275200
-assert (-792484 + -9256931) = -10049415
-assert (6980975 mod 4479968) = 2501007
-assert (2477129 / -4190732) = 0
-assert (-2121085 or -1534533) = -18501
-assert (7172443 <> 6194865) = -1
-assert (8159092 > 622070) = -1
+assert (""+"a") = "a"
+assert ("bcba"+"") = "bcba"
+assert ("" > "ba") = 0
+assert ("cadc" = "aa") = 0
+assert ("cc" < "dcc") = -1
+assert ("bbcd" >= "adb") = -1
+assert ("ddca"+"baa") = "ddcabaa"
+assert ("bcb"+"adcb") = "bcbadcb"
+assert ("cb"+"bcac") = "cbbcac"
+assert ("a"+"c") = "ac"
+assert ("ac" = "") = 0
+assert ("ba" <> "dc") = -1
+assert ("addd"+"bc") = "adddbc"
+assert ("d"+"db") = "ddb"
+assert ("bcb" <> "c") = -1
+assert ("bda"+"c") = "bdac"
+assert ("c" <> "cb") = -1
+assert ("d" < "ab") = 0
+assert ("a"+"b") = "ab"
+assert ("a"+"") = "a"
+assert ("d" > "cca") = -1
+assert ("a" >= "cdbb") = 0
+assert ("cccc"+"dab") = "ccccdab"
+assert ("adcc" <> "") = -1
+assert ("ccd" >= "") = -1
+assert ("ccdd"+"cc") = "ccddcc"
+assert ("ddd" >= "") = -1
+assert ("adbb" <> "bc") = -1
+assert ("dc"+"a") = "dca"
+assert ("cdaa" < "") = 0
+assert ("bbbb"+"bda") = "bbbbbda"
+assert ("" >= "acb") = 0
+assert ("bcb" <> "bbd") = -1
+assert ("dbdb" <= "") = 0
+assert ("baba" < "c") = -1
+assert ("dba" <> "bac") = -1
+assert ("dba"+"dbd") = "dbadbd"
+assert ("dd" < "") = 0
+assert ("bda" = "a") = 0
+assert ("c" >= "") = -1
+assert ("dad" >= "bcad") = -1
+assert ("ac" < "b") = -1
+assert ("dbac"+"db") = "dbacdb"
+assert ("dc" <> "c") = -1
+assert ("bbda" <= "dbbb") = -1
+assert ("cc" > "cc") = 0
+assert (""+"cc") = "cc"
+assert ("c" = "") = 0
+assert ("da"+"") = "da"
+assert (""+"baa") = "baa"
+assert ("dc" = "c") = 0
+assert ("ac" >= "dc") = 0
+assert (""+"ada") = "ada"
+assert ("ddc"+"") = "ddc"
+assert (""+"") = ""
+assert ("adac"+"acd") = "adacacd"
+assert ("acc"+"cbca") = "acccbca"
+assert (""+"bb") = "bb"
+assert ("" = "") = -1
+assert ("bcad" <> "abad") = -1
+assert ("c" < "bb") = 0
+assert ("ddaa" = "") = 0
+assert ("bc" >= "") = -1
+assert ("" = "") = -1
+assert ("bdaa"+"bbcb") = "bdaabbcb"
+assert ("aaca"+"aacb") = "aacaaacb"
+assert ("dcc"+"dcc") = "dccdcc"
+assert ("acda"+"bd") = "acdabd"
+assert ("cc" > "adb") = -1
+assert ("cccb" >= "bcba") = -1
+assert ("cacc" = "a") = 0
+assert ("d"+"") = "d"
+assert ("c" <> "bcbd") = -1
+assert ("a" >= "d") = 0
+assert ("d"+"a") = "da"
+assert ("badd" > "dcbc") = 0
+assert (""+"bdd") = "bdd"
+assert ("badc"+"") = "badc"
+assert ("ddd"+"b") = "dddb"
+assert ("abbd" <= "c") = -1
+assert ("cbc"+"cd") = "cbccd"
+assert ("b"+"daad") = "bdaad"
+assert ("daac"+"") = "daac"
+assert ("dbad"+"") = "dbad"
+assert ("aacd" = "ddd") = 0
+assert ("" > "d") = 0
+assert ("" >= "d") = 0
+assert ("cb" <> "aa") = -1
+assert ("b"+"d") = "bd"
+assert ("b" = "") = 0
+assert ("a"+"dba") = "adba"
+assert ("bd"+"c") = "bdc"
+assert (""+"") = ""
+assert ("baa" <> "dba") = -1
+assert ("a"+"db") = "adb"
+assert ("b"+"ddca") = "bddca"
+assert ("bcad"+"bbd") = "bcadbbd"
+assert ("daa" >= "cd") = -1
+assert ("a" > "bbd") = 0
+assert ("" <> "cbb") = -1
+assert ("" < "aada") = -1
+assert ("d"+"") = "d"
+assert ("dbdd"+"dd") = "dbdddd"
+assert ("aaad"+"cba") = "aaadcba"
+assert ("" = "cd") = 0
+assert ("a" < "adba") = -1
+assert ("ccac" < "") = 0
+assert ("caa" = "aacc") = 0
+assert ("add"+"db") = "adddb"
+assert ("c" > "ccad") = 0
+assert ("cdca" >= "db") = 0
+assert (""+"cd") = "cd"
+assert ("cd"+"ac") = "cdac"
+assert ("cddb" <= "") = 0
+assert ("dadd"+"") = "dadd"
+assert ("aa"+"bcb") = "aabcb"
+assert (""+"ddd") = "ddd"
+assert (""+"d") = "d"
+assert ("ad" < "ca") = -1
+assert ("dcd"+"d") = "dcdd"
+assert ("" = "caa") = 0
+assert ("ddd"+"bdb") = "dddbdb"
+assert ("cb" >= "dccb") = 0
+assert ("dd" < "b") = 0
+assert ("dbaa"+"cba") = "dbaacba"
+assert ("dcbc"+"c") = "dcbcc"
+assert ("c"+"aba") = "caba"
+assert (""+"dd") = "dd"
+assert ("a"+"ca") = "aca"
+assert ("abd" <= "d") = -1
+assert ("aa" >= "") = -1
+assert ("dac" > "a") = -1
+assert ("c"+"cadd") = "ccadd"
+assert ("cb" = "aab") = 0
+assert ("ca"+"babc") = "cababc"
+assert ("d" < "d") = 0
+assert (""+"cb") = "cb"
+assert ("dbc"+"aba") = "dbcaba"
+assert ("" <= "baaa") = -1
+assert ("cba" > "cb") = -1
+assert ("db" <> "bbb") = -1
+assert ("bda" <= "") = 0
+assert ("" <= "ab") = -1
+assert ("" >= "bad") = 0
+assert ("ab" <= "bbbb") = -1
+assert ("b"+"b") = "bb"
+assert ("acd"+"bdbd") = "acdbdbd"
+assert ("bba"+"b") = "bbab"
+assert ("ddb"+"bb") = "ddbbb"
+assert ("aad" < "ca") = -1
+assert ("" >= "d") = 0
+assert ("ca" <> "dcdc") = -1
+assert ("" < "b") = -1
+assert ("cc" > "c") = -1
+assert ("b"+"") = "b"
+assert ("baad" = "ca") = 0
+assert ("cad" > "abca") = -1
+assert ("dad"+"") = "dad"
+assert ("aaca" > "ca") = 0
+assert ("aa"+"") = "aa"
+assert (""+"") = ""
+assert ("adad"+"b") = "adadb"
+assert ("ab" <= "bd") = -1
+assert ("c" <= "ab") = 0
+assert ("aadd" > "b") = 0
+assert ("c" >= "") = -1
+assert ("bbcc"+"ba") = "bbccba"
+assert ("" = "") = -1
+assert (""+"b") = "b"
+assert ("" >= "aaca") = 0
+assert ("cb" < "") = 0
+assert ("ddd" <> "c") = -1
+assert ("c"+"") = "c"
+assert ("ac"+"") = "ac"
+assert ("d"+"") = "d"
+assert ("ba" > "") = -1
+assert ("dba" < "b") = 0
+assert ("daaa" <= "") = 0
+assert ("cc"+"dddd") = "ccdddd"
+assert ("cca" <= "ba") = 0
+assert (""+"d") = "d"
+assert ("bd"+"cacb") = "bdcacb"
+assert ("db" > "") = -1
+assert ("ca" <> "b") = -1
+assert ("ad"+"d") = "add"
+assert ("ac"+"c") = "acc"
+assert ("aad" > "bbc") = 0
+assert ("ac" <= "bc") = -1
+assert ("" <> "") = 0
+assert (""+"") = ""
+assert ("d"+"cdab") = "dcdab"
+assert ("add"+"a") = "adda"
+assert ("a" <> "cd") = -1
+assert ("" < "a") = -1
+assert ("ac" >= "") = -1
+assert ("c" <= "c") = -1
+assert ("cd" <> "cc") = -1
+assert ("ccaa" = "b") = 0
+assert ("a"+"aaba") = "aaaba"
+assert ("bcd"+"b") = "bcdb"
+assert ("dbc"+"ca") = "dbcca"
+assert ("a"+"dd") = "add"
+assert ("c"+"b") = "cb"
+assert ("ca" < "cb") = -1
+assert ("cb"+"abbb") = "cbabbb"
+assert ("da"+"") = "da"
+assert ("a"+"a") = "aa"
+assert ("d" > "") = -1
+assert ("abc" = "") = 0
+assert ("cab"+"ccbb") = "cabccbb"
+assert ("cc"+"a") = "cca"
+assert ("ba" > "cd") = 0
+assert ("" >= "cdc") = 0
+assert ("abdc"+"bbcc") = "abdcbbcc"
+assert ("" <= "adc") = -1
+assert ("c" < "dda") = -1
+assert (""+"c") = "c"
+assert ("cca"+"") = "cca"
+assert ("a"+"cadc") = "acadc"
+assert ("d" > "") = -1
+assert ("adab" < "") = 0
+assert ("aaaa"+"cacb") = "aaaacacb"
+assert ("adb" >= "bd") = 0
+assert ("ad"+"abd") = "adabd"
+assert (""+"cc") = "cc"
+assert ("bdbd" <= "") = 0
+assert ("aa"+"a") = "aaa"
+assert ("abca"+"b") = "abcab"
+assert ("b" >= "bdac") = 0
+assert (""+"bbca") = "bbca"
+assert ("cabd" <= "b") = 0
+assert ("adc"+"b") = "adcb"
+assert ("ada"+"") = "ada"
+assert ("a" <> "ab") = -1
+assert ("ccc" < "") = 0
+assert ("cbac"+"") = "cbac"
+assert (""+"accd") = "accd"
+assert ("bdad"+"") = "bdad"
+assert ("c" < "c") = 0
+assert ("ab"+"daca") = "abdaca"
+assert ("db"+"") = "db"
+assert ("acc"+"cb") = "acccb"
+assert ("a"+"d") = "ad"
+assert ("adab"+"dbda") = "adabdbda"
+assert ("dd"+"dc") = "dddc"
+assert ("" <> "c") = -1
+assert ("a"+"") = "a"
+assert ("" > "cab") = 0
+assert (""+"b") = "b"
+assert ("" = "abbd") = 0
+assert ("a" = "a") = -1
+assert ("dbbb" < "b") = 0
+assert ("abcb" <= "") = 0
+assert ("dbd"+"bbb") = "dbdbbb"
+assert (""+"c") = "c"
+assert ("ddbd"+"db") = "ddbddb"
+assert ("bdd"+"d") = "bddd"
+assert ("ac" >= "") = -1
+assert ("aa" >= "a") = -1
+assert ("addd" > "bb") = 0
+assert (""+"aaac") = "aaac"
+assert ("da"+"") = "da"
+assert ("a" > "cc") = 0
+assert ("ab" <= "b") = -1
+assert ("b"+"ad") = "bad"
+assert ("bcca"+"b") = "bccab"
+assert ("a"+"acd") = "aacd"
+assert ("a" < "") = 0
+assert ("aadc"+"c") = "aadcc"
+assert ("" >= "d") = 0
+assert ("ccc"+"cab") = "ccccab"
+assert ("cbc" > "bc") = -1
+assert ("" >= "") = -1
+assert ("c"+"") = "c"
+assert (""+"dd") = "dd"
+assert ("bda"+"bdda") = "bdabdda"
+assert ("cbb"+"ad") = "cbbad"
+assert ("d"+"cb") = "dcb"
+assert ("bb"+"ccc") = "bbccc"
+assert ("b"+"a") = "ba"
+assert ("b" >= "abd") = -1
+assert ("" <> "ad") = -1
+assert ("aa"+"") = "aa"
+assert ("ad" = "dad") = 0
+assert ("aa" <> "dac") = -1
+assert (""+"dbdd") = "dbdd"
+assert ("" > "") = 0
+assert (""+"") = ""
+assert ("dcbd"+"abac") = "dcbdabac"
+assert (""+"dadb") = "dadb"
+assert ("bca" > "c") = 0
+assert ("acb" <= "abb") = 0
+assert ("ccb"+"") = "ccb"
+assert ("dadb"+"ca") = "dadbca"
+assert ("a" <> "bcd") = -1
+assert ("" >= "dbdd") = 0
+assert ("cbd"+"bbdd") = "cbdbbdd"
+assert ("dbc" <= "abc") = 0
+assert ("aca"+"ddbd") = "acaddbd"
+assert (""+"") = ""
+assert ("a" > "b") = 0
+assert ("cb" > "") = -1
+assert ("aba"+"b") = "abab"
+assert ("cadb" <> "ac") = -1
+assert ("d" <= "adb") = 0
+assert ("cdbd"+"cb") = "cdbdcb"
+assert ("aaa" >= "daab") = 0
+assert ("da"+"ba") = "daba"
+assert ("cbdd" > "") = -1
+assert ("ddb" = "") = 0
+assert (""+"cdb") = "cdb"
+assert ("bbcc" <= "") = 0
+assert ("" = "ac") = 0
+assert ("bbcb" >= "aa") = -1
+assert ("bbdc" > "bcb") = 0
+assert ("cac"+"dcbb") = "cacdcbb"
+assert ("db"+"bccc") = "dbbccc"
+assert ("c" < "") = 0
+assert ("a" = "bdad") = 0
+assert (""+"b") = "b"
+assert ("c"+"") = "c"
+assert ("" = "bbb") = 0
+assert ("b"+"cdd") = "bcdd"
+assert ("" < "") = 0
+assert ("cdc"+"ccd") = "cdcccd"
+assert ("b"+"c") = "bc"
+assert ("dcbc" <> "") = -1
+assert ("c" >= "cdd") = 0
+assert ("cd" > "dd") = 0
+assert ("d"+"bbb") = "dbbb"
+assert ("bd" > "cab") = 0
+assert ("bba" >= "b") = -1
+assert ("" >= "ccbb") = 0
+assert ("aadb"+"cdd") = "aadbcdd"
+assert ("dcb" < "") = 0
+assert ("cbb" < "dda") = -1
+assert ("dbc"+"") = "dbc"
+assert ("adda"+"") = "adda"
+assert ("c" <> "") = -1
+assert ("d"+"dd") = "ddd"
+assert ("a"+"adad") = "aadad"
+assert ("d"+"c") = "dc"
+assert ("c" < "c") = 0
+assert ("ba"+"") = "ba"
+assert (""+"bbcd") = "bbcd"
+assert ("cbcb"+"bb") = "cbcbbb"
+assert (""+"") = ""
+assert ("b"+"") = "b"
+assert ("cc" >= "d") = 0
+assert ("cab" <= "b") = 0
+assert ("cbab"+"abbd") = "cbababbd"
+assert ("a"+"bc") = "abc"
+assert ("cab"+"add") = "cabadd"
+assert ("d" <= "") = 0
+assert ("aa" <= "dca") = -1
+assert ("" <> "caad") = -1
+assert ("aca"+"d") = "acad"
+assert ("dcc"+"a") = "dcca"
+assert ("cb"+"ab") = "cbab"
+assert ("aa" < "da") = -1
+assert ("ccab"+"db") = "ccabdb"
+assert ("ccc"+"d") = "cccd"
+assert ("db"+"") = "db"
+assert ("ac" < "") = 0
+assert (""+"aac") = "aac"
+assert ("ccac"+"bad") = "ccacbad"
+assert (""+"b") = "b"
+assert (""+"aaad") = "aaad"
+assert ("acd"+"ca") = "acdca"
+assert ("dc" >= "abb") = -1
+assert ("db"+"acaa") = "dbacaa"
+assert ("aaab" <= "dc") = -1
+assert ("bbbb"+"dc") = "bbbbdc"
+assert (""+"d") = "d"
+assert ("a" = "dbcb") = 0
+assert ("" > "aba") = 0
+assert ("" <> "d") = -1
+assert (""+"") = ""
+assert (""+"") = ""
+assert ("bad" > "cca") = 0
+assert ("a"+"acc") = "aacc"
+assert (""+"bb") = "bb"
+assert ("b" <> "") = -1
+assert ("dbbb"+"") = "dbbb"
+assert ("ab"+"ca") = "abca"
+assert ("bd" <> "dbd") = -1
+assert ("d"+"dbab") = "ddbab"
+assert ("d"+"") = "d"
+assert ("dada"+"a") = "dadaa"
+assert ("c"+"cdab") = "ccdab"
+assert ("bb" < "da") = -1
+assert ("cd"+"") = "cd"
+assert ("cac" < "dabb") = -1
+assert ("" < "cd") = -1
+assert ("" <> "ad") = -1
+assert ("d" > "a") = -1
+assert ("c"+"dbbc") = "cdbbc"
+assert ("dcad"+"dcc") = "dcaddcc"
+assert ("caaa"+"abcc") = "caaaabcc"
+assert ("cabd" >= "ab") = -1
+assert ("bdb" <> "b") = -1
+assert ("bcb"+"") = "bcb"
+assert ("bccc"+"b") = "bcccb"
+assert ("ada"+"cbd") = "adacbd"
+assert ("bbdb"+"b") = "bbdbb"
+assert ("a" <= "adbd") = -1
+assert ("" < "bdab") = -1
+assert ("ada"+"da") = "adada"
+assert ("adac"+"abbb") = "adacabbb"
+assert ("ccdd" <= "ba") = 0
+assert ("ca" > "aa") = -1
+assert ("ba" > "ccac") = 0
+assert (""+"db") = "db"
+assert ("cd" < "ca") = 0
+assert ("d" >= "") = -1
+assert ("dbc"+"dd") = "dbcdd"
+assert ("acbb" = "bab") = 0
+assert ("b" > "bac") = 0
+assert ("da" > "acc") = -1
+assert ("" > "adbd") = 0
+assert ("dab" <> "cda") = -1
+assert ("bc"+"aabb") = "bcaabb"
+assert ("" <> "") = 0
+assert ("bcb"+"") = "bcb"
+assert ("aa" < "") = 0
+assert ("da" < "") = 0
+assert ("abab"+"caa") = "ababcaa"
+assert ("dbcb"+"adc") = "dbcbadc"
+assert ("bcba"+"cdb") = "bcbacdb"
+assert ("adcb" > "") = -1
+assert (""+"aca") = "aca"
+assert ("bd"+"db") = "bddb"
+assert ("ad"+"bcb") = "adbcb"
+assert ("aa" = "cdd") = 0
+assert ("b"+"dbaa") = "bdbaa"
+assert ("abd"+"dcd") = "abddcd"
+assert ("b"+"") = "b"
+assert ("ddda" <> "c") = -1
+assert ("bbda" > "") = -1
+assert ("" <> "cc") = -1
+assert ("ab"+"db") = "abdb"
+assert ("bc"+"d") = "bcd"
+assert ("" < "abad") = -1
+assert (""+"d") = "d"
+assert ("caad" < "") = 0
+assert ("cd"+"b") = "cdb"
+assert ("c"+"a") = "ca"
+assert (""+"ca") = "ca"
+assert ("dacd"+"cd") = "dacdcd"
+assert ("" = "") = -1
+assert ("abad"+"b") = "abadb"
+assert ("bbb"+"") = "bbb"
+assert ("cbd" <= "caa") = 0
+assert ("" > "d") = 0
+assert ("cba"+"b") = "cbab"
+assert ("dcdb" > "aa") = -1
+assert ("a" <= "dca") = -1
+assert ("" <> "") = 0
+assert ("caa" <= "dabc") = -1
+assert ("dad"+"dba") = "daddba"
+assert ("aa"+"bd") = "aabd"
+assert ("" < "ca") = -1
+assert ("aaa"+"cad") = "aaacad"
+assert ("dda"+"d") = "ddad"
+assert ("bab" >= "d") = 0
+assert (""+"da") = "da"
+assert ("ab"+"bda") = "abbda"
+assert ("acda" <> "d") = -1
+assert ("bd" <> "a") = -1
+assert ("c"+"dbbb") = "cdbbb"
+assert ("ada" <= "ab") = 0
+assert (""+"cb") = "cb"
+assert ("b" <= "") = 0
+assert ("" <= "c") = -1
+assert ("a"+"abb") = "aabb"
+assert ("bbac" > "aa") = -1
+assert ("cdac"+"bdda") = "cdacbdda"
+assert ("bcc" < "cdc") = -1
+assert ("dc" <= "") = 0
+assert ("dbc" < "cd") = 0
+assert ("" >= "acbd") = 0
+assert ("b" >= "b") = -1
+assert ("cbdb" <> "") = -1
+assert ("" <= "cd") = -1
+assert ("d"+"acda") = "dacda"
+assert ("d" <> "ac") = -1
+assert (""+"dc") = "dc"
+assert ("" > "b") = 0
+assert ("ad"+"baca") = "adbaca"
+assert ("ccca" >= "bbb") = -1
+assert ("ba"+"cada") = "bacada"
+assert ("bdb" = "bbc") = 0
+assert ("" <> "") = 0
+assert ("" > "cbdc") = 0
+assert ("adac" <= "") = 0
+assert ("a"+"caad") = "acaad"
+assert ("cc"+"") = "cc"
+assert ("d"+"cb") = "dcb"
+assert ("bcab" = "") = 0
+assert (""+"ac") = "ac"
 xemu

@@ -92,9 +92,9 @@ Group0Vectors:
 	.word	Command_VDU              ; $d7 vdu
 	.word	Command_Print            ; $d8 print
 	.word	CommandData              ; $d9 data
-	.word	Unimplemented            ; $da image
-	.word	Unimplemented            ; $db at
-	.word	Unimplemented            ; $dc flip
+	.word	TKErr13                  ; $da image
+	.word	TKErr12                  ; $db at
+	.word	TKErr14                  ; $dc flip
 	.word	Command_Assert           ; $dd assert
 	.word	Command_Poke             ; $de poke
 	.word	Command_Doke             ; $df doke
