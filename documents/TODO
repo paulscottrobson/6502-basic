@@ -1,10 +1,14 @@
 TODO
 ====
 
-Sprite initialise on sprite ON/TRUE
-- SPRITE <n> TO <x>,<y> IMAGE <x> FLIP <f> AT <pos>
-- SPRITE <n> <anything other than FALSE> turns it off, <TRUE> just turns sprite <n> on.
-- SPRITE TRUE|FALSE toggles bit 6
+SPRITE CLEAR 	Turn all sprites off, move all off screen.
+SPRITE ON/TRUE 	Sets sprite enabled bit.
+SPRITE OFF/FALSE Clears sprite enabled bit
+SPRITE 	<n> 		Turns the sprite on except if SPRITE <n> OFF/FALSE
+		ON/TRUE 	turns on
+		TO <x>,<y>	Move it
+		IMAGE <n>	Set image number
+		FLIP <n> 	Set flip bits
 
 PALETTE added to VRAM specification. Loads and uses the default palette.
 
