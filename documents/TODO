@@ -1,11 +1,7 @@
 TODO
 ====
 
-SPRITE 	TO <x>,<y>	Move it
-		IMAGE <n>	Set image number
-		FLIP <n> 	Set flip bits
-
-PALETTE added to VRAM specification. Loads and uses the default palette.
+PALETTE added to VRAM specification. Demo Loads and uses the default palette.
 
 => 0.18
 
@@ -44,7 +40,3 @@ Notes
 
 New commands/Changes to document
 ================================
-SPRITE <TRUE|FALSE>
-SPRITE CLEAR
-SPRITE <n> 
-		<TRUE|FALSE>

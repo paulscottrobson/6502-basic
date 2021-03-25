@@ -53,3 +53,4 @@ NumStack:Expression too complex
 Assembler:Bad Operand/Mode
 Branch:Branch out of range 
 Label:Label changed value
+NoSprite:No Sprite Selected

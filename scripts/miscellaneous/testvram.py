@@ -19,10 +19,15 @@ add(fileData,"Hemmo world!",1,0,4)
 
 fileData.append(0x25)						# 0010 0101 => Size 16x16 sprite, 4 bpp.
 fileData.append(2)
-
 fileData.append(0xFF)						# 127 bytes of data, fake sprite.
 for i in range(0,127):
 	fileData.append(0x22 if i%8 == 4 else 0x33)
+
+fileData.append(0x25)						# 0010 0101 => Size 16x16 sprite, 4 bpp.
+fileData.append(3)
+fileData.append(0xFF)						# 127 bytes of data, fake sprite.
+for i in range(0,127):
+	fileData.append(0x00 if (i >> 3)%8 == 2 or i%8 == 1 else 0x33)
 
 fileData.append(0x80)
 

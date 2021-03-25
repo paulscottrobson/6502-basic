@@ -57,6 +57,12 @@ _CSCommandLoop:
 		beq 	_CSExit
 		cmp 	#TKW_COMMA 					; semantic comma
 		beq 	_CSCommandLoop
+		cmp		#TKW_IMAGE 					; image ?
+		beq 	_CSSetImage
+		cmp 	#TKW_FLIP 					; flip ?
+		beq 	_CSSetFlip
+		cmp 	#TKW_TO 					; to ?
+		beq 	_CSSetPos
 		;
 		;		Select a sprite
 		;
@@ -97,6 +103,70 @@ _CSSetVisibility:
 _CSSetOff:
 		sta 	$9F23 						; update and loop back
 		jmp 	_CSCommandLoop
+		;
+		;		Flip
+		;
+_CSSetFlip:		
+		lda 	#0 							; image # now at level 0
+		.main_evaluatesmall					
+		lda 	#6 							; set sprite position to +6
+		jsr 	SpriteSetTarget
+		lda 	esInt0 						; flip value & 3 => temp0
+		and 	#3
+		sta 	temp0
+		lda 	$9F23 						; update the flip.
+		and 	#$FC
+		ora 	temp0
+		sta 	$9F23
+		jmp 	_CSCommandLoop
+		;
+		;		Set sprite position.
+		;
+_CSSetPos:
+		lda 	#0 							; X now at level 0
+		.main_evaluateint					
+		.main_checkcomma
+		lda 	#1 							; Y now at level 1
+		.main_evaluateint
+		ldx 	#0 							; coords at 0,1		
+		jsr 	SpriteMove 					; move it.
+		jmp 	_CSCommandLoop
+		;
+		;		Set Image #
+		;
+_CSSetImage:
+		lda 	#0 							; image # now at level 0
+		.main_evaluatesmall					
+		lda 	#0 							; set sprite position to +0
+		jsr 	SpriteSetTarget
+		ldx 	esInt0 						; get image # into X
+		lda 	imageAddr2Low,x 			; copy low address in.
+		sta 	$9F23
+		inc 	$9F20 						; bump to offset 1.
+		;
+		lda 	imageInfo,x 				; get 4/8 bit flag from info.
+		and 	#$10
+		asl 	a
+		asl		a
+		asl 	a 							; put into bit 7
+		ora 	imageAddr2High,x 			; or high address with it.
+		sta 	$9F23 						; write the high byte.
+
+		lda 	#6
+		jsr 	SpriteSetTarget 			; set sprite on.
+		lda 	$9F23
+		ora 	#$0C
+		sta 	$9F23
+
+		inc 	$9F20 						; point to byte 7 : height/width/palette offset
+		lda 	imageInfo,x 				; get image info
+		asl 	a 							; shift bits 0-3 to 4-7
+		asl 	a
+		asl 	a
+		asl 	a
+		ora 	#$0F 						; set palette offset and write back
+		sta 	$9F23
+		jmp 	_CSCommandLoop
 
 ; ************************************************************************************************
 ;
@@ -108,10 +178,14 @@ SpriteSetTarget:
 		ora 	currSprite
 		sta 	$9F20
 		lda 	currSprite+1
+		beq 	_SSTNoSet
 		sta 	$9F21
 		lda 	#$01
 		sta 	$9F22
 		rts
+
+_SSTNoSet:
+		.throw 	NoSprite		
 
 ; ************************************************************************************************
 ;

@@ -15,6 +15,7 @@
 ../source/extension/option_x16/mode.asm
 ../source/extension/option_x16/palette.asm
 ../source/extension/option_x16/sprite.asm
+../source/extension/option_x16/spritemove.asm
 ../source/extension/option_x16/vload.asm
 ../source/extension/option_x16/vpeekpoke.asm
 ../source/extension/option_x16/vramprocess.asm

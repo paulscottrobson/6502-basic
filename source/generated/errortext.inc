@@ -40,5 +40,6 @@ ErrorTextList:
 	.text 16,"Bad Operand/Mode"
 	.text 19,"Branch out of range"
 	.text 19,"Label changed value"
+	.text 18,"No Sprite Selected"
 	.byte 0
 

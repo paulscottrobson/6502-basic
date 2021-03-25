@@ -39,3 +39,4 @@ ErrorID_NumStack = 35 ; Expression too complex
 ErrorID_Assembler = 36 ; Bad Operand/Mode
 ErrorID_Branch = 37 ; Branch out of range
 ErrorID_Label = 38 ; Label changed value
+ErrorID_NoSprite = 39 ; No Sprite Selected
