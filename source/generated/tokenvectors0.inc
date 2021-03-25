@@ -103,6 +103,6 @@ Group0Vectors:
 	.word	Command_Paper            ; $e2 paper
 	.word	Command_CLS              ; $e3 cls
 	.word	Command_Locate           ; $e4 locate
-	.word	CommandBreak             ; $e5 break
-	.word	CommandAssemblerLabel    ; $e6 .
-	.word	TKErr11                  ; $e7 #
+	.word	CommandAssemblerLabel    ; $e5 .
+	.word	TKErr11                  ; $e6 #
+	.word	CommandClear             ; $e7 clear

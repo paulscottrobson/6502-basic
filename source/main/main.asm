@@ -62,12 +62,13 @@ mainVectors:
 	.word LinkEvaluate         ; index 8
 	.word LinkEvaluateInteger  ; index 10
 	.word LinkEvaluateSmallInt ; index 12
-	.word LinkEvaluateTerm     ; index 14
-	.word MLInt32ToString      ; index 16
-	.word Command_XNew         ; index 18
-	.word XCommand_Run         ; index 20
-	.word Command_RunFrom      ; index 22
-	.word LinkInt32FromString  ; index 24
+	.word LinkEvaluateString   ; index 14
+	.word LinkEvaluateTerm     ; index 16
+	.word MLInt32ToString      ; index 18
+	.word Command_XNew         ; index 20
+	.word XCommand_Run         ; index 22
+	.word Command_RunFrom      ; index 24
+	.word LinkInt32FromString  ; index 26
 _DummyControlHandler:
 	rts
 .send code

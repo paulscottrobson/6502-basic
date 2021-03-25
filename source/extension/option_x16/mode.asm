@@ -13,6 +13,7 @@
 currentMode:
 		.fill 	4		
 		.send storage
+
 		.section code	
 
 ; ************************************************************************************************
@@ -40,8 +41,8 @@ _FMCheck:
 ; ************************************************************************************************
 
 CommandMode:	;; [mode]
-		ldx 	#0
-		jsr 	XEvaluateInteger
+		lda 	#0
+		.main_evaluateint
 		;
 		lda 	esInt3
 		and 	#$70

@@ -37,33 +37,38 @@ main_evaluatesmall .macro
 	jsr	mainHandler
 	.endm
 
-main_evaluateterm .macro
+main_evaluatestring .macro
 	ldx	#14
 	jsr	mainHandler
 	.endm
 
-main_inttostr .macro
+main_evaluateterm .macro
 	ldx	#16
 	jsr	mainHandler
 	.endm
 
-main_new .macro
+main_inttostr .macro
 	ldx	#18
 	jsr	mainHandler
 	.endm
 
-main_run .macro
+main_new .macro
 	ldx	#20
 	jsr	mainHandler
 	.endm
 
-main_runfrom .macro
+main_run .macro
 	ldx	#22
 	jsr	mainHandler
 	.endm
 
-main_strtoint .macro
+main_runfrom .macro
 	ldx	#24
+	jsr	mainHandler
+	.endm
+
+main_strtoint .macro
+	ldx	#26
 	jsr	mainHandler
 	.endm
 

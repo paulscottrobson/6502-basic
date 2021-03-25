@@ -44,7 +44,9 @@ Detokenise: ;; <detokenise>
 		;		Print the line number.
 		;
 		ldx 	#2 						
-		jsr 	MInt32False
+		lda 	#0 						; clear upper two bytes
+		sta 	esInt2,x
+		sta 	esInt3,x
 		ldy 	#1 						; copy line number to stack,2 (as using stack 0,1 for list range)
 		lda 	(codePtr),y
 		sta 	esInt0,x
@@ -67,7 +69,7 @@ _DTPadOut:
 		;
 		;		Main listing loop
 		;
-_DTListLoop		
+_DTListLoop:		
 		lda 	(codePtr),y
 		cmp 	#TOK_STR 				; Inline string.
 		beq 	_DTIsString

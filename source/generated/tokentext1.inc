@@ -2,11 +2,11 @@
 ;	Automatically generated
 ;
 Group1Text:
-	.byte $05,$43,$4c,$45,$41,$d2          ; $86 clear
-	.byte $04,$4c,$4f,$41,$c4              ; $87 load
-	.byte $04,$53,$41,$56,$c5              ; $88 save
-	.byte $04,$4c,$49,$53,$d4              ; $89 list
-	.byte $03,$4e,$45,$d7                  ; $8a new
+	.byte $04,$4c,$4f,$41,$c4              ; $86 load
+	.byte $04,$53,$41,$56,$c5              ; $87 save
+	.byte $04,$4c,$49,$53,$d4              ; $88 list
+	.byte $03,$4e,$45,$d7                  ; $89 new
+	.byte $05,$42,$52,$45,$41,$cb          ; $8a break
 	.byte $03,$52,$55,$ce                  ; $8b run
 	.byte $04,$52,$45,$41,$c4              ; $8c read
 	.byte $07,$52,$45,$53,$54,$4f,$52,$c5  ; $8d restore

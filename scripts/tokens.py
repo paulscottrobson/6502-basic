@@ -166,13 +166,13 @@ class Tokens(object):
 			rem 	let 	input	else	vdu 	
 			print	data	image 	at 		flip
 			assert 	poke 	doke 	loke 	ink
-			paper 	cls 	locate 	break	.
-			# 		
+			paper 	cls 	locate 	.
+			# 		clear 	
 		##
 		##		Put these in group 1.
 		##
 		[group1]
-			clear 	load	save 	list 	new 	
+			load	save 	list 	new 	break	
 			run 	read 	restore	end 	stop
 			xemu 	goto 	gosub 	return
 		##
@@ -180,6 +180,7 @@ class Tokens(object):
 		##
 		[group2]
 			vpoke	vdoke	vload	mode 	palette
+			sprite
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##

@@ -97,8 +97,8 @@ Group0Text:
 	.byte $05,$50,$41,$50,$45,$d2          ; $e2 paper
 	.byte $03,$43,$4c,$d3                  ; $e3 cls
 	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e4 locate
-	.byte $05,$42,$52,$45,$41,$cb          ; $e5 break
-	.byte $01,$ae                          ; $e6 .
-	.byte $01,$a3                          ; $e7 #
+	.byte $01,$ae                          ; $e5 .
+	.byte $01,$a3                          ; $e6 #
+	.byte $05,$43,$4c,$45,$41,$d2          ; $e7 clear
 	.byte $00
 

@@ -1,11 +1,8 @@
 TODO
 ====
 
-SPRITE CLEAR 	Turn all sprites off, move all off screen.
-SPRITE ON/TRUE 	Sets sprite enabled bit.
-SPRITE OFF/FALSE Clears sprite enabled bit
 SPRITE 	<n> 		Turns the sprite on except if SPRITE <n> OFF/FALSE
-		ON/TRUE 	turns on
+		TRUE/FALSE 	Turn on/off.
 		TO <x>,<y>	Move it
 		IMAGE <n>	Set image number
 		FLIP <n> 	Set flip bits
@@ -49,3 +46,5 @@ Notes
 
 New commands/Changes to document
 ================================
+SPRITE <TRUE|FALSE>
+SPRITE CLEAR

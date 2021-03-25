@@ -18,15 +18,16 @@
 ; ************************************************************************************************
 
 Command_VLoad:		;; [vload]
-		ldx 	#0 								; string which is the file name
-		jsr 	EvaluateString
-		inx
-		jsr 	MInt32False 							
+		lda 	#0 								; string which is the file name
+		.main_evaluatestring 					; get a string.
+		ldx 	#1 								; load address at +1.
 		lda 	lowMemory 						; load it into lowMemory (for now ?)
 		sta 	esInt0,x
 		lda 	lowMemory+1
 		sta 	esInt1,x
-		dex
+		lda 	#0
+		sta 	esInt2,x
+		sta 	esInt3,x
 		.device_load 							; load filein to lowMemory.
 		lda 	esInt0+1 						; (temp0) is where we are decoding from.
 		sta 	temp0

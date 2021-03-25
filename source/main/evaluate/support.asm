@@ -114,6 +114,12 @@ LinkEvaluateInteger: 	;; <evaluateint>
 		txa
 		rts
 
+LinkEvaluateString: 	;; <evaluatestring>
+		tax
+		jsr 	EvaluateString
+		txa
+		rts
+		
 LinkEvaluateSmallInt: 	;; <evaluatesmall>
 		tax
 		jsr 	EvaluateSmallInteger

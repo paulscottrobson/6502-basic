@@ -25,12 +25,12 @@ Command_VDoke:		;; [vdoke]
 		clc 						; two bytes, CC
 CmdVideoWrite:		
 		php 						; save one or two btes
-		ldx 	#0  				; get address and value into levels 0,1
-		jsr 	XEvaluateInteger
-		jsr 	CheckComma
-		inx
-		jsr 	XEvaluateInteger
-		dex
+		lda 	#0  				; get address and value into levels 0,1
+		.main_evaluateint
+		.main_checkcomma
+		lda 	#1
+		.main_evaluateint
+		ldx 	#0
 		jsr 	SetUpTOSVRamAddress ; copy target address to VRAM address registers
 		;
 		lda 	esInt0+1 			; get MSB of write value
@@ -79,13 +79,17 @@ Command_VDeek:		;; [vdeek(]
 		clc 						; two bytes, CC
 CmdVideoRead:		
 		php 						; save action on stack.
-		tax 						; save stack position
-		jsr 	XEvaluateInteger 	; address
-		jsr 	CheckRightParen 	; closing right bracket.
+		pha 						; save stack position
+		.main_evaluateint 			; get address.
+		.main_checkrightparen 		; check right bracket
+		.pulx 						; get stack back in X.
 		;
 		jsr 	SetUpTOSVRamAddress	; set up VRAM address.
 		;
-		jsr 	MInt32False 		; zero return.
+		lda 	#0 					; zero upper 3 bytes
+		sta 	esInt1,x
+		sta 	esInt2,x
+		sta 	esInt3,x
 		;
 		lda 	$9F23				; copy 1st byte
 		sta 	esInt0,x
