@@ -47,21 +47,70 @@ _CSCheckClear:
 		;		Sprite command loop.
 		;
 _CSCommandLoop:
-		.debug
+		jsr 	CSCheckOnOff 				; check sprite on/off
+		beq 	_CSSetVisibility
 		lda 	(codePtr),y 				; get and consume character
 		cmp 	#TOK_EOL					; EOL exit.		
+		beq 	_CSExit
 		iny									; consume it
 		cmp 	#TKW_COLON 					; colon exit
 		beq 	_CSExit
 		cmp 	#TKW_COMMA 					; semantic comma
 		beq 	_CSCommandLoop
 		;
+		;		Select a sprite
 		;
-		;
+		dey 								; unpick DEY
 		lda 	#0 							; sprite # now at level 0
 		.main_evaluatesmall					; now in esInt0. A = 0
-
+		asl		esInt0 						; multiply A:esInt0 by 8
+		bcs 	_CSBadValue 				; sprites only 0-127
+		asl 	esInt0
+		rol 	a
+		asl 	esInt0
+		rol 	a
+		ora 	#$FC 						; MSB of address (barring $01 upper third byte)
+		sta 	currSprite+1
+		lda 	esInt0 						; LSB of address
+		sta 	currSprite+0
+		jmp 	_CSCommandLoop
+_CSBadValue
+		.throw	BadValue		
+		;
+		;		Exit
+		;
 _CSExit:		
+		rts
+		;
+		;		Set visibility to On (CS) Off (CC)
+		;
+_CSSetVisibility:
+		php 								; save carry
+		lda 	#6 							; set pos to offset 6.
+		jsr 	SpriteSetTarget
+		;
+		lda 	$9F23 						; read it.
+		and 	#$F3 						; clear depth bits, disabling it.
+		plp
+		bcc 	_CSSetOff 					; check if carry was set
+		ora 	#$0C 						; otherwise set depth bits to 11, on top.
+_CSSetOff:
+		sta 	$9F23 						; update and loop back
+		jmp 	_CSCommandLoop
+
+; ************************************************************************************************
+;
+;			Set R/W address to current sprite or A - no increment or decrement so can R/w
+;
+; ************************************************************************************************
+
+SpriteSetTarget:
+		ora 	currSprite
+		sta 	$9F20
+		lda 	currSprite+1
+		sta 	$9F21
+		lda 	#$01
+		sta 	$9F22
 		rts
 
 ; ************************************************************************************************

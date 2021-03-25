@@ -74,3 +74,4 @@ vary too much. Text source only.
 =========
 - Resuming following Cov19 injections in family (minor side effects) and other personal stuff.
 - BUG: CallCheck script wasn't checking in subdirectories - fixed several cross calls.
+- Added SPRITE commands.

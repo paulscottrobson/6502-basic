@@ -1,9 +1,7 @@
 TODO
 ====
 
-SPRITE 	<n> 		Turns the sprite on except if SPRITE <n> OFF/FALSE
-		TRUE/FALSE 	Turn on/off.
-		TO <x>,<y>	Move it
+SPRITE 	TO <x>,<y>	Move it
 		IMAGE <n>	Set image number
 		FLIP <n> 	Set flip bits
 
@@ -48,3 +46,5 @@ New commands/Changes to document
 ================================
 SPRITE <TRUE|FALSE>
 SPRITE CLEAR
+SPRITE <n> 
+		<TRUE|FALSE>
