@@ -13,6 +13,12 @@ def add(data,text,x,y,colour):
 		data.append(colour)
 
 fileData = [0,0,0x08]						# at 0,0, comrpession 0
+
+fileData.append(0x0F) 						# colour 2 to $F80 (orange)
+fileData.append(0xF3)
+fileData.append(0x80)
+fileData.append(0x0F)
+
 add(fileData,"Hemmo world!",1,0,4)
 #add(fileData,"Hexxo world!",2,2,5)
 #add(fileData,"Heyyo world!",0,3,6)
@@ -28,6 +34,7 @@ fileData.append(3)
 fileData.append(0xFF)						# 127 bytes of data, fake sprite.
 for i in range(0,127):
 	fileData.append(0x00 if (i >> 3)%8 == 2 or i%8 == 1 else 0x33)
+
 
 fileData.append(0x80)
 

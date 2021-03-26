@@ -7,6 +7,10 @@ VRAM Data File Format
 
 00001nnn 				Set decompression type to nnn. 
 
+00001111 				Palette definition. Next byte is palette index, followed by two byte
+						colour in Vera Format. This changes the write address, so should be either first
+						or last.
+
 001bhhww nnnnnnnn 		Define sprite data image n as being here (aligned to 32 bytes automatically)
 						wwhh is size (as defined in Vera docs)
 						b is the mode bit (0 = 4 bit,1 = 8 bit.)

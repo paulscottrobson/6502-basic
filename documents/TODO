@@ -1,10 +1,7 @@
 TODO
 ====
 
-PALETTE added to VRAM specification. Demo Loads and uses the default palette.
-
-=> 0.18
-
+Rewrite the table generator segmenting it up.
 Write a proper VRAM file creator, Import proper sprites add compression ?
 Rewrite the builder program as it's getting out of control.
 

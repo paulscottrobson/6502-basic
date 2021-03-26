@@ -43,6 +43,8 @@ _LVRLoop:
 		bcs 	_LVRLoad 					; load data in ?
 		cmp 	#$08 						; is it set address ?
 		bcc 	_LVRSetAddress
+		cmp 	#$0F 						; is it define palette
+		beq 	_LVRSetPalette
 		cmp 	#$10 						; is it set compression type ?
 		bcc 	_LVRSetCompress
 		cmp 	#$64 						; is it set sprite type.
@@ -86,6 +88,19 @@ _LVRExit:
 		.pulx
 		rts
 		;
+		;		Set palette
+		;
+_LVRSetPalette:
+		jsr 	LVFGet 						; get palette id.
+		jsr 	PointToPaletteA 			; in palette.asm
+		;
+		jsr 	LVFGet 						; copy 12 bit palette data in.
+		sta 	$9F23
+		jsr 	LVFGet
+		and 	#$0F
+		sta 	$9F23
+		jmp 	_LVRLoop
+		;
 		;		Load A & 7F bytes of data in (no decompression yet)
 		;
 _LVRLoad:		
@@ -96,7 +111,7 @@ _LVRLCopy:
 		sta 	$9F23		
 		dex
 		bne 	_LVRLCopy
-		beq 	_LVRLoop
+		jmp 	_LVRLoop
 		;
 		;		Set sprite to current address
 		;
