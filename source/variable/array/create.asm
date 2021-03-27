@@ -3,7 +3,7 @@
 ;
 ;		Name:		create.asm
 ;		Purpose:	Create an array
-;		Created:	17th March 2021 (version 2)
+;		Created:	17th March 2021 
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************

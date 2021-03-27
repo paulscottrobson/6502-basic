@@ -39,4 +39,3 @@ for k in secKeys:
 	for t in sections[k]["targets"].keys():
 		if t not in sections[k]["labels"] and t != "initialiseall":
 			print("Bad : "+t+" accessed in "+k)
-	

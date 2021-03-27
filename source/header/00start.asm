@@ -23,6 +23,7 @@ Start:
 GoColdStart:
 		.set16 basePage,programMemory 		; set up
 		.set16 endMemory,endOfMemory
+
 		jsr 	InitialiseAll 				; initialise everything.
 
 		.if installed_interaction == 0 && autorun != 0

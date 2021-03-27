@@ -1,5 +1,5 @@
 #
-#		Produce test RAM file.
+#		Produce test RAM file, quick bodge for development. PSR 22/3/2021
 #
 def add(data,text,x,y,colour):
 	pos = x * 64 + y * 256

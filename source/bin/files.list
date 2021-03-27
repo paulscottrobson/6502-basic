@@ -1,6 +1,7 @@
 ;
 ;	Automatically generated
 ;
+../source/assembler/asmconst.inc
 ../source/assembler/asmoperand.asm
 ../source/assembler/asmwrite.asm
 ../source/assembler/assemblecmd.asm
@@ -11,6 +12,7 @@
 ../source/device/option_x16/x16io.asm
 ../source/device/option_x16/x16timer.asm
 ../source/error/errorhandler.asm
+../source/error/errorhandler.inc
 ../source/extension/extensionhandler.asm
 ../source/extension/option_x16/mode.asm
 ../source/extension/option_x16/palette.asm
@@ -19,15 +21,20 @@
 ../source/extension/option_x16/vload.asm
 ../source/extension/option_x16/vpeekpoke.asm
 ../source/extension/option_x16/vramprocess.asm
+../source/extension/option_x16/x16const.inc
 ../source/floatingpoint/addsub.asm
 ../source/floatingpoint/compare.asm
 ../source/floatingpoint/convert.asm
+../source/floatingpoint/float.inc
 ../source/floatingpoint/importexport.asm
 ../source/floatingpoint/loadstore.asm
 ../source/floatingpoint/muldiv.asm
 ../source/floatingpoint/unary.asm
 ../source/footer/99end.asm
 ../source/header/00start.asm
+../source/header/01common.inc
+../source/header/02macros.inc
+../source/header/03data.inc
 ../source/interaction/cold.asm
 ../source/interaction/delete.asm
 ../source/interaction/insert.asm
@@ -83,9 +90,11 @@
 ../source/string/functions/compare.asm
 ../source/string/functions/concat.asm
 ../source/string/functions/memory.asm
+../source/string/functions/memory.inc
 ../source/string/functions/setcase.asm
 ../source/string/functions/substring.asm
 ../source/string/functions/write.asm
+../source/tokeniser/detokenise/colouring.inc
 ../source/tokeniser/detokenise/detokenise.asm
 ../source/tokeniser/detokenise/dtprint.asm
 ../source/tokeniser/detokenise/identifier.asm

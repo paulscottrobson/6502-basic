@@ -79,3 +79,8 @@ vary too much. Text source only.
 26/3/2021
 =========
 - VRAM file can now set palette.
+- Reorganised table generators script
+
+27/3/2021
+=========
+- Reorganised builder script

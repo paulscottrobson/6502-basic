@@ -33,10 +33,10 @@ run : $(APPNAME)
 	$(EMULATOR) $<
 
 analyse: $(APPNAME)
-	python $(SCRIPTDIR)analyse.py $(OBJDIR)basic.lbl
+	python $(SCRIPTDIR)miscellaneous$(S)analyse.py $(OBJDIR)basic.lbl
 
 dump : $(APPNAME)
-	python $(SCRIPTDIR)dumpvar.py 
+	python $(SCRIPTDIR)miscellaneous$(S)dumpvar.py 
 
 $(TESTDIR)makebasic.zip : $(SCRIPTDIR)tokens.py $(SCRIPTDIR)tokeniser.py $(SCRIPTDIR)makepgm.py $(SCRIPTDIR)__main__.py
 	zip -q -j $@ $^
