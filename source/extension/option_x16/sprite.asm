@@ -164,7 +164,9 @@ _CSSetImage:
 		asl 	a
 		asl 	a
 		asl 	a
+		bcs		_CSNoOffset 				; if bit 4 was set don't set the offset.
 		ora 	#$0F 						; set palette offset and write back
+_CSNoOffset:		
 		sta 	$9F23
 		jmp 	_CSCommandLoop
 

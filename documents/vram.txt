@@ -19,8 +19,9 @@ VRAM Data File Format
 
 10000000 				End of data.
 
-1nnnnnnn 				Block of data size n bytes follows, using current compression,
-						expand at current address.
+Compression Model 0 (uncompressed)
+==================================
+1nnnnnnn 				Block of data size n bytes follows.
 
 
 

@@ -100,10 +100,12 @@ _LVRSetPalette:
 		and 	#$0F
 		sta 	$9F23
 		jmp 	_LVRLoop
+_LVRLoad:	
+		ldx 	compressMode
+		bne 	_LVRNotMode0
 		;
-		;		Load A & 7F bytes of data in (no decompression yet)
+		;		Mode 0 :Load A & 7F bytes of data in (no decompression yet)
 		;
-_LVRLoad:		
 		and 	#$7F 						; count in X (is > 0)
 		tax
 _LVRLCopy:
@@ -156,6 +158,10 @@ _LVRShift:
 _LVRSSValue:
 		.throw 	BadValue
 
+_LVRNotMode0:
+		.debug
+		jmp 	_LVRNotMode0
+		
 ; ************************************************************************************************
 ;
 ;			Read one byte from VRAM source. This MUST go through here, so we can use
