@@ -19,7 +19,7 @@ from palette import *
 # *****************************************************************************
 
 class DataObject(VRAMBase):
-	def __init__(self,compression = 1):
+	def __init__(self,compression = 0):
 		self.currentCompression = compression
 		self.data = []
 	#

@@ -24,7 +24,7 @@ palette.setSpritePalette()
 
 target.append([1,0])									# position to 256*64 = 1024*16
 
-target.append([0x3A if do8Bit else 0x2A,0x01]) 			# define sprite 32x32 #1 4/8 bit colour.
+target.append([0x3A if do8Bit else 0x2A,0x03]) 			# define sprite 32x32 #1 4/8 bit colour.
 
 image = Image.open("vram/mario.png")
 enc = ImageEncoder()

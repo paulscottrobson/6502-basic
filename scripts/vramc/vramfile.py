@@ -25,7 +25,8 @@ class VRAMFile(object):
 	def chunk(self):
 		pass
 	#
-	def write(self,fileName = "data.vram"):
+	def write(self,fileName = None):
+		fileName = "data.vram" if fileName is None else fileName
 		h = open(fileName,"wb")
 		h.write(bytes([0xFF,0xFF]))
 		h.write(bytes(self.data))

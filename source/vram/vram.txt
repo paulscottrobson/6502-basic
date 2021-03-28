@@ -17,7 +17,7 @@
 ; -----------------------------------------------------------------------------------
 ;
 ;		Move sets the VRAM write pointer, so you can specify certain tables or graphics
-;		go in a particular space. Defaults to 0
+;		go in a particular space. No default.
 ;
 MOVE	$4000 
 ; -----------------------------------------------------------------------------------
@@ -40,8 +40,8 @@ COLOUR 	sprite
 SPRITE 	2,32,32
 ; -----------------------------------------------------------------------------------
 ;
-;		Set the number of bits in the tile or sprite. Defaults to 1. Sprites
-;		can be 4 or 8 bits. Defaults to 4.
+;		Set the number of bits in the tile or sprite. Sprites can be 4 or 8 bits. 
+;		Defaults to 4.
 ;
 BITS 	4
 ; -----------------------------------------------------------------------------------
@@ -51,5 +51,5 @@ BITS 	4
 ;		Images need to be readable by the Pillow library and have an alpha channel for
 ;		transparency.
 ;
-IMAGE 	sq_mario.png
 IMAGE 	mario.png
+IMAGE 	sq_mario.png
