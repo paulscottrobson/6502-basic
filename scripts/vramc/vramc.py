@@ -40,6 +40,7 @@ class VRamCompiler(object):
 		self.width = 16
 		self.height = 16
 		self.bits = 4
+		self.sheet = None
 		#
 		self.legalSizes = { 8:0,16:1,32:2,64:3 }
 	#
@@ -86,10 +87,31 @@ class VRamCompiler(object):
 			elif s.startswith("image"):
 				self.markSpritePosition()
 				image = Image.open(dir+os.sep+s[5:].strip())
-				imgData = self.encoder.encode(image,self.palette,self.bits == 4,self.width,self.height)
-				do = DataObject()
-				do.append(imgData)
-				self.target.append(do.render())
+				self.addImage(image)
+			#
+			elif s.startswith("sheet"):
+				self.sheet = s[5:].strip().split(",")
+				if len(self.sheet) != 7:
+					raise VRAMAssertion("Bad sheet")
+				self.sheet[0] = Image.open(dir+os.sep+self.sheet[0])
+				for i in range(1,7):
+					self.sheet[i] = self.evaluate(self.sheet[i])
+			#
+			elif s.startswith("import"):
+				grid = s[6:].strip().split(",")
+				if len(grid) != 4:
+					raise VRAMAssertion("Bad sheet")
+				for i in range(0,4):
+					grid[i] = self.evaluate(grid[i])
+				if self.sheet is None:
+					raise "No sheet selected to import"
+				for y in range(0,grid[3]):
+					for x in range(0,grid[2]):
+						xs = self.sheet[1] + self.sheet[3]*x
+						ys = self.sheet[2] + self.sheet[4]*y
+						image = self.sheet[0].crop((xs,ys,xs+self.sheet[5],ys+self.sheet[6]))
+						self.markSpritePosition()
+						self.addImage(image)						
 			#
 			else:
 				raise VRAMAssertion("Unknown command "+s)
@@ -102,6 +124,14 @@ class VRamCompiler(object):
 		ctrl += self.legalSizes[self.width] 
 		self.target.append([ctrl,self.spriteID])
 		self.spriteID += 1
+	#
+	#		Add image
+	#
+	def addImage(self,image):
+		imgData = self.encoder.encode(image,self.palette,self.bits == 4,self.width,self.height)
+		do = DataObject()
+		do.append(imgData)
+		self.target.append(do.render())
 	#
 	#		Write file out.
 	#

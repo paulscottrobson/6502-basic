@@ -25,6 +25,7 @@ class ImageEncoder(object):
 	#		Encode one image.
 	#
 	def encode(self,image,palette,is4Bit,reqWidth,reqHeight):
+		image = image.convert("RGBA")
 		#
 		#		Does it need resizing ?
 		#

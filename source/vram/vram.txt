@@ -53,3 +53,19 @@ BITS 	4
 ;
 IMAGE 	mario.png
 IMAGE 	sq_mario.png
+;
+; -----------------------------------------------------------------------------------
+;
+;		We're going to import a sheet. This is preparatory. The first two coordinates
+;		are the top left of the first graphic. The next 2 are the spacing between each
+;		graphic (here, they are stuck together). The last 2 are the size of each graphic.
+;
+SHEET 	sheet.png,0,0,16,16,16,16
+;
+; -----------------------------------------------------------------------------------
+;
+;		We set the sprite position and size, then import the range given, which is
+;		the coordinate of the first one as a grid, and the count across and count down.
+;		
+SPRITE 	16,16,16
+IMPORT 	0,0,8,4
