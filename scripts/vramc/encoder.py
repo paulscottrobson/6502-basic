@@ -29,7 +29,7 @@ class ImageEncoder(object):
 		#		Does it need resizing ?
 		#
 		if image.width != reqWidth or image.height != reqHeight:
-			image = image.resize((reqWidth,reqHeight))
+			image = self.resizeImage(image,reqWidth,reqHeight)
 		#
 		#		Scan & find nearest.
 		#			
@@ -85,6 +85,21 @@ class ImageEncoder(object):
 				bestPixel = pix
 		assert bestPixel is not None
 		return bestPixel
+	#
+	#		Resize image maintaining aspect ratio
+	#
+	def resizeImage(self,img,w,h):
+		ws = w / img.width 									# Scales to fit in space
+		hs = h / img.height 
+		scale = min(ws,hs) 									# Scale to use is the smaller.
+		xScaled = int(img.width*scale+0.5)					# Work out scaled size.
+		yScaled = int(img.height*scale+0.5)		
+		img = img.resize((xScaled,yScaled))					# Resize. Now fits in at least one axis
+		if img.width != w or img.height != h:
+			newImage = Image.new("RGBA",(w,h),0)			# Centre on new image.
+			newImage.paste(img,(int(w/2-img.width/2),int(h/2-img.height/2)))
+			img = newImage
+		return img
 
 if __name__ == "__main__":
 	palette = Palette()
