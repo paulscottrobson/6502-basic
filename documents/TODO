@@ -1,7 +1,6 @@
 TODO
 ====
 
-- Get compression type 1 (simple RLE) working and get Marios demo working
 - Expand VRAMC to take a control file in a subdirectory.
 
 => 0.19

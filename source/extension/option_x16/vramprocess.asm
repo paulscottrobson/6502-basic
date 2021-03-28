@@ -107,6 +107,7 @@ _LVRLoad:
 		;		Mode 0 :Load A & 7F bytes of data in (no decompression yet)
 		;
 		and 	#$7F 						; count in X (is > 0)
+_LVRLCopyX:		
 		tax
 _LVRLCopy:
 		jsr 	LVFGet 						; write to data.
@@ -157,11 +158,30 @@ _LVRShift:
 
 _LVRSSValue:
 		.throw 	BadValue
-
+		;
+		;		Mode 1 : Simple RLE compression.
+		;
 _LVRNotMode0:
+		cpx 	#1
+		bne 	_LVRNotMode1
+		;
+		and 	#$7F 						; drop bit 7
+		cmp 	#$40
+		bcc 	_LVRLCopyX 					; 00-3F use mode 0's copying code.
+_LVRRLEGroup:
+		and 	#$3F
+		tax
+		jsr 	LVFGet
+_LVRLEGroupLoop:
+		sta 	$9F23
+		dex
+		bne 	_LVRLEGroupLoop
+		jmp 	_LVRLoop
+
+_LVRNotMode1:
 		.debug
-		jmp 	_LVRNotMode0
-		
+		jmp 	_LVRNotMode1
+
 ; ************************************************************************************************
 ;
 ;			Read one byte from VRAM source. This MUST go through here, so we can use

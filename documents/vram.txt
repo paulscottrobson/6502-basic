@@ -24,6 +24,10 @@ Compression Model 0 (uncompressed)
 1nnnnnnn 				Block of data size n bytes follows.
 
 
+Compression Model 1 (Simple RLE compression)
+============================================
+10nnnnnn 				Followed by n bytes of data
+11cccccc 				Followed by cccccc copies of the following byte.
 
 VRAM Source file format
 =======================												

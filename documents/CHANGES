@@ -85,3 +85,8 @@ vary too much. Text source only.
 =========
 - Reorganised builder script
 - Got Mario on screen using VRAM file and commands :)
+
+28/3/2021
+=========
+- Fixed scaling so maintains aspect ratio
+- Simple RLE compression used to store sprites in VRAM.
