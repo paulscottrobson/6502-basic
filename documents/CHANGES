@@ -91,3 +91,6 @@ vary too much. Text source only.
 - Fixed scaling so maintains aspect ratio
 - Simple RLE compression used to store sprites in VRAM.
 - Scripting format allows sprites from sprite sheets and individual graphics.
+- vramc.py now exists as zipped standalone application.
+- finished reorganisation of scripts directory.
+

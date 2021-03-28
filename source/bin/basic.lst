@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -D autorun=1 -D coldstartnew=0 -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
-; Sun Mar 28 15:16:59 2021
+; Sun Mar 28 20:49:34 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -2322,9 +2322,9 @@
 >1cfc	20 62 79 20 50 61 75 6c 20 52 6f 62 73 6f 6e 20
 >1d0c	32 30 32 31 0d 0d
 >1d12	02 42 61 73 69 63 20				.text 	2,"Basic "
->1d19	30 2e 31 38					.text "0.18"
+>1d19	30 2e 31 39					.text "0.19"
 >1d1d	20 28						.text 	" ("
->1d1f	32 36 2d 4d 61 72 2d 32				.text "26-Mar-2021"
+>1d1f	32 38 2d 4d 61 72 2d 32				.text "28-Mar-2021"
 >1d27	30 32 31
 >1d2a	29 0d 0d 00					.text 	")",13,13,0
 .1d2e					ForceStandardMode:

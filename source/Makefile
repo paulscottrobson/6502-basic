@@ -26,7 +26,7 @@ ASSEMBLESRC = 	$(ASM) -D autorun=1 -D coldstartnew=0 $(ASMOPTS) -o $(OBJDIR)stub
 
 .PHONY: all run analyse dump test
 
-all : $(APPNAME) $(TESTDIR)makebasic.zip
+all : $(TESTDIR)makebasic.zip $(TESTDIR)vramc.zip $(APPNAME) 
 
 run : $(APPNAME)
 	$(CDEL) dump.bin $(CDELQ)
@@ -39,6 +39,9 @@ dump : $(APPNAME)
 	python $(SCRIPTDIR)miscellaneous$(S)dumpvar.py 
 
 $(TESTDIR)makebasic.zip : $(SCRIPTDIR)build$(S)tokens.py $(SCRIPTDIR)build$(S)tokeniser.py $(SCRIPTDIR)build$(S)makepgm.py $(SCRIPTDIR)build$(S)__main__.py
+	zip -q -j $@ $^
+
+$(TESTDIR)vramc.zip : $(SCRIPTDIR)vramc$(S)data.py  $(SCRIPTDIR)vramc$(S)encoder.py  $(SCRIPTDIR)vramc$(S)palette.py  $(SCRIPTDIR)vramc$(S)vramc.py  $(SCRIPTDIR)vramc$(S)vramfile.py  $(SCRIPTDIR)vramc$(S)__main__.py
 	zip -q -j $@ $^
 
 $(APPNAME) : basic.asm $(TESTDIR)makebasic.zip
@@ -55,11 +58,11 @@ $(APPNAME) : basic.asm $(TESTDIR)makebasic.zip
 
 test: 
 	python $(SCRIPTDIR)tests$(S)$(TEST) >$(BASICDIR)test.bas
-	python $(SCRIPTDIR)makepgm.py $(BASICDIR)test.bas
-	python $(SCRIPTDIR)errorgen.py
-	python $(SCRIPTDIR)builder.py
-	python $(SCRIPTDIR)asmtables.py
-	python $(SCRIPTDIR)tables.py
+	python $(SCRIPTDIR)build$(S)makepgm.py $(BASICDIR)test.bas
+	python $(SCRIPTDIR)build$(S)errorgen.py
+	python $(SCRIPTDIR)build$(S)builder.py
+	python $(SCRIPTDIR)build$(S)asmtables.py
+	python $(SCRIPTDIR)build$(S)tables.py
 	$(ASSEMBLESRC) 
 	$(MAKEPRG)
 	$(CDEL) dump.bin $(CDELQ)

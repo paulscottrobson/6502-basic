@@ -30,5 +30,6 @@ class VRAMFile(object):
 		h = open(fileName,"wb")
 		h.write(bytes([0xFF,0xFF]))
 		h.write(bytes(self.data))
+		print("VRAM File size {0} bytes.".format(len(self.data)+2))
 		h.close()
 

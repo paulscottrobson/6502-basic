@@ -1,12 +1,8 @@
 TODO
 ====
 
-- Build VRAMC as an application
-
-=> 0.19
-
 - some sort of clock read function ?
-- Sprite collision function.
+- Sprite collision function, sprite read X/Y functions.
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
 - JOYSTICK (n) and JOYX() JOYY() JOYB(n)
 

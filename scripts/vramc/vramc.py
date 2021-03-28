@@ -154,3 +154,4 @@ if __name__ == "__main__":
 	vc = VRamCompiler()
 	vc.load("vram")
 	vc.write()
+	
