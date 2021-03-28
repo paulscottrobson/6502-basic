@@ -29,11 +29,3 @@ Compression Model 1 (Simple RLE compression)
 10nnnnnn 				Followed by n bytes of data
 11cccccc 				Followed by cccccc copies of the following byte.
 
-VRAM Source file format
-=======================												
-;
-;		Comments
-;				
-* = <const>
-COMPRESS <const>
-SPRITE n,w,h,bpp		n can be + indicating next. w/h can be 8,16,32,64. bpp is 4 or 8

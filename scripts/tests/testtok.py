@@ -11,7 +11,7 @@
 
 import random,sys
 sys.path.append("..")
-sys.path.append("../scripts")
+sys.path.append("../scripts/build")
 from tokeniser import *
 from tokens import *
 

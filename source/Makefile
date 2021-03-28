@@ -38,17 +38,17 @@ analyse: $(APPNAME)
 dump : $(APPNAME)
 	python $(SCRIPTDIR)miscellaneous$(S)dumpvar.py 
 
-$(TESTDIR)makebasic.zip : $(SCRIPTDIR)tokens.py $(SCRIPTDIR)tokeniser.py $(SCRIPTDIR)makepgm.py $(SCRIPTDIR)__main__.py
+$(TESTDIR)makebasic.zip : $(SCRIPTDIR)build$(S)tokens.py $(SCRIPTDIR)build$(S)tokeniser.py $(SCRIPTDIR)build$(S)makepgm.py $(SCRIPTDIR)build$(S)__main__.py
 	zip -q -j $@ $^
 
 $(APPNAME) : basic.asm $(TESTDIR)makebasic.zip
 	$(CDEL) generated$(S)*.inc $(CDELQ)
 	python $(SCRIPTDIR)tests$(S)testtok.py disabled
-	python $(SCRIPTDIR)makepgm.py $(BASICDIR)demo.bas
-	python $(SCRIPTDIR)errorgen.py
-	python $(SCRIPTDIR)builder.py
-	python $(SCRIPTDIR)asmtables.py
-	python $(SCRIPTDIR)tables.py
+	python $(SCRIPTDIR)build$(S)makepgm.py $(BASICDIR)demo.bas
+	python $(SCRIPTDIR)build$(S)errorgen.py
+	python $(SCRIPTDIR)build$(S)builder.py
+	python $(SCRIPTDIR)build$(S)asmtables.py
+	python $(SCRIPTDIR)build$(S)tables.py
 	$(CCOPY) $(OBJDIR)stub.prg $(TESTDIR)
 	$(ASSEMBLESRC) 
 	$(MAKEPRG)

@@ -1,6 +1,6 @@
-mode 0
+mode &25006000
 sprite true:sprite clear
-vload "test.vram"
+vload "data.vram"
 
 sprite 1 image 1
 sprite 2 image 1 flip 1
