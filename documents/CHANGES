@@ -93,4 +93,5 @@ vary too much. Text source only.
 - Scripting format allows sprites from sprite sheets and individual graphics.
 - vramc.py now exists as zipped standalone application.
 - finished reorganisation of scripts directory.
-
+- BUG: While calling evaluate with X = 4 not 0.
+- Collision testing working.

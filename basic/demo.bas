@@ -2,20 +2,20 @@ mode &25006000
 sprite true:sprite clear:cls
 vload "data.vram"
 
-s = 16
-sprite 1 image s
-sprite 2 image 4 to -5,40 flip 1
-print sprite.x(2),sprite.y(2)
+while vpeek(0) = 0:wend
 
-for i = 16 to 47
-	sprite i image i to i mod 8 * 32+16,i/8*32
-next i
+x = 200:y = 180
 
-for i = 1 to 200
-	sprite 1 to 40+i*2,i+20
-	t1 = timer()
-	repeat until timer() > t1
-next i
+sprite 1 image 4 to 100,40 
+sprite 2 image 4 to x,y
+
+print sprite.x(2)
+event1 = 0
+while hit(1,2) = 0
+	y = y - 1:x = x - 1
+	sprite 2 to x,y
+wend
+
 a$ = get$()
 end
 

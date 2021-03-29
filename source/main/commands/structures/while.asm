@@ -27,7 +27,7 @@ Command_While: 	;; [While]
 		lda 	#1
 		jsr 	RSSavePosition 				; save position before the WHILE keyword.
 		iny
-		jsr 	EvaluateInteger				; get the conditional
+		jsr 	EvaluateRootInteger			; get the conditional
 		jsr 	MInt32Zero 	 				; if zero, skip forward to the fail code.
 		beq 	_CWFail
 		rts

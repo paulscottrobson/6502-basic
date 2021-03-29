@@ -27,12 +27,16 @@ SpriteGetCode:
 		pha 								; save stack position
 		jsr 	GetSpriteNumber 			; get # of sprite.
 		.main_checkrightparen 				; check right bracket
-		.pulx 								; get X back
-		lda 	#0 							; zero upper 2 bytes
-		sta 	esInt2,x
-		sta 	esInt3,x
+		.pulx 								; get X back		
 		plp 								; which one ?
 		jsr 	SpriteReadCoordinate 		; read appropriate coordinate into esInt0,x
+		lda 	esInt1,x 					; get sign bit, sign extend 16->32 bits
+		and 	#$80
+		beq 	_SGXYPos
+		lda 	#$FF
+_SGXYPos:
+		sta 	esInt2,x		
+		sta 	esInt3,x		
 		txa 								; return NSP in A
 		rts
 

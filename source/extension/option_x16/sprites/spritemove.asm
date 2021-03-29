@@ -68,7 +68,7 @@ SMHalfSize:
 ; ************************************************************************************************
 ;
 ;		Read position into esInt0,x esInt1,x. Currently selected sprite. 
-;		CS : Read X (CC) Y (CS)
+;		CS : Read X (CC) Y (CS)	esInt3,x contains the half-size.
 ;
 ; ************************************************************************************************
 
@@ -90,6 +90,8 @@ SpriteReadCoordinate:
 _SPRCNotY1:		
 		and 	#3 									; point into half width/height 
 		tay
+		lda 	SMHalfSize,y 						; get half size -> esInt3,x
+		sta 	esInt3,x
 		;
 		plp 										; CS Y CC X
 		lda 	#0 									; A = 0 X A = 2 Y
@@ -100,11 +102,16 @@ _SPRCNotY1:
 		;
 		clc 										; read and unfix centre.
 		lda 	$9F23
-		adc 	SMHalfSize,y
+		adc 	esInt3,x
 		sta 	esInt0,x
 		inc 	$9F20 								; do MSB
 		lda 	$9F23
 		adc 	#0
+		and 	#$0F 								; sign extend on bit 11.
+		cmp		#$08
+		bcc 	_SPRCNoSX
+		ora 	#$F0
+_SPRCNoSX:		
 		sta 	esInt1,x
 		.puly 										; restore Y and exit
 		rts

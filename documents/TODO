@@ -1,7 +1,5 @@
 TODO
 ====
-
-- Sprite collision function
 - some sort of clock read function ?
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
 - JOYSTICK (n) and JOYX() JOYY() JOYB(n)
@@ -13,8 +11,6 @@ Something like AMOS's Animation thing.
 
 Known Bugs
 ==========
-
-	Sign extension fix on coordinate get.
 
 	Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 
@@ -37,8 +33,3 @@ New commands/Changes to document
 ================================
 
 
-Box collision test
-==================
-centre of sprite < sum of widths/2.
-abs(xc+yc) < xw/2+yw/2
-abs((x1+xw1/2)-(x2+xw2/2)) < xw1/2+xw2/2 | hit range.
