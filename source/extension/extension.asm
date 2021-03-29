@@ -2,13 +2,14 @@
 ;	Automatically generated
 ;
 	.include "extensionhandler.asm"
-	.include "option_x16/mode.asm"
-	.include "option_x16/palette.asm"
-	.include "option_x16/sprite.asm"
-	.include "option_x16/spritemove.asm"
-	.include "option_x16/vload.asm"
-	.include "option_x16/vpeekpoke.asm"
-	.include "option_x16/vramprocess.asm"
+	.include "option_x16/sprites/sprite.asm"
+	.include "option_x16/sprites/spritemove.asm"
+	.include "option_x16/sprites/spriteutils.asm"
+	.include "option_x16/video/mode.asm"
+	.include "option_x16/video/palette.asm"
+	.include "option_x16/video/vload.asm"
+	.include "option_x16/video/vpeekpoke.asm"
+	.include "option_x16/video/vramprocess.asm"
 
 .section code
 .send code

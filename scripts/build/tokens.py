@@ -185,7 +185,8 @@ class Tokens(object):
 		##		Floating point functions and system unary functions in group 3.
 		##
 		[group3]
-			vpeek( 	vdeek(
+			vpeek( 	vdeek(	sprite.x(	sprite.y(	
+			hit(
 """		
 	#
 	#		CSV export of assembler.ods using colon

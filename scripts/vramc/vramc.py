@@ -50,6 +50,7 @@ class VRamCompiler(object):
 		src = open(dir+os.sep+"vram.txt").readlines()
 		src = [x.strip().lower().replace("\t"," ") for x in src if x.strip() != "" and not x.startswith(";")]
 		for s in src:
+			self.target.chunk()
 			s = s.replace("color","colour")
 			#
 			if s.startswith("move"):

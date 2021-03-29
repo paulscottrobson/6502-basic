@@ -69,19 +69,10 @@ _CSCommandLoop:
 		dey 								; unpick DEY
 		lda 	#0 							; sprite # now at level 0
 		.main_evaluatesmall					; now in esInt0. A = 0
-		asl		esInt0 						; multiply A:esInt0 by 8
-		bcs 	_CSBadValue 				; sprites only 0-127
-		asl 	esInt0
-		rol 	a
-		asl 	esInt0
-		rol 	a
-		ora 	#$FC 						; MSB of address (barring $01 upper third byte)
-		sta 	currSprite+1
-		lda 	esInt0 						; LSB of address
-		sta 	currSprite+0
+		lda 	esInt0
+		jsr 	SelectSpriteA
 		jmp 	_CSCommandLoop
-_CSBadValue
-		.throw	BadValue		
+
 		;
 		;		Exit
 		;
@@ -229,5 +220,29 @@ _CSClear:
 		lda 	$9F21
 		bne 	_CSClear
 		rts
+
+; ************************************************************************************************
+;
+;									Make Sprite A current
+;
+; ************************************************************************************************
 		
+SelectSpriteA:		
+		sta 	temp0
+		lda 	#0
+		asl		temp0 						; multiply A:esInt0 by 8
+		bcs 	_CSBadValue 				; sprites only 0-127
+		asl 	temp0
+		rol 	a
+		asl 	temp0
+		rol 	a
+		ora 	#$FC 						; MSB of address (barring $01 upper third byte)
+		sta 	currSprite+1
+		lda 	temp0 						; LSB of address
+		sta 	currSprite+0
+		rts
+		
+_CSBadValue
+		.throw	BadValue		
+
 		.send code

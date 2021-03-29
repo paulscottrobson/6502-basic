@@ -1,10 +1,11 @@
 TODO
 ====
 
+- Sprite collision function
 - some sort of clock read function ?
-- Sprite collision function, sprite read X/Y functions.
 - MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
 - JOYSTICK (n) and JOYX() JOYY() JOYB(n)
+- Draw sprite on bitmap various scales ? Font ?
 
 => 0.20
 
@@ -12,6 +13,8 @@ Something like AMOS's Animation thing.
 
 Known Bugs
 ==========
+
+	Sign extension fix on coordinate get.
 
 	Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 
@@ -21,7 +24,8 @@ Incomplete but hooked in for write and test
 ===========================================
 	Special case 1 character in concrete ???
 
-	All floating point operations.
+	All floating point operations. Note Shift-3 dispatches automatically to 
+	extension. Needs cross dispatch to FP routines ?
 
 	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
 	need 6502 versions along with dispatch macro.
@@ -31,4 +35,10 @@ Notes
 
 New commands/Changes to document
 ================================
-VRAMC scripting (in demo ?)
+
+
+Box collision test
+==================
+centre of sprite < sum of widths/2.
+abs(xc+yc) < xw/2+yw/2
+abs((x1+xw1/2)-(x2+xw2/2)) < xw1/2+xw2/2 | hit range.

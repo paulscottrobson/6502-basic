@@ -54,6 +54,9 @@ BITS 	4
 IMAGE 	mario.png
 IMAGE 	sq_mario.png
 ;
+SPRITE 	4,16,32
+IMAGE   box.png
+;
 ; -----------------------------------------------------------------------------------
 ;
 ;		We're going to import a sheet. This is preparatory. The first two coordinates

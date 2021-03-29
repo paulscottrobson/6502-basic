@@ -196,3 +196,6 @@ TKW_PALETTE                  = $8a ; palette
 TKW_SPRITE                   = $8b ; sprite
 TKW_VPEEKLPAREN              = $86 ; vpeek(
 TKW_VDEEKLPAREN              = $87 ; vdeek(
+TKW_SPRITEPERIODXLPAREN      = $88 ; sprite.x(
+TKW_SPRITEPERIODYLPAREN      = $89 ; sprite.y(
+TKW_HITLPAREN                = $8a ; hit(
