@@ -65,7 +65,7 @@ class Palette(VRAMBase):
 		assert len(sprPal) == 16	
 		for i in range(0,16):
 			cvCol = [self.byteToNibble(n) for n in sprPal[i]]
-			self.set(i+0xF0,(cvCol[2] << 8)+(cvCol[1] << 4)+cvCol[0])
+			self.set(i+0xF0,(cvCol[0] << 8)+(cvCol[1] << 4)+cvCol[2])
 	#
 	#		Byte colour to palette colour
 	#

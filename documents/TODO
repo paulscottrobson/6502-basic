@@ -7,11 +7,10 @@ TODO
 
 => 0.20
 
-Something like AMOS's Animation thing.
+Something like AMOS's Animation thing, animate basic movement, destroy ?
 
 Known Bugs
 ==========
-
 	Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 
 	DATA in odd places in structures won't work. May need own scanner.

@@ -95,3 +95,6 @@ vary too much. Text source only.
 - finished reorganisation of scripts directory.
 - BUG: While calling evaluate with X = 4 not 0.
 - Collision testing working.
+- BUG: Fixed sprite pallete (r/b reversed)
+- BUG: Fixed image encoder (using colour 240)
+- Added Mode 1 (40x30) Mode 2 (20x15) Mode 3 (320x200x256 bitmap)

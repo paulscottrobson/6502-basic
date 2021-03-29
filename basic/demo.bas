@@ -1,13 +1,11 @@
-mode &25006000
-sprite true:sprite clear:cls
+mode 1
+sprite true:sprite clear
 vload "data.vram"
-
-while vpeek(0) = 0:wend
 
 x = 200:y = 180
 
-sprite 1 image 4 to 100,40 
-sprite 2 image 4 to x,y
+sprite 1 image 2 to 100,40 
+sprite 2 image 2 to x,y
 
 print sprite.x(2)
 event1 = 0

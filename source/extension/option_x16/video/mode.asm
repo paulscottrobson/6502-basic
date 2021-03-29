@@ -132,6 +132,9 @@ _CMModeError:
 
 CMModeList:
 		.dword	$20006000 					; Mode 0 which is the standard 80x60 mode, no sprites
+		.dword 	$25006000					; Mode 1 (40x30)
+		.dword 	$2A006000 					; Mode 2 (20x15)
+		.dword 	$15006007 					; Mode 3 (320x200 256 colour bitmap)
 CMEndModeList:
 
 ; ************************************************************************************************

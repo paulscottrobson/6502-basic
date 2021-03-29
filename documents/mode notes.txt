@@ -23,16 +23,15 @@ Bit 7 and Byte 2 are all set to zero, this is for expansion.
 Lx config (byte 1 is L1,byte 0 is L0)
 =====================================
 
-[Map Height:2] [Map Width:2] [Tile Size:1] [Bitmap Mode:1] [Colour Depth:1]
+[Map Height:2] [Map Width:2] [Tile Size:1] [Bitmap Mode:1] [Colour Depth:2]
 
 The byte with Tile Size cleared is copied into LX_Config
 Map Base address is as default
-Tile Base address is as default with the tile size bits copied into bits 0 & 1
+Tile Base address is as default with the tile size bit copied into bits 0 & 1
 Scroll is zeroed.
 
 L1 default tilebase is $7C (w/h = 0)
 L1 map config is $60 
-
 
 Default Mode 0 
 

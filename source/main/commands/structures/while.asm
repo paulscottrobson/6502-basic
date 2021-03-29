@@ -65,5 +65,7 @@ Command_Wend:	;; [wend]
 ;		Date			Notes
 ;		==== 			=====
 ;		07-Mar-21 		Pre code read v0.01
+;		29-Mar-21 		Was using EvaluateInteger rather than EvaluateRootInteger and X
+;						was set to 4 - worked but wasted half the number stack.
 ;
 ; ************************************************************************************************

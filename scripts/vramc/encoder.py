@@ -75,7 +75,7 @@ class ImageEncoder(object):
 		b = palette.byteToNibble(pixel[2])
 		bestScore = None
 		bestPixel = None
-		for pix in range(240 if is4Bit else 0,256):
+		for pix in range(241 if is4Bit else 1,256):
 			test = palette.get(pix)
 			rt = (test >> 8) & 0xF
 			gt = (test >> 4) & 0xF
