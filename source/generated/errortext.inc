@@ -41,5 +41,6 @@ ErrorTextList:
 	.text 19,"Branch out of range"
 	.text 19,"Label changed value"
 	.text 18,"No Sprite Selected"
+	.text 8,"Hardware"
 	.byte 0
 

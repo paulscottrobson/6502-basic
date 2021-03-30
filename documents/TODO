@@ -1,8 +1,6 @@
 TODO
 ====
 - some sort of clock read function ?
-- MOUSE (Basic) and MOUSEX() MOUSEY() MOUSEB(n) (click ?)
-- JOYSTICK (n) and JOYX() JOYY() JOYB(n)
 - Draw sprite on bitmap various scales ? Font ?
 
 => 0.20
@@ -30,5 +28,3 @@ Notes
 
 New commands/Changes to document
 ================================
-
-

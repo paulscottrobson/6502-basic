@@ -199,3 +199,6 @@ TKW_VDEEKLPAREN              = $87 ; vdeek(
 TKW_SPRITEPERIODXLPAREN      = $88 ; sprite.x(
 TKW_SPRITEPERIODYLPAREN      = $89 ; sprite.y(
 TKW_HITLPAREN                = $8a ; hit(
+TKW_JOYPERIODXLPAREN         = $8b ; joy.x(
+TKW_JOYPERIODYLPAREN         = $8c ; joy.y(
+TKW_JOYPERIODBLPAREN         = $8d ; joy.b(

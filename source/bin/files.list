@@ -14,6 +14,7 @@
 ../source/error/errorhandler.asm
 ../source/error/errorhandler.inc
 ../source/extension/extensionhandler.asm
+../source/extension/option_x16/miscellany/joystick.asm
 ../source/extension/option_x16/sprites/collide.asm
 ../source/extension/option_x16/sprites/sprite.asm
 ../source/extension/option_x16/sprites/spritemove.asm

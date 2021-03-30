@@ -2,6 +2,7 @@
 ;	Automatically generated
 ;
 	.include "extensionhandler.asm"
+	.include "option_x16/miscellany/joystick.asm"
 	.include "option_x16/sprites/collide.asm"
 	.include "option_x16/sprites/sprite.asm"
 	.include "option_x16/sprites/spritemove.asm"

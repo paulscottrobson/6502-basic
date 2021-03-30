@@ -10,8 +10,10 @@ sprite 2 image 2 to x,y
 print sprite.x(2)
 event1 = 0
 while hit(1,2) = 0
-	y = y - 1:x = x - 1
-	sprite 2 to x,y
+	if event(event1,2)
+		y = y + joy.y():x = x + joy.x()
+		sprite 2 to x,y
+	endif
 wend
 
 a$ = get$()

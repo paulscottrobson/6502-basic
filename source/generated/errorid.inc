@@ -40,3 +40,4 @@ ErrorID_Assembler = 36 ; Bad Operand/Mode
 ErrorID_Branch = 37 ; Branch out of range
 ErrorID_Label = 38 ; Label changed value
 ErrorID_NoSprite = 39 ; No Sprite Selected
+ErrorID_Hardware = 40 ; Hardware
