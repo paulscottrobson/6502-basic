@@ -105,3 +105,4 @@ vary too much. Text source only.
 30/3/2021
 =========
 - Added Joystick Functions.
+- CLOCK() reads the internal RTC

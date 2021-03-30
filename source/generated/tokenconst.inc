@@ -202,3 +202,4 @@ TKW_HITLPAREN                = $8a ; hit(
 TKW_JOYPERIODXLPAREN         = $8b ; joy.x(
 TKW_JOYPERIODYLPAREN         = $8c ; joy.y(
 TKW_JOYPERIODBLPAREN         = $8d ; joy.b(
+TKW_CLOCKLPAREN              = $8e ; clock(

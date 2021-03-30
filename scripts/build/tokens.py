@@ -187,6 +187,7 @@ class Tokens(object):
 		[group3]
 			vpeek( 	vdeek(	sprite.x(	sprite.y(	
 			hit(	joy.x(	joy.y(		joy.b(
+			clock(
 """		
 	#
 	#		CSV export of assembler.ods using colon
