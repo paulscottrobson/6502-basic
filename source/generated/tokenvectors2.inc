@@ -8,3 +8,4 @@ Group2Vectors:
 	.word	CommandMode              ; $89 mode
 	.word	CommandPalette           ; $8a palette
 	.word	CommandSprite            ; $8b sprite
+	.word	CommandClg               ; $8c clg

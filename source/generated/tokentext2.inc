@@ -8,5 +8,6 @@ Group2Text:
 	.byte $04,$4d,$4f,$44,$c5              ; $89 mode
 	.byte $07,$50,$41,$4c,$45,$54,$54,$c5  ; $8a palette
 	.byte $06,$53,$50,$52,$49,$54,$c5      ; $8b sprite
+	.byte $03,$43,$4c,$c7                  ; $8c clg
 	.byte $00
 

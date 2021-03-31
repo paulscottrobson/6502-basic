@@ -106,3 +106,7 @@ vary too much. Text source only.
 =========
 - Added Joystick Functions.
 - CLOCK() reads the internal RTC
+
+31/3/2021
+=========
+- Wrote first version graphics support driver. Added CLG.

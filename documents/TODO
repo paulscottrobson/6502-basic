@@ -1,10 +1,14 @@
 TODO
 ====
+- Rectangle, Frame, Line, Line consistent syntax.
 - Draw sprite on bitmap various scales ? Font ?
+- Review code.
 
-=> 0.20
+=> 0.21
 
-Something like AMOS's Animation thing, animate basic movement, destroy ?
+- Sound (if supported ?)
+
+Something like AMOS's Animation thing, animate basic movement, destroy ? looping ?
 
 Known Bugs
 ==========

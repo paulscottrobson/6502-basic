@@ -99,6 +99,7 @@ _CMClear:
 		ldx 	#7 							; when we do layer 1, offset by 7 hence starts at $9F34
 		lda 	currentMode+1
 		jsr 	CMDecodeLayer
+		jsr 	gdModeChanged 				; check the bitmap status.
 		rts
 
 
@@ -182,4 +183,13 @@ _CMDLayer0: 								; layer 0
 		sta 	$9F2F,X
 		rts
 
+; ************************************************************************************************
+;
+;								Clear Graphics
+;
+; ************************************************************************************************
+
+CommandClg:	;; [clg]
+		jsr 	gdClearGraphics
+		rts
 		.send code

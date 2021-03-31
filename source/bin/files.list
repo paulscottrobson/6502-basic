@@ -14,6 +14,8 @@
 ../source/error/errorhandler.asm
 ../source/error/errorhandler.inc
 ../source/extension/extensionhandler.asm
+../source/extension/option_x16/driver/coords.asm
+../source/extension/option_x16/driver/driver.asm
 ../source/extension/option_x16/miscellany/clock.asm
 ../source/extension/option_x16/miscellany/joystick.asm
 ../source/extension/option_x16/sprites/collide.asm

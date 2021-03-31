@@ -194,6 +194,7 @@ TKW_VLOAD                    = $88 ; vload
 TKW_MODE                     = $89 ; mode
 TKW_PALETTE                  = $8a ; palette
 TKW_SPRITE                   = $8b ; sprite
+TKW_CLG                      = $8c ; clg
 TKW_VPEEKLPAREN              = $86 ; vpeek(
 TKW_VDEEKLPAREN              = $87 ; vdeek(
 TKW_SPRITEPERIODXLPAREN      = $88 ; sprite.x(

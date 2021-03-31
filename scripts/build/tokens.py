@@ -180,7 +180,7 @@ class Tokens(object):
 		##
 		[group2]
 			vpoke	vdoke	vload	mode 	palette
-			sprite
+			sprite	clg
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##
