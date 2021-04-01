@@ -100,6 +100,7 @@ _CMClear:
 		lda 	currentMode+1
 		jsr 	CMDecodeLayer
 		jsr 	gdModeChanged 				; check the bitmap status.
+		jsr 	GResetStorage 				; reset the graphics drawing storage.
 		rts
 
 

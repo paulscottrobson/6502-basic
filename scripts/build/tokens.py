@@ -166,7 +166,7 @@ class Tokens(object):
 			rem 	let 	input	else	vdu 	
 			print	data	image 	at 		flip
 			assert 	poke 	doke 	loke 	ink
-			paper 	cls 	locate 	.
+			paper 	cls 	locate 	.		
 			# 		clear 	
 		##
 		##		Put these in group 1.

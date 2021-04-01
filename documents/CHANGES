@@ -110,3 +110,7 @@ vary too much. Text source only.
 31/3/2021
 =========
 - Wrote first version graphics support driver. Added CLG.
+
+1/4/2021
+========
+- Wrote general graphics handler.

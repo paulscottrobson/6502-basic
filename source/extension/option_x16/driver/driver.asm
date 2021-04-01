@@ -9,7 +9,10 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;	External calls:
+;	External calls: 
+;
+;	These must exist, but can all throw Unimplemented (for no graphics) except gdModeChanged
+;	which should just return.
 ;
 ;			gdModeChanged 				Screen mode changed/initialised, set up
 ;			gdClearGraphics 			Clear Graphics screen
