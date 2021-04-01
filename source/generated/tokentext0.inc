@@ -98,7 +98,8 @@ Group0Text:
 	.byte $03,$43,$4c,$d3                  ; $e3 cls
 	.byte $06,$4c,$4f,$43,$41,$54,$c5      ; $e4 locate
 	.byte $01,$ae                          ; $e5 .
-	.byte $01,$a3                          ; $e6 #
-	.byte $05,$43,$4c,$45,$41,$d2          ; $e7 clear
+	.byte $04,$46,$52,$4f,$cd              ; $e6 from
+	.byte $01,$a3                          ; $e7 #
+	.byte $05,$43,$4c,$45,$41,$d2          ; $e8 clear
 	.byte $00
 

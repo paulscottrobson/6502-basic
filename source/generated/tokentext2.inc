@@ -9,5 +9,9 @@ Group2Text:
 	.byte $07,$50,$41,$4c,$45,$54,$54,$c5  ; $8a palette
 	.byte $06,$53,$50,$52,$49,$54,$c5      ; $8b sprite
 	.byte $03,$43,$4c,$c7                  ; $8c clg
+	.byte $04,$52,$45,$43,$d4              ; $8d rect
+	.byte $05,$46,$52,$41,$4d,$c5          ; $8e frame
+	.byte $04,$44,$52,$41,$d7              ; $8f draw
+	.byte $04,$54,$45,$58,$d4              ; $90 text
 	.byte $00
 

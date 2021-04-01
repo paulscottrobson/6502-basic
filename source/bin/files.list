@@ -15,6 +15,7 @@
 ..\source\error\errorhandler.inc
 ..\source\extension\extensionhandler.asm
 ..\source\extension\graphics\general.asm
+..\source\extension\graphics\rectframe.asm
 ..\source\extension\option_x16\driver\coords.asm
 ..\source\extension\option_x16\driver\driver.asm
 ..\source\extension\option_x16\miscellany\clock.asm

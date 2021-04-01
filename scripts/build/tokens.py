@@ -166,7 +166,7 @@ class Tokens(object):
 			rem 	let 	input	else	vdu 	
 			print	data	image 	at 		flip
 			assert 	poke 	doke 	loke 	ink
-			paper 	cls 	locate 	.		
+			paper 	cls 	locate 	.		from
 			# 		clear 	
 		##
 		##		Put these in group 1.
@@ -180,7 +180,8 @@ class Tokens(object):
 		##
 		[group2]
 			vpoke	vdoke	vload	mode 	palette
-			sprite	clg
+			sprite	clg		rect 	frame 	draw
+			text
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##

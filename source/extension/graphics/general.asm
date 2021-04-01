@@ -15,6 +15,7 @@
 ;		The generic handler examines the text after the drawing keyword and behaves as follows :
 ;
 ;		<coordinate pair>				makes current position, but does nothing else.
+;		FROM <coordinate pair> 			same
 ;		AT/TO <coordinate pair> 		makes current position
 ;		INK/PAPER <colour> 				set ink/paper colour.
 ;		DIM <size> 						set dimensions
@@ -118,7 +119,8 @@ _GHLoop:
 		beq 	_GHCallHandler 				; update post & call the handler
 		cmp 	#TKW_TO
 		beq 	_GHCallHandler 
-
+		cmp 	#TKW_FROM
+		beq 	_GHCPairSkip
 		ldx 	#0 							; now see if it matches a token modifier (INK,PAPER etc.)
 _GHCheckTokens:
 		lda 	(codePtr),y
@@ -127,7 +129,11 @@ _GHCheckTokens:
 		inx
 		lda 	_GHTokenTable,x
 		bne 	_GHCheckTokens
+		dey
+_GHCPairSkip:	
+		iny		
 		;
+_GHCPair:		
 		jsr 	GHMakeCurrent 				; should be a coordinate pair then.
 		jmp 	_GHLoop
 		;
@@ -148,7 +154,9 @@ _GHFoundToken:
 _GHCallHandler:
 		iny 								; consume AT or TO.
 		jsr 	GHMakeCurrent 				; update the coordinates.
+		.pshy
 		jsr 	_GHCallHandlerCode 			; call the handler code
+		.puly
 		jmp 	_GHLoop 					; and loop round.
 		;
 _GHCallHandlerCode:
@@ -206,5 +214,41 @@ _GHMCDoIt:
 _GMHCRange:
 		.throw	BadValue
 
+; ************************************************************************************************
+;
+;		Compare coordinate at X with coordinate at Y
+;
+; ************************************************************************************************
+
+GCompareCoords:
+		lda 	gx1,x
+		cmp 	gx1,y
+		lda 	gx1+1,x
+		sbc 	gx1+1,y
+		rts
+
+; ************************************************************************************************
+;
+;		Swap coordinates at X & Y if CS e.g. X >= Y so smallest first.
+;
+; ************************************************************************************************
+
+GSortMinMaxCoords:
+		bcc 	GSMMCExit
+		lda 	gx1,x
+		pha
+		lda 	gx1,y
+		sta 	gx1,x
+		pla
+		sta 	gx1,y
+
+		lda 	gx1+1,x
+		pha
+		lda 	gx1+1,y
+		sta 	gx1+1,x
+		pla
+		sta 	gx1+1,y
+GSMMCExit:
+		rts
 
 		.send 	code
