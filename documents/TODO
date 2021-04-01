@@ -1,7 +1,8 @@
 TODO
 ====
-- Rectangle, Frame, Line, Line consistent syntax.
-- Draw sprite on bitmap various scales ? Font ?
+- Horizontal/Vertical Lines
+- Bresenham right moving only so mod to suit.
+- Draw sprite on bitmap various scales ? Font - general pixel getter ?
 - Review code.
 
 => 0.21
@@ -31,3 +32,5 @@ Notes
 
 New commands/Changes to document
 ================================
+General Drawing support syntax.
+RECT and FRAME

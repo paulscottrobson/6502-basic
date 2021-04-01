@@ -28,9 +28,9 @@ _gdMR0:										; bump position
 		inc 	gdXPos+1
 _gdMR1:	
 		lda 	gdXPos+1		 			; check MSB
-		beq 	gdMOffScreen
+		beq 	gdMOnScreen
 		cmp 	#2
-		bcs 	gdmOnScreen
+		bcs 	gdmOffScreen
 		lda 	gdXPos 						; $01xx check < $140
 		cmp 	#$40
 		bcs 	gdmOffScreen

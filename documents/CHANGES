@@ -1,6 +1,5 @@
 Changes
 =======
-
 This is a list of changes made post release 0.14 (prior to that it was too fluid)
 
 It is not practical yet to keep code in binary (e.g. tokenised) form because the token values
@@ -113,4 +112,5 @@ vary too much. Text source only.
 
 1/4/2021
 ========
-- Wrote general graphics handler.
+- Wrote general graphics handler  handling INK PAPER DIM and so on.
+- Added RECT and FRAME

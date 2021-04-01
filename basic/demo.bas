@@ -1,3 +1,5 @@
 mode 3
-rect ink 3 from 10,190 to 50,12
+for i = 1 to 1000
+	frame ink random(255) from random(320),random(200) to random(320),random(200)
+next i
 a$ = get$()

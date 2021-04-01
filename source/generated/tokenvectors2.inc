@@ -10,6 +10,6 @@ Group2Vectors:
 	.word	CommandSprite            ; $8b sprite
 	.word	CommandClg               ; $8c clg
 	.word	Command_Rect             ; $8d rect
-	.word	Unimplemented            ; $8e frame
+	.word	Command_Frame            ; $8e frame
 	.word	Unimplemented            ; $8f draw
 	.word	Unimplemented            ; $90 text

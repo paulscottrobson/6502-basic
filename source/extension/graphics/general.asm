@@ -147,6 +147,10 @@ _GHFoundToken:
 		.pulx								; get target back
 		lda 	esInt0 						; get evaluated value
 		sta 	gModifiers,x 				; update the modifiers
+		lda 	gInk 						; update driver ink and paper.
+		jsr 	gdSetInk
+		lda 	gPaper
+		jsr 	gdSetPaper
 		jmp 	_GHLoop 					; and loop back
 		;				
 		;		Found AT or TO. Get the following coordinate, and call the handler to do the actual work.
