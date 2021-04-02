@@ -119,3 +119,5 @@ vary too much. Text source only.
 ========
 - Added LINE and PLOT
 - Redesigned driver & made everything else work.
+- Optimised horizontal line driver
+- CLG allows you to specify a colour via PAPER.

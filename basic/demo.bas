@@ -1,7 +1,4 @@
-mode 3
-for i = 0 to 50
-	rect ink i from i,i to 319-i,199-i
-next i
+mode 3:clg paper 13
 
 plot ink 1 to 100,100
 rect ink 2 from 10,20 to 90,140

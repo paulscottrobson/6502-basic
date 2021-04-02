@@ -20,6 +20,8 @@
 ;			gdSetDrawPosition 			Update pixel offset okay from xPos/yPos 
 ;			gdMvRight/gdMvDown/gdMvUp 	Move, synchronise X,Y with pixelOffset 
 ;			gdPlotInk/gdPlotPaper 		Plot ink/paper (if #255) at current position
+;			gdOptHorizontalWriter 		Draw YX length horizontal line from current, position unchanged.
+;										(can be )
 ;
 ; ************************************************************************************************
 
@@ -133,6 +135,25 @@ _gdCBFail:
 
 ; ************************************************************************************************
 ;
+;								Clear Graphics
+;
+; ************************************************************************************************
+
+CommandClg:	;; [clg]
+		lda 	(codePtr),y
+		cmp 	#TKW_PAPER
+		bne 	_CCLClear
+		iny
+		lda 	#0
+		.main_evaluatesmall
+		lda 	esInt0
+		sta 	gdPaper
+_CCLClear:		
+		jsr 	gdClearGraphics
+		rts
+
+; ************************************************************************************************
+;
 ;								Clear the graphics display
 ;
 ; ************************************************************************************************
@@ -146,10 +167,7 @@ gdClearGraphics:
 		tax
 		jsr 	gdSetX
 		jsr 	gdSetY	
-		sta 	gdPaper 					; paper black
 		jsr 	gdSetDrawPosition 			; set the draw position.
-		lda 	#1 							; ink white
-		sta 	gdInk
 		;
 		ldy 	#$FA						; 320 x 200 pixels = $FA00
 		ldx 	#0
@@ -190,9 +208,15 @@ gdOptHorizontalWriter:
 		pla
 _gdOLoop:
 		sta 	$9F23				
-		dex
-		bne 	_gdOLoop
+		cpx 	#0
+		bne 	_gdNoBorrow
+		cpy 	#0
+		beq 	_gdExit
 		dey
-		bne 	_gdOLoop
+_gdNoBorrow:
+		dex
+		jmp 	_gdOLoop
+_gdExit:				
 		rts
 		.send 	code	
+		

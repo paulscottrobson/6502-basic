@@ -1,7 +1,5 @@
 TODO
 ====
-- Speed up block horizontal writer.
-- You can't set the paper colour on CLG :)
 - Draw sprite on bitmap various scales ? Font - general pixel getter ? TEXT and IMAGE
 - Write documentation for drawing commands / syntax
 - Review code.
@@ -37,5 +35,3 @@ New commands/Changes to document
 ================================
 General Drawing support syntax.
 RECT FRAME PLOT LINE [TEXT IMAGE]
-Modifiers
-INK PAPER [DIM FLIP]

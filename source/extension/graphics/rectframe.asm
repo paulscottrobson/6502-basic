@@ -119,20 +119,29 @@ DrawBoxEnds:
 ; ************************************************************************************************
 
 DrawHorizontalLine:
-		stx 	temp1+1
-		sta 	temp1
-_DVLLoop:
-		jsr 	gdPlotInk
-		jsr		gdMvRight		
-		lda 	temp1
-		bne 	_DVLNoBorrow
-		dec 	temp1+1
-_DVLNoBorrow:
-		dec 	temp1
-		lda 	temp1+1
-		bpl 	_DVLLoop		
-_DVLExit:		
-		rts
+		stx 	tempShort
+		tax
+		ldy 	tempShort
+		lda 	gdInk
+		jmp 	gdOptHorizontalWriter
+;
+;		If you don't want to implement gdOptHorizontalWriter use this code instead and
+;		comment out the above five lines.
+;		
+;		stx 	temp1+1
+;		sta 	temp1
+;_DVLLoop:
+;		jsr 	gdPlotInk
+;		jsr		gdMvRight		
+;		lda 	temp1
+;		bne 	_DVLNoBorrow
+;		dec 	temp1+1
+;_DVLNoBorrow:
+;		dec 	temp1
+;		lda 	temp1+1
+;		bpl 	_DVLLoop		
+;_DVLExit:		
+;		rts
 
 		.send code
 		
