@@ -58,21 +58,7 @@ gdx:			 							; delta x and y
 		.fill 	2
 gdy:		
 		.fill 	2
-;
-;		Modifiers, again, order matters. See _GHTokenTable
-;
-gModifiers:
 
-gInk:										; current ink/paper colours. paper = $FF = don't draw.
-		.fill 	1
-gPaper:	
-		.fill 	1		
-gSize: 										; graphic size.
-		.fill 	1		
-gImage:										; currently selected image
-		.fill 	1
-gFlip: 										; currently selected FLIP.
-		.fill 	1 		
 ;
 ;
 ;
@@ -98,7 +84,6 @@ _GRSLoop:
 		sta 	gStartStorage,x
 		dex
 		bpl 	_GRSLoop
-		inc 	gInk 						; make ink 1.
 		.pulx
 		rts
 
@@ -158,10 +143,6 @@ _GHFoundToken:
 		.pulx								; get target back
 		lda 	esInt0 						; get evaluated value
 		sta 	gModifiers,x 				; update the modifiers
-		lda 	gInk 						; update driver ink and paper.
-		jsr 	gdSetInk
-		lda 	gPaper
-		jsr 	gdSetPaper
 		jmp 	_GHLoop 					; and loop back
 		;				
 		;		Found AT or TO. Get the following coordinate, and call the handler to do the actual work.

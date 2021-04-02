@@ -1,7 +1,7 @@
 TODO
 ====
-- Ink/Paper out of driver, 255 = always transparent.
 - Speed up block horizontal writer.
+- You can't set the paper colour on CLG :)
 - Draw sprite on bitmap various scales ? Font - general pixel getter ? TEXT and IMAGE
 - Write documentation for drawing commands / syntax
 - Review code.

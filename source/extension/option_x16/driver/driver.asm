@@ -16,7 +16,6 @@
 ;
 ;			gdModeChanged 				Screen mode changed/initialised, set up
 ;			gdClearGraphics 			Clear Graphics screen
-;			gdSetInk/gdSetPaper 		Set Ink/Paper
 ;			gdSetX/gdSetY 				Set X/Y position to XA
 ;			gdSetDrawPosition 			Update pixel offset okay from xPos/yPos 
 ;			gdMvRight/gdMvDown/gdMvUp 	Move, synchronise X,Y with pixelOffset 
@@ -34,14 +33,27 @@ gdXPos: 									; horizontal position, calculation only.
 		.fill 	2		
 gdYPos: 									; vertical position.
 		.fill 	2		
+
+;
+;		These are directly accessed and are mandatory
+;
+gModifiers:
+
 gdInk: 										; foreground colour
 		.fill 	1
 gdPaper:									; background colour (255 = transparent)
 		.fill 	1		
+gdSize:										; current size.
+		.fill 	1
+gdImage:									; selected image
+		.fill 	1
+gdFlip:										; selected flip
+		.fill 	1
 gdXLimit: 									; max extent of X and Y
 		.fill 	2
 gdYLimit:
 		.fill 	2		
+
 		.send 	storage
 
 		.section code	
@@ -82,6 +94,13 @@ _gdNotLayer1:
 		ldx 	#0 							; check offset 0 (e.g. start at $9F2D)
 		jsr 	gdCheckBitmap 				; go see if this is a bitmap
 _gdExit:
+		lda 	#0 							; initialise modifiers.
+		sta 	gdPaper
+		sta 	gdFlip
+		sta 	gdImage
+		lda 	#1
+		sta 	gdInk
+		sta 	gdSize
 		jsr 	gdClearGraphics 			; clear graphics display.
 		.puly 								; restore YX
 		.pulx
@@ -129,37 +148,16 @@ gdClearGraphics:
 		jsr 	gdSetY	
 		sta 	gdPaper 					; paper black
 		jsr 	gdSetDrawPosition 			; set the draw position.
-		lda 	$9F22 						; make it autoincrement.
-		ora 	#$10
-		sta 	$9F22
 		lda 	#1 							; ink white
 		sta 	gdInk
 		;
 		ldy 	#$FA						; 320 x 200 pixels = $FA00
 		ldx 	#0
 		lda 	gdPaper
-_gdCGLoop1:
-		sta 	$9F23				
-		dex
-		bne 	_gdCGLoop1
-		dey
-		bne 	_gdCGLoop1
-_gdCGExit:
+		jsr 	gdOptHorizontalWriter		
+_gdCGExit:		
 		.puly
 		.pulx
-		rts
-
-; ************************************************************************************************
-;
-;										Set Ink/Paper
-;
-; ************************************************************************************************
-
-gdSetInk:
-		sta 	gdInk
-		rts
-gdSetPaper:
-		sta 	gdPaper
 		rts
 
 ; ************************************************************************************************
@@ -178,4 +176,23 @@ gdSetY:
 		stx 	gdYPos+1
 		rts
 
+; ************************************************************************************************
+;
+;									Write YX Paper elements
+;
+; ************************************************************************************************
+
+gdOptHorizontalWriter:
+		pha
+		lda 	$9F22 						; make it autoincrement.
+		ora 	#$10
+		sta 	$9F22
+		pla
+_gdOLoop:
+		sta 	$9F23				
+		dex
+		bne 	_gdOLoop
+		dey
+		bne 	_gdOLoop
+		rts
 		.send 	code	
