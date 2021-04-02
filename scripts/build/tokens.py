@@ -181,7 +181,7 @@ class Tokens(object):
 		[group2]
 			vpoke	vdoke	vload	mode 	palette
 			sprite	clg		rect 	frame 	draw
-			text
+			text	plot 	line
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##

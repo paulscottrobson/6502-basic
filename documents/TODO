@@ -1,6 +1,5 @@
 TODO
 ====
-- Horizontal/Vertical Lines
 - Bresenham right moving only so mod to suit.
 - Draw sprite on bitmap various scales ? Font - general pixel getter ?
 - Review code.
@@ -33,4 +32,4 @@ Notes
 New commands/Changes to document
 ================================
 General Drawing support syntax.
-RECT and FRAME
+RECT FRAME PLOT LINE

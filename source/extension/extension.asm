@@ -3,6 +3,8 @@
 ;
 	.include "extensionhandler.asm"
 	.include "graphics/general.asm"
+	.include "graphics/line.asm"
+	.include "graphics/plot.asm"
 	.include "graphics/rectframe.asm"
 	.include "graphics/utils.asm"
 	.include "option_x16/driver/coords.asm"

@@ -11,29 +11,6 @@
 
 ; ************************************************************************************************
 ;
-;								Draw vertical line length XA
-;
-; ************************************************************************************************
-
-DrawVerticalLine:
-		stx 	temp1+1
-		sta 	temp1
-_DVLLoop:
-		jsr 	gdPlotInk
-		jsr		gdMvRight		
-		bcs 	_DVLExit					
-		lda 	temp1
-		bne 	_DVLNoBorrow
-		dec 	temp1+1
-_DVLNoBorrow:
-		dec 	temp1
-		lda 	temp1+1
-		bpl 	_DVLLoop		
-_DVLExit:		
-		rts
-
-; ************************************************************************************************
-;
 ;						Setup XY for gX1,gY1 or gX2,gy2 Y is offset
 ;
 ; ************************************************************************************************
@@ -61,6 +38,28 @@ CompareCoords:
 		sbc 	gX1+1,y
 		rts
 
+CompareCoordsSigned:
+		jsr 	CompareCoords
+		bvc 	_CCSExit
+		eor 	#$80	
+_CCSExit:		
+		rts
+		
+; ************************************************************************************************
+;
+;					= Compare any 2 coords X or Y offsets from X1/X2 in XY
+;
+; ************************************************************************************************
+
+CompareCoordsEq:
+		lda 	gX1,x
+		cmp 	gX1,y
+		bne 	_CCEExit
+		lda 	gX1+1,x
+		cmp 	gX1+1,y
+_CCEExit:		
+		rts
+
 ; ************************************************************************************************
 ;
 ;				   frame sort, so x1,y1 is top left and x2,y2 is bottom right.
@@ -77,5 +76,44 @@ BoxSort:
 		jsr 	GCompareCoords
 		jsr 	GSortMinMaxCoords
 		rts
+
+; ************************************************************************************************
+;
+;		Compare coordinate at X with coordinate at Y
+;
+; ************************************************************************************************
+
+GCompareCoords:
+		lda 	gx1,x
+		cmp 	gx1,y
+		lda 	gx1+1,x
+		sbc 	gx1+1,y
+		rts
+
+; ************************************************************************************************
+;
+;		Swap coordinates at X & Y if CS e.g. X >= Y so smallest first.
+;
+; ************************************************************************************************
+
+GSortMinMaxCoords:
+		bcc 	GSMMCExit
+GSwapCoords:		
+		lda 	gx1,x
+		pha
+		lda 	gx1,y
+		sta 	gx1,x
+		pla
+		sta 	gx1,y
+
+		lda 	gx1+1,x
+		pha
+		lda 	gx1+1,y
+		sta 	gx1+1,x
+		pla
+		sta 	gx1+1,y
+GSMMCExit:
+		rts
+
 
 		.send code

@@ -1,5 +1,8 @@
 mode 3
-for i = 1 to 1000
-	frame ink random(255) from random(320),random(200) to random(320),random(200)
-next i
+x = 160:y = 100:xi = 32:yi = 64
+
+line ink 1 from x,y to x+xi,y+yi
+line ink 2 from x,y to x-xi,y-yi
+line ink 3 from x,y to x+xi,y-yi
+line ink 4 from x,y to x-xi,y+yi
 a$ = get$()

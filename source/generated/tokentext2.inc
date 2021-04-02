@@ -13,5 +13,7 @@ Group2Text:
 	.byte $05,$46,$52,$41,$4d,$c5          ; $8e frame
 	.byte $04,$44,$52,$41,$d7              ; $8f draw
 	.byte $04,$54,$45,$58,$d4              ; $90 text
+	.byte $04,$50,$4c,$4f,$d4              ; $91 plot
+	.byte $04,$4c,$49,$4e,$c5              ; $92 line
 	.byte $00
 

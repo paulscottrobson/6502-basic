@@ -48,6 +48,17 @@ gX2:
 gY2:		
 		.fill 	2		
 ;
+;		Bresenham values see bresenham.py in documentation directory.
+;
+gError:		 								; error value.
+		.fill 	2
+g2Error:		 							; 2 x error value.
+		.fill 	2
+gdx:			 							; delta x and y
+		.fill 	2
+gdy:		
+		.fill 	2
+;
 ;		Modifiers, again, order matters. See _GHTokenTable
 ;
 gModifiers:
@@ -217,42 +228,5 @@ _GHMCDoIt:
 		rts
 _GMHCRange:
 		.throw	BadValue
-
-; ************************************************************************************************
-;
-;		Compare coordinate at X with coordinate at Y
-;
-; ************************************************************************************************
-
-GCompareCoords:
-		lda 	gx1,x
-		cmp 	gx1,y
-		lda 	gx1+1,x
-		sbc 	gx1+1,y
-		rts
-
-; ************************************************************************************************
-;
-;		Swap coordinates at X & Y if CS e.g. X >= Y so smallest first.
-;
-; ************************************************************************************************
-
-GSortMinMaxCoords:
-		bcc 	GSMMCExit
-		lda 	gx1,x
-		pha
-		lda 	gx1,y
-		sta 	gx1,x
-		pla
-		sta 	gx1,y
-
-		lda 	gx1+1,x
-		pha
-		lda 	gx1+1,y
-		sta 	gx1+1,x
-		pla
-		sta 	gx1+1,y
-GSMMCExit:
-		rts
 
 		.send 	code

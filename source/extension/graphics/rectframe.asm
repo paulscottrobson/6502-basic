@@ -1,4 +1,5 @@
 ; ************************************************************************************************
+; ************************************************************************************************
 ;
 ;		Name:		rectframe.asm
 ;		Purpose:	Rectangle and frame code
@@ -6,7 +7,12 @@
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
+; ************************************************************************************************
 
+		.section storage
+frameFlag:									; 0 rect #0 frame.
+		.fill 	1
+		.send storage
 		.section code	
 
 ; ************************************************************************************************
@@ -40,8 +46,11 @@ Command_Frame: 	;; [frame]
 ; ************************************************************************************************
 
 FrameHandler:
-		nop
+		lda 	#1
+		bne 	RectHandler+2
 RectHandler:		
+		lda 	#0
+		sta 	frameFlag
 		jsr 	BoxSort 					; sort so topleft/bottom right
 		jsr 	DrawBoxPart 				; solid first line
 		bcs 	_FHExit
@@ -50,8 +59,7 @@ _FHLoop:
 		ldy 	#gY2-gX1		
 		jsr 	CompareCoords 
 		bcs 	_FHLastLine 				; Y1 >= Y2 then end.
-		lda 	gWordHandler 				; identify solid or frame ?
-		cmp 	#RectHandler & $FF
+		lda 	frameFlag 					; identify solid or frame ?
 		beq 	_FHIsSolidRect
 		jsr 	DrawBoxEnds
 		jmp 	_FHNext
@@ -87,7 +95,7 @@ DrawBoxPart:
 		sbc 	gx1+1
 		tax
 		pla 								; line length in XA.
-		jsr 	DrawVerticalLine
+		jsr 	DrawHorizontalLine
 		clc
 _DBPExit:
 		rts
@@ -110,6 +118,30 @@ DrawBoxEnds:
 		bcs 	_DBEExit 					; off screen, return with CS.
 		jsr 	gdPlotInk 					; RH end.
 _DBEExit:
+		rts
+
+
+; ************************************************************************************************
+;
+;								Draw Horizontal line length XA
+;
+; ************************************************************************************************
+
+DrawHorizontalLine:
+		stx 	temp1+1
+		sta 	temp1
+_DVLLoop:
+		jsr 	gdPlotInk
+		jsr		gdMvRight		
+		bcs 	_DVLExit					
+		lda 	temp1
+		bne 	_DVLNoBorrow
+		dec 	temp1+1
+_DVLNoBorrow:
+		dec 	temp1
+		lda 	temp1+1
+		bpl 	_DVLLoop		
+_DVLExit:		
 		rts
 
 		.send code
