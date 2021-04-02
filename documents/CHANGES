@@ -121,3 +121,4 @@ vary too much. Text source only.
 - Redesigned driver & made everything else work.
 - Optimised horizontal line driver
 - CLG allows you to specify a colour via PAPER.
+- Tested works okay with PHX/PLX/PHY/PLY 65C02

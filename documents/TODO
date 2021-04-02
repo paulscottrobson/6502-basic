@@ -2,6 +2,7 @@ TODO
 ====
 - Draw sprite on bitmap various scales ? Font - general pixel getter ? TEXT and IMAGE
 - Write documentation for drawing commands / syntax
+- Test with 6502 jump indirect rather than 65C02
 - Review code.
 
 => 0.21
