@@ -1,11 +1,14 @@
 TODO
 ====
+- Write documentation for drawing commands / syntax
 - Draw sprite on bitmap various scales ? Font - general pixel getter ?
 - Review code.
 
 => 0.21
 
 - Sound (if supported ?)
+
+Write some games of some type
 
 Something like AMOS's Animation thing, animate basic movement, destroy ? looping ?
 
