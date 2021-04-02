@@ -27,18 +27,6 @@ _gdMR0:										; bump position
 		bne 	_gdMR1
 		inc 	gdXPos+1
 _gdMR1:	
-		lda 	gdXPos+1		 			; check MSB
-		beq 	gdMOnScreen
-		cmp 	#2
-		bcs 	gdmOffScreen
-		lda 	gdXPos 						; $01xx check < $140
-		cmp 	#$40
-		bcs 	gdmOffScreen
-gdmOnScreen:
-		clc
-		rts
-gdmOffScreen:
-		sec
 		rts
 
 ; ************************************************************************************************
@@ -62,7 +50,7 @@ _gdMU1:	dec 	gdYPos
 		lda 	$9F22
 		sbc 	#0
 		sta 	$9F22
-		jmp 	gdCheckYRange
+		rts
 
 gdMvDown:	
 		inc 	gdYPos 						; decrement Y Pos
@@ -79,41 +67,16 @@ _gdMU1:
 		lda 	$9F22
 		adc 	#0
 		sta 	$9F22
-
-gdCheckYRange: 								; check Y = 0...199
-		lda 	gdYPos+1
-		bne 	gdmOffScreen
-		lda 	gdYPos
-		cmp 	#200
-		bcs 	gdmOffScreen
-		bcc 	gdmOnScreen
-; ************************************************************************************************
-;
-;						Update pixel offset/is okay from gdXPos,gdYPos
-;
-; ************************************************************************************************
-
-gdUpdatePixelOffset:
-		lda 	gdXPos+1 					; check X < 320 ($140)
-		beq 	_gdUPOCheckY
-		cmp 	#2
-		bcs 	_gdUPOBad
-		lda 	gdXPos
-		cmp 	#$40
-		bcs 	_gdUPOBad
-_gdUPOCheckY:		
-		lda 	gdYPos+1 					; check Y < 200 
-		bne 	_gdUPOCalculate
-		lda 	gdYPos
-		cmp 	#200
-		bcc 	_gdUPOCalculate
-_gdUPOBad:
-		lda 	#0
-		sta 	gdIsPosOkay
-		sec
 		rts
+
+; ************************************************************************************************
 ;
-_gdUPOCalculate:
+;						Calculate pixel offset from gdXPos,gdYPos => temp0
+;							 Copy that to the screen display position.
+;
+; ************************************************************************************************
+
+gdSetDrawPosition:
 		lda 	#0 							; temp0 is LSB of result start as 256 x Y
 		sta 	temp0 
 		lda 	gdYPos
@@ -131,36 +94,21 @@ _gdUPOCalculate:
 		clc
 		lda 	temp0
 		adc 	gdXPos
-		sta 	gdPixelOffset
+		sta 	temp0
 		lda 	temp0+1
 		adc 	gdXPos+1
-		sta 	gdPixelOffset+1
-		;
-		lda 	#1 							; it's legitimate.
-		sta 	gdIsPosOkay 
-		jsr 	gdCopyPosition 				; copy position over
-		clc
-		rts
+		sta 	temp0+1
 
-; ************************************************************************************************
-;
-;					Copy Pixel offset + bitmapAddress => Address register
-;
-; ************************************************************************************************
-
-gdCopyPosition:
-		pha
 		clc
 		lda 	gdBitmapAddress
-		adc 	gdPixelOffset
+		adc 	temp0
 		sta 	$9F20		
 		lda 	gdBitmapAddress+1
-		adc 	gdPixelOffset+1
+		adc 	temp0+1
 		sta 	$9F21
 		lda 	gdBitmapAddress+2
 		adc 	#0
 		sta 	$9F22
-		pla
 		rts
 
 ; ************************************************************************************************

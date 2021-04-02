@@ -29,8 +29,8 @@ Command_Plot: 	;; [plot]
 ;
 ; ************************************************************************************************
 
-PlotHandler:		
-		ldy 	#gX1-gX1
+PlotHandler:
+		ldy 	#gX2-gX1
 		jsr 	SetupXY 					; set up X1,Y1 to draw.
 		bcs 	_PHExit 					; off screen, return with CS.
 		jsr 	gdPlotInk 					; pixel in Ink.

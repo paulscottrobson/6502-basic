@@ -18,8 +18,8 @@
 ;			gdClearGraphics 			Clear Graphics screen
 ;			gdSetInk/gdSetPaper 		Set Ink/Paper
 ;			gdSetX/gdSetY 				Set X/Y position to XA
-;			gdUpdatePixelOffset 		Update pixel offset okay from xPos/yPos (CS on offscreen)
-;			gdMvRight/gdMvDown/gdMvUp 	Move, synchronise X,Y with pixelOffset (CS on offscreen_)
+;			gdSetDrawPosition 			Update pixel offset okay from xPos/yPos 
+;			gdMvRight/gdMvDown/gdMvUp 	Move, synchronise X,Y with pixelOffset 
 ;			gdPlotInk/gdPlotPaper 		Plot ink/paper (if #255) at current position
 ;
 ; ************************************************************************************************
@@ -30,20 +30,18 @@ gdEnabled:									; non zero if graphics work.
 		.fill 	1		
 gdBitmapAddress: 							; bitmap address (base)
 		.fill 	3		
-
-gdPixelOffset: 								; pixel offset from bitmap address, current.
-		.fill 	2
-gdXPos: 									; horizontal position.
+gdXPos: 									; horizontal position, calculation only.
 		.fill 	2		
 gdYPos: 									; vertical position.
 		.fill 	2		
-gdIsPosOkay: 								; position is on screen if non-zero.
-		.fill 	1
 gdInk: 										; foreground colour
 		.fill 	1
 gdPaper:									; background colour (255 = transparent)
 		.fill 	1		
-
+gdXLimit: 									; max extent of X and Y
+		.fill 	2
+gdYLimit:
+		.fill 	2		
 		.send 	storage
 
 		.section code	
@@ -108,6 +106,8 @@ gdCheckBitmap:
 		sta 	gdBitmapAddress+2
 		lda 	#$00
 		sta 	gdBitmapAddress 			; this is a 17 bit address.
+		set16 	gdXLimit,320 				; set the size of the bitmap.
+		set16 	gdYLimit,200
 _gdCBFail:
 		clc
 		rts		
@@ -123,12 +123,12 @@ gdClearGraphics:
 		.pshy
 		lda 	gdEnabled 					; screen enabled
 		beq 	_gdCGExit
-		lda 	#0 							; reset position
-		sta 	gdIsPosOkay 				; not legal position
-		sta 	gdPixelOffset 				; zero pixel offset.
-		sta 	gdPixelOffset+1
+		lda 	#0 							; home cursor
+		tax
+		jsr 	gdSetX
+		jsr 	gdSetY	
 		sta 	gdPaper 					; paper black
-		jsr 	gdCopyPosition
+		jsr 	gdSetDrawPosition 			; set the draw position.
 		lda 	$9F22 						; make it autoincrement.
 		ora 	#$10
 		sta 	$9F22

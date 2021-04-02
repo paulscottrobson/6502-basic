@@ -204,27 +204,34 @@ GHMakeCurrent:
 ;
 ;		Updates one coordinate of the pair, which data is updated is modified via X.
 ;
-_GHMCDoIt:
+_GHMCDoIt:		
 		lda 	gCurrentXPos,x 				; copy the current position to X,Y
 		sta 	gX1,x
 		lda 	gCurrentXPos+1,x
 		sta 	gX1+1,x
+		;
 		;
 		.pshx 								; save X
 		lda 	#0 							; evaluate the parameter, now in esInt0,esInt1
 		.main_evaluateint
 		.pulx
 		;
-		lda 	esInt0 					
+		lda 	esInt0 						; check coordinate range
+		cmp 	gdXLimit,x
+		lda 	esInt1
+		sbc 	gdXLimit+1,x
+		bcs 	_GMHCRange
+		lda 	esInt2
+		ora 	esInt3
+		bne 	_GMHCRange
+
+		lda 	esInt0 						; copy into current and X2,Y2
 		sta 	gCurrentXPos,x
 		sta 	gX2,x
 		lda 	esInt1
 		sta 	gCurrentXPos+1,x
 		sta 	gX2+1,x
 		;
-		lda 	esInt2 						; check reasonable range.
-		ora 	esInt3
-		bne 	_GMHCRange
 		rts
 _GMHCRange:
 		.throw	BadValue

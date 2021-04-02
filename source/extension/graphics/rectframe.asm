@@ -53,7 +53,6 @@ RectHandler:
 		sta 	frameFlag
 		jsr 	BoxSort 					; sort so topleft/bottom right
 		jsr 	DrawBoxPart 				; solid first line
-		bcs 	_FHExit
 _FHLoop:
 		ldx 	#gY1-gX1 					; check Y1 = Y2
 		ldy 	#gY2-gX1		
@@ -85,8 +84,6 @@ _FHExit:
 DrawBoxPart:
 		ldy 	#gX1-gX1
 		jsr 	SetupXY 					; set up X1,Y1 to draw.
-		bcs 	_DBPExit 					; off screen, return with CS.
-
 		sec 								; calculate line length => temp0
 		lda 	gX2
 		sbc 	gX1
@@ -96,8 +93,6 @@ DrawBoxPart:
 		tax
 		pla 								; line length in XA.
 		jsr 	DrawHorizontalLine
-		clc
-_DBPExit:
 		rts
 
 ; ************************************************************************************************
@@ -109,17 +104,13 @@ _DBPExit:
 DrawBoxEnds:
 		ldy 	#gX1-gX1
 		jsr 	SetupXY 					; set up X1,Y1 to draw.
-		bcs 	_DBEExit 					; off screen, return with CS.
 		jsr 	gdPlotInk 					; LH end.
 		lda 	gX2 						; set position to X2,Y1
 		ldx 	gX2+1
 		jsr 	gdSetX
-		jsr 	gdUpdatePixelOffset 		; update position.
-		bcs 	_DBEExit 					; off screen, return with CS.
+		jsr		gdSetDrawPosition 			; update position.
 		jsr 	gdPlotInk 					; RH end.
-_DBEExit:
 		rts
-
 
 ; ************************************************************************************************
 ;
@@ -133,7 +124,6 @@ DrawHorizontalLine:
 _DVLLoop:
 		jsr 	gdPlotInk
 		jsr		gdMvRight		
-		bcs 	_DVLExit					
 		lda 	temp1
 		bne 	_DVLNoBorrow
 		dec 	temp1+1
@@ -145,3 +135,4 @@ _DVLExit:
 		rts
 
 		.send code
+		

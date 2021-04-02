@@ -80,8 +80,7 @@ _LHExit:
 _LHNextPixel:
 		jsr 	gdPlotInk 					; plot the pixel.
 		jsr 	BresenhamIteration 			; do one bresenham iteration calculation
-		bcc  	_LHDrawLoop 				; and loop back if okay
-		bcs 	_LHExit 					; fail if off screen
+		jmp  	_LHDrawLoop 				; and loop back if okay
 
 ; ************************************************************************************************
 ;
@@ -163,7 +162,6 @@ BresenhamIteration:
 		jsr 	CompareCoordsSigned
 		bmi 	_BINoE2DY
 		jsr 	BresenhamE2GEDY
-		bcs 	_BIFail
 _BINoE2DY:				
 		;
 		;		check dx >= e2, and if so execute the body.
@@ -173,10 +171,7 @@ _BINoE2DY:
 		jsr 	CompareCoordsSigned
 		bmi 	_BINoDXE2
 		jsr 	BresenhamDXGEE2
-		bcs 	_BIFail
 _BINoDXE2:				
-		clc
-_BIFail:		
 		rts
 ;
 ;		Code to execute if e2 >= dy

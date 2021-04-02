@@ -1,7 +1,9 @@
 TODO
 ====
+- Ink/Paper out of driver, 255 = always transparent.
+- Speed up block horizontal writer.
+- Draw sprite on bitmap various scales ? Font - general pixel getter ? TEXT and IMAGE
 - Write documentation for drawing commands / syntax
-- Draw sprite on bitmap various scales ? Font - general pixel getter ?
 - Review code.
 
 => 0.21
@@ -34,4 +36,6 @@ Notes
 New commands/Changes to document
 ================================
 General Drawing support syntax.
-RECT FRAME PLOT LINE
+RECT FRAME PLOT LINE [TEXT IMAGE]
+Modifiers
+INK PAPER [DIM FLIP]

@@ -22,7 +22,7 @@ SetupXY:
 		lda 	gY1,y
 		ldx 	gY1+1,y
 		jsr 	gdSetY
-		jsr 	gdUpdatePixelOffset
+		jsr 	gdSetDrawPosition
 		rts		
 
 ; ************************************************************************************************
