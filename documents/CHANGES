@@ -114,3 +114,7 @@ vary too much. Text source only.
 ========
 - Wrote general graphics handler  handling INK PAPER DIM and so on.
 - Added RECT and FRAME
+
+2/4/2021
+========
+- Added LINE and PLOT

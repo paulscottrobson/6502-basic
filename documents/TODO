@@ -1,6 +1,5 @@
 TODO
 ====
-- Bresenham right moving only so mod to suit.
 - Draw sprite on bitmap various scales ? Font - general pixel getter ?
 - Review code.
 

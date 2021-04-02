@@ -65,9 +65,6 @@ _LHNoSwap:
 		jsr 	SetupXY 					; set up X1,Y1 to draw.
 		bcs 	_LHExit 					; line off screen.
 		;
-		lda 	gdy+1 						; save sign of dy
-		sta 	gdysign
-		;
 _LHDrawLoop:
 		ldx 	#gX1-gX1 					; check if X1=X2 and Y1 = Y2
 		ldy 	#gX2-gX1
@@ -83,7 +80,8 @@ _LHExit:
 _LHNextPixel:
 		jsr 	gdPlotInk 					; plot the pixel.
 		jsr 	BresenhamIteration 			; do one bresenham iteration calculation
-		jmp 	_LHDrawLoop 				; and loop back.		
+		bcc  	_LHDrawLoop 				; and loop back if okay
+		bcs 	_LHExit 					; fail if off screen
 
 ; ************************************************************************************************
 ;
@@ -112,6 +110,22 @@ BresenhamInitialise:
 		lda 	gY1+1
 		sbc 	gY2+1
 		sta 	gdy+1
+		;
+		;		Check if dy +ve in which case we are moving the wrong way
+		;
+		lda 	gdy+1 						; save sign of dy
+		sta 	gdysign
+		bmi 	_BINormal
+		sec
+		lda 	#0
+		sbc 	gdy
+		sta 	gdy
+		lda 	#0
+		sbc 	gdy+1
+		sta 	gdy+1
+		rts
+
+_BINormal:		
 		;
 		;		error = dx + dy
 		;
@@ -149,6 +163,7 @@ BresenhamIteration:
 		jsr 	CompareCoordsSigned
 		bmi 	_BINoE2DY
 		jsr 	BresenhamE2GEDY
+		bcs 	_BIFail
 _BINoE2DY:				
 		;
 		;		check dx >= e2, and if so execute the body.
@@ -158,7 +173,10 @@ _BINoE2DY:
 		jsr 	CompareCoordsSigned
 		bmi 	_BINoDXE2
 		jsr 	BresenhamDXGEE2
+		bcs 	_BIFail
 _BINoDXE2:				
+		clc
+_BIFail:		
 		rts
 ;
 ;		Code to execute if e2 >= dy
@@ -197,6 +215,8 @@ BresenhamDXGEE2:
 		lda 	gError+1
 		adc 	gdx+1
 		sta 	gError+1
+		lda 	gdySign
+		bpl 	_BEDXInvertY
 		;
 		;		inc y1
 		;
@@ -206,5 +226,16 @@ BresenhamDXGEE2:
 _BEDXSkip:
 		jsr 	gdMvDown
 		rts		
-
+		;
+		;		code we do if flipped Y e.g. decrement y1 and move up
+		;
+_BEDXInvertY:
+		lda 	gY1
+		bne 	_BEDXSkip2
+		dec 	gY1+1
+_BEDXSkip2:
+		dec 	gY1		
+		jsr 	gdMvUp
+		rts
+		
 		.send 	code
