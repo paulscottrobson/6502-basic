@@ -15,5 +15,6 @@ Group2Text:
 	.byte $04,$54,$45,$58,$d4              ; $90 text
 	.byte $04,$50,$4c,$4f,$d4              ; $91 plot
 	.byte $04,$4c,$49,$4e,$c5              ; $92 line
+	.byte $05,$50,$41,$49,$4e,$d4          ; $93 paint
 	.byte $00
 

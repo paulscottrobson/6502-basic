@@ -202,6 +202,7 @@ TKW_DRAW                     = $8f ; draw
 TKW_TEXT                     = $90 ; text
 TKW_PLOT                     = $91 ; plot
 TKW_LINE                     = $92 ; line
+TKW_PAINT                    = $93 ; paint
 TKW_VPEEKLPAREN              = $86 ; vpeek(
 TKW_VDEEKLPAREN              = $87 ; vdeek(
 TKW_SPRITEPERIODXLPAREN      = $88 ; sprite.x(

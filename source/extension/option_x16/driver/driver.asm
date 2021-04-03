@@ -19,7 +19,8 @@
 ;			gdSetX/gdSetY 				Set X/Y position to XA
 ;			gdSetDrawPosition 			Update pixel offset okay from xPos/yPos 
 ;			gdMvRight/gdMvDown/gdMvUp 	Move, synchronise X,Y with pixelOffset 
-;			gdPlotInk/gdPlotPaper 		Plot ink/paper (if #255) at current position
+;			gdPlotInk/gdPlotPaper 		Plot ink/paper at current position
+;			gdPlotA 					Plot A at current position.
 ;			gdOptHorizontalWriter 		Draw YX length horizontal line from current, position unchanged.
 ;										(can be )
 ;

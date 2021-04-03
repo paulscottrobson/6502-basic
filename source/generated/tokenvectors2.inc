@@ -15,3 +15,4 @@ Group2Vectors:
 	.word	Unimplemented            ; $90 text
 	.word	Command_Plot             ; $91 plot
 	.word	Command_Line             ; $92 line
+	.word	Command_Paint            ; $93 paint

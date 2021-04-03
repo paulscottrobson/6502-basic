@@ -19,6 +19,7 @@
 ..\source\extension\graphics\line.asm
 ..\source\extension\graphics\plot.asm
 ..\source\extension\graphics\rectframe.asm
+..\source\extension\graphics\renderer.asm
 ..\source\extension\graphics\utils.asm
 ..\source\extension\option_x16\driver\coords.asm
 ..\source\extension\option_x16\driver\driver.asm

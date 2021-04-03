@@ -127,3 +127,4 @@ vary too much. Text source only.
 ========
 - First builder control file.
 - Converted tokens.py into one class plus two pure data classes.
+- Added scaling image/bitmap renderer.
