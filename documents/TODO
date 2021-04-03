@@ -1,17 +1,18 @@
 TODO
 ====
-- Flipper code
 - Access Sprite Data via Render Handler.
 - Draw sprite on bitmap various scales ? Font - general pixel getter ? TEXT and IMAGE
 - Write documentation for drawing commands / syntax
-- 6502 jump indirect code and change 01common.inc so picks correct CPU.
-- Review code.
 
 => 0.21
 
+- 6502 jump indirect code and change 01common.inc so picks correct CPU.
+- Review code.
 - Sound (if supported ?)
 
-Write some games of some type
+=> 0.40
+
+- Write some games of some type
 
 Something like AMOS's Animation thing, animate basic movement, destroy ? looping ?
 

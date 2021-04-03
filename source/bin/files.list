@@ -15,7 +15,6 @@
 ..\source\error\errorhandler.inc
 ..\source\extension\extensionhandler.asm
 ..\source\extension\graphics\general.asm
-..\source\extension\graphics\imagedraw.asm
 ..\source\extension\graphics\line.asm
 ..\source\extension\graphics\plot.asm
 ..\source\extension\graphics\rectframe.asm
@@ -27,6 +26,7 @@
 ..\source\extension\option_x16\miscellany\joystick.asm
 ..\source\extension\option_x16\sprites\collide.asm
 ..\source\extension\option_x16\sprites\sprite.asm
+..\source\extension\option_x16\sprites\spritedraw.asm
 ..\source\extension\option_x16\sprites\spritemove.asm
 ..\source\extension\option_x16\sprites\spriteutils.asm
 ..\source\extension\option_x16\video\mode.asm

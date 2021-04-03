@@ -1,12 +1,16 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		imagedraw.asm
-;		Purpose:	Drawing Utilities for images and bitmaps
-;		Created:	4th April 2021
+;		Name:		spritedraw.asm
+;		Purpose:	Drawing Utilities for sprites
+;		Created:	3rd April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
+; ************************************************************************************************
+;
+;		This file is here because it's optional like sprites. No sprites, PAINT won't work.
+;
 ; ************************************************************************************************
 
 		.section code	

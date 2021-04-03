@@ -3,7 +3,6 @@
 ;
 	.include "extensionhandler.asm"
 	.include "graphics/general.asm"
-	.include "graphics/imagedraw.asm"
 	.include "graphics/line.asm"
 	.include "graphics/plot.asm"
 	.include "graphics/rectframe.asm"
@@ -15,6 +14,7 @@
 	.include "option_x16/miscellany/joystick.asm"
 	.include "option_x16/sprites/collide.asm"
 	.include "option_x16/sprites/sprite.asm"
+	.include "option_x16/sprites/spritedraw.asm"
 	.include "option_x16/sprites/spritemove.asm"
 	.include "option_x16/sprites/spriteutils.asm"
 	.include "option_x16/video/mode.asm"

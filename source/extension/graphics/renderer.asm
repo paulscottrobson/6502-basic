@@ -143,6 +143,27 @@ _RGIUsePaper:
 ; ************************************************************************************************
 
 RenderFlipXY:
+		lda 	gdFlip 						; check any flip at all
+		and 	#3
+		beq 	_RFExit
+		;
+		lsr 	a 							; bit 0 in carry flag
+		bcc 	_RFNoHFlip
+		lda 	RenderWidth 				; X Flip
+		stx 	tempShort
+		clc
+		sbc 	tempShort
+		tax
+_RFNoHFlip:
+		lda 	gdFlip
+		and 	#2 							; bit 1 check
+		beq 	_RFExit
+		lda 	RenderHeight 				; Y Flip
+		sty 	tempShort
+		clc
+		sbc 	tempShort
+		tay
+_RFExit:		
 		rts
 
 ; ************************************************************************************************
