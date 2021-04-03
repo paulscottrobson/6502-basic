@@ -1,6 +1,16 @@
 ;
 ;	Automatically generated
 ;
+cputype = 0
+autorun=1
+coldstartnew=0
+CodeStart = $1000
+MemoryStorage = $800
+EndOfMemory = $9F00
+ZeroPageStorage = $28
+StackAddress = $90
+StackSize = 8
+retStackSizePages = 2
 	.include "header/01common.inc"
 	.include "header/02macros.inc"
 	.include "header/03data.inc"

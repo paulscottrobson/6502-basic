@@ -1,25 +1,41 @@
 ; ************************************************************************************************
 ; ************************************************************************************************
 ;
-;		Name:		memory.inc
-;		Purpose:	String memory reset macro
-;		Reviewed: 	8th March 2021
-;		Created:	27th February 2021
+;		Name:		imagedraw.asm
+;		Purpose:	Drawing Utilities for images and bitmaps
+;		Created:	4th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
-MaxStringSize = 252
+		.section code	
 
 ; ************************************************************************************************
 ;
-;		Zero the MSB of the soft memory pointer, will force it being correctly set on soft
-;		allocation.
+;											Test Image
 ;
 ; ************************************************************************************************
 
-StringSoftReset .macro
-		lda 	#0
-		sta 	softMemAlloc+1
-		.endm		
+TestImageAccess:
+		cpx 	#255 						; get information
+		beq 	_TIAGetInfo
+		txa 								; fake up a pattern using the X/Y coordinates.
+		lsr 	a
+		lsr 	a
+		sta 	tempShort
+		tya
+		lsr 	a
+		lsr 	a
+		clc
+		adc 	tempShort
+		rts
+;
+_TIAGetInfo:
+		lda 	#1 							; image (1) bitmap (0)
+		ldx 	#16 						; pixel width
+		ldy 	#32							; pixel height
+		rts
+
+		.send 	code
+				

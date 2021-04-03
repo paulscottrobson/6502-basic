@@ -18,7 +18,7 @@ import re,os,sys
 # *****************************************************************************
 
 class Builder(object):
-	def __init__(self,groups):
+	def __init__(self,ctrlFile):
 		#
 		self.sourceList = []													# list of asm files.
 		self.sourceDir = ".."+os.sep+"source"									# where the source is.
@@ -28,13 +28,15 @@ class Builder(object):
 		#
 		self.isEnabled = {}														# modules enabled/not enabled
 		self.isDispatched = {} 													# does it have std disaptcher
-#
-		for s in [x.replace("\t"," ").strip() for x in groups.split("\n") if x.strip() != ""]:
+		#
+		ctrlData = [x.strip().replace("\t"," ") for x in open(ctrlFile).readlines() if not x.startswith(";")]
+
+		for s in [x[1:] for x in ctrlData if x.startswith(".")]:
 			self.processGroup(s.strip())
 
 		self.writeInstallCheckFile()											# constant for each installed
 		self.createInitialiseAllFile()											# calls initialise for every module
-		self.createMainProgram()												# main linking progrm
+		self.createMainProgram(ctrlData)										# main linking progrm
 		self.createFileList()													# list of files for scanners
 	#
 	#		Process group S.
@@ -171,10 +173,12 @@ class Builder(object):
 	#
 	#		Write out main program.
 	#
-	def createMainProgram(self):
+	def createMainProgram(self,ctrlData):
 		self.mainIncludes.sort(key = lambda x:Builder.sorter(x))
 		h = open(self.sourceDir+os.sep+"basic.asm","w")
 		h.write(self.header)
+		for s in [x for x in ctrlData if x.find("=") >= 0]:
+			h.write(s+"\n")
 		for i in self.mainIncludes:
 			if i.endswith(".asm"):
 				section = i.split(os.sep)[0]
@@ -209,27 +213,5 @@ class Builder(object):
 		h.write("\n".join(self.sourceList))
 		h.close()
 
-
-#
-#		The subdirectories that go to make the program. The asterisk 
-#		means that dispatch is handled by the module itself, rather 
-#		than routine scanning.
-#
-#		* means no automatic dispatcher is built
-#		- means the module is disabled.
-#
 if __name__ == "__main__":
-	Builder("""
-		header			*
-		main 	
-		variable		
-		assembler 		
-		error			*
-		extension 		*
-		string 			
-		device 			
-		floatingpoint	- 	
-		interaction
-		tokeniser
-		footer 			*
-	""")
+	Builder(sys.argv[1])

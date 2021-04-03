@@ -15,6 +15,7 @@
 ..\source\error\errorhandler.inc
 ..\source\extension\extensionhandler.asm
 ..\source\extension\graphics\general.asm
+..\source\extension\graphics\imagedraw.asm
 ..\source\extension\graphics\line.asm
 ..\source\extension\graphics\plot.asm
 ..\source\extension\graphics\rectframe.asm

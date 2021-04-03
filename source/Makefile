@@ -22,7 +22,9 @@ ASMOPTS = -Walias -Wmacro-prefix -Wall -q -c -L $(OBJDIR)basic.lst -l $(OBJDIR)b
 APPNAME = $(OBJDIR)basic.prg
 TESTDIR = $(ROOTDIR)test$(S)
 SCRIPTDIR = $(ROOTDIR)scripts$(S)
-ASSEMBLESRC = 	$(ASM) -D autorun=1 -D coldstartnew=0 $(ASMOPTS) -o $(OBJDIR)stub.prg basic.asm
+CTRLDIR = $(ROOTDIR)control$(S)
+
+ASSEMBLESRC = 	$(ASM) $(ASMOPTS) -o $(OBJDIR)stub.prg basic.asm
 
 .PHONY: all run analyse dump test
 
@@ -38,7 +40,7 @@ analyse: $(APPNAME)
 dump : $(APPNAME)
 	python $(SCRIPTDIR)miscellaneous$(S)dumpvar.py 
 
-$(TESTDIR)makebasic.zip : $(SCRIPTDIR)build$(S)tokens.py $(SCRIPTDIR)build$(S)tokeniser.py $(SCRIPTDIR)build$(S)makepgm.py $(SCRIPTDIR)build$(S)__main__.py
+$(TESTDIR)makebasic.zip : $(SCRIPTDIR)build$(S)tokens.py $(SCRIPTDIR)build$(S)tokeniser.py  $(SCRIPTDIR)build$(S)tokendata.py $(SCRIPTDIR)build$(S)asmdata.py $(SCRIPTDIR)build$(S)makepgm.py $(SCRIPTDIR)build$(S)__main__.py
 	zip -q -j $@ $^
 
 $(TESTDIR)vramc.zip : $(SCRIPTDIR)vramc$(S)data.py  $(SCRIPTDIR)vramc$(S)encoder.py  $(SCRIPTDIR)vramc$(S)palette.py  $(SCRIPTDIR)vramc$(S)vramc.py  $(SCRIPTDIR)vramc$(S)vramfile.py  $(SCRIPTDIR)vramc$(S)__main__.py
@@ -49,7 +51,7 @@ $(APPNAME) : basic.asm $(TESTDIR)makebasic.zip
 	python $(SCRIPTDIR)tests$(S)testtok.py disabled
 	python $(SCRIPTDIR)build$(S)makepgm.py $(BASICDIR)demo.bas
 	python $(SCRIPTDIR)build$(S)errorgen.py
-	python $(SCRIPTDIR)build$(S)builder.py
+	python $(SCRIPTDIR)build$(S)builder.py $(CTRLDIR)build.info
 	python $(SCRIPTDIR)build$(S)asmtables.py
 	python $(SCRIPTDIR)build$(S)tables.py
 	$(CCOPY) $(OBJDIR)stub.prg $(TESTDIR)
@@ -60,7 +62,7 @@ test:
 	python $(SCRIPTDIR)tests$(S)$(TEST) >$(BASICDIR)test.bas
 	python $(SCRIPTDIR)build$(S)makepgm.py $(BASICDIR)test.bas
 	python $(SCRIPTDIR)build$(S)errorgen.py
-	python $(SCRIPTDIR)build$(S)builder.py
+	python $(SCRIPTDIR)build$(S)builder.py $(CTRLDIR)build.info
 	python $(SCRIPTDIR)build$(S)asmtables.py
 	python $(SCRIPTDIR)build$(S)tables.py
 	$(ASSEMBLESRC) 

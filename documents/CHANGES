@@ -122,3 +122,8 @@ vary too much. Text source only.
 - Optimised horizontal line driver
 - CLG allows you to specify a colour via PAPER.
 - Tested works okay with PHX/PLX/PHY/PLY 65C02
+
+3/4/2021
+========
+- First builder control file.
+- Converted tokens.py into one class plus two pure data classes.

@@ -194,6 +194,7 @@ TKErr11:	;; [#]
 TKErr12:	;; [at]
 TKErr13:	;; [image]
 TKErr14:	;; [flip]
+TKErr15:	;; [from]
 
 		.throw 	Syntax
 

@@ -36,6 +36,8 @@ dispatch 	.macro
 ;
 ; ************************************************************************************************
 
+		.if cputype == 0
+
 pshy 	.macro
 		tya
 		pha
@@ -55,6 +57,26 @@ pulx 	.macro
 		pla
 		tax
 		.endm
+
+		.else
+
+pshy 	.macro
+		phy
+		.endm
+
+puly 	.macro
+		ply
+		.endm
+
+pshx 	.macro
+		phx
+		.endm
+
+pulx 	.macro
+		plx
+		.endm
+
+		.endif
 
 ; ************************************************************************************************
 ;

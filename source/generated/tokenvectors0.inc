@@ -104,6 +104,6 @@ Group0Vectors:
 	.word	Command_CLS              ; $e3 cls
 	.word	Command_Locate           ; $e4 locate
 	.word	CommandAssemblerLabel    ; $e5 .
-	.word	Unimplemented            ; $e6 from
+	.word	TKErr15                  ; $e6 from
 	.word	TKErr11                  ; $e7 #
 	.word	CommandClear             ; $e8 clear

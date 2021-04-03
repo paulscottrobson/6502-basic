@@ -3,6 +3,7 @@
 ;
 	.include "extensionhandler.asm"
 	.include "graphics/general.asm"
+	.include "graphics/imagedraw.asm"
 	.include "graphics/line.asm"
 	.include "graphics/plot.asm"
 	.include "graphics/rectframe.asm"

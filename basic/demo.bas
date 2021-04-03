@@ -1,5 +1,6 @@
-mode 3:clg paper 13
-
+mode 3:sprite true:sprite clear:clg paper 0
+vload "data.vram"
+sprite 1 image 2 to 100,40 
 plot ink 1 to 100,100
 rect ink 2 from 10,20 to 90,140
 frame ink 3 from 20,30 to 80,130
