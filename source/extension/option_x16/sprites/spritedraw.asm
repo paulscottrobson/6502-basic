@@ -7,6 +7,7 @@
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
+
 ; ************************************************************************************************
 ;
 ;		This file is here because it's optional like sprites. No sprites, PAINT won't work.
@@ -37,8 +38,6 @@ ImageHandler:
 		lda 	#TestImageAccess & $FF
 		ldx 	#TestImageAccess >> 8
 		jmp 	ImageRenderer
-
-
 
 		.send 	code
 				

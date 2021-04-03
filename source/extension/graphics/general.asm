@@ -60,10 +60,31 @@ gdy:
 		.fill 	2
 
 ;
-;
+;		Drawing handler for current command.
 ;
 gWordHandler: 								; the word handler which does the actual drawing.
 		.fill 	2 	
+			
+
+;
+;		Control Modifiers/Values. These are directly accessed and are mandatory
+;
+gModifiers:
+
+gdInk: 										; foreground colour
+		.fill 	1
+gdPaper:									; background colour (255 = transparent)
+		.fill 	1		
+gdSize:										; current size.
+		.fill 	1
+gdImage:									; selected image
+		.fill 	1
+gdFlip:										; selected flip
+		.fill 	1
+gdXLimit: 									; max extent of X and Y
+		.fill 	2
+gdYLimit:
+		.fill 	2		
 
 gEndStorage:		
 		.send storage
@@ -84,6 +105,9 @@ _GRSLoop:
 		sta 	gStartStorage,x
 		dex
 		bpl 	_GRSLoop
+		lda 	#1 						
+		sta 	gdInk
+		sta 	gdSize
 		.pulx
 		rts
 
