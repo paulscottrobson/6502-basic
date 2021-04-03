@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Walias -Wmacro-prefix -Wall -q -c -L ..\source\bin\basic.lst -l ..\source\bin\basic.lbl -Wall -o ..\source\bin\stub.prg basic.asm
-; Sat Apr 03 07:21:15 2021
+; Sat Apr 03 09:43:38 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -1642,15 +1642,15 @@
 >188a	d8 22					.word	Command_VLoad            ; $88 vload
 >188c	e4 21					.word	CommandMode              ; $89 mode
 >188e	a1 22					.word	CommandPalette           ; $8a palette
->1890	a9 1f					.word	CommandSprite            ; $8b sprite
->1892	d3 1d					.word	CommandClg               ; $8c clg
+>1890	c0 1f					.word	CommandSprite            ; $8b sprite
+>1892	ea 1d					.word	CommandClg               ; $8c clg
 >1894	bc 1a					.word	Command_Rect             ; $8d rect
 >1896	c4 1a					.word	Command_Frame            ; $8e frame
 >1898	97 30					.word	Unimplemented            ; $8f draw
 >189a	97 30					.word	Unimplemented            ; $90 text
 >189c	a9 1a					.word	Command_Plot             ; $91 plot
 >189e	83 19					.word	Command_Line             ; $92 line
->18a0	f4 20					.word	Command_Paint            ; $93 paint
+>18a0	0b 21					.word	Command_Paint            ; $93 paint
 
 ;******  Return to file: extension/extensionhandler.asm
 
@@ -1662,11 +1662,11 @@
 >18a4	4f 23					.word	Command_VDeek            ; $87 vdeek(
 >18a6	a2 21					.word	Sprite_GetX              ; $88 sprite.x(
 >18a8	a5 21					.word	Sprite_GetY              ; $89 sprite.y(
->18aa	ec 1e					.word	FunctionCollide          ; $8a hit(
->18ac	64 1e					.word	Unary_JoyX               ; $8b joy.x(
->18ae	67 1e					.word	Unary_JoyY               ; $8c joy.y(
->18b0	a2 1e					.word	Unary_JButton            ; $8d joy.b(
->18b2	37 1e					.word	Unary_Clock              ; $8e clock(
+>18aa	03 1f					.word	FunctionCollide          ; $8a hit(
+>18ac	7b 1e					.word	Unary_JoyX               ; $8b joy.x(
+>18ae	7e 1e					.word	Unary_JoyY               ; $8c joy.y(
+>18b0	b9 1e					.word	Unary_JButton            ; $8d joy.b(
+>18b2	4e 1e					.word	Unary_Clock              ; $8e clock(
 
 ;******  Return to file: extension/extensionhandler.asm
 
@@ -1838,42 +1838,42 @@
 .198b					LineHandler:
 .198b	a2 00		ldx #$00			ldx 	#gX1-gX1 					; check if horizontal, vertical line
 .198d	a0 04		ldy #$04			ldy 	#gX2-gX1
-.198f	20 57 1c	jsr $1c57			jsr 	CompareCoordsEq
+.198f	20 6e 1c	jsr $1c6e			jsr 	CompareCoordsEq
 .1992	f0 09		beq $199d			beq 	_LHRectCode
 .1994	a2 02		ldx #$02			ldx 	#gY1-gX1
 .1996	a0 06		ldy #$06			ldy 	#gY2-gX1
-.1998	20 57 1c	jsr $1c57			jsr 	CompareCoordsEq
+.1998	20 6e 1c	jsr $1c6e			jsr 	CompareCoordsEq
 .199b	d0 03		bne $19a0			bne 	_LHLineDrawer
 .199d					_LHRectCode:
 .199d	4c d0 1a	jmp $1ad0			jmp 	RectHandler
 .19a0					_LHLineDrawer:
 .19a0	a2 00		ldx #$00			ldx 	#gX1-gX1 					; check if X1 < X2 e.g. it is sloped to the right.
 .19a2	a0 04		ldy #$04			ldy 	#gX2-gX1
-.19a4	20 42 1c	jsr $1c42			jsr 	CompareCoords
+.19a4	20 59 1c	jsr $1c59			jsr 	CompareCoords
 .19a7	90 0a		bcc $19b3			bcc 	_LHNoSwap
-.19a9	20 8a 1c	jsr $1c8a			jsr 	GSwapCoords					; if so swap coords so X2 > X1, may be going up or down.
+.19a9	20 a1 1c	jsr $1ca1			jsr 	GSwapCoords					; if so swap coords so X2 > X1, may be going up or down.
 .19ac	a2 02		ldx #$02			ldx 	#gY1-gX1
 .19ae	a0 06		ldy #$06			ldy 	#gY2-gX1
-.19b0	20 8a 1c	jsr $1c8a			jsr 	GSwapCoords
+.19b0	20 a1 1c	jsr $1ca1			jsr 	GSwapCoords
 .19b3					_LHNoSwap:
 .19b3	20 dc 19	jsr $19dc			jsr 	BresenhamInitialise 		; initialise Bresenham constants
 .19b6	a0 00		ldy #$00			ldy 	#gX1-gX1
-.19b8	20 2c 1c	jsr $1c2c			jsr 	SetupXY 					; set up X1,Y1 to draw.
+.19b8	20 43 1c	jsr $1c43			jsr 	SetupXY 					; set up X1,Y1 to draw.
 .19bb	b0 15		bcs $19d2			bcs 	_LHExit 					; line off screen.
 .19bd					_LHDrawLoop:
 .19bd	a2 00		ldx #$00			ldx 	#gX1-gX1 					; check if X1=X2 and Y1 = Y2
 .19bf	a0 04		ldy #$04			ldy 	#gX2-gX1
-.19c1	20 57 1c	jsr $1c57			jsr 	CompareCoordsEq
+.19c1	20 6e 1c	jsr $1c6e			jsr 	CompareCoordsEq
 .19c4	d0 0d		bne $19d3			bne 	_LHNextPixel
 .19c6	a2 06		ldx #$06			ldx 	#gY2-gX1
 .19c8	a0 06		ldy #$06			ldy 	#gY2-gX1
-.19ca	20 57 1c	jsr $1c57			jsr 	CompareCoordsEq
+.19ca	20 6e 1c	jsr $1c6e			jsr 	CompareCoordsEq
 .19cd	d0 04		bne $19d3			bne 	_LHNextPixel
-.19cf	20 46 1d	jsr $1d46			jsr 	gdPlotInk 					; plot the last pixel.
+.19cf	20 5d 1d	jsr $1d5d			jsr 	gdPlotInk 					; plot the last pixel.
 .19d2					_LHExit:
 .19d2	60		rts				rts
 .19d3					_LHNextPixel:
-.19d3	20 46 1d	jsr $1d46			jsr 	gdPlotInk 					; plot the pixel.
+.19d3	20 5d 1d	jsr $1d5d			jsr 	gdPlotInk 					; plot the pixel.
 .19d6	20 30 1a	jsr $1a30			jsr 	BresenhamIteration 			; do one bresenham iteration calculation
 .19d9	4c bd 19	jmp $19bd			jmp  	_LHDrawLoop 				; and loop back if okay
 .19dc					BresenhamInitialise:
@@ -1920,13 +1920,13 @@
 .1a3b	8d f5 0b	sta $0bf5			sta 	g2Error+1
 .1a3e	a2 0a		ldx #$0a			ldx 	#g2Error-gX1
 .1a40	a0 0e		ldy #$0e			ldy 	#gdy-gX1
-.1a42	20 4f 1c	jsr $1c4f			jsr 	CompareCoordsSigned
+.1a42	20 66 1c	jsr $1c66			jsr 	CompareCoordsSigned
 .1a45	30 03		bmi $1a4a			bmi 	_BINoE2DY
 .1a47	20 57 1a	jsr $1a57			jsr 	BresenhamE2GEDY
 .1a4a					_BINoE2DY:
 .1a4a	a2 0c		ldx #$0c			ldx 	#gdx-gX1
 .1a4c	a0 0a		ldy #$0a			ldy 	#g2Error-gX1
-.1a4e	20 4f 1c	jsr $1c4f			jsr 	CompareCoordsSigned
+.1a4e	20 66 1c	jsr $1c66			jsr 	CompareCoordsSigned
 .1a51	30 03		bmi $1a56			bmi 	_BINoDXE2
 .1a53	20 76 1a	jsr $1a76			jsr 	BresenhamDXGEE2
 .1a56					_BINoDXE2:
@@ -1943,7 +1943,7 @@
 .1a6d	d0 03		bne $1a72			bne 	_BE2Skip
 .1a6f	ee eb 0b	inc $0beb			inc 	gX1+1
 .1a72					_BE2Skip:
-.1a72	20 a7 1c	jsr $1ca7			jsr 	gdMvRight
+.1a72	20 be 1c	jsr $1cbe			jsr 	gdMvRight
 .1a75	60		rts				rts
 .1a76					BresenhamDXGEE2:
 .1a76	18		clc				clc
@@ -1959,7 +1959,7 @@
 .1a91	d0 03		bne $1a96			bne 	_BEDXSkip
 .1a93	ee ed 0b	inc $0bed			inc 	gY1+1
 .1a96					_BEDXSkip:
-.1a96	20 e2 1c	jsr $1ce2			jsr 	gdMvDown
+.1a96	20 f9 1c	jsr $1cf9			jsr 	gdMvDown
 .1a99	60		rts				rts
 .1a9a					_BEDXInvertY:
 .1a9a	ad ec 0b	lda $0bec			lda 	gY1
@@ -1967,7 +1967,7 @@
 .1a9f	ce ed 0b	dec $0bed			dec 	gY1+1
 .1aa2					_BEDXSkip2:
 .1aa2	ce ec 0b	dec $0bec			dec 	gY1
-.1aa5	20 bd 1c	jsr $1cbd			jsr 	gdMvUp
+.1aa5	20 d4 1c	jsr $1cd4			jsr 	gdMvUp
 .1aa8	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
@@ -1982,9 +1982,9 @@
 .1ab0	60		rts				rts
 .1ab1					PlotHandler:
 .1ab1	a0 04		ldy #$04			ldy 	#gX2-gX1
-.1ab3	20 2c 1c	jsr $1c2c			jsr 	SetupXY 					; set up X1,Y1 to draw.
+.1ab3	20 43 1c	jsr $1c43			jsr 	SetupXY 					; set up X1,Y1 to draw.
 .1ab6	b0 03		bcs $1abb			bcs 	_PHExit 					; off screen, return with CS.
-.1ab8	20 46 1d	jsr $1d46			jsr 	gdPlotInk 					; pixel in Ink.
+.1ab8	20 5d 1d	jsr $1d5d			jsr 	gdPlotInk 					; pixel in Ink.
 .1abb	60		rts		_PHExit:rts
 
 ;******  Return to file: extension/extension.asm
@@ -2010,12 +2010,12 @@
 .1ad0					RectHandler:
 .1ad0	a9 00		lda #$00			lda 	#0
 .1ad2	8d fd 0b	sta $0bfd			sta 	frameFlag
-.1ad5	20 66 1c	jsr $1c66			jsr 	BoxSort 					; sort so topleft/bottom right
+.1ad5	20 7d 1c	jsr $1c7d			jsr 	BoxSort 					; sort so topleft/bottom right
 .1ad8	20 01 1b	jsr $1b01			jsr 	DrawBoxPart 				; solid first line
 .1adb					_FHLoop:
 .1adb	a2 02		ldx #$02			ldx 	#gY1-gX1 					; check Y1 = Y2
 .1add	a0 06		ldy #$06			ldy 	#gY2-gX1
-.1adf	20 42 1c	jsr $1c42			jsr 	CompareCoords
+.1adf	20 59 1c	jsr $1c59			jsr 	CompareCoords
 .1ae2	b0 19		bcs $1afd			bcs 	_FHLastLine 				; Y1 >= Y2 then end.
 .1ae4	ad fd 0b	lda $0bfd			lda 	frameFlag 					; identify solid or frame ?
 .1ae7	f0 06		beq $1aef			beq 	_FHIsSolidRect
@@ -2034,7 +2034,7 @@
 .1b00	60		rts				rts
 .1b01					DrawBoxPart:
 .1b01	a0 00		ldy #$00			ldy 	#gX1-gX1
-.1b03	20 2c 1c	jsr $1c2c			jsr 	SetupXY 					; set up X1,Y1 to draw.
+.1b03	20 43 1c	jsr $1c43			jsr 	SetupXY 					; set up X1,Y1 to draw.
 .1b06	38		sec				sec 								; calculate line length => temp0
 .1b07	ad ee 0b	lda $0bee			lda 	gX2
 .1b0a	ed ea 0b	sbc $0bea			sbc 	gX1
@@ -2047,20 +2047,20 @@
 .1b19	60		rts				rts
 .1b1a					DrawBoxEnds:
 .1b1a	a0 00		ldy #$00			ldy 	#gX1-gX1
-.1b1c	20 2c 1c	jsr $1c2c			jsr 	SetupXY 					; set up X1,Y1 to draw.
-.1b1f	20 46 1d	jsr $1d46			jsr 	gdPlotInk 					; LH end.
+.1b1c	20 43 1c	jsr $1c43			jsr 	SetupXY 					; set up X1,Y1 to draw.
+.1b1f	20 5d 1d	jsr $1d5d			jsr 	gdPlotInk 					; LH end.
 .1b22	ad ee 0b	lda $0bee			lda 	gX2 						; set position to X2,Y1
 .1b25	ae ef 0b	ldx $0bef			ldx 	gX2+1
-.1b28	20 0e 1e	jsr $1e0e			jsr 	gdSetX
-.1b2b	20 04 1d	jsr $1d04			jsr		gdSetDrawPosition 			; update position.
-.1b2e	20 46 1d	jsr $1d46			jsr 	gdPlotInk 					; RH end.
+.1b28	20 25 1e	jsr $1e25			jsr 	gdSetX
+.1b2b	20 1b 1d	jsr $1d1b			jsr		gdSetDrawPosition 			; update position.
+.1b2e	20 5d 1d	jsr $1d5d			jsr 	gdPlotInk 					; RH end.
 .1b31	60		rts				rts
 .1b32					DrawHorizontalLine:
 .1b32	86 32		stx $32				stx 	tempShort
 .1b34	aa		tax				tax
 .1b35	a4 32		ldy $32				ldy 	tempShort
 .1b37	ad 0b 0c	lda $0c0b			lda 	gdInk
-.1b3a	4c 1c 1e	jmp $1e1c			jmp 	gdOptHorizontalWriter
+.1b3a	4c 33 1e	jmp $1e33			jmp 	gdOptHorizontalWriter
 
 ;******  Return to file: extension/extension.asm
 
@@ -2106,7 +2106,7 @@
 .1b73	98		tya				tya
 .1b74	48		pha				pha
 .1b75	a0 04		ldy #$04			ldy 	#gX2-gX1 					; set the position at (x,y)
-.1b77	20 2c 1c	jsr $1c2c			jsr 	SetupXY
+.1b77	20 43 1c	jsr $1c43			jsr 	SetupXY
 .1b7a	68		pla				pla
 .1b7b	a8		tay				tay
 .1b7c	a2 00		ldx #$00			ldx 	#0 							; X is the current pixel.
@@ -2133,10 +2133,10 @@
 .1b9f					_RDPSLoop:
 .1b9f	c9 ff		cmp #$ff			cmp 	#255 						; don't draw if $FF
 .1ba1	f0 03		beq $1ba6			beq 	_RDPSNoDraw
-.1ba3	20 49 1d	jsr $1d49			jsr 	gdPlotA 					; draw A otherwise
+.1ba3	20 60 1d	jsr $1d60			jsr 	gdPlotA 					; draw A otherwise
 .1ba6					_RDPSNoDraw:
 .1ba6	48		pha				pha 								; move right
-.1ba7	20 a7 1c	jsr $1ca7			jsr 	gdMvRight
+.1ba7	20 be 1c	jsr $1cbe			jsr 	gdMvRight
 .1baa	68		pla				pla
 .1bab	ca		dex				dex
 .1bac	d0 f1		bne $1b9f			bne 	_RDPSLoop 					; do it size times.
@@ -2215,167 +2215,185 @@
 .1c26	20 18 15	jsr $1518		jsr	errorHandler
 .1c29					CallRenderFunction:
 .1c29	6c fe 0b	jmp ($0bfe)			jmp 	(RenderFunction)
+.1c2c					TestImageAccess:
+.1c2c	e0 ff		cpx #$ff			cpx 	#255 						; get information
+.1c2e	f0 0c		beq $1c3c			beq 	_TIAGetInfo
+.1c30	8a		txa				txa 								; fake up a pattern using the X/Y coordinates.
+.1c31	4a		lsr a				lsr 	a
+.1c32	4a		lsr a				lsr 	a
+.1c33	85 32		sta $32				sta 	tempShort
+.1c35	98		tya				tya
+.1c36	4a		lsr a				lsr 	a
+.1c37	4a		lsr a				lsr 	a
+.1c38	18		clc				clc
+.1c39	65 32		adc $32				adc 	tempShort
+.1c3b	60		rts				rts
+.1c3c					_TIAGetInfo:
+.1c3c	a9 01		lda #$01			lda 	#1 							; image (1) bitmap (0)
+.1c3e	a2 10		ldx #$10			ldx 	#16 						; pixel width
+.1c40	a0 20		ldy #$20			ldy 	#32							; pixel height
+.1c42	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
 
 
 ;******  Processing file: extension/graphics/utils.asm
 
-.1c2c					SetupXY:
-.1c2c	b9 ea 0b	lda $0bea,y			lda 	gX1,y
-.1c2f	be eb 0b	ldx $0beb,y			ldx 	gX1+1,y
-.1c32	20 0e 1e	jsr $1e0e			jsr 	gdSetX
-.1c35	b9 ec 0b	lda $0bec,y			lda 	gY1,y
-.1c38	be ed 0b	ldx $0bed,y			ldx 	gY1+1,y
-.1c3b	20 15 1e	jsr $1e15			jsr 	gdSetY
-.1c3e	20 04 1d	jsr $1d04			jsr 	gdSetDrawPosition
-.1c41	60		rts				rts
-.1c42					CompareCoords:
-.1c42	bd ea 0b	lda $0bea,x			lda 	gX1,x
-.1c45	d9 ea 0b	cmp $0bea,y			cmp 	gX1,y
-.1c48	bd eb 0b	lda $0beb,x			lda 	gX1+1,x
-.1c4b	f9 eb 0b	sbc $0beb,y			sbc 	gX1+1,y
-.1c4e	60		rts				rts
-.1c4f					CompareCoordsSigned:
-.1c4f	20 42 1c	jsr $1c42			jsr 	CompareCoords
-.1c52	50 02		bvc $1c56			bvc 	_CCSExit
-.1c54	49 80		eor #$80			eor 	#$80
-.1c56					_CCSExit:
-.1c56	60		rts				rts
-.1c57					CompareCoordsEq:
-.1c57	bd ea 0b	lda $0bea,x			lda 	gX1,x
-.1c5a	d9 ea 0b	cmp $0bea,y			cmp 	gX1,y
-.1c5d	d0 06		bne $1c65			bne 	_CCEExit
+.1c43					SetupXY:
+.1c43	b9 ea 0b	lda $0bea,y			lda 	gX1,y
+.1c46	be eb 0b	ldx $0beb,y			ldx 	gX1+1,y
+.1c49	20 25 1e	jsr $1e25			jsr 	gdSetX
+.1c4c	b9 ec 0b	lda $0bec,y			lda 	gY1,y
+.1c4f	be ed 0b	ldx $0bed,y			ldx 	gY1+1,y
+.1c52	20 2c 1e	jsr $1e2c			jsr 	gdSetY
+.1c55	20 1b 1d	jsr $1d1b			jsr 	gdSetDrawPosition
+.1c58	60		rts				rts
+.1c59					CompareCoords:
+.1c59	bd ea 0b	lda $0bea,x			lda 	gX1,x
+.1c5c	d9 ea 0b	cmp $0bea,y			cmp 	gX1,y
 .1c5f	bd eb 0b	lda $0beb,x			lda 	gX1+1,x
-.1c62	d9 eb 0b	cmp $0beb,y			cmp 	gX1+1,y
-.1c65					_CCEExit:
+.1c62	f9 eb 0b	sbc $0beb,y			sbc 	gX1+1,y
 .1c65	60		rts				rts
-.1c66					BoxSort:
-.1c66	a2 00		ldx #$00			ldx 	#gx1-gx1
-.1c68	a0 04		ldy #$04			ldy 	#gx2-gx1
-.1c6a	20 7b 1c	jsr $1c7b			jsr 	GCompareCoords
-.1c6d	20 88 1c	jsr $1c88			jsr 	GSortMinMaxCoords
-.1c70	a2 02		ldx #$02			ldx 	#gy1-gx1
-.1c72	a0 06		ldy #$06			ldy 	#gy2-gx1
-.1c74	20 7b 1c	jsr $1c7b			jsr 	GCompareCoords
-.1c77	20 88 1c	jsr $1c88			jsr 	GSortMinMaxCoords
-.1c7a	60		rts				rts
-.1c7b					GCompareCoords:
-.1c7b	bd ea 0b	lda $0bea,x			lda 	gx1,x
-.1c7e	d9 ea 0b	cmp $0bea,y			cmp 	gx1,y
-.1c81	bd eb 0b	lda $0beb,x			lda 	gx1+1,x
-.1c84	f9 eb 0b	sbc $0beb,y			sbc 	gx1+1,y
-.1c87	60		rts				rts
-.1c88					GSortMinMaxCoords:
-.1c88	90 1c		bcc $1ca6			bcc 	GSMMCExit
-.1c8a					GSwapCoords:
-.1c8a	bd ea 0b	lda $0bea,x			lda 	gx1,x
-.1c8d	48		pha				pha
-.1c8e	b9 ea 0b	lda $0bea,y			lda 	gx1,y
-.1c91	9d ea 0b	sta $0bea,x			sta 	gx1,x
-.1c94	68		pla				pla
-.1c95	99 ea 0b	sta $0bea,y			sta 	gx1,y
+.1c66					CompareCoordsSigned:
+.1c66	20 59 1c	jsr $1c59			jsr 	CompareCoords
+.1c69	50 02		bvc $1c6d			bvc 	_CCSExit
+.1c6b	49 80		eor #$80			eor 	#$80
+.1c6d					_CCSExit:
+.1c6d	60		rts				rts
+.1c6e					CompareCoordsEq:
+.1c6e	bd ea 0b	lda $0bea,x			lda 	gX1,x
+.1c71	d9 ea 0b	cmp $0bea,y			cmp 	gX1,y
+.1c74	d0 06		bne $1c7c			bne 	_CCEExit
+.1c76	bd eb 0b	lda $0beb,x			lda 	gX1+1,x
+.1c79	d9 eb 0b	cmp $0beb,y			cmp 	gX1+1,y
+.1c7c					_CCEExit:
+.1c7c	60		rts				rts
+.1c7d					BoxSort:
+.1c7d	a2 00		ldx #$00			ldx 	#gx1-gx1
+.1c7f	a0 04		ldy #$04			ldy 	#gx2-gx1
+.1c81	20 92 1c	jsr $1c92			jsr 	GCompareCoords
+.1c84	20 9f 1c	jsr $1c9f			jsr 	GSortMinMaxCoords
+.1c87	a2 02		ldx #$02			ldx 	#gy1-gx1
+.1c89	a0 06		ldy #$06			ldy 	#gy2-gx1
+.1c8b	20 92 1c	jsr $1c92			jsr 	GCompareCoords
+.1c8e	20 9f 1c	jsr $1c9f			jsr 	GSortMinMaxCoords
+.1c91	60		rts				rts
+.1c92					GCompareCoords:
+.1c92	bd ea 0b	lda $0bea,x			lda 	gx1,x
+.1c95	d9 ea 0b	cmp $0bea,y			cmp 	gx1,y
 .1c98	bd eb 0b	lda $0beb,x			lda 	gx1+1,x
-.1c9b	48		pha				pha
-.1c9c	b9 eb 0b	lda $0beb,y			lda 	gx1+1,y
-.1c9f	9d eb 0b	sta $0beb,x			sta 	gx1+1,x
-.1ca2	68		pla				pla
-.1ca3	99 eb 0b	sta $0beb,y			sta 	gx1+1,y
-.1ca6					GSMMCExit:
-.1ca6	60		rts				rts
+.1c9b	f9 eb 0b	sbc $0beb,y			sbc 	gx1+1,y
+.1c9e	60		rts				rts
+.1c9f					GSortMinMaxCoords:
+.1c9f	90 1c		bcc $1cbd			bcc 	GSMMCExit
+.1ca1					GSwapCoords:
+.1ca1	bd ea 0b	lda $0bea,x			lda 	gx1,x
+.1ca4	48		pha				pha
+.1ca5	b9 ea 0b	lda $0bea,y			lda 	gx1,y
+.1ca8	9d ea 0b	sta $0bea,x			sta 	gx1,x
+.1cab	68		pla				pla
+.1cac	99 ea 0b	sta $0bea,y			sta 	gx1,y
+.1caf	bd eb 0b	lda $0beb,x			lda 	gx1+1,x
+.1cb2	48		pha				pha
+.1cb3	b9 eb 0b	lda $0beb,y			lda 	gx1+1,y
+.1cb6	9d eb 0b	sta $0beb,x			sta 	gx1+1,x
+.1cb9	68		pla				pla
+.1cba	99 eb 0b	sta $0beb,y			sta 	gx1+1,y
+.1cbd					GSMMCExit:
+.1cbd	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
 
 
 ;******  Processing file: extension/option_x16/driver/coords.asm
 
-.1ca7					gdMvRight:
-.1ca7	ee 20 9f	inc $9f20			inc 	$9F20 						; bump $9F20
-.1caa	d0 08		bne $1cb4			bne 	_gdMR0
-.1cac	ee 21 9f	inc $9f21			inc 	$9F21
-.1caf	d0 03		bne $1cb4			bne 	_gdMR0
-.1cb1	ee 22 9f	inc $9f22			inc 	$9F22
-.1cb4					_gdMR0:
-.1cb4	ee 07 0c	inc $0c07			inc 	gdXPos
-.1cb7	d0 03		bne $1cbc			bne 	_gdMR1
-.1cb9	ee 08 0c	inc $0c08			inc 	gdXPos+1
-.1cbc					_gdMR1:
-.1cbc	60		rts				rts
-.1cbd					gdMvUp:
-.1cbd	ad 09 0c	lda $0c09			lda 	gdYPos 						; decrement Y Pos
-.1cc0	d0 03		bne $1cc5			bne 	_gdMU1
-.1cc2	ce 0a 0c	dec $0c0a			dec 	gdYPos+1
-.1cc5	ce 09 0c	dec $0c09	_gdMU1:	dec 	gdYPos
-.1cc8	38		sec				sec 								; adjust position by -320
-.1cc9	ad 20 9f	lda $9f20			lda 	$9F20
-.1ccc	e9 40		sbc #$40			sbc 	#64
-.1cce	8d 20 9f	sta $9f20			sta 	$9F20
-.1cd1	ad 21 9f	lda $9f21			lda 	$9F21
-.1cd4	e9 01		sbc #$01			sbc 	#1
-.1cd6	8d 21 9f	sta $9f21			sta 	$9F21
-.1cd9	ad 22 9f	lda $9f22			lda 	$9F22
-.1cdc	e9 00		sbc #$00			sbc 	#0
-.1cde	8d 22 9f	sta $9f22			sta 	$9F22
-.1ce1	60		rts				rts
-.1ce2					gdMvDown:
-.1ce2	ee 09 0c	inc $0c09			inc 	gdYPos 						; decrement Y Pos
-.1ce5	d0 03		bne $1cea			bne 	_gdMU1
-.1ce7	ee 0a 0c	inc $0c0a			inc 	gdYPos+1
-.1cea					_gdMU1:
-.1cea	18		clc				clc 								; adjust position by -320
-.1ceb	ad 20 9f	lda $9f20			lda 	$9F20
-.1cee	69 40		adc #$40			adc 	#64
-.1cf0	8d 20 9f	sta $9f20			sta 	$9F20
-.1cf3	ad 21 9f	lda $9f21			lda 	$9F21
-.1cf6	69 01		adc #$01			adc 	#1
-.1cf8	8d 21 9f	sta $9f21			sta 	$9F21
-.1cfb	ad 22 9f	lda $9f22			lda 	$9F22
-.1cfe	69 00		adc #$00			adc 	#0
-.1d00	8d 22 9f	sta $9f22			sta 	$9F22
-.1d03	60		rts				rts
-.1d04					gdSetDrawPosition:
-.1d04	a9 00		lda #$00			lda 	#0 							; temp0 is LSB of result start as 256 x Y
-.1d06	85 2a		sta $2a				sta 	temp0
-.1d08	ad 09 0c	lda $0c09			lda 	gdYPos
-.1d0b	85 2b		sta $2b				sta 	temp0+1
-.1d0d	46 2b		lsr $2b				lsr 	temp0+1 					; / 4 so temp0 is YC x 64
-.1d0f	66 2a		ror $2a				ror 	temp0
-.1d11	46 2b		lsr $2b				lsr 	temp0+1
-.1d13	66 2a		ror $2a				ror 	temp0
-.1d15	ad 09 0c	lda $0c09			lda 	gdYPos 						; add 256 x Y => 320 * Y < 64k
-.1d18	18		clc				clc
-.1d19	65 2b		adc $2b				adc 	temp0+1
-.1d1b	85 2b		sta $2b				sta 	temp0+1 					; temp0 = 320 x Y now add X => pixeloffset
-.1d1d	18		clc				clc
-.1d1e	a5 2a		lda $2a				lda 	temp0
-.1d20	6d 07 0c	adc $0c07			adc 	gdXPos
-.1d23	85 2a		sta $2a				sta 	temp0
-.1d25	a5 2b		lda $2b				lda 	temp0+1
-.1d27	6d 08 0c	adc $0c08			adc 	gdXPos+1
-.1d2a	85 2b		sta $2b				sta 	temp0+1
-.1d2c	18		clc				clc
-.1d2d	ad 04 0c	lda $0c04			lda 	gdBitmapAddress
-.1d30	65 2a		adc $2a				adc 	temp0
-.1d32	8d 20 9f	sta $9f20			sta 	$9F20
-.1d35	ad 05 0c	lda $0c05			lda 	gdBitmapAddress+1
-.1d38	65 2b		adc $2b				adc 	temp0+1
-.1d3a	8d 21 9f	sta $9f21			sta 	$9F21
-.1d3d	ad 06 0c	lda $0c06			lda 	gdBitmapAddress+2
-.1d40	69 00		adc #$00			adc 	#0
-.1d42	8d 22 9f	sta $9f22			sta 	$9F22
-.1d45	60		rts				rts
-.1d46					gdPlotInk:
-.1d46	ad 0b 0c	lda $0c0b			lda 	gdInk
-.1d49					gdPlotA:
-.1d49	8d 23 9f	sta $9f23			sta 	$9F23
-.1d4c	60		rts				rts
-.1d4d					gdPlotPaper:
-.1d4d	ad 0c 0c	lda $0c0c			lda 	gdPaper
-.1d50	c9 ff		cmp #$ff			cmp 	#$FF
-.1d52	f0 03		beq $1d57			beq 	_gdPPSkip
-.1d54	8d 23 9f	sta $9f23			sta 	$9F23
-.1d57					_gdPPSkip:
-.1d57	60		rts				rts
+.1cbe					gdMvRight:
+.1cbe	ee 20 9f	inc $9f20			inc 	$9F20 						; bump $9F20
+.1cc1	d0 08		bne $1ccb			bne 	_gdMR0
+.1cc3	ee 21 9f	inc $9f21			inc 	$9F21
+.1cc6	d0 03		bne $1ccb			bne 	_gdMR0
+.1cc8	ee 22 9f	inc $9f22			inc 	$9F22
+.1ccb					_gdMR0:
+.1ccb	ee 07 0c	inc $0c07			inc 	gdXPos
+.1cce	d0 03		bne $1cd3			bne 	_gdMR1
+.1cd0	ee 08 0c	inc $0c08			inc 	gdXPos+1
+.1cd3					_gdMR1:
+.1cd3	60		rts				rts
+.1cd4					gdMvUp:
+.1cd4	ad 09 0c	lda $0c09			lda 	gdYPos 						; decrement Y Pos
+.1cd7	d0 03		bne $1cdc			bne 	_gdMU1
+.1cd9	ce 0a 0c	dec $0c0a			dec 	gdYPos+1
+.1cdc	ce 09 0c	dec $0c09	_gdMU1:	dec 	gdYPos
+.1cdf	38		sec				sec 								; adjust position by -320
+.1ce0	ad 20 9f	lda $9f20			lda 	$9F20
+.1ce3	e9 40		sbc #$40			sbc 	#64
+.1ce5	8d 20 9f	sta $9f20			sta 	$9F20
+.1ce8	ad 21 9f	lda $9f21			lda 	$9F21
+.1ceb	e9 01		sbc #$01			sbc 	#1
+.1ced	8d 21 9f	sta $9f21			sta 	$9F21
+.1cf0	ad 22 9f	lda $9f22			lda 	$9F22
+.1cf3	e9 00		sbc #$00			sbc 	#0
+.1cf5	8d 22 9f	sta $9f22			sta 	$9F22
+.1cf8	60		rts				rts
+.1cf9					gdMvDown:
+.1cf9	ee 09 0c	inc $0c09			inc 	gdYPos 						; decrement Y Pos
+.1cfc	d0 03		bne $1d01			bne 	_gdMU1
+.1cfe	ee 0a 0c	inc $0c0a			inc 	gdYPos+1
+.1d01					_gdMU1:
+.1d01	18		clc				clc 								; adjust position by -320
+.1d02	ad 20 9f	lda $9f20			lda 	$9F20
+.1d05	69 40		adc #$40			adc 	#64
+.1d07	8d 20 9f	sta $9f20			sta 	$9F20
+.1d0a	ad 21 9f	lda $9f21			lda 	$9F21
+.1d0d	69 01		adc #$01			adc 	#1
+.1d0f	8d 21 9f	sta $9f21			sta 	$9F21
+.1d12	ad 22 9f	lda $9f22			lda 	$9F22
+.1d15	69 00		adc #$00			adc 	#0
+.1d17	8d 22 9f	sta $9f22			sta 	$9F22
+.1d1a	60		rts				rts
+.1d1b					gdSetDrawPosition:
+.1d1b	a9 00		lda #$00			lda 	#0 							; temp0 is LSB of result start as 256 x Y
+.1d1d	85 2a		sta $2a				sta 	temp0
+.1d1f	ad 09 0c	lda $0c09			lda 	gdYPos
+.1d22	85 2b		sta $2b				sta 	temp0+1
+.1d24	46 2b		lsr $2b				lsr 	temp0+1 					; / 4 so temp0 is YC x 64
+.1d26	66 2a		ror $2a				ror 	temp0
+.1d28	46 2b		lsr $2b				lsr 	temp0+1
+.1d2a	66 2a		ror $2a				ror 	temp0
+.1d2c	ad 09 0c	lda $0c09			lda 	gdYPos 						; add 256 x Y => 320 * Y < 64k
+.1d2f	18		clc				clc
+.1d30	65 2b		adc $2b				adc 	temp0+1
+.1d32	85 2b		sta $2b				sta 	temp0+1 					; temp0 = 320 x Y now add X => pixeloffset
+.1d34	18		clc				clc
+.1d35	a5 2a		lda $2a				lda 	temp0
+.1d37	6d 07 0c	adc $0c07			adc 	gdXPos
+.1d3a	85 2a		sta $2a				sta 	temp0
+.1d3c	a5 2b		lda $2b				lda 	temp0+1
+.1d3e	6d 08 0c	adc $0c08			adc 	gdXPos+1
+.1d41	85 2b		sta $2b				sta 	temp0+1
+.1d43	18		clc				clc
+.1d44	ad 04 0c	lda $0c04			lda 	gdBitmapAddress
+.1d47	65 2a		adc $2a				adc 	temp0
+.1d49	8d 20 9f	sta $9f20			sta 	$9F20
+.1d4c	ad 05 0c	lda $0c05			lda 	gdBitmapAddress+1
+.1d4f	65 2b		adc $2b				adc 	temp0+1
+.1d51	8d 21 9f	sta $9f21			sta 	$9F21
+.1d54	ad 06 0c	lda $0c06			lda 	gdBitmapAddress+2
+.1d57	69 00		adc #$00			adc 	#0
+.1d59	8d 22 9f	sta $9f22			sta 	$9F22
+.1d5c	60		rts				rts
+.1d5d					gdPlotInk:
+.1d5d	ad 0b 0c	lda $0c0b			lda 	gdInk
+.1d60					gdPlotA:
+.1d60	8d 23 9f	sta $9f23			sta 	$9F23
+.1d63	60		rts				rts
+.1d64					gdPlotPaper:
+.1d64	ad 0c 0c	lda $0c0c			lda 	gdPaper
+.1d67	c9 ff		cmp #$ff			cmp 	#$FF
+.1d69	f0 03		beq $1d6e			beq 	_gdPPSkip
+.1d6b	8d 23 9f	sta $9f23			sta 	$9F23
+.1d6e					_gdPPSkip:
+.1d6e	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
 
@@ -2405,266 +2423,266 @@
 >0c10							.fill 	2
 .0c12					gdYLimit:
 >0c12							.fill 	2
-.1d58					gdModeChanged:
-.1d58	8a		txa				txa
-.1d59	48		pha				pha
-.1d5a	98		tya				tya
-.1d5b	48		pha				pha
-.1d5c	a9 00		lda #$00			lda 	#0 							; zero the enabled flag.
-.1d5e	8d 03 0c	sta $0c03			sta 	gdEnabled
-.1d61	ad 2a 9f	lda $9f2a			lda 	$9F2A 						; requires $40 for H/V Scale
-.1d64	c9 40		cmp #$40			cmp 	#$40
-.1d66	d0 1f		bne $1d87			bne 	_gdExit
-.1d68	ad 2b 9f	lda $9f2b			lda 	$9F2B
-.1d6b	c9 40		cmp #$40			cmp 	#$40
-.1d6d	d0 18		bne $1d87			bne 	_gdExit
-.1d6f	ad 29 9f	lda $9f29			lda 	$9F29 						; read DC_Video, see which layers are enabled.
-.1d72	0a		asl a				asl 	a 							;
-.1d73	0a		asl a				asl 	a 							; bit 7 now set if layer 1 enabled.
-.1d74	10 09		bpl $1d7f			bpl 	_gdNotLayer1
-.1d76	48		pha				pha 								; save A
-.1d77	a2 07		ldx #$07			ldx 	#7 							; check offset 7 (e.g. start at $9F34)
-.1d79	20 a2 1d	jsr $1da2			jsr 	gdCheckBitmap 				; go see if this is a bitmap
-.1d7c	68		pla				pla 								; restore A
-.1d7d	b0 08		bcs $1d87			bcs 	_gdExit 					; if successful then exit
-.1d7f					_gdNotLayer1:
-.1d7f	0a		asl a				asl 	a 							; bit 7 now set if layer 0 enabled.
-.1d80	10 05		bpl $1d87			bpl 	_gdExit 					; if not enabled, exit
-.1d82	a2 00		ldx #$00			ldx 	#0 							; check offset 0 (e.g. start at $9F2D)
-.1d84	20 a2 1d	jsr $1da2			jsr 	gdCheckBitmap 				; go see if this is a bitmap
-.1d87					_gdExit:
-.1d87	a9 00		lda #$00			lda 	#0 							; initialise modifiers.
-.1d89	8d 0c 0c	sta $0c0c			sta 	gdPaper
-.1d8c	8d 0f 0c	sta $0c0f			sta 	gdFlip
-.1d8f	8d 0e 0c	sta $0c0e			sta 	gdImage
-.1d92	a9 01		lda #$01			lda 	#1
-.1d94	8d 0b 0c	sta $0c0b			sta 	gdInk
-.1d97	8d 0d 0c	sta $0c0d			sta 	gdSize
-.1d9a	20 ea 1d	jsr $1dea			jsr 	gdClearGraphics 			; clear graphics display.
-.1d9d	68		pla				pla
-.1d9e	a8		tay				tay
-.1d9f	68		pla				pla
-.1da0	aa		tax				tax
-.1da1	60		rts				rts
-.1da2					gdCheckBitmap:
-.1da2	bd 2d 9f	lda $9f2d,x			lda 	$9F2D,x 					; look at bitmap bit.
-.1da5	c9 07		cmp #$07			cmp 	#7 							; must be zero map size, bitmap and 8bpp
-.1da7	d0 28		bne $1dd1			bne 	_gdCBFail
-.1da9	ee 03 0c	inc $0c03			inc 	gdEnabled 					; set the enabled flag to non zero.
-.1dac	bd 2f 9f	lda $9f2f,x			lda 	$9F2F,x 					; this is the bitmap address / 2
-.1daf	0a		asl a				asl 	a
-.1db0	8d 05 0c	sta $0c05			sta 	gdBitmapAddress+1
-.1db3	69 00		adc #$00			adc 	#$00 						; set to no move, updated manually.
-.1db5	8d 06 0c	sta $0c06			sta 	gdBitmapAddress+2
-.1db8	a9 00		lda #$00			lda 	#$00
-.1dba	8d 04 0c	sta $0c04			sta 	gdBitmapAddress 			; this is a 17 bit address.
-.1dbd	a9 40		lda #$40			lda 	#(320) & $FF
-.1dbf	8d 10 0c	sta $0c10			sta 	gdXLimit
-.1dc2	a9 01		lda #$01			lda 	#(320) >> 8
-.1dc4	8d 11 0c	sta $0c11			sta 	1+(gdXLimit)
-.1dc7	a9 c8		lda #$c8			lda 	#(200) & $FF
-.1dc9	8d 12 0c	sta $0c12			sta 	gdYLimit
-.1dcc	a9 00		lda #$00			lda 	#(200) >> 8
-.1dce	8d 13 0c	sta $0c13			sta 	1+(gdYLimit)
-.1dd1					_gdCBFail:
-.1dd1	18		clc				clc
-.1dd2	60		rts				rts
-.1dd3					CommandClg:
-.1dd3	b1 28		lda ($28),y			lda 	(codePtr),y
-.1dd5	c9 e2		cmp #$e2			cmp 	#TKW_PAPER
-.1dd7	d0 0d		bne $1de6			bne 	_CCLClear
-.1dd9	c8		iny				iny
-.1dda	a9 00		lda #$00			lda 	#0
-.1ddc	a2 0c		ldx #$0c		ldx	#12
-.1dde	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1de1	a5 98		lda $98				lda 	esInt0
-.1de3	8d 0c 0c	sta $0c0c			sta 	gdPaper
-.1de6					_CCLClear:
-.1de6	20 ea 1d	jsr $1dea			jsr 	gdClearGraphics
+.1d6f					gdModeChanged:
+.1d6f	8a		txa				txa
+.1d70	48		pha				pha
+.1d71	98		tya				tya
+.1d72	48		pha				pha
+.1d73	a9 00		lda #$00			lda 	#0 							; zero the enabled flag.
+.1d75	8d 03 0c	sta $0c03			sta 	gdEnabled
+.1d78	ad 2a 9f	lda $9f2a			lda 	$9F2A 						; requires $40 for H/V Scale
+.1d7b	c9 40		cmp #$40			cmp 	#$40
+.1d7d	d0 1f		bne $1d9e			bne 	_gdExit
+.1d7f	ad 2b 9f	lda $9f2b			lda 	$9F2B
+.1d82	c9 40		cmp #$40			cmp 	#$40
+.1d84	d0 18		bne $1d9e			bne 	_gdExit
+.1d86	ad 29 9f	lda $9f29			lda 	$9F29 						; read DC_Video, see which layers are enabled.
+.1d89	0a		asl a				asl 	a 							;
+.1d8a	0a		asl a				asl 	a 							; bit 7 now set if layer 1 enabled.
+.1d8b	10 09		bpl $1d96			bpl 	_gdNotLayer1
+.1d8d	48		pha				pha 								; save A
+.1d8e	a2 07		ldx #$07			ldx 	#7 							; check offset 7 (e.g. start at $9F34)
+.1d90	20 b9 1d	jsr $1db9			jsr 	gdCheckBitmap 				; go see if this is a bitmap
+.1d93	68		pla				pla 								; restore A
+.1d94	b0 08		bcs $1d9e			bcs 	_gdExit 					; if successful then exit
+.1d96					_gdNotLayer1:
+.1d96	0a		asl a				asl 	a 							; bit 7 now set if layer 0 enabled.
+.1d97	10 05		bpl $1d9e			bpl 	_gdExit 					; if not enabled, exit
+.1d99	a2 00		ldx #$00			ldx 	#0 							; check offset 0 (e.g. start at $9F2D)
+.1d9b	20 b9 1d	jsr $1db9			jsr 	gdCheckBitmap 				; go see if this is a bitmap
+.1d9e					_gdExit:
+.1d9e	a9 00		lda #$00			lda 	#0 							; initialise modifiers.
+.1da0	8d 0c 0c	sta $0c0c			sta 	gdPaper
+.1da3	8d 0f 0c	sta $0c0f			sta 	gdFlip
+.1da6	8d 0e 0c	sta $0c0e			sta 	gdImage
+.1da9	a9 01		lda #$01			lda 	#1
+.1dab	8d 0b 0c	sta $0c0b			sta 	gdInk
+.1dae	8d 0d 0c	sta $0c0d			sta 	gdSize
+.1db1	20 01 1e	jsr $1e01			jsr 	gdClearGraphics 			; clear graphics display.
+.1db4	68		pla				pla
+.1db5	a8		tay				tay
+.1db6	68		pla				pla
+.1db7	aa		tax				tax
+.1db8	60		rts				rts
+.1db9					gdCheckBitmap:
+.1db9	bd 2d 9f	lda $9f2d,x			lda 	$9F2D,x 					; look at bitmap bit.
+.1dbc	c9 07		cmp #$07			cmp 	#7 							; must be zero map size, bitmap and 8bpp
+.1dbe	d0 28		bne $1de8			bne 	_gdCBFail
+.1dc0	ee 03 0c	inc $0c03			inc 	gdEnabled 					; set the enabled flag to non zero.
+.1dc3	bd 2f 9f	lda $9f2f,x			lda 	$9F2F,x 					; this is the bitmap address / 2
+.1dc6	0a		asl a				asl 	a
+.1dc7	8d 05 0c	sta $0c05			sta 	gdBitmapAddress+1
+.1dca	69 00		adc #$00			adc 	#$00 						; set to no move, updated manually.
+.1dcc	8d 06 0c	sta $0c06			sta 	gdBitmapAddress+2
+.1dcf	a9 00		lda #$00			lda 	#$00
+.1dd1	8d 04 0c	sta $0c04			sta 	gdBitmapAddress 			; this is a 17 bit address.
+.1dd4	a9 40		lda #$40			lda 	#(320) & $FF
+.1dd6	8d 10 0c	sta $0c10			sta 	gdXLimit
+.1dd9	a9 01		lda #$01			lda 	#(320) >> 8
+.1ddb	8d 11 0c	sta $0c11			sta 	1+(gdXLimit)
+.1dde	a9 c8		lda #$c8			lda 	#(200) & $FF
+.1de0	8d 12 0c	sta $0c12			sta 	gdYLimit
+.1de3	a9 00		lda #$00			lda 	#(200) >> 8
+.1de5	8d 13 0c	sta $0c13			sta 	1+(gdYLimit)
+.1de8					_gdCBFail:
+.1de8	18		clc				clc
 .1de9	60		rts				rts
-.1dea					gdClearGraphics:
-.1dea	8a		txa				txa
-.1deb	48		pha				pha
-.1dec	98		tya				tya
-.1ded	48		pha				pha
-.1dee	ad 03 0c	lda $0c03			lda 	gdEnabled 					; screen enabled
-.1df1	f0 16		beq $1e09			beq 	_gdCGExit
-.1df3	a9 00		lda #$00			lda 	#0 							; home cursor
-.1df5	aa		tax				tax
-.1df6	20 0e 1e	jsr $1e0e			jsr 	gdSetX
-.1df9	20 15 1e	jsr $1e15			jsr 	gdSetY
-.1dfc	20 04 1d	jsr $1d04			jsr 	gdSetDrawPosition 			; set the draw position.
-.1dff	a0 fa		ldy #$fa			ldy 	#$FA						; 320 x 200 pixels = $FA00
-.1e01	a2 00		ldx #$00			ldx 	#0
-.1e03	ad 0c 0c	lda $0c0c			lda 	gdPaper
-.1e06	20 1c 1e	jsr $1e1c			jsr 	gdOptHorizontalWriter
-.1e09					_gdCGExit:
-.1e09	68		pla				pla
-.1e0a	a8		tay				tay
-.1e0b	68		pla				pla
+.1dea					CommandClg:
+.1dea	b1 28		lda ($28),y			lda 	(codePtr),y
+.1dec	c9 e2		cmp #$e2			cmp 	#TKW_PAPER
+.1dee	d0 0d		bne $1dfd			bne 	_CCLClear
+.1df0	c8		iny				iny
+.1df1	a9 00		lda #$00			lda 	#0
+.1df3	a2 0c		ldx #$0c		ldx	#12
+.1df5	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1df8	a5 98		lda $98				lda 	esInt0
+.1dfa	8d 0c 0c	sta $0c0c			sta 	gdPaper
+.1dfd					_CCLClear:
+.1dfd	20 01 1e	jsr $1e01			jsr 	gdClearGraphics
+.1e00	60		rts				rts
+.1e01					gdClearGraphics:
+.1e01	8a		txa				txa
+.1e02	48		pha				pha
+.1e03	98		tya				tya
+.1e04	48		pha				pha
+.1e05	ad 03 0c	lda $0c03			lda 	gdEnabled 					; screen enabled
+.1e08	f0 16		beq $1e20			beq 	_gdCGExit
+.1e0a	a9 00		lda #$00			lda 	#0 							; home cursor
 .1e0c	aa		tax				tax
-.1e0d	60		rts				rts
-.1e0e					gdSetX:
-.1e0e	8d 07 0c	sta $0c07			sta 	gdXPos
-.1e11	8e 08 0c	stx $0c08			stx 	gdXPos+1
-.1e14	60		rts				rts
-.1e15					gdSetY:
-.1e15	8d 09 0c	sta $0c09			sta 	gdYPos
-.1e18	8e 0a 0c	stx $0c0a			stx 	gdYPos+1
-.1e1b	60		rts				rts
-.1e1c					gdOptHorizontalWriter:
-.1e1c	48		pha				pha
-.1e1d	ad 22 9f	lda $9f22			lda 	$9F22 						; make it autoincrement.
-.1e20	09 10		ora #$10			ora 	#$10
-.1e22	8d 22 9f	sta $9f22			sta 	$9F22
-.1e25	68		pla				pla
-.1e26					_gdOLoop:
-.1e26	8d 23 9f	sta $9f23			sta 	$9F23
-.1e29	e0 00		cpx #$00			cpx 	#0
-.1e2b	d0 05		bne $1e32			bne 	_gdNoBorrow
-.1e2d	c0 00		cpy #$00			cpy 	#0
-.1e2f	f0 05		beq $1e36			beq 	_gdExit
-.1e31	88		dey				dey
-.1e32					_gdNoBorrow:
-.1e32	ca		dex				dex
-.1e33	4c 26 1e	jmp $1e26			jmp 	_gdOLoop
-.1e36					_gdExit:
-.1e36	60		rts				rts
+.1e0d	20 25 1e	jsr $1e25			jsr 	gdSetX
+.1e10	20 2c 1e	jsr $1e2c			jsr 	gdSetY
+.1e13	20 1b 1d	jsr $1d1b			jsr 	gdSetDrawPosition 			; set the draw position.
+.1e16	a0 fa		ldy #$fa			ldy 	#$FA						; 320 x 200 pixels = $FA00
+.1e18	a2 00		ldx #$00			ldx 	#0
+.1e1a	ad 0c 0c	lda $0c0c			lda 	gdPaper
+.1e1d	20 33 1e	jsr $1e33			jsr 	gdOptHorizontalWriter
+.1e20					_gdCGExit:
+.1e20	68		pla				pla
+.1e21	a8		tay				tay
+.1e22	68		pla				pla
+.1e23	aa		tax				tax
+.1e24	60		rts				rts
+.1e25					gdSetX:
+.1e25	8d 07 0c	sta $0c07			sta 	gdXPos
+.1e28	8e 08 0c	stx $0c08			stx 	gdXPos+1
+.1e2b	60		rts				rts
+.1e2c					gdSetY:
+.1e2c	8d 09 0c	sta $0c09			sta 	gdYPos
+.1e2f	8e 0a 0c	stx $0c0a			stx 	gdYPos+1
+.1e32	60		rts				rts
+.1e33					gdOptHorizontalWriter:
+.1e33	48		pha				pha
+.1e34	ad 22 9f	lda $9f22			lda 	$9F22 						; make it autoincrement.
+.1e37	09 10		ora #$10			ora 	#$10
+.1e39	8d 22 9f	sta $9f22			sta 	$9F22
+.1e3c	68		pla				pla
+.1e3d					_gdOLoop:
+.1e3d	8d 23 9f	sta $9f23			sta 	$9F23
+.1e40	e0 00		cpx #$00			cpx 	#0
+.1e42	d0 05		bne $1e49			bne 	_gdNoBorrow
+.1e44	c0 00		cpy #$00			cpy 	#0
+.1e46	f0 05		beq $1e4d			beq 	_gdExit
+.1e48	88		dey				dey
+.1e49					_gdNoBorrow:
+.1e49	ca		dex				dex
+.1e4a	4c 3d 1e	jmp $1e3d			jmp 	_gdOLoop
+.1e4d					_gdExit:
+.1e4d	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
 
 
 ;******  Processing file: extension/option_x16/miscellany/clock.asm
 
-.1e37					Unary_Clock:
-.1e37	a2 0c		ldx #$0c		ldx	#12
-.1e39	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1e3c	48		pha				pha 								; save stack pos
-.1e3d	a2 04		ldx #$04		ldx	#4
-.1e3f	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1e42	98		tya				tya
-.1e43	48		pha				pha
-.1e44	20 50 ff	jsr $ff50			jsr 	$FF50
-.1e47	68		pla				pla
-.1e48	a8		tay				tay
-.1e49	68		pla				pla 								; restore, repush, put into X to read offset
-.1e4a	48		pha				pha
-.1e4b	aa		tax				tax
-.1e4c	b5 98		lda $98,x			lda 	esInt0,x 					; must be 0-5
-.1e4e	c9 06		cmp #$06			cmp 	#6
-.1e50	b0 0d		bcs $1e5f			bcs 	_UCValue
-.1e52	aa		tax				tax 								; index in X and read RTC.
-.1e53	b5 02		lda $02,x			lda 	2,x
-.1e55	85 32		sta $32				sta 	tempshort
-.1e57	68		pla				pla 								; restore number stack index.
-.1e58	aa		tax				tax
-.1e59	a5 32		lda $32				lda 	tempShort
-.1e5b	95 98		sta $98,x			sta 	esInt0,x 					; rest are set up.
-.1e5d	8a		txa				txa
-.1e5e	60		rts				rts
-.1e5f					_UCValue:
-.1e5f	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
-.1e61	20 18 15	jsr $1518		jsr	errorHandler
+.1e4e					Unary_Clock:
+.1e4e	a2 0c		ldx #$0c		ldx	#12
+.1e50	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1e53	48		pha				pha 								; save stack pos
+.1e54	a2 04		ldx #$04		ldx	#4
+.1e56	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1e59	98		tya				tya
+.1e5a	48		pha				pha
+.1e5b	20 50 ff	jsr $ff50			jsr 	$FF50
+.1e5e	68		pla				pla
+.1e5f	a8		tay				tay
+.1e60	68		pla				pla 								; restore, repush, put into X to read offset
+.1e61	48		pha				pha
+.1e62	aa		tax				tax
+.1e63	b5 98		lda $98,x			lda 	esInt0,x 					; must be 0-5
+.1e65	c9 06		cmp #$06			cmp 	#6
+.1e67	b0 0d		bcs $1e76			bcs 	_UCValue
+.1e69	aa		tax				tax 								; index in X and read RTC.
+.1e6a	b5 02		lda $02,x			lda 	2,x
+.1e6c	85 32		sta $32				sta 	tempshort
+.1e6e	68		pla				pla 								; restore number stack index.
+.1e6f	aa		tax				tax
+.1e70	a5 32		lda $32				lda 	tempShort
+.1e72	95 98		sta $98,x			sta 	esInt0,x 					; rest are set up.
+.1e74	8a		txa				txa
+.1e75	60		rts				rts
+.1e76					_UCValue:
+.1e76	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
+.1e78	20 18 15	jsr $1518		jsr	errorHandler
 
 ;******  Return to file: extension/extension.asm
 
 
 ;******  Processing file: extension/option_x16/miscellany/joystick.asm
 
-.1e64					Unary_JoyX:
-.1e64	38		sec				sec
-.1e65	b0 01		bcs $1e68			bcs 	JoystickRead
-.1e67					Unary_JoyY:
-.1e67	18		clc				clc
-.1e68					JoystickRead:
-.1e68	48		pha				pha 								; save stack position
-.1e69	08		php				php 								; save test flag.
-.1e6a	a2 04		ldx #$04		ldx	#4
-.1e6c	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1e6f	20 c9 1e	jsr $1ec9			jsr 	ReadJoystick 				; read it.
-.1e72	28		plp				plp
-.1e73	b0 02		bcs $1e77			bcs 	_JRNoShift 					; if Y, shift right twice so accessing Y buttons
-.1e75	4a		lsr a				lsr 	a
-.1e76	4a		lsr a				lsr 	a
-.1e77					_JRNoShift:
-.1e77	29 03		and #$03			and 	#3 							; isolate the test bits.
-.1e79	f0 0d		beq $1e88			beq 	JoyReturnA 					; if nothing pressed, return A.
-.1e7b	c9 03		cmp #$03			cmp 	#3
-.1e7d	f0 07		beq $1e86			beq 	JoyReturnFalse 				; could be both on a keyboard.
-.1e7f	4a		lsr a				lsr 	a 							; bit 0 set, its +1
-.1e80	b0 16		bcs $1e98			bcs 	JoyReturn1
-.1e82					JoyReturnTrue:
-.1e82	a9 ff		lda #$ff			lda 	#$FF
-.1e84	d0 02		bne $1e88			bne 	JoyReturnA
-.1e86					JoyReturnFalse:
-.1e86	a9 00		lda #$00			lda 	#0
-.1e88					JoyReturnA:
-.1e88	85 32		sta $32				sta 	tempShort 					; return A
-.1e8a	68		pla				pla
-.1e8b	aa		tax				tax
-.1e8c	a5 32		lda $32				lda 	tempShort
-.1e8e	95 98		sta $98,x			sta 	esInt0,x
-.1e90					JoyReturn13:
-.1e90	95 a0		sta $a0,x			sta 	esInt1,x
-.1e92	95 a8		sta $a8,x			sta 	esInt2,x
-.1e94	95 b0		sta $b0,x			sta 	esInt3,x
-.1e96	8a		txa				txa 								; return NSP in A
-.1e97	60		rts				rts
-.1e98					JoyReturn1:
-.1e98	68		pla				pla
-.1e99	aa		tax				tax
-.1e9a	a9 01		lda #$01			lda 	#1
-.1e9c	95 98		sta $98,x			sta 	esInt0,x
-.1e9e	a9 00		lda #$00			lda 	#0
-.1ea0	f0 ee		beq $1e90			beq 	JoyReturn13
-.1ea2					Unary_JButton:
-.1ea2	48		pha				pha 								; save X on stack, put in X
-.1ea3	a2 0c		ldx #$0c		ldx	#12
-.1ea5	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1ea8	aa		tax				tax 								; get value to check, push on stack.
-.1ea9	b5 98		lda $98,x			lda 	esInt0,x
-.1eab	c9 04		cmp #$04			cmp 	#4 							; check button 0-3
-.1ead	b0 15		bcs $1ec4			bcs 	_UJBadValue
-.1eaf	69 05		adc #$05			adc 	#5 							; four more shifts to get the bit into carry.
-.1eb1	48		pha				pha 								; save that shift count on the stack.
-.1eb2	a2 04		ldx #$04		ldx	#4
-.1eb4	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1eb7	68		pla				pla
-.1eb8	aa		tax				tax
-.1eb9	20 c9 1e	jsr $1ec9			jsr 	ReadJoystick 				; joystick read
-.1ebc					_UJShift:
-.1ebc	4a		lsr a				lsr 	a
-.1ebd	ca		dex				dex
-.1ebe	d0 fc		bne $1ebc			bne 	_UJShift
-.1ec0	b0 c0		bcs $1e82			bcs 	JoyReturnTrue
-.1ec2	90 c2		bcc $1e86			bcc 	JoyReturnFalse
-.1ec4					_UJBadValue:
-.1ec4	a2 28		ldx #$28			ldx 	#ErrorID_Hardware
-.1ec6	20 18 15	jsr $1518		jsr	errorHandler
-.1ec9					ReadJoystick:
-.1ec9	8a		txa				txa
-.1eca	48		pha				pha
-.1ecb	98		tya				tya
-.1ecc	48		pha				pha
-.1ecd	a9 00		lda #$00			lda 	#0
-.1ecf	20 56 ff	jsr $ff56			jsr 	$FF56
-.1ed2	c0 00		cpy #$00			cpy 	#0
-.1ed4	d0 11		bne $1ee7			bne 	_RJError
-.1ed6	c9 00		cmp #$00			cmp 	#0 							; bug, returns $00 initially
-.1ed8	d0 02		bne $1edc			bne 	_RJNoBug
-.1eda	a9 ff		lda #$ff			lda 	#$FF
-.1edc					_RJNoBug:
-.1edc	85 32		sta $32				sta 	tempShort
-.1ede	68		pla				pla
-.1edf	a8		tay				tay
-.1ee0	68		pla				pla
-.1ee1	aa		tax				tax
-.1ee2	a5 32		lda $32				lda 	tempShort
-.1ee4	49 ff		eor #$ff			eor 	#$FF 						; active 1 bit.
-.1ee6	60		rts				rts
-.1ee7					_RJError:
-.1ee7	a2 28		ldx #$28			ldx 	#ErrorID_Hardware
-.1ee9	20 18 15	jsr $1518		jsr	errorHandler
+.1e7b					Unary_JoyX:
+.1e7b	38		sec				sec
+.1e7c	b0 01		bcs $1e7f			bcs 	JoystickRead
+.1e7e					Unary_JoyY:
+.1e7e	18		clc				clc
+.1e7f					JoystickRead:
+.1e7f	48		pha				pha 								; save stack position
+.1e80	08		php				php 								; save test flag.
+.1e81	a2 04		ldx #$04		ldx	#4
+.1e83	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1e86	20 e0 1e	jsr $1ee0			jsr 	ReadJoystick 				; read it.
+.1e89	28		plp				plp
+.1e8a	b0 02		bcs $1e8e			bcs 	_JRNoShift 					; if Y, shift right twice so accessing Y buttons
+.1e8c	4a		lsr a				lsr 	a
+.1e8d	4a		lsr a				lsr 	a
+.1e8e					_JRNoShift:
+.1e8e	29 03		and #$03			and 	#3 							; isolate the test bits.
+.1e90	f0 0d		beq $1e9f			beq 	JoyReturnA 					; if nothing pressed, return A.
+.1e92	c9 03		cmp #$03			cmp 	#3
+.1e94	f0 07		beq $1e9d			beq 	JoyReturnFalse 				; could be both on a keyboard.
+.1e96	4a		lsr a				lsr 	a 							; bit 0 set, its +1
+.1e97	b0 16		bcs $1eaf			bcs 	JoyReturn1
+.1e99					JoyReturnTrue:
+.1e99	a9 ff		lda #$ff			lda 	#$FF
+.1e9b	d0 02		bne $1e9f			bne 	JoyReturnA
+.1e9d					JoyReturnFalse:
+.1e9d	a9 00		lda #$00			lda 	#0
+.1e9f					JoyReturnA:
+.1e9f	85 32		sta $32				sta 	tempShort 					; return A
+.1ea1	68		pla				pla
+.1ea2	aa		tax				tax
+.1ea3	a5 32		lda $32				lda 	tempShort
+.1ea5	95 98		sta $98,x			sta 	esInt0,x
+.1ea7					JoyReturn13:
+.1ea7	95 a0		sta $a0,x			sta 	esInt1,x
+.1ea9	95 a8		sta $a8,x			sta 	esInt2,x
+.1eab	95 b0		sta $b0,x			sta 	esInt3,x
+.1ead	8a		txa				txa 								; return NSP in A
+.1eae	60		rts				rts
+.1eaf					JoyReturn1:
+.1eaf	68		pla				pla
+.1eb0	aa		tax				tax
+.1eb1	a9 01		lda #$01			lda 	#1
+.1eb3	95 98		sta $98,x			sta 	esInt0,x
+.1eb5	a9 00		lda #$00			lda 	#0
+.1eb7	f0 ee		beq $1ea7			beq 	JoyReturn13
+.1eb9					Unary_JButton:
+.1eb9	48		pha				pha 								; save X on stack, put in X
+.1eba	a2 0c		ldx #$0c		ldx	#12
+.1ebc	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1ebf	aa		tax				tax 								; get value to check, push on stack.
+.1ec0	b5 98		lda $98,x			lda 	esInt0,x
+.1ec2	c9 04		cmp #$04			cmp 	#4 							; check button 0-3
+.1ec4	b0 15		bcs $1edb			bcs 	_UJBadValue
+.1ec6	69 05		adc #$05			adc 	#5 							; four more shifts to get the bit into carry.
+.1ec8	48		pha				pha 								; save that shift count on the stack.
+.1ec9	a2 04		ldx #$04		ldx	#4
+.1ecb	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1ece	68		pla				pla
+.1ecf	aa		tax				tax
+.1ed0	20 e0 1e	jsr $1ee0			jsr 	ReadJoystick 				; joystick read
+.1ed3					_UJShift:
+.1ed3	4a		lsr a				lsr 	a
+.1ed4	ca		dex				dex
+.1ed5	d0 fc		bne $1ed3			bne 	_UJShift
+.1ed7	b0 c0		bcs $1e99			bcs 	JoyReturnTrue
+.1ed9	90 c2		bcc $1e9d			bcc 	JoyReturnFalse
+.1edb					_UJBadValue:
+.1edb	a2 28		ldx #$28			ldx 	#ErrorID_Hardware
+.1edd	20 18 15	jsr $1518		jsr	errorHandler
+.1ee0					ReadJoystick:
+.1ee0	8a		txa				txa
+.1ee1	48		pha				pha
+.1ee2	98		tya				tya
+.1ee3	48		pha				pha
+.1ee4	a9 00		lda #$00			lda 	#0
+.1ee6	20 56 ff	jsr $ff56			jsr 	$FF56
+.1ee9	c0 00		cpy #$00			cpy 	#0
+.1eeb	d0 11		bne $1efe			bne 	_RJError
+.1eed	c9 00		cmp #$00			cmp 	#0 							; bug, returns $00 initially
+.1eef	d0 02		bne $1ef3			bne 	_RJNoBug
+.1ef1	a9 ff		lda #$ff			lda 	#$FF
+.1ef3					_RJNoBug:
+.1ef3	85 32		sta $32				sta 	tempShort
+.1ef5	68		pla				pla
+.1ef6	a8		tay				tay
+.1ef7	68		pla				pla
+.1ef8	aa		tax				tax
+.1ef9	a5 32		lda $32				lda 	tempShort
+.1efb	49 ff		eor #$ff			eor 	#$FF 						; active 1 bit.
+.1efd	60		rts				rts
+.1efe					_RJError:
+.1efe	a2 28		ldx #$28			ldx 	#ErrorID_Hardware
+.1f00	20 18 15	jsr $1518		jsr	errorHandler
 
 ;******  Return to file: extension/extension.asm
 
@@ -2677,119 +2695,119 @@
 >0c15							.fill 	1
 .0c16					hitRange:
 >0c16							.fill 	1
-.1eec					FunctionCollide:
-.1eec	48		pha				pha 								; save and put index into X
-.1eed	aa		tax				tax
-.1eee	a9 00		lda #$00			lda 	#0 							; set hit range to default.
-.1ef0	8d 16 0c	sta $0c16			sta 	hitRange
-.1ef3	20 98 1f	jsr $1f98			jsr 	_FCGetSpriteID
-.1ef6	8d 14 0c	sta $0c14			sta 	hitSprite1
-.1ef9	8a		txa				txa
-.1efa	48		pha				pha
-.1efb	a2 02		ldx #$02		ldx	#2
-.1efd	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1f00	68		pla				pla
-.1f01	aa		tax				tax
-.1f02	20 98 1f	jsr $1f98			jsr 	_FCGetSpriteID
-.1f05	8d 15 0c	sta $0c15			sta 	hitSprite2
-.1f08	b1 28		lda ($28),y			lda 	(codePtr),y 				; is there a third parameter
-.1f0a	c9 c9		cmp #$c9			cmp 	#TKW_RPAREN
-.1f0c	f0 13		beq $1f21			beq 	_FCParam2
-.1f0e	8a		txa				txa
-.1f0f	48		pha				pha
-.1f10	a2 02		ldx #$02		ldx	#2
-.1f12	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1f15	68		pla				pla
-.1f16	a2 0c		ldx #$0c		ldx	#12
-.1f18	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1f1b	aa		tax				tax
-.1f1c	b5 98		lda $98,x			lda 	esInt0,x
-.1f1e	8d 16 0c	sta $0c16			sta 	hitRange
-.1f21					_FCParam2:
-.1f21	a2 04		ldx #$04		ldx	#4
-.1f23	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1f26	68		pla				pla 								; set X to point to the stack again.
-.1f27	48		pha				pha
-.1f28	aa		tax				tax
-.1f29	98		tya				tya
-.1f2a	48		pha				pha
-.1f2b	18		clc				clc 								; do it with the horizontal values.
-.1f2c	20 4e 1f	jsr $1f4e			jsr 	_FCCheck
-.1f2f	90 0a		bcc $1f3b			bcc 	_FCFail
-.1f31	38		sec				sec 								; do it with the vertical values.
-.1f32	20 4e 1f	jsr $1f4e			jsr 	_FCCheck
-.1f35	90 04		bcc $1f3b			bcc 	_FCFail
-.1f37	a9 ff		lda #$ff			lda 	#255 						; pass, return -1
-.1f39	d0 02		bne $1f3d			bne 	_FCReturnA
-.1f3b					_FCFail:
-.1f3b	a9 00		lda #$00			lda 	#0 							; return 0, it didn't work.
-.1f3d					_FCReturnA:
-.1f3d	85 32		sta $32				sta 	tempShort 					; put result in tempShort
-.1f3f	68		pla				pla
-.1f40	a8		tay				tay
-.1f41	68		pla				pla 								; restore stack, return result and exit.
-.1f42	aa		tax				tax
-.1f43	a5 32		lda $32				lda 	tempShort
-.1f45	95 98		sta $98,x			sta 	esInt0,x
-.1f47	95 a0		sta $a0,x			sta 	esInt1,x
-.1f49	95 a8		sta $a8,x			sta 	esInt2,x
-.1f4b	95 b0		sta $b0,x			sta 	esInt3,x
-.1f4d	60		rts				rts
-.1f4e					_FCCheck:
-.1f4e	08		php				php 								; save the H/V flag twice
-.1f4f	08		php				php
-.1f50	ad 14 0c	lda $0c14			lda 	hitSprite1 					; select sprite 1 and read its location
-.1f53	20 d6 20	jsr $20d6			jsr 	SelectSpriteA 				; into X
-.1f56	28		plp				plp
-.1f57	20 5e 21	jsr $215e			jsr 	SpriteReadCoordinate
-.1f5a	ad 15 0c	lda $0c15			lda 	hitSprite2					; now repeat for sprite 2 and location X+1
-.1f5d	20 d6 20	jsr $20d6			jsr 	SelectSpriteA
-.1f60	e8		inx				inx
-.1f61	28		plp				plp
-.1f62	20 5e 21	jsr $215e			jsr 	SpriteReadCoordinate
-.1f65	ca		dex				dex
-.1f66	38		sec				sec 								; calculate |s1.c-s2.c| put in temp0
-.1f67	b5 98		lda $98,x			lda 	esInt0,x
-.1f69	f5 99		sbc $99,x			sbc 	esInt0+1,x
-.1f6b	85 2a		sta $2a				sta 	temp0
-.1f6d	b5 a0		lda $a0,x			lda 	esInt1,x
-.1f6f	f5 a1		sbc $a1,x			sbc 	esInt1+1,x
-.1f71	85 2b		sta $2b				sta 	temp0+1
-.1f73	10 0d		bpl $1f82			bpl 	_FCCIsPositive
-.1f75	38		sec				sec 								; if -ve calculate |difference|
-.1f76	a9 00		lda #$00			lda 	#0
-.1f78	e5 2a		sbc $2a				sbc 	temp0
-.1f7a	85 2a		sta $2a				sta 	temp0
-.1f7c	a9 00		lda #$00			lda 	#0
-.1f7e	e5 2b		sbc $2b				sbc 	temp0+1
-.1f80	85 2b		sta $2b				sta 	temp0+1
-.1f82					_FCCIsPositive:
-.1f82	a5 2b		lda $2b				lda 	temp0+1 					; if range >= 256 then definitely fail.
-.1f84	d0 10		bne $1f96			bne 	_FCCFail
-.1f86	18		clc				clc 								; work out required min distance which is
-.1f87	b5 b0		lda $b0,x			lda 	esInt3,x 					; the sum of the half width/heights
-.1f89	75 b1		adc $b1,x			adc 	esInt3+1,x
-.1f8b	ac 16 0c	ldy $0c16			ldy 	hitRange 					; get the hit range
-.1f8e	f0 01		beq $1f91			beq 	_FCCNoSetRange 				; override if non zero.
-.1f90	98		tya				tya
-.1f91					_FCCNoSetRange:
-.1f91	c5 2a		cmp $2a				cmp 	temp0 						; result is range > distance
-.1f93	f0 01		beq $1f96			beq 	_FCCFail
-.1f95	60		rts				rts
-.1f96					_FCCFail:
-.1f96	18		clc				clc
-.1f97	60		rts				rts
-.1f98					_FCGetSpriteID:
-.1f98	8a		txa				txa
-.1f99	a2 0c		ldx #$0c		ldx	#12
-.1f9b	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1f9e	aa		tax				tax
-.1f9f	b5 98		lda $98,x			lda 	esInt0,x
-.1fa1	30 01		bmi $1fa4			bmi 	_FCGSValue
-.1fa3	60		rts				rts
-.1fa4					_FCGSValue:
-.1fa4	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
-.1fa6	20 18 15	jsr $1518		jsr	errorHandler
+.1f03					FunctionCollide:
+.1f03	48		pha				pha 								; save and put index into X
+.1f04	aa		tax				tax
+.1f05	a9 00		lda #$00			lda 	#0 							; set hit range to default.
+.1f07	8d 16 0c	sta $0c16			sta 	hitRange
+.1f0a	20 af 1f	jsr $1faf			jsr 	_FCGetSpriteID
+.1f0d	8d 14 0c	sta $0c14			sta 	hitSprite1
+.1f10	8a		txa				txa
+.1f11	48		pha				pha
+.1f12	a2 02		ldx #$02		ldx	#2
+.1f14	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1f17	68		pla				pla
+.1f18	aa		tax				tax
+.1f19	20 af 1f	jsr $1faf			jsr 	_FCGetSpriteID
+.1f1c	8d 15 0c	sta $0c15			sta 	hitSprite2
+.1f1f	b1 28		lda ($28),y			lda 	(codePtr),y 				; is there a third parameter
+.1f21	c9 c9		cmp #$c9			cmp 	#TKW_RPAREN
+.1f23	f0 13		beq $1f38			beq 	_FCParam2
+.1f25	8a		txa				txa
+.1f26	48		pha				pha
+.1f27	a2 02		ldx #$02		ldx	#2
+.1f29	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1f2c	68		pla				pla
+.1f2d	a2 0c		ldx #$0c		ldx	#12
+.1f2f	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1f32	aa		tax				tax
+.1f33	b5 98		lda $98,x			lda 	esInt0,x
+.1f35	8d 16 0c	sta $0c16			sta 	hitRange
+.1f38					_FCParam2:
+.1f38	a2 04		ldx #$04		ldx	#4
+.1f3a	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1f3d	68		pla				pla 								; set X to point to the stack again.
+.1f3e	48		pha				pha
+.1f3f	aa		tax				tax
+.1f40	98		tya				tya
+.1f41	48		pha				pha
+.1f42	18		clc				clc 								; do it with the horizontal values.
+.1f43	20 65 1f	jsr $1f65			jsr 	_FCCheck
+.1f46	90 0a		bcc $1f52			bcc 	_FCFail
+.1f48	38		sec				sec 								; do it with the vertical values.
+.1f49	20 65 1f	jsr $1f65			jsr 	_FCCheck
+.1f4c	90 04		bcc $1f52			bcc 	_FCFail
+.1f4e	a9 ff		lda #$ff			lda 	#255 						; pass, return -1
+.1f50	d0 02		bne $1f54			bne 	_FCReturnA
+.1f52					_FCFail:
+.1f52	a9 00		lda #$00			lda 	#0 							; return 0, it didn't work.
+.1f54					_FCReturnA:
+.1f54	85 32		sta $32				sta 	tempShort 					; put result in tempShort
+.1f56	68		pla				pla
+.1f57	a8		tay				tay
+.1f58	68		pla				pla 								; restore stack, return result and exit.
+.1f59	aa		tax				tax
+.1f5a	a5 32		lda $32				lda 	tempShort
+.1f5c	95 98		sta $98,x			sta 	esInt0,x
+.1f5e	95 a0		sta $a0,x			sta 	esInt1,x
+.1f60	95 a8		sta $a8,x			sta 	esInt2,x
+.1f62	95 b0		sta $b0,x			sta 	esInt3,x
+.1f64	60		rts				rts
+.1f65					_FCCheck:
+.1f65	08		php				php 								; save the H/V flag twice
+.1f66	08		php				php
+.1f67	ad 14 0c	lda $0c14			lda 	hitSprite1 					; select sprite 1 and read its location
+.1f6a	20 ed 20	jsr $20ed			jsr 	SelectSpriteA 				; into X
+.1f6d	28		plp				plp
+.1f6e	20 5e 21	jsr $215e			jsr 	SpriteReadCoordinate
+.1f71	ad 15 0c	lda $0c15			lda 	hitSprite2					; now repeat for sprite 2 and location X+1
+.1f74	20 ed 20	jsr $20ed			jsr 	SelectSpriteA
+.1f77	e8		inx				inx
+.1f78	28		plp				plp
+.1f79	20 5e 21	jsr $215e			jsr 	SpriteReadCoordinate
+.1f7c	ca		dex				dex
+.1f7d	38		sec				sec 								; calculate |s1.c-s2.c| put in temp0
+.1f7e	b5 98		lda $98,x			lda 	esInt0,x
+.1f80	f5 99		sbc $99,x			sbc 	esInt0+1,x
+.1f82	85 2a		sta $2a				sta 	temp0
+.1f84	b5 a0		lda $a0,x			lda 	esInt1,x
+.1f86	f5 a1		sbc $a1,x			sbc 	esInt1+1,x
+.1f88	85 2b		sta $2b				sta 	temp0+1
+.1f8a	10 0d		bpl $1f99			bpl 	_FCCIsPositive
+.1f8c	38		sec				sec 								; if -ve calculate |difference|
+.1f8d	a9 00		lda #$00			lda 	#0
+.1f8f	e5 2a		sbc $2a				sbc 	temp0
+.1f91	85 2a		sta $2a				sta 	temp0
+.1f93	a9 00		lda #$00			lda 	#0
+.1f95	e5 2b		sbc $2b				sbc 	temp0+1
+.1f97	85 2b		sta $2b				sta 	temp0+1
+.1f99					_FCCIsPositive:
+.1f99	a5 2b		lda $2b				lda 	temp0+1 					; if range >= 256 then definitely fail.
+.1f9b	d0 10		bne $1fad			bne 	_FCCFail
+.1f9d	18		clc				clc 								; work out required min distance which is
+.1f9e	b5 b0		lda $b0,x			lda 	esInt3,x 					; the sum of the half width/heights
+.1fa0	75 b1		adc $b1,x			adc 	esInt3+1,x
+.1fa2	ac 16 0c	ldy $0c16			ldy 	hitRange 					; get the hit range
+.1fa5	f0 01		beq $1fa8			beq 	_FCCNoSetRange 				; override if non zero.
+.1fa7	98		tya				tya
+.1fa8					_FCCNoSetRange:
+.1fa8	c5 2a		cmp $2a				cmp 	temp0 						; result is range > distance
+.1faa	f0 01		beq $1fad			beq 	_FCCFail
+.1fac	60		rts				rts
+.1fad					_FCCFail:
+.1fad	18		clc				clc
+.1fae	60		rts				rts
+.1faf					_FCGetSpriteID:
+.1faf	8a		txa				txa
+.1fb0	a2 0c		ldx #$0c		ldx	#12
+.1fb2	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.1fb5	aa		tax				tax
+.1fb6	b5 98		lda $98,x			lda 	esInt0,x
+.1fb8	30 01		bmi $1fbb			bmi 	_FCGSValue
+.1fba	60		rts				rts
+.1fbb					_FCGSValue:
+.1fbb	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
+.1fbd	20 18 15	jsr $1518		jsr	errorHandler
 
 ;******  Return to file: extension/extension.asm
 
@@ -2798,210 +2816,192 @@
 
 .0c17					currSprite:
 >0c17							.fill 	2
-.1fa9					CommandSprite:
-.1fa9	20 ab 20	jsr $20ab			jsr 	CSCheckOnOff 				; look for TRUE/FALSE
-.1fac	d0 0d		bne $1fbb			bne 	_CSCheckClear
-.1fae	ad 29 9f	lda $9f29			lda 	$9F29 						; sprite enable is bit 6.
-.1fb1	29 bf		and #$bf			and 	#$BF 						; clear it whatever
-.1fb3	90 02		bcc $1fb7			bcc 	_CSNotOn 					; if CS turn on, so set it
-.1fb5	09 40		ora #$40			ora 	#$40
-.1fb7					_CSNotOn:
-.1fb7	8d 29 9f	sta $9f29			sta 	$9F29 						; write it back in new state and exit
-.1fba	60		rts				rts
-.1fbb					_CSCheckClear:
-.1fbb	a9 00		lda #$00			lda 	#0 							; no sprite currently selected.
-.1fbd	8d 18 0c	sta $0c18			sta 	currSprite+1
-.1fc0	b1 28		lda ($28),y			lda 	(codePtr),y 				; check for CLEAR
-.1fc2	c9 e8		cmp #$e8			cmp 	#TKW_CLEAR
-.1fc4	d0 05		bne $1fcb			bne 	_CSCommandLoop 				; not CLEAR, go to main loop
-.1fc6	20 bc 20	jsr $20bc			jsr 	CSClearSprites 				; clear all the sprites
-.1fc9	c8		iny				iny 								; consume CLEAR token and exit.
-.1fca	60		rts				rts
-.1fcb					_CSCommandLoop:
-.1fcb	20 ab 20	jsr $20ab			jsr 	CSCheckOnOff 				; check sprite on/off
-.1fce	f0 2c		beq $1ffc			beq 	_CSSetVisibility
-.1fd0	b1 28		lda ($28),y			lda 	(codePtr),y 				; get and consume character
-.1fd2	c9 80		cmp #$80			cmp 	#TOK_EOL					; EOL exit.
-.1fd4	f0 25		beq $1ffb			beq 	_CSExit
-.1fd6	c8		iny				iny									; consume it
-.1fd7	c9 ca		cmp #$ca			cmp 	#TKW_COLON 					; colon exit
-.1fd9	f0 20		beq $1ffb			beq 	_CSExit
-.1fdb	c9 cb		cmp #$cb			cmp 	#TKW_COMMA 					; semantic comma
-.1fdd	f0 ec		beq $1fcb			beq 	_CSCommandLoop
-.1fdf	c9 da		cmp #$da			cmp		#TKW_IMAGE 					; image ?
-.1fe1	f0 69		beq $204c			beq 	_CSSetImage
-.1fe3	c9 dc		cmp #$dc			cmp 	#TKW_FLIP 					; flip ?
-.1fe5	f0 2b		beq $2012			beq 	_CSSetFlip
-.1fe7	c9 ce		cmp #$ce			cmp 	#TKW_TO 					; to ?
-.1fe9	f0 46		beq $2031			beq 	_CSSetPos
-.1feb	88		dey				dey 								; unpick DEY
-.1fec	a9 00		lda #$00			lda 	#0 							; sprite # now at level 0
-.1fee	a2 0c		ldx #$0c		ldx	#12
-.1ff0	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.1ff3	a5 98		lda $98				lda 	esInt0
-.1ff5	20 d6 20	jsr $20d6			jsr 	SelectSpriteA
-.1ff8	4c cb 1f	jmp $1fcb			jmp 	_CSCommandLoop
-.1ffb					_CSExit:
-.1ffb	60		rts				rts
-.1ffc					_CSSetVisibility:
-.1ffc	08		php				php 								; save carry
-.1ffd	a9 06		lda #$06			lda 	#6 							; set pos to offset 6.
-.1fff	20 92 20	jsr $2092			jsr 	SpriteSetTarget
-.2002	ad 23 9f	lda $9f23			lda 	$9F23 						; read it.
-.2005	29 f3		and #$f3			and 	#$F3 						; clear depth bits, disabling it.
-.2007	28		plp				plp
-.2008	90 02		bcc $200c			bcc 	_CSSetOff 					; check if carry was set
-.200a	09 0c		ora #$0c			ora 	#$0C 						; otherwise set depth bits to 11, on top.
-.200c					_CSSetOff:
-.200c	8d 23 9f	sta $9f23			sta 	$9F23 						; update and loop back
-.200f	4c cb 1f	jmp $1fcb			jmp 	_CSCommandLoop
-.2012					_CSSetFlip:
-.2012	a9 00		lda #$00			lda 	#0 							; image # now at level 0
-.2014	a2 0c		ldx #$0c		ldx	#12
-.2016	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.2019	a9 06		lda #$06			lda 	#6 							; set sprite position to +6
-.201b	20 92 20	jsr $2092			jsr 	SpriteSetTarget
-.201e	a5 98		lda $98				lda 	esInt0 						; flip value & 3 => temp0
-.2020	29 03		and #$03			and 	#3
-.2022	85 2a		sta $2a				sta 	temp0
-.2024	ad 23 9f	lda $9f23			lda 	$9F23 						; update the flip.
-.2027	29 fc		and #$fc			and 	#$FC
-.2029	05 2a		ora $2a				ora 	temp0
-.202b	8d 23 9f	sta $9f23			sta 	$9F23
-.202e	4c cb 1f	jmp $1fcb			jmp 	_CSCommandLoop
-.2031					_CSSetPos:
-.2031	a9 00		lda #$00			lda 	#0 							; X now at level 0
-.2033	a2 0a		ldx #$0a		ldx	#10
-.2035	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.2038	a2 02		ldx #$02		ldx	#2
-.203a	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.203d	a9 01		lda #$01			lda 	#1 							; Y now at level 1
-.203f	a2 0a		ldx #$0a		ldx	#10
-.2041	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.2044	a2 00		ldx #$00			ldx 	#0 							; coords at 0,1
-.2046	20 1a 21	jsr $211a			jsr 	SpriteMove 					; move it.
-.2049	4c cb 1f	jmp $1fcb			jmp 	_CSCommandLoop
-.204c					_CSSetImage:
-.204c	a9 00		lda #$00			lda 	#0 							; image # now at level 0
-.204e	a2 0c		ldx #$0c		ldx	#12
-.2050	20 f1 3c	jsr $3cf1		jsr	mainHandler
-.2053	a9 00		lda #$00			lda 	#0 							; set sprite position to +0
-.2055	20 92 20	jsr $2092			jsr 	SpriteSetTarget
-.2058	a6 98		ldx $98				ldx 	esInt0 						; get image # into X
-.205a	bd 5e 0c	lda $0c5e,x			lda 	imageAddr2Low,x 			; copy low address in.
-.205d	8d 23 9f	sta $9f23			sta 	$9F23
-.2060	ee 20 9f	inc $9f20			inc 	$9F20 						; bump to offset 1.
-.2063	bd 1e 0c	lda $0c1e,x			lda 	imageInfo,x 				; get 4/8 bit flag from info.
-.2066	29 10		and #$10			and 	#$10
-.2068	0a		asl a				asl 	a
-.2069	0a		asl a				asl		a
-.206a	0a		asl a				asl 	a 							; put into bit 7
-.206b	1d 9e 0c	ora $0c9e,x			ora 	imageAddr2High,x 			; or high address with it.
-.206e	8d 23 9f	sta $9f23			sta 	$9F23 						; write the high byte.
-.2071	a9 06		lda #$06			lda 	#6
-.2073	20 92 20	jsr $2092			jsr 	SpriteSetTarget 			; set sprite on.
-.2076	ad 23 9f	lda $9f23			lda 	$9F23
-.2079	09 0c		ora #$0c			ora 	#$0C
-.207b	8d 23 9f	sta $9f23			sta 	$9F23
-.207e	ee 20 9f	inc $9f20			inc 	$9F20 						; point to byte 7 : height/width/palette offset
-.2081	bd 1e 0c	lda $0c1e,x			lda 	imageInfo,x 				; get image info
-.2084	0a		asl a				asl 	a 							; shift bits 0-3 to 4-7
-.2085	0a		asl a				asl 	a
-.2086	0a		asl a				asl 	a
-.2087	0a		asl a				asl 	a
-.2088	b0 02		bcs $208c			bcs		_CSNoOffset 				; if bit 4 was set don't set the offset.
-.208a	09 0f		ora #$0f			ora 	#$0F 						; set palette offset and write back
-.208c					_CSNoOffset:
-.208c	8d 23 9f	sta $9f23			sta 	$9F23
-.208f	4c cb 1f	jmp $1fcb			jmp 	_CSCommandLoop
-.2092					SpriteSetTarget:
-.2092	0d 17 0c	ora $0c17			ora 	currSprite
-.2095	8d 20 9f	sta $9f20			sta 	$9F20
-.2098	ad 18 0c	lda $0c18			lda 	currSprite+1
-.209b	f0 09		beq $20a6			beq 	_SSTNoSet
-.209d	8d 21 9f	sta $9f21			sta 	$9F21
-.20a0	a9 01		lda #$01			lda 	#$01
-.20a2	8d 22 9f	sta $9f22			sta 	$9F22
-.20a5	60		rts				rts
-.20a6					_SSTNoSet:
-.20a6	a2 27		ldx #$27			ldx 	#ErrorID_NoSprite
-.20a8	20 18 15	jsr $1518		jsr	errorHandler
-.20ab					CSCheckOnOff:
-.20ab	b1 28		lda ($28),y			lda 	(codePtr),y 				; get and consume it.
-.20ad	c8		iny				iny
-.20ae	c9 ab		cmp #$ab			cmp 	#TKW_FALSE					; return CC/EQ if FALSE
-.20b0	18		clc				clc
-.20b1	f0 08		beq $20bb			beq 	_CSCOExit
-.20b3	c9 aa		cmp #$aa			cmp 	#TKW_TRUE 					; return CS/EQ if TRUE
-.20b5	38		sec				sec 								; return NE if neither.
-.20b6	f0 03		beq $20bb			beq 	_CSCOExit
-.20b8	88		dey				dey 								; undo consume
-.20b9	c9 aa		cmp #$aa			cmp 	#TKW_TRUE 					; and set NE again, DEY will change it.
-.20bb					_CSCOExit:
-.20bb	60		rts				rts
-.20bc					CSClearSprites:
-.20bc	a9 11		lda #$11			lda 	#$11 						; set address to 1FC00 with single bump
-.20be	8d 22 9f	sta $9f22			sta 	$9F22
-.20c1	a9 fc		lda #$fc			lda 	#$FC
-.20c3	8d 21 9f	sta $9f21			sta 	$9F21
-.20c6	a9 00		lda #$00			lda 	#0
-.20c8	8d 20 9f	sta $9f20			sta 	$9F20
-.20cb					_CSClear:
-.20cb	a9 00		lda #$00			lda 	#0 							; set everything to $00
-.20cd	8d 23 9f	sta $9f23			sta 	$9F23
-.20d0	ad 21 9f	lda $9f21			lda 	$9F21
-.20d3	d0 f6		bne $20cb			bne 	_CSClear
-.20d5	60		rts				rts
-.20d6					SelectSpriteA:
-.20d6	85 2a		sta $2a				sta 	temp0
-.20d8	a9 00		lda #$00			lda 	#0
-.20da	06 2a		asl $2a				asl		temp0 						; multiply A:esInt0 by 8
-.20dc	b0 11		bcs $20ef			bcs 	_CSBadValue 				; sprites only 0-127
-.20de	06 2a		asl $2a				asl 	temp0
-.20e0	2a		rol a				rol 	a
-.20e1	06 2a		asl $2a				asl 	temp0
-.20e3	2a		rol a				rol 	a
-.20e4	09 fc		ora #$fc			ora 	#$FC 						; MSB of address (barring $01 upper third byte)
-.20e6	8d 18 0c	sta $0c18			sta 	currSprite+1
-.20e9	a5 2a		lda $2a				lda 	temp0 						; LSB of address
-.20eb	8d 17 0c	sta $0c17			sta 	currSprite+0
-.20ee	60		rts				rts
-.20ef					_CSBadValue
-.20ef	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
-.20f1	20 18 15	jsr $1518		jsr	errorHandler
+.1fc0					CommandSprite:
+.1fc0	20 c2 20	jsr $20c2			jsr 	CSCheckOnOff 				; look for TRUE/FALSE
+.1fc3	d0 0d		bne $1fd2			bne 	_CSCheckClear
+.1fc5	ad 29 9f	lda $9f29			lda 	$9F29 						; sprite enable is bit 6.
+.1fc8	29 bf		and #$bf			and 	#$BF 						; clear it whatever
+.1fca	90 02		bcc $1fce			bcc 	_CSNotOn 					; if CS turn on, so set it
+.1fcc	09 40		ora #$40			ora 	#$40
+.1fce					_CSNotOn:
+.1fce	8d 29 9f	sta $9f29			sta 	$9F29 						; write it back in new state and exit
+.1fd1	60		rts				rts
+.1fd2					_CSCheckClear:
+.1fd2	a9 00		lda #$00			lda 	#0 							; no sprite currently selected.
+.1fd4	8d 18 0c	sta $0c18			sta 	currSprite+1
+.1fd7	b1 28		lda ($28),y			lda 	(codePtr),y 				; check for CLEAR
+.1fd9	c9 e8		cmp #$e8			cmp 	#TKW_CLEAR
+.1fdb	d0 05		bne $1fe2			bne 	_CSCommandLoop 				; not CLEAR, go to main loop
+.1fdd	20 d3 20	jsr $20d3			jsr 	CSClearSprites 				; clear all the sprites
+.1fe0	c8		iny				iny 								; consume CLEAR token and exit.
+.1fe1	60		rts				rts
+.1fe2					_CSCommandLoop:
+.1fe2	20 c2 20	jsr $20c2			jsr 	CSCheckOnOff 				; check sprite on/off
+.1fe5	f0 2c		beq $2013			beq 	_CSSetVisibility
+.1fe7	b1 28		lda ($28),y			lda 	(codePtr),y 				; get and consume character
+.1fe9	c9 80		cmp #$80			cmp 	#TOK_EOL					; EOL exit.
+.1feb	f0 25		beq $2012			beq 	_CSExit
+.1fed	c8		iny				iny									; consume it
+.1fee	c9 ca		cmp #$ca			cmp 	#TKW_COLON 					; colon exit
+.1ff0	f0 20		beq $2012			beq 	_CSExit
+.1ff2	c9 cb		cmp #$cb			cmp 	#TKW_COMMA 					; semantic comma
+.1ff4	f0 ec		beq $1fe2			beq 	_CSCommandLoop
+.1ff6	c9 da		cmp #$da			cmp		#TKW_IMAGE 					; image ?
+.1ff8	f0 69		beq $2063			beq 	_CSSetImage
+.1ffa	c9 dc		cmp #$dc			cmp 	#TKW_FLIP 					; flip ?
+.1ffc	f0 2b		beq $2029			beq 	_CSSetFlip
+.1ffe	c9 ce		cmp #$ce			cmp 	#TKW_TO 					; to ?
+.2000	f0 46		beq $2048			beq 	_CSSetPos
+.2002	88		dey				dey 								; unpick DEY
+.2003	a9 00		lda #$00			lda 	#0 							; sprite # now at level 0
+.2005	a2 0c		ldx #$0c		ldx	#12
+.2007	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.200a	a5 98		lda $98				lda 	esInt0
+.200c	20 ed 20	jsr $20ed			jsr 	SelectSpriteA
+.200f	4c e2 1f	jmp $1fe2			jmp 	_CSCommandLoop
+.2012					_CSExit:
+.2012	60		rts				rts
+.2013					_CSSetVisibility:
+.2013	08		php				php 								; save carry
+.2014	a9 06		lda #$06			lda 	#6 							; set pos to offset 6.
+.2016	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget
+.2019	ad 23 9f	lda $9f23			lda 	$9F23 						; read it.
+.201c	29 f3		and #$f3			and 	#$F3 						; clear depth bits, disabling it.
+.201e	28		plp				plp
+.201f	90 02		bcc $2023			bcc 	_CSSetOff 					; check if carry was set
+.2021	09 0c		ora #$0c			ora 	#$0C 						; otherwise set depth bits to 11, on top.
+.2023					_CSSetOff:
+.2023	8d 23 9f	sta $9f23			sta 	$9F23 						; update and loop back
+.2026	4c e2 1f	jmp $1fe2			jmp 	_CSCommandLoop
+.2029					_CSSetFlip:
+.2029	a9 00		lda #$00			lda 	#0 							; image # now at level 0
+.202b	a2 0c		ldx #$0c		ldx	#12
+.202d	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.2030	a9 06		lda #$06			lda 	#6 							; set sprite position to +6
+.2032	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget
+.2035	a5 98		lda $98				lda 	esInt0 						; flip value & 3 => temp0
+.2037	29 03		and #$03			and 	#3
+.2039	85 2a		sta $2a				sta 	temp0
+.203b	ad 23 9f	lda $9f23			lda 	$9F23 						; update the flip.
+.203e	29 fc		and #$fc			and 	#$FC
+.2040	05 2a		ora $2a				ora 	temp0
+.2042	8d 23 9f	sta $9f23			sta 	$9F23
+.2045	4c e2 1f	jmp $1fe2			jmp 	_CSCommandLoop
+.2048					_CSSetPos:
+.2048	a9 00		lda #$00			lda 	#0 							; X now at level 0
+.204a	a2 0a		ldx #$0a		ldx	#10
+.204c	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.204f	a2 02		ldx #$02		ldx	#2
+.2051	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.2054	a9 01		lda #$01			lda 	#1 							; Y now at level 1
+.2056	a2 0a		ldx #$0a		ldx	#10
+.2058	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.205b	a2 00		ldx #$00			ldx 	#0 							; coords at 0,1
+.205d	20 1a 21	jsr $211a			jsr 	SpriteMove 					; move it.
+.2060	4c e2 1f	jmp $1fe2			jmp 	_CSCommandLoop
+.2063					_CSSetImage:
+.2063	a9 00		lda #$00			lda 	#0 							; image # now at level 0
+.2065	a2 0c		ldx #$0c		ldx	#12
+.2067	20 f1 3c	jsr $3cf1		jsr	mainHandler
+.206a	a9 00		lda #$00			lda 	#0 							; set sprite position to +0
+.206c	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget
+.206f	a6 98		ldx $98				ldx 	esInt0 						; get image # into X
+.2071	bd 5e 0c	lda $0c5e,x			lda 	imageAddr2Low,x 			; copy low address in.
+.2074	8d 23 9f	sta $9f23			sta 	$9F23
+.2077	ee 20 9f	inc $9f20			inc 	$9F20 						; bump to offset 1.
+.207a	bd 1e 0c	lda $0c1e,x			lda 	imageInfo,x 				; get 4/8 bit flag from info.
+.207d	29 10		and #$10			and 	#$10
+.207f	0a		asl a				asl 	a
+.2080	0a		asl a				asl		a
+.2081	0a		asl a				asl 	a 							; put into bit 7
+.2082	1d 9e 0c	ora $0c9e,x			ora 	imageAddr2High,x 			; or high address with it.
+.2085	8d 23 9f	sta $9f23			sta 	$9F23 						; write the high byte.
+.2088	a9 06		lda #$06			lda 	#6
+.208a	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget 			; set sprite on.
+.208d	ad 23 9f	lda $9f23			lda 	$9F23
+.2090	09 0c		ora #$0c			ora 	#$0C
+.2092	8d 23 9f	sta $9f23			sta 	$9F23
+.2095	ee 20 9f	inc $9f20			inc 	$9F20 						; point to byte 7 : height/width/palette offset
+.2098	bd 1e 0c	lda $0c1e,x			lda 	imageInfo,x 				; get image info
+.209b	0a		asl a				asl 	a 							; shift bits 0-3 to 4-7
+.209c	0a		asl a				asl 	a
+.209d	0a		asl a				asl 	a
+.209e	0a		asl a				asl 	a
+.209f	b0 02		bcs $20a3			bcs		_CSNoOffset 				; if bit 4 was set don't set the offset.
+.20a1	09 0f		ora #$0f			ora 	#$0F 						; set palette offset and write back
+.20a3					_CSNoOffset:
+.20a3	8d 23 9f	sta $9f23			sta 	$9F23
+.20a6	4c e2 1f	jmp $1fe2			jmp 	_CSCommandLoop
+.20a9					SpriteSetTarget:
+.20a9	0d 17 0c	ora $0c17			ora 	currSprite
+.20ac	8d 20 9f	sta $9f20			sta 	$9F20
+.20af	ad 18 0c	lda $0c18			lda 	currSprite+1
+.20b2	f0 09		beq $20bd			beq 	_SSTNoSet
+.20b4	8d 21 9f	sta $9f21			sta 	$9F21
+.20b7	a9 01		lda #$01			lda 	#$01
+.20b9	8d 22 9f	sta $9f22			sta 	$9F22
+.20bc	60		rts				rts
+.20bd					_SSTNoSet:
+.20bd	a2 27		ldx #$27			ldx 	#ErrorID_NoSprite
+.20bf	20 18 15	jsr $1518		jsr	errorHandler
+.20c2					CSCheckOnOff:
+.20c2	b1 28		lda ($28),y			lda 	(codePtr),y 				; get and consume it.
+.20c4	c8		iny				iny
+.20c5	c9 ab		cmp #$ab			cmp 	#TKW_FALSE					; return CC/EQ if FALSE
+.20c7	18		clc				clc
+.20c8	f0 08		beq $20d2			beq 	_CSCOExit
+.20ca	c9 aa		cmp #$aa			cmp 	#TKW_TRUE 					; return CS/EQ if TRUE
+.20cc	38		sec				sec 								; return NE if neither.
+.20cd	f0 03		beq $20d2			beq 	_CSCOExit
+.20cf	88		dey				dey 								; undo consume
+.20d0	c9 aa		cmp #$aa			cmp 	#TKW_TRUE 					; and set NE again, DEY will change it.
+.20d2					_CSCOExit:
+.20d2	60		rts				rts
+.20d3					CSClearSprites:
+.20d3	a9 11		lda #$11			lda 	#$11 						; set address to 1FC00 with single bump
+.20d5	8d 22 9f	sta $9f22			sta 	$9F22
+.20d8	a9 fc		lda #$fc			lda 	#$FC
+.20da	8d 21 9f	sta $9f21			sta 	$9F21
+.20dd	a9 00		lda #$00			lda 	#0
+.20df	8d 20 9f	sta $9f20			sta 	$9F20
+.20e2					_CSClear:
+.20e2	a9 00		lda #$00			lda 	#0 							; set everything to $00
+.20e4	8d 23 9f	sta $9f23			sta 	$9F23
+.20e7	ad 21 9f	lda $9f21			lda 	$9F21
+.20ea	d0 f6		bne $20e2			bne 	_CSClear
+.20ec	60		rts				rts
+.20ed					SelectSpriteA:
+.20ed	85 2a		sta $2a				sta 	temp0
+.20ef	a9 00		lda #$00			lda 	#0
+.20f1	06 2a		asl $2a				asl		temp0 						; multiply A:esInt0 by 8
+.20f3	b0 11		bcs $2106			bcs 	_CSBadValue 				; sprites only 0-127
+.20f5	06 2a		asl $2a				asl 	temp0
+.20f7	2a		rol a				rol 	a
+.20f8	06 2a		asl $2a				asl 	temp0
+.20fa	2a		rol a				rol 	a
+.20fb	09 fc		ora #$fc			ora 	#$FC 						; MSB of address (barring $01 upper third byte)
+.20fd	8d 18 0c	sta $0c18			sta 	currSprite+1
+.2100	a5 2a		lda $2a				lda 	temp0 						; LSB of address
+.2102	8d 17 0c	sta $0c17			sta 	currSprite+0
+.2105	60		rts				rts
+.2106					_CSBadValue
+.2106	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
+.2108	20 18 15	jsr $1518		jsr	errorHandler
 
 ;******  Return to file: extension/extension.asm
 
 
 ;******  Processing file: extension/option_x16/sprites/spritedraw.asm
 
-.20f4					Command_Paint:
-.20f4	a9 fc		lda #$fc			lda 	#ImageHandler & $FF
-.20f6	a2 20		ldx #$20			ldx 	#ImageHandler >> 8
-.20f8	20 cb 18	jsr $18cb			jsr 	GHandler
-.20fb	60		rts				rts
-.20fc					ImageHandler:
-.20fc	a9 03		lda #$03			lda 	#TestImageAccess & $FF
-.20fe	a2 21		ldx #$21			ldx 	#TestImageAccess >> 8
-.2100	4c 3d 1b	jmp $1b3d			jmp 	ImageRenderer
-.2103					TestImageAccess:
-.2103	e0 ff		cpx #$ff			cpx 	#255 						; get information
-.2105	f0 0c		beq $2113			beq 	_TIAGetInfo
-.2107	8a		txa				txa 								; fake up a pattern using the X/Y coordinates.
-.2108	4a		lsr a				lsr 	a
-.2109	4a		lsr a				lsr 	a
-.210a	85 32		sta $32				sta 	tempShort
-.210c	98		tya				tya
-.210d	4a		lsr a				lsr 	a
-.210e	4a		lsr a				lsr 	a
-.210f	18		clc				clc
-.2110	65 32		adc $32				adc 	tempShort
+.210b					Command_Paint:
+.210b	a9 13		lda #$13			lda 	#ImageHandler & $FF
+.210d	a2 21		ldx #$21			ldx 	#ImageHandler >> 8
+.210f	20 cb 18	jsr $18cb			jsr 	GHandler
 .2112	60		rts				rts
-.2113					_TIAGetInfo:
-.2113	a9 01		lda #$01			lda 	#1 							; image (1) bitmap (0)
-.2115	a2 10		ldx #$10			ldx 	#16 						; pixel width
-.2117	a0 20		ldy #$20			ldy 	#32							; pixel height
-.2119	60		rts				rts
+.2113					ImageHandler:
+.2113	a9 2c		lda #$2c			lda 	#TestImageAccess & $FF
+.2115	a2 1c		ldx #$1c			ldx 	#TestImageAccess >> 8
+.2117	4c 3d 1b	jmp $1b3d			jmp 	ImageRenderer
 
 ;******  Return to file: extension/extension.asm
 
@@ -3012,7 +3012,7 @@
 .211a	98		tya				tya
 .211b	48		pha				pha
 .211c	a9 07		lda #$07			lda 	#7 									; point to height/width byte and read it.
-.211e	20 92 20	jsr $2092			jsr 	SpriteSetTarget
+.211e	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget
 .2121	ad 23 9f	lda $9f23			lda 	$9F23
 .2124	4a		lsr a				lsr 	a 									; A now contains bits 0-1 (width) 2-3 (height)
 .2125	4a		lsr a				lsr 	a
@@ -3020,7 +3020,7 @@
 .2127	4a		lsr a				lsr 	a
 .2128	85 2a		sta $2a				sta 	temp0 								; save these bits so we can work out the centre.
 .212a	a9 02		lda #$02			lda 	#2 									; point to X position.Low
-.212c	20 92 20	jsr $2092			jsr 	SpriteSetTarget
+.212c	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget
 .212f	20 3e 21	jsr $213e			jsr 	SMWritePosition 					; write X position out.
 .2132	46 2a		lsr $2a				lsr 	temp0 								; shift height bits into 0,1
 .2134	46 2a		lsr $2a				lsr 	temp0
@@ -3051,7 +3051,7 @@
 .215f	48		pha				pha
 .2160	08		php				php 										; save CTR on stack
 .2161	a9 07		lda #$07			lda 	#7 									; point to height/width byte and read it.
-.2163	20 92 20	jsr $2092			jsr 	SpriteSetTarget
+.2163	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget
 .2166	ad 23 9f	lda $9f23			lda 	$9F23
 .2169	4a		lsr a				lsr 	a 									; A now contains bits 0-1 (width) 2-3 (height)
 .216a	4a		lsr a				lsr 	a
@@ -3072,7 +3072,7 @@
 .217e	2a		rol a				rol 	a
 .217f	2a		rol a				rol 	a
 .2180	69 02		adc #$02			adc 	#2 									; A = 2 X A = 4 Y
-.2182	20 92 20	jsr $2092			jsr 	SpriteSetTarget 					; set data pointer offset by that
+.2182	20 a9 20	jsr $20a9			jsr 	SpriteSetTarget 					; set data pointer offset by that
 .2185	18		clc				clc 										; read and unfix centre.
 .2186	ad 23 9f	lda $9f23			lda 	$9F23
 .2189	75 b0		adc $b0,x			adc 	esInt3,x
@@ -3126,7 +3126,7 @@
 .21ca	68		pla				pla
 .21cb	aa		tax				tax
 .21cc	b5 98		lda $98,x			lda 	esInt0,x
-.21ce	20 d6 20	jsr $20d6			jsr 	SelectSpriteA
+.21ce	20 ed 20	jsr $20ed			jsr 	SelectSpriteA
 .21d1	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
@@ -3193,7 +3193,7 @@
 .2239	a2 07		ldx #$07			ldx 	#7 							; when we do layer 1, offset by 7 hence starts at $9F34
 .223b	ad 1a 0c	lda $0c1a			lda 	currentMode+1
 .223e	20 84 22	jsr $2284			jsr 	CMDecodeLayer
-.2241	20 58 1d	jsr $1d58			jsr 	gdModeChanged 				; check the bitmap status.
+.2241	20 6f 1d	jsr $1d6f			jsr 	gdModeChanged 				; check the bitmap status.
 .2244	20 bc 18	jsr $18bc			jsr 	GResetStorage 				; reset the graphics drawing storage.
 .2247	60		rts				rts
 .2248					CMExpandMode:

@@ -1,7 +1,8 @@
 mode 3:sprite true:sprite clear:clg paper 0
 vload "data.vram"
 f = 1
-sprite 1 image 2 flip f to 100,40 
+sprite 2 image 2 flip f to 40,40 
+sprite 3 image 3 flip 0 to 60,40 
 for i = 0 to 3
 paint image 2 dim 3 flip i to i*60+10,20
 next i

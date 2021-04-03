@@ -40,19 +40,19 @@ COLOUR 	sprite
 SPRITE 	2,32,32
 ; -----------------------------------------------------------------------------------
 ;
-;		Set the number of bits in the tile or sprite. Sprites can be 4 or 8 bits. 
-;		Defaults to 4.
-;
-BITS 	4
-; -----------------------------------------------------------------------------------
-;
 ;		Create a sprite image according to the current sprite number, width and height.
 ;		The current sprite number is incremented. So these will be sprite images 2 + 3
 ;		Images need to be readable by the Pillow library and have an alpha channel for
 ;		transparency.
 ;
 IMAGE 	mario.png
-IMAGE 	sq_mario.png
+; -----------------------------------------------------------------------------------
+;
+;		Set the number of bits in the tile or sprite. Sprites can be 4 or 8 bits. 
+;		Defaults to 4.
+;
+BITS 	8
+IMAGE 	mario.png
 ;
 SPRITE 	4,16,32
 IMAGE   box.png
