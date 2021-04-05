@@ -15,9 +15,9 @@ compressMode:
 
 imageInfo:									; image info (the first byte) for sprites
 		.fill 	X16MaxImages
-imageAddr2Low: 								; image VRAM address divided by 2 to fit in 16 bits.
+imageAddr32Low: 							; image VRAM address divided by 32
 		.fill  	X16MaxImages
-imageAddr2High:		
+imageAddr32High:		
 		.fill  	X16MaxImages
 
 		.send storage
@@ -151,9 +151,9 @@ _LVRShift:
 		bne 	_LVRShift
 		;
 		lda 	temp1+1 					; copy result.
-		sta 	imageAddr2High,x		
+		sta 	imageAddr32High,x		
 		lda 	temp1
-		sta 	imageAddr2Low,x		
+		sta 	imageAddr32Low,x		
 		jmp 	_LVRLoop
 
 _LVRSSValue:

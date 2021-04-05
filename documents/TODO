@@ -1,7 +1,6 @@
 TODO
 ====
-- Access Sprite Data via Render Handler.
-- Draw sprite on bitmap various scales ? Font - general pixel getter ? TEXT and IMAGE
+- Font - general pixel getter ? TEXT 
 - Write documentation for drawing commands / syntax
 
 => 0.21
@@ -38,4 +37,4 @@ Notes
 New commands/Changes to document
 ================================
 General Drawing support syntax.
-RECT FRAME PLOT LINE [TEXT PAINT]
+RECT FRAME PLOT LINE PAINT

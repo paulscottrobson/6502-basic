@@ -131,7 +131,7 @@ _CSSetImage:
 		lda 	#0 							; set sprite position to +0
 		jsr 	SpriteSetTarget
 		ldx 	esInt0 						; get image # into X
-		lda 	imageAddr2Low,x 			; copy low address in.
+		lda 	imageAddr32Low,x 			; copy low address in.
 		sta 	$9F23
 		inc 	$9F20 						; bump to offset 1.
 		;
@@ -140,7 +140,7 @@ _CSSetImage:
 		asl 	a
 		asl		a
 		asl 	a 							; put into bit 7
-		ora 	imageAddr2High,x 			; or high address with it.
+		ora 	imageAddr32High,x 			; or high address with it.
 		sta 	$9F23 						; write the high byte.
 
 		lda 	#6
@@ -230,7 +230,7 @@ _CSClear:
 SelectSpriteA:		
 		sta 	temp0
 		lda 	#0
-		asl		temp0 						; multiply A:esInt0 by 8
+		asl		temp0 						; multiply A:temp0 by 8
 		bcs 	_CSBadValue 				; sprites only 0-127
 		asl 	temp0
 		rol 	a

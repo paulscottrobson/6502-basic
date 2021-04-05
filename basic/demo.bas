@@ -3,9 +3,10 @@ vload "data.vram"
 f = 1
 sprite 2 image 2 flip f to 40,40 
 sprite 3 image 3 flip 0 to 60,40 
-for i = 0 to 3
-paint image 2 dim 3 flip i to i*60+10,20
-next i
+for x = 0 to 10 step 2
+for y = 0 to 2 step 2
+paint image 3 flip x dim 2 to x*23,y*32
+next y:next x
 a$  = get$():end
 
 plot ink 1 to 100,100

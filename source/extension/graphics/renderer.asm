@@ -100,7 +100,7 @@ RenderDrawPixelSet:
 		jsr 	RenderGetInk				; get colour to draw with.
 		ldx 	gdSize 						; X counts the size.
 _RDPSLoop:
-		cmp 	#255 						; don't draw if $FF
+		cmp 	#0							; don't draw if $00 
 		beq 	_RDPSNoDraw		
 		jsr 	gdPlotA 					; draw A otherwise
 _RDPSNoDraw:
@@ -239,7 +239,7 @@ TestImageAccess:
 		lsr 	a
 		lsr 	a
 		clc
-		adc 	tempShort
+		adc 	tempShort 					; return 0 here for transparency.
 		rts
 ;
 _TIAGetInfo:
