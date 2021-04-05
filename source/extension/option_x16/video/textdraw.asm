@@ -19,7 +19,7 @@ DefaultFont = $F800
 ;
 ; ************************************************************************************************
 
-Command_Text: 	;; [Text] 
+Command_Draw: 	;; [draw] 
 		lda 	#TextHandler & $FF
 		ldx 	#TextHandler >> 8
 		jsr 	GHandler
@@ -32,13 +32,67 @@ Command_Text: 	;; [Text]
 ; ************************************************************************************************
 
 TextHandler:
-		lda 	#BitmapTextAccess & $FF
+		lda 	gdText+1 					; do we have a string
+		bne 	_THHasString
+
+_THCallRenderer:		
+		.pshx 								; save X register and y position
+		lda 	gy2
+		pha
+		lda 	gy2+1
+		pha
+		;
+		lda 	#BitmapTextAccess & $FF 	; render current image (gdImage)
 		ldx 	#BitmapTextAccess >> 8
-		jmp 	ImageRenderer
+		jsr 	ImageRenderer
+		;
+		pla 								; restore y position and x register
+		sta 	gy2+1
+		pla
+		sta 	gy2
+		.pulx
+		rts
+		;
+		;		Handle string.
+		;
+_THHasString:
+		ldx 	#0 							; position in string
+_THStringLoop:
+		lda 	gdText 						; text => temp0
+		sta 	temp0
+		lda 	gdText+1
+		sta 	temp0+1		
+		;
+		txa 								; length = string length.
+		ldy 	#0 					
+		cmp 	(temp0),y
+		beq 	_THExit 					; if so exit.
+		;
+		inx 								; next character, put in Y
+		txa
+		tay
+		lda 	(temp0),y 					; char to print, override image
+		sta 	gdImage
+		jsr 	_THCallRenderer 			; render the text
+		;
+		lda 	gdSize	 					; get size, need to x by 8 as 8x8 font.
+		asl		a
+		asl 	a
+		asl 	a
+		clc
+		adc 	gX2 						; add to horizontal position
+		sta 	gx2
+		bcc 	_THStringLoop
+		inc 	gx2+1
+		jmp 	_THStringLoop 				; do the whole lot.
+
+_THExit:		
+		rts
+
 
 ; ************************************************************************************************
 ;
-;									Sprite Image Handler
+;									8x8 Bitmap Text Handler
 ;
 ; ************************************************************************************************
 
@@ -65,11 +119,6 @@ _BTABitmap:
 
 DrawCharacterA:
 		sta 	temp0
-		;
-		lda 	gY2
-		pha
-		lda 	gY2+1
-		pha
 		;
 		lda 	#0
 		asl 	temp0	 					; x temp0:A x 8
@@ -103,9 +152,5 @@ _BTANotSet:
 		dex
 		bpl 	_BTADoCache
 		;
-		pla
-		sta 	gY2+1
-		pla
-		sta 	gY2
 		rts
 		.send 	code

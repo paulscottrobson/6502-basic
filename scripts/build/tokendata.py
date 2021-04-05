@@ -62,7 +62,7 @@ class TokenData(object):
 			print	data	image 	at 		flip
 			assert 	poke 	doke 	loke 	ink
 			paper 	cls 	locate 	.		from
-			# 		clear 	
+			# 		clear 	text
 		##
 		##		Put these in group 1.
 		##
@@ -75,8 +75,8 @@ class TokenData(object):
 		##
 		[group2]
 			vpoke	vdoke	vload	mode 	palette
-			sprite	clg		rect 	frame 	
-			text	plot 	line	paint
+			sprite	clg		rect 	frame 	draw
+			plot 	line	paint
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##

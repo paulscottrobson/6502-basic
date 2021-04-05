@@ -107,3 +107,4 @@ Group0Vectors:
 	.word	TKErr15                  ; $e6 from
 	.word	TKErr11                  ; $e7 #
 	.word	CommandClear             ; $e8 clear
+	.word	TKErr16                  ; $e9 text

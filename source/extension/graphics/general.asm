@@ -85,7 +85,8 @@ gdXLimit: 									; max extent of X and Y
 		.fill 	2
 gdYLimit:
 		.fill 	2		
-
+gdText:  									; string, $00xx if not used.
+		.fill 	2
 gEndStorage:		
 		.send storage
 
@@ -120,6 +121,8 @@ _GRSLoop:
 GHandler:
 		stx 	gWordHandler+1 				; save code that draws the actual line or whatever.
 		sta 	gWordHandler
+		lda 	#0							; default no text.
+		sta 	gdText+1
 		dey 								; predecrement
 		;
 _GHLoopNext:
@@ -141,6 +144,8 @@ _GHLoop:
 		beq 	_GHCallHandler 
 		cmp 	#TKW_FROM
 		beq 	_GHCPairSkip
+		cmp 	#TKW_TEXT
+		beq 	_GHText
 		ldx 	#0 							; now see if it matches a token modifier (INK,PAPER etc.)
 _GHCheckTokens:
 		lda 	(codePtr),y
@@ -184,6 +189,18 @@ _GHCallHandlerCode:
 		;
 _GHExit:
 		rts		
+		;
+		;		Found TEXT
+		;
+_GHText:		
+		iny 								; skip token
+		lda 	#0 							; get string.
+		.main_evaluatestring
+		lda 	esInt0 						; copy address of string.
+		sta 	gdText
+		lda 	esInt1
+		sta 	gdText+1
+		jmp 	_GHLoop		
 ;
 ;		Token table used to identify element to update. 
 ;
@@ -242,3 +259,4 @@ _GMHCRange:
 		.throw	BadValue
 
 		.send 	code
+		

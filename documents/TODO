@@ -1,15 +1,11 @@
 TODO
 ====
-- Add support for string print.
-- Write documentation for drawing commands / syntax
-
-=> 0.21
 
 - 6502 jump indirect code and change 01common.inc so picks correct CPU.
 - Review code.
 - Sound (if supported ?)
 
-=> 0.40
+=> 0.30
 
 - Write some games of some type
 
@@ -36,5 +32,7 @@ Notes
 
 New commands/Changes to document
 ================================
-General Drawing support syntax
-RECT FRAME PLOT LINE PAINT TEXT
+General Drawing support syntax explanation ?
+RECT FRAME PLOT LINE PAINT DRAW
+Add TEXT modifier.
+
