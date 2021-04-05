@@ -31,6 +31,7 @@
 ../source/extension/option_x16/sprites/spriteutils.asm
 ../source/extension/option_x16/video/mode.asm
 ../source/extension/option_x16/video/palette.asm
+../source/extension/option_x16/video/textdraw.asm
 ../source/extension/option_x16/video/vload.asm
 ../source/extension/option_x16/video/vpeekpoke.asm
 ../source/extension/option_x16/video/vramprocess.asm

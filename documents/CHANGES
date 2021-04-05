@@ -133,3 +133,4 @@ vary too much. Text source only.
 ========
 - PAINT sprites working.
 - Faster cached rendering system, one read per line.
+- Scaling font printer (built in 8x8 only)

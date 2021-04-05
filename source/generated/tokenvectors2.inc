@@ -11,7 +11,7 @@ Group2Vectors:
 	.word	CommandClg               ; $8c clg
 	.word	Command_Rect             ; $8d rect
 	.word	Command_Frame            ; $8e frame
-	.word	Unimplemented            ; $8f text
+	.word	Command_Text             ; $8f text
 	.word	Command_Plot             ; $90 plot
 	.word	Command_Line             ; $91 line
 	.word	Command_Paint            ; $92 paint

@@ -1,6 +1,6 @@
 TODO
 ====
-- Font - general pixel getter ? TEXT 
+- Add support for string print.
 - Write documentation for drawing commands / syntax
 
 => 0.21
@@ -36,5 +36,5 @@ Notes
 
 New commands/Changes to document
 ================================
-General Drawing support syntax.
-RECT FRAME PLOT LINE PAINT
+General Drawing support syntax
+RECT FRAME PLOT LINE PAINT TEXT
