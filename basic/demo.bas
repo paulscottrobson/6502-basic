@@ -5,7 +5,7 @@ sprite 2 image 2 flip f to 40,40
 sprite 3 image 3 flip 0 to 60,40 
 for x = 0 to 10 step 2
 for y = 0 to 2 step 2
-paint image 3 flip x dim 2 to x*23,y*32
+paint image 3 flip x dim 1 to x*23,y*35
 next y:next x
 a$  = get$():end
 

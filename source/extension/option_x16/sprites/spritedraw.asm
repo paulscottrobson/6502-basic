@@ -35,8 +35,8 @@ Command_Paint: 	;; [paint]
 ; ************************************************************************************************
 
 ImageHandler:
-		lda 	#SpriteImageAccess & $FF
-		ldx 	#SpriteImageAccess >> 8
+		lda 	#TestImageAccess & $FF
+		ldx 	#TestImageAccess >> 8
 		jmp 	ImageRenderer
 
 ; ************************************************************************************************

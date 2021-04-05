@@ -19,6 +19,8 @@ RenderHeight:								; image height in pixels
 RenderType:									; render type (0 = bitmap,1 = colour image)
 		.fill 	1		
 
+RenderCache: 								; renderer cache for one line.
+		.fill 	64
 		.send storage
 
 		.section code	
@@ -35,7 +37,7 @@ ImageRenderer:
 		;
 		;		Get the information about the thing we are rendering.
 		;
-		ldx 	#255 						; get information.
+		ldy 	#255 						; get information.
 		jsr 	CallRenderFunction
 		sta 	RenderType 					; and save it.
 		stx 	RenderWidth
@@ -52,6 +54,9 @@ ImageRenderer:
 		;
 		ldy 	#0 							; Y is the current line #
 _IRLoop1:
+		.pshy
+		jsr 	CallRenderFunction 			; fill the rendering cache.
+		.puly
 		ldx 	gdSize 						; number of times to do the row.
 _IRLoop2:
 		jsr 	RenderDrawRow 				; draw one row.
@@ -122,19 +127,17 @@ _RDPSNoDraw:
 RenderGetInk:
 		lda 	RenderType 					; type, if 0 it's a bitmap
 		beq 	_RGIBitmap
-		jsr 	CallRenderFunction 			; ask the rendering function.
+		lda 	RenderCache,x 				; read from the cache.
 		rts
 
 _RGIBitmap:	
-		jsr 	CallRenderFunction 			; ask the rendering function.
-		cmp 	#0
-		beq 	_RGIUsePaper
+		lda 	RenderCache,x 				; read from the cache.
+		beq 	_RGIBPaper 					; return ink if #0, paper if =0
 		lda 	gdInk
 		rts
-_RGIUsePaper:
+_RGIBPaper:
 		lda 	gdPaper
-		rts		
-		.debug		
+		rts
 
 ; ************************************************************************************************
 ;
@@ -229,22 +232,19 @@ CallRenderFunction:
 ; ************************************************************************************************
 
 TestImageAccess:
-		cpx 	#255 						; get information
+		cpy 	#255 						; get information
 		beq 	_TIAGetInfo
-		txa 								; fake up a pattern using the X/Y coordinates.
-		lsr 	a
-		lsr 	a
-		sta 	tempShort
+		ldy 	#63
+_TIACreate:
 		tya
-		lsr 	a
-		lsr 	a
-		clc
-		adc 	tempShort 					; return 0 here for transparency.
+		sta 	RenderCache,y
+		dey
+		bpl 	_TIACreate
 		rts
 ;
 _TIAGetInfo:
 		lda 	#1 							; image (1) bitmap (0)
-		ldx 	#16 						; pixel width
+		ldx 	#32 						; pixel width
 		ldy 	#32							; pixel height
 		rts		
 		.send 	code
