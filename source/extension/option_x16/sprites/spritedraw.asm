@@ -7,12 +7,17 @@
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
-
+		
 ; ************************************************************************************************
 ;
 ;		This file is here because it's optional like sprites. No sprites, PAINT won't work.
 ;
 ; ************************************************************************************************
+
+		.section storage
+srenderWidth:
+		.fill 	1
+		.send 	 storage
 
 		.section code	
 
@@ -35,8 +40,8 @@ Command_Paint: 	;; [paint]
 ; ************************************************************************************************
 
 ImageHandler:
-		lda 	#TestImageAccess & $FF
-		ldx 	#TestImageAccess >> 8
+		lda 	#SpriteImageAccess & $FF
+		ldx 	#SpriteImageAccess >> 8
 		jmp 	ImageRenderer
 
 ; ************************************************************************************************
@@ -46,7 +51,7 @@ ImageHandler:
 ; ************************************************************************************************
 
 SpriteImageAccess:
-		cpx 	#255
+		cpy 	#255
 		bne 	_SIAGetPixel
 ;
 ;		Get information on sprite. (X,Y) size A type image
@@ -57,6 +62,7 @@ SpriteImageAccess:
 		and 	#3 							; LSB x 2 width
 		tax
 		lda 	_SIASizeTable,x
+		sta 	sRenderWidth 				; save rendering width.
 		tax
 		pla 								; get back next 2 bits are height
 		lsr 	a
@@ -72,13 +78,13 @@ _SIASizeTable:
 		.byte 	8,16,32,64 					; size of sprites from 2 bits,
 
 ;
-;		Get pixel for (X,Y), 0 for transparent. 
+;		Get pixel row for Y into render cache. 0 for transparent. 
 ;
 _SIAGetPixel:
+
 		sty 	temp0 						; this is the Y size 8,16,32,64 => temp0
 		lda 	#0
 		sta 	temp0+1
-		stx 	temp1+1 					; save X into temp1+1
 		;
 		ldy 	gdImage 					; get image info into A
 		lda 	imageInfo,y
@@ -97,14 +103,6 @@ _SIAMultiply:
 		rol 	temp0+1
 		dey
 		bne 	_SIAMultiply		
-		;
-		txa 								; add X to it.
-		clc
-		adc 	temp0
-		sta 	temp0
-		bcc 	_SIANoCarry1
-		inc 	temp0+1
-_SIANoCarry1:
 		;
 		lda 	temp1 						; if the mode bit is 0 then halve this value
 		bne 	_SIANoHalf 					; because we pack 2 pixels in every byte.
@@ -136,27 +134,50 @@ _SIMult32:
 		lda 	temp0+1
 		adc 	temp2+1
 		sta 	$9F21
-		lda 	#0
+		lda 	#$10
 		adc 	temp3
 		sta 	$9F22
-		lda 	$9F24 						; read the sprite data port 1
+		;
+		;		Copy data into cache.
+		;
+		ldx 	#0 							; index into Render Cache.
+_SIFillCacheLoop:
+		lda 	temp1 						; is it 8 bit ? if so, then exit
+		bne 	_SI8Bit
+		;
+		;		4 Bit handler
+		;
+		lda 	$9F24 						; get data
+		pha 								; save it
+		lsr 	a 							; MSB first
+		lsr 	a
+		lsr 	a
+		lsr 	a
+		jsr 	_SIWrite4Bit
+		pla
+		jsr 	_SIWrite4Bit
+		jmp 	_SIAdvance
+		;
+		;		8 Bit handler
+		;
+_SI8Bit:		
+		lda 	$9F24 						; copy data into render cache
+		sta 	RenderCache,x
+		inx
+_SIAdvance:
+		cpx 	sRenderWidth 				; filled the cache to required width ?
+		bne 	_SIFillCacheLoop		
 		dec 	$9F25 						; select original data port.
-		ldx 	temp1 						; is it 8 bit ? if so, then exit
-		bne 	_SIExit
-
-		lsr 	temp1+1 					; get even/odd X and shift A accordingly
-		bcs 	_SIHalf
-		lsr 	a
-		lsr 	a
-		lsr 	a
-		lsr 	a
-_SIHalf:
-		and 	#15 						; if 0 (e.g. would paint 240, return 0 transparent)		
-		beq 	_SIExit
-		ora 	#$F0
-_SIExit:		
 		rts
 
+_SIWrite4Bit:
+		and 	#15 						; if 0 (e.g. would paint 240, return 0 transparent)		
+		beq 	_SIW4Skip
+		ora 	#$F0
+_SIW4Skip:
+		sta 	RenderCache,x
+		inx
+		rts		
 
 
 		.send 	code

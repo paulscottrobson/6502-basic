@@ -132,3 +132,4 @@ vary too much. Text source only.
 5/4/2021
 ========
 - PAINT sprites working.
+- Faster cached rendering system, one read per line.

@@ -55,6 +55,7 @@ ImageRenderer:
 		ldy 	#0 							; Y is the current line #
 _IRLoop1:
 		.pshy
+		jsr 	RenderFlipXY 				; flip X/Y for the correct vertical row.
 		jsr 	CallRenderFunction 			; fill the rendering cache.
 		.puly
 		ldx 	gdSize 						; number of times to do the row.
@@ -248,3 +249,4 @@ _TIAGetInfo:
 		ldy 	#32							; pixel height
 		rts		
 		.send 	code
+

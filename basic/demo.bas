@@ -1,12 +1,11 @@
 mode 3:sprite true:sprite clear:clg paper 0
 vload "data.vram"
-f = 1
+f = 3
 sprite 2 image 2 flip f to 40,40 
 sprite 3 image 3 flip 0 to 60,40 
-for x = 0 to 10 step 2
-for y = 0 to 2 step 2
-paint image 3 flip x dim 1 to x*23,y*35
-next y:next x
+for i = 1 to 200
+paint image 2 flip i dim 1 to random(280),random(150)
+next i
 a$  = get$():end
 
 plot ink 1 to 100,100
