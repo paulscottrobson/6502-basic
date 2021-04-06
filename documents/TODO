@@ -1,8 +1,7 @@
 TODO
 ====
 
-- Sound to [channel] for [time] at [pitch] type [output type] step [volume]
-- Sound false (all off)
+- Sound to [channel] for [time] at [pitch] type [output type] step [volume] clear
 - playing(<channel>) unary function.
 - optional channel, works backwards to find unused.
 - default type is [tone] step is full [63]
@@ -11,6 +10,7 @@ TODO
 
 - Write some games of some type
 - M/C interface to various functions.
+- Finish outstanding code reviews
 
 Something like AMOS's Animation thing, animate basic movement, destroy ? looping ?
 
@@ -26,9 +26,6 @@ Incomplete but hooked in for write and test
 
 	All floating point operations. Note Shift-3 dispatches automatically to 
 	extension. Needs cross dispatch to FP routines ?
-
-	Three dispatchers - 2 in run.asm and 1 in extensionhandler.asm which use jmp (a,x)
-	need 6502 versions along with dispatch macro.
 
 Notes
 =====
