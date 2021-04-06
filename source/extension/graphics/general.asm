@@ -81,13 +81,14 @@ gdImage:									; selected image
 		.fill 	1
 gdFlip:										; selected flip
 		.fill 	1
+gEndStorage:		
+
 gdXLimit: 									; max extent of X and Y
 		.fill 	2
 gdYLimit:
 		.fill 	2		
 gdText:  									; string, $00xx if not used.
 		.fill 	2
-gEndStorage:		
 		.send storage
 
 		.section code	

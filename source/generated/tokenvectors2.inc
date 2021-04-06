@@ -15,3 +15,5 @@ Group2Vectors:
 	.word	Command_Plot             ; $90 plot
 	.word	Command_Line             ; $91 line
 	.word	Command_Paint            ; $92 paint
+	.word	Unimplemented            ; $93 sound
+	.word	Unimplemented            ; $94 volume

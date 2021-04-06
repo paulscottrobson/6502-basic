@@ -76,7 +76,7 @@ class TokenData(object):
 		[group2]
 			vpoke	vdoke	vload	mode 	palette
 			sprite	clg		rect 	frame 	draw
-			plot 	line	paint
+			plot 	line	paint	sound 	volume
 		##
 		##		Floating point functions and system unary functions in group 3.
 		##

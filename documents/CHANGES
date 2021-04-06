@@ -135,3 +135,7 @@ vary too much. Text source only.
 - Faster cached rendering system, one read per line.
 - Scaling font printer DRAW (built in 8x8 only), can print single characters or strings.
 - Updated the document to describe the graphics operations in more detail.
+
+6/4/2021
+========
+- BUG: Fixed drawing not working as xMax,yMax being cleared on mode change.

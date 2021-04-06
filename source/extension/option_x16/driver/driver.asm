@@ -135,14 +135,15 @@ gdClearGraphics:
 		.pshy
 		lda 	gdEnabled 					; screen enabled
 		beq 	_gdCGExit
+		;
+		set16 	gdXLimit,320 				; set the size of the bitmap.
+		set16 	gdYLimit,200
+		;
 		lda 	#0 							; home cursor
 		tax
 		jsr 	gdSetX
 		jsr 	gdSetY	
 		jsr 	gdSetDrawPosition 			; set the draw position.
-		;
-		set16 	gdXLimit,320 				; set the size of the bitmap.
-		set16 	gdYLimit,200
 		;
 		ldy 	#$FA						; 320 x 200 pixels = $FA00
 		ldx 	#0

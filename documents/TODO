@@ -3,11 +3,12 @@ TODO
 
 - 6502 jump indirect code and change 01common.inc so picks correct CPU.
 - Review code.
-- Sound (if supported ?)
+- Sound / Volume
 
 => 0.30
 
 - Write some games of some type
+- M/C interface to various functions.
 
 Something like AMOS's Animation thing, animate basic movement, destroy ? looping ?
 
