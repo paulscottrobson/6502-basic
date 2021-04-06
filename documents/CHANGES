@@ -139,3 +139,6 @@ vary too much. Text source only.
 6/4/2021
 ========
 - BUG: Fixed drawing not working as xMax,yMax being cleared on mode change.
+- Now assembles in 6502 mode - fixed jmp (nnnn,x) and a ply/phy that sneaked in.
+- Reviewed more code.
+- Sound outline code.

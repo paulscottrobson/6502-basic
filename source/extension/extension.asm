@@ -12,6 +12,7 @@
 	.include "option_x16/driver/driver.asm"
 	.include "option_x16/miscellany/clock.asm"
 	.include "option_x16/miscellany/joystick.asm"
+	.include "option_x16/sound/sound.asm"
 	.include "option_x16/sprites/collide.asm"
 	.include "option_x16/sprites/sprite.asm"
 	.include "option_x16/sprites/spritedraw.asm"

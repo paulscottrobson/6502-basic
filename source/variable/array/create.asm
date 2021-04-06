@@ -4,6 +4,7 @@
 ;		Name:		create.asm
 ;		Purpose:	Create an array
 ;		Created:	17th March 2021 
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -27,14 +28,14 @@ CreateArray:	;; <createarray>
 		;
 		;		Create the basic array element, checking it doesn't already exist.
 		;
-		jsr 	AccessSetup 				; set up the basic stuff.
+		jsr 	AccessSetup 				; set up the basic stuff, hashtables and so on.
 		;
 		lda 	varType 					; is the variable type an array
 		lsr 	a
 		bcc 	CANotArray 					; no, cause an error.
 		;
 		jsr 	FindVariable 				; does the variable exist already
-		bcs 	CAFound 					; cannot redefine it.
+		bcs 	CAFound 					; if so, error cannot redefine it.
 		;
 		jsr 	CreateVariable 				; create the variable entry.
 		;
@@ -42,6 +43,7 @@ CreateArray:	;; <createarray>
 		pha
 		lda 	temp0+1
 		pha
+		;
 		ldx 	#0
 		jsr 	GetArrayDimensions 			; get the array dimensions
 		;
@@ -57,7 +59,7 @@ CreateArray:	;; <createarray>
 		pla
 		sta 	temp0
 		;
-		tya 								; write YX there.
+		tya 								; write YX there (address in original record)
 		ldy 	#6
 		sta 	(temp0),y
 		dey
@@ -110,7 +112,7 @@ _CAGetDimensions:
 		bne 	CASize
 		;
 		lda 	#$FF 						; set the type past the end to $FF so we know how many
-		sta 	esType,x 					; dimensions there are.
+		sta 	esType,x 					; dimensions there are, it marks the end.
 
 		pla 								; restore the variable type ($3A-$3F)
 		sta 	varType 					
@@ -128,11 +130,11 @@ CreateArrayLevel:
 		;		Get the size of the element this level.
 		;
 		ldy 	varType
-		lda 	CAActualSize-$3A,y
+		lda 	CAActualSize-$3A,y 			; $3A is the first type marker.
 		sta 	elementSize 				; get element size this level.
 		ldy 	esType+1,x 					; is it top level
-		bmi 	_CANotPointer
-		lda 	#2 							; array of pointers is 2.
+		bmi 	_CANotPointer 				; then its values, keep elementsize
+		lda 	#2 							; use array of pointers, each element is 2.
 		sta 	elementSize
 _CANotPointer:
 		;
@@ -149,7 +151,7 @@ _CANotPointer:
 		;
 		jsr 	AllocateArraySpace 			; allocate space for all array stuff at this level.
 		;
-		;		Copy the size of this level of the array into offsets+0,+1
+		;		Copy the highest index. of this level of the array into offsets+0,+1
 		;
 		ldy 	#0 					
 		lda 	esInt0,x
@@ -158,8 +160,8 @@ _CANotPointer:
 		lda 	esInt1,x
 		sta 	(temp0),y
 		;		
-		;		If this is an array of pointers, e.g. sub levels, then set bit 15 of the
-		;		maximum index.
+		;		If this is an array of pointers, e.g. sub levels, then bit 15 is set of the
+		;		maximum index as a marker.
 		;
 		lda 	esType+1,x 					; do we have another level ?
 		bmi 	_CALNotLast

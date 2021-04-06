@@ -4,6 +4,7 @@
 ;		Name:		asmwrite.asm
 ;		Purpose:	Decode operand
 ;		Created:	15th March 2021
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -25,9 +26,9 @@ finalOpcode:
 AsmWriteInstruction:
 		sta 	finalOpcode					; save opcode.
 		.pshy 								; save Y
-		lda 	SingleLetterVar+("O"-"A")*4	; check O
+		lda 	SingleLetterVar+("O"-"A")*4	; check O (e.g. what do we display/check.)
 		and 	#2
-		beq 	_ASMWNoEcho 				; if zero then don't echo.
+		beq 	_ASMWNoEcho 				; if bit 2 zero then don't echo.
 		;
 		;		Echo hexadecimal code to console.
 		;
@@ -48,17 +49,20 @@ AsmWriteInstruction:
 _ASMWEchoExit:
 		.pshx
 		.device_crlf
-		.pulx
+		.pulx#
+		;
+		;		Now just output the actual values to memory.
+		;
 _ASMWNoEcho:
-		lda 	finalOpcode
+		lda 	finalOpcode 				; opcode
 		jsr 	AsmWriteByte
-		cpx 	#0
+		cpx 	#0	 						; exit if no operands
 		beq 	_ASMWExit
-		lda 	esInt0
+		lda 	esInt0	 					; low byte
 		jsr 	AsmWriteByte
 		cpx 	#1
 		beq 	_ASMWExit
-		lda 	esInt1
+		lda 	esInt1 						; high byte
 		jsr 	AsmWriteByte
 _ASMWExit:
 		.puly
@@ -67,6 +71,8 @@ _ASMWExit:
 ; ************************************************************************************************
 ;
 ;						Write out byte A to wherever P variable is pointing.
+;
+;	 				 (Could be upgraded to write to banked RAM for P >= $10000 ?)
 ;
 ; ************************************************************************************************
 
@@ -85,6 +91,12 @@ AsmWriteByte:
 		inc 	SingleLetterVar+("P"-"A")*4+1
 _AWBNoCarry:
 		rts
+
+; ************************************************************************************************
+;
+;								Simple Hex -> Console routines
+;
+; ************************************************************************************************
 
 AWIWriteHexSpace:
 		pha

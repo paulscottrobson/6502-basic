@@ -4,6 +4,7 @@
 ;		Name:		assemblelabel.asm
 ;		Purpose:	Assembler label handler
 ;		Created:	14th March 2021
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -19,7 +20,7 @@
 
 AssembleLabel:	;; <label>		
 		lda 	(codePtr),y 				; check it's followed by a variable name.
-		cmp 	#$3A
+		cmp 	#$3A 						; e.g. it isn't just '.'
 		bcs 	_ALSyntax
 
 		lda 	#0							; get a variable name on to stack:0
@@ -34,13 +35,13 @@ AssembleLabel:	;; <label>
 		sta 	temp0+1
 		.pshy
 
-		lda 	SingleLetterVar+("O"-"A")*4	; are we in Pass 2
+		lda 	SingleLetterVar+("O"-"A")*4	; are we in Pass 2 ?
 		lsr 	a
 		bcc 	_ALWrite
 
 		ldy 	#0
 		lda 	SingleLetterVar+("P"-"A")*4 ; compare the value in P to the variable
-		cmp 	(temp0),y
+		cmp 	(temp0),y 					; labels cannot change value, usually means address mode has changed.
 		bne 	_ALChanged
 		iny
 		lda 	SingleLetterVar+("P"-"A")*4+1
@@ -70,5 +71,3 @@ _ALSyntax:
 		.throw 	Syntax
 
 		.send 	code		
-
-; In pass 2, a label cannot change value. 

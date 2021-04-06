@@ -24,7 +24,7 @@ ExtensionHandler:
 		iny
 		asl 	a
 		tax
-		jmp 	(Group2Vectors-12,x)
+		dispatch	Group2Vectors-12
 		;
 		;		Handle unary functions for extensions.
 		;
@@ -35,7 +35,7 @@ _ExtensionUnary:
 		asl 	a
 		tax
 		pla 								; restore stack pos and call group3 command.
-		jmp 	(Group3Vectors-12,X)
+		dispatch	Group3Vectors-12
 
 _ExtensionForce:
 		jmp 	ForceMode0

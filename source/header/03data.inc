@@ -128,6 +128,8 @@ NullString:									; used for null string.
 convertBuffer:								; buffer for numeric conversions
 		.fill 	35
 
+jumpVector:									; used for jmp ($nnnn,x) on 6502.
+		.fill 	2
 		.send storage
 
 ;

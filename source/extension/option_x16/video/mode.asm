@@ -101,6 +101,7 @@ _CMClear:
 		jsr 	CMDecodeLayer
 		jsr 	gdModeChanged 				; check the bitmap status.
 		jsr 	GResetStorage 				; reset the graphics drawing storage.
+		jsr 	SoundReset 					; Reset the sound channels.
 		rts
 
 

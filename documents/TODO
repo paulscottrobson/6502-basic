@@ -1,9 +1,11 @@
 TODO
 ====
 
-- 6502 jump indirect code and change 01common.inc so picks correct CPU.
-- Review code.
-- Sound / Volume
+- Sound to [channel] for [time] at [pitch] type [output type] step [volume]
+- Sound false (all off)
+- playing(<channel>) unary function.
+- optional channel, works backwards to find unused.
+- default type is [tone] step is full [63]
 
 => 0.30
 
@@ -32,4 +34,4 @@ Notes
 =====
 
 New commands/Changes to document
-================================
+===============================

@@ -97,14 +97,14 @@ IOPrintAscii: ;; <printascii>
 
 IOPrintChar: ;; <print>
 		tax 								; save in X so we can save Y
-		phy
+		.pshy
 		txa
 		cmp 	#8 							; make BS (8) onto CHR$(14) which is the
 		bne 	_IOPCNotBS 					; Commodore/X16 backspace code.
 		lda 	#$14
 _IOPCNotBS:
 		jsr 	$FFD2 						; CBM OS Call.
-		ply
+		.puly
 		rts
 
 ; ************************************************************************************************

@@ -1,14 +1,5 @@
 Review List
 ===========
 ;
-;		Reviewed: 	19th March 2021
+;		Reviewed: 	6th April 2021
 ;
-
-../source/extension/option_x16/vload.asm [13, 3, 2021]
-../source/extension/option_x16/vramprocess.asm [13, 3, 2021]
-../source/main/utility/warmstart.asm [10, 3, 2021]
-../source/main/commands/link.asm [15, 3, 2021]
-../source/main/commands/system/loadsave.asm [11, 3, 2021]
-../source/footer/99end.asm [11, 3, 2021]
-../source/device/option_x16/x16break.asm [12, 3, 2021]
-../source/device/option_x16/x16file.asm [11, 3, 2021]

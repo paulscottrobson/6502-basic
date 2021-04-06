@@ -4,6 +4,7 @@
 ;		Name:		asmoperand.asm
 ;		Purpose:	Decode operand
 ;		Created:	15th March 2021
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -35,12 +36,12 @@ AsmGetOperand:
 		sta 	esInt2,x
 		sta 	esInt3,x
 		
-		lda 	(codePtr),y 				; first into X
+		lda 	(codePtr),y 				; first character into X
 		tax
 		;
 		lda 	#AMD_ACCIMP				
 		cpx 	#TOK_EOL 					; if end of line or colon, return implied mode.
-		beq 	_AGOExit
+		beq 	_AGOExit 					; e.g. "INX"
 		cpx 	#TKW_COLON
 		beq 	_AGOExit
 		;
@@ -49,12 +50,13 @@ AsmGetOperand:
 		cpx 	#TKW_HASH 					; if a hash present, then immediate mode.
 		beq		_AGOEvalExit 				; with an operand.
 		;
-		cpx 	#TKW_LPAREN 				; left bracket ?
+		cpx 	#TKW_LPAREN 				; left bracket ? so it is lda (something
 		beq 	_AGOIndirect
-
-		cpx 	#$01 						; is it "A" e.g. the variable A.
+		;
+		cpx 	#$01 						; is it "A" e.g. the variable A on its own. This is for ASL A
 		bne 	_AGOZeroPage1 				; if not it is zero zero,x zero,y, unpick 1 iny
-		lda 	(codePtr),y 				; get the second character & consume it
+		;
+		lda 	(codePtr),y 				; get the second character & consume it - this should be $3A
 		iny
 		tax
 		lda 	#AMD_ACCIMP 				; and return Acc/Implied if it is just A
@@ -66,12 +68,12 @@ _AGOZeroPage1:
 		;
 		;		Zero Page, possibly with indexing.
 		;
-		lda 	#0 							; get the address into esInt0/1
+		lda 	#0 							; get the address into esInt0/1 (it may of course be absolute)
 		.main_evaluateint		
-		jsr 	AsmGetIndexing
-		lda 	#AMD_ZERO
-		bcc 	_AGOExit
-		lda 	#AMD_ZEROX
+		jsr 	AsmGetIndexing 				; get ,X or ,Y if present
+		lda 	#AMD_ZERO 					
+		bcc 	_AGOExit 					; neither present
+		lda 	#AMD_ZEROX 					; decide if ,X or ,Y
 		cpx 	#0
 		beq 	_AGOExit
 		lda 	#AMD_ZEROY
@@ -97,7 +99,7 @@ _AGOExit:
 _AGOValue:
 		.throw 	BadValue		
 		;
-		;		Indirect found. (nnn) (nnn,X) or (nnn,Y)
+		;		Indirect found. (nnn) (nnn,X) or (nnn),Y
 		;
 _AGOIndirect:
 		lda 	#0 							; evaluate operand in root.
@@ -106,7 +108,7 @@ _AGOIndirect:
 		cmp 	#TKW_RPAREN
 		beq 	_AGOIndIndY
 		;
-		jsr 	ASMGetIndexing 				; must be ,X)
+		jsr 	ASMGetIndexing 				; must be ,X) so get the ending and error on anything else.
 		bcc 	AGISyntax
 		cpx 	#0
 		bne 	AGISyntax	
@@ -132,7 +134,7 @@ _AGOIndIndY:								; either (xxx) or (xxx),Y
 ; ************************************************************************************************
 
 AsmGetIndexing:
-		lda 	(codePtr),y 				; check for comma
+		lda 	(codePtr),y 				; check for comma (e.g. ,X ,Y)
 		cmp 	#TKW_COMMA
 		clc
 		bne 	_AGIExit 					; no comma, return with CC
@@ -157,4 +159,3 @@ AGISyntax:
 		.throw	 syntax
 
 		.send 	code		
-

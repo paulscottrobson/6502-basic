@@ -17,7 +17,7 @@
 ; ************************************************************************************************
 
 		.if cputype == 0
-		.cpu "65c02"				; TODO: Not a bug, haven't replaced jmp (nnnn,x) yet.
+		.cpu "6502"					; TODO: Not a bug, haven't replaced jmp (nnnn,x) yet.
 		.endif
 		.if cputype == 1
 		.cpu "65c02"

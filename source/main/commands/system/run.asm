@@ -69,7 +69,7 @@ _CRExecute:
 		jsr 	_CRRunRoutine 				; we want to do jsr (group0vectors,x)
 		jmp 	CRNextInstruction
 _CRRunRoutine:		
-		jmp 	(Group0Vectors,x) 		
+		dispatch Group0Vectors
 		;
 		;		First element is an integer or an identifier.
 		;
@@ -111,7 +111,7 @@ CommandShift1:	;; [[[SH1]]]
 		bcs 	CommandAssembler
 		asl 	a 							; double into X
 		tax
-		jmp 	(Group1Vectors-12,x) 		; and do the code.	
+		dispatch Group1Vectors-12 			; and do the code.	
 
 CommandShift2:	;; [[[SH2]]]
 		lda 	#$FF 						; $FF means command not unary function.
@@ -125,6 +125,15 @@ CommandAssembler:							; run the assembler, opcode code is in A.
 CommandAssemblerLabel: ;; [.]
 		.assembler_label
 		rts
+
+; ************************************************************************************************
+;
+;					Code called when non-implemented token/keyword appears
+;
+; ************************************************************************************************
+
+Unimplemented:
+		.throw 	Missing
 
 ; ************************************************************************************************
 ;
@@ -165,14 +174,6 @@ ResetCodeAddress:
 		ldy 	#3 							; offset after offset link and line#
 		rts
 
-; ************************************************************************************************
-;
-;					Code called when non-implemented token/keyword appears
-;
-; ************************************************************************************************
-
-Unimplemented:
-		.throw 	Missing
 
 ; ************************************************************************************************
 ;

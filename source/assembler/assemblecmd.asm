@@ -4,6 +4,7 @@
 ;		Name:		assemblecmd.asm
 ;		Purpose:	Assembler instruction handler
 ;		Created:	14th March 2021
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -40,7 +41,7 @@ AssembleOneInstruction:	;; <assemble>
 		sta 	asmMode
 		;
 		lda 	esInt1 						; check if this is a three byte operand.
-		bne 	_AOIThreeBytes 				; if so, we have to use three byte
+		bne 	_AOIThreeBytes 				; if so, we have to use three byte, can't try zp before abs
 		;
 		jsr 	AssembleAttempt 			; try to assemble token/mode/operand (2 bytes)
 		bcs 	_AOISuccess 				; worked ok.

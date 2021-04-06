@@ -4,6 +4,7 @@
 ;		Name:		x16file.asm
 ;		Purpose:	Save/Load x16 files
 ;		Created:	11th March 2021
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -91,12 +92,13 @@ ExternGetLength:
 		ldy 	#0
 		lda 	(temp0),y
 		
-		ldx 	esInt0 						; name into YX
+		ldx 	esInt0 						; name string address into YX
 		ldy 	esInt1
-		inx 								; advance over the length pointer.
+		inx 								; advance over the length byte.
 		bne 	_ESNoCarry
 		iny
 _ESNoCarry:		
 		rts
 
 		.send 	code
+

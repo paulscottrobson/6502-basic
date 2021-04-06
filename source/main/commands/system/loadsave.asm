@@ -4,6 +4,7 @@
 ;		Name:		loadsave.asm
 ;		Purpose:	Save and Load functions
 ;		Created:	11th March 2021
+;		Reviewed: 	6th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -51,10 +52,10 @@ _CSNoOverrideAddress:
 ; ************************************************************************************************
 
 CLSParameters:
-		ldx 	#0 								; string
+		ldx 	#0 								; string at +0
 		jsr 	EvaluateString
 		;
-		inx 									; erase out +1 +2
+		inx 									; erase out +1 (start) +2 (end, for save)
 		jsr 	MInt32False
 		inx
 		jsr 	MInt32False
@@ -75,11 +76,11 @@ CLSParameters:
 		;
 		iny 									; skip comma
 		ldx 	#1 								; get numeric value.
-		jsr 	EvaluateInteger
-		sec
+		jsr 	EvaluateInteger 				; the load or start save address
+		sec 									; return CS indicating override
 		rts
 
-_CLSDefault:		
+_CLSDefault:									; return default.
 		clc
 		rts
 
