@@ -1,16 +1,16 @@
 TODO
 ====
 
-- Sound to [channel] for [time] at [pitch] type [output type] step [volume] clear
-- playing(<channel>) unary function.
-- optional channel, works backwards to find unused.
-- default type is [tone] step is full [63]
+- 'interrupt' routine.
 
 => 0.30
 
 - Write some games of some type
 - M/C interface to various functions.
 - Finish outstanding code reviews
+- Add whatever you think necessary
+
+=> 0.40
 
 Something like AMOS's Animation thing, animate basic movement, destroy ? looping ?
 
@@ -32,3 +32,5 @@ Notes
 
 New commands/Changes to document
 ===============================
+SOUND AT<pitch> FOR <decisec> TYPE <type> TO <channel> STEP <volume>  | CLEAR
+PLAYING(n) PLAYING()

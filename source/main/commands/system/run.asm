@@ -155,7 +155,7 @@ CommandBreak:	;; [break]
 		jsr 	MInt32Zero
 		beq 	BreakOff
 BreakOn:		
-		ldx 	#8	
+		ldx 	#4 							; checks 1 in 256/X instructions.
 BreakOff:			
 		stx 	breakIncrement
 		rts
