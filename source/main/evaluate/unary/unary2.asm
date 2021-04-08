@@ -55,7 +55,7 @@ UnaryGet:		;; [get(]
 		jsr 	CheckRightParen
 		stx 	temp0
 _UGLoop:
-		.device_break		
+		.device_syncbreak		
 		.device_inkey		
 		cmp 	#0
 		beq 	_UGLoop

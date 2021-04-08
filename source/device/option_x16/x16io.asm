@@ -18,6 +18,8 @@ bufferCount:	 							; chars in buffer
 		.fill 	0
 bufferStorage: 								; input buffer.
 		.fill 	MaxLineInputSize
+nextSyncTick: 								; time of next sync tick, if zero not initialised.
+		.fill 	0 
 
 		.send storage
 
@@ -37,6 +39,7 @@ IOControlHandler: ;; <controlhandler>
 		lda 	#2 							; green on black and clear screen
 		jsr 	IOInk
 		lda 	#0
+		sta 	nextSyncTick
 		jsr 	IOPaper
 		jsr 	IOClearScreen
 _CHExit:		

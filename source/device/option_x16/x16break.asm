@@ -14,11 +14,27 @@
 
 ; ************************************************************************************************
 ;
-;								Break Check (must preserve Y)
+;								Synchronisation and Break Check (must preserve Y)
 ;
 ; ************************************************************************************************
 
-X16Break: ;; <break>
+X16SyncBreak: ;; <syncbreak>
+		.pshy
+		jsr 	$FFDE
+		ldy 	nextSyncTick 				; if NST = 0 then always sync
+		tay 								; save tick in Y
+		sec
+		sbc 	nextSyncTick 				; calculate timer - next tick
+		bmi 	_X16NoSync 					; if -ve then no sync.
+_X16Sync:
+		tya 								; get current time back
+		clc 								; work out time of next tick.
+		adc 	#6 							; at 60Hz that is six ticks.		
+		sta 	nextSyncTick
+		lda 	#$FD 						; call the extension update code.
+		.extension_execown
+_X16NoSync:
+		.puly
 		jsr 	$FFE1
 		beq 	_IsBreak
 		rts

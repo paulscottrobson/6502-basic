@@ -122,7 +122,7 @@ InputString:
 		lda 	#0
 		sta 	InputBuffer
 _InputLoop:
-		.device_break
+		.device_syncbreak
 		.device_inkey
 		cmp 	#0
 		beq 	_InputLoop

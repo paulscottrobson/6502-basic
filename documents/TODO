@@ -1,14 +1,9 @@
 TODO
 ====
-
-- 'interrupt' routine.
-
-=> 0.30
-
 - Write some games of some type
 - M/C interface to various functions.
 - Finish outstanding code reviews
-- Add whatever you think necessary
+- Add whatever you think necessary as you go.
 
 => 0.40
 
@@ -19,6 +14,8 @@ Known Bugs
 	Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 
 	DATA in odd places in structures won't work. May need own scanner.
+
+	Break on/off will disable sound interrupt too.
 
 Incomplete but hooked in for write and test
 ===========================================
@@ -31,6 +28,5 @@ Notes
 =====
 
 New commands/Changes to document
-===============================
-SOUND AT<pitch> FOR <decisec> TYPE <type> TO <channel> STEP <volume>  | CLEAR
-PLAYING(n) PLAYING()
+================================
+

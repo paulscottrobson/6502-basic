@@ -1,8 +1,9 @@
 sound at 1181 for 10 type 0
 sound at 1181/2 for 10 type 0
-for i = 0 to 15:print playing(i):next i
+repeat
+cls:for i = 0 to 15:print playing(i):next i
 print playing()
-a$ = get$()
+until inkey$ <> ""
 end
 psg = &1F9C0
 vdoke psg,1181

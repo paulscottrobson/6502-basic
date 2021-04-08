@@ -46,7 +46,7 @@ CRNextInstruction:
 		adc 	breakIncrement
 		sta 	breakCounter
 		bcc 	_CRNoChecks
-		.device_break
+		.device_syncbreak
 _CRNoChecks
 
 		lda 	(codePtr),y 				; get next token.

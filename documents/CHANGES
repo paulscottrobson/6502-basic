@@ -144,4 +144,7 @@ vary too much. Text source only.
 - Sound outline code.
 
 8/4/2021
+========
 - BUG: Now works again ... sorry 'bout that.
+- SOUND command implemented .... but not the timer code to shut it up yet :)
+- Now it shuts up :)

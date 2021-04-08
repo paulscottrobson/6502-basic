@@ -7,62 +7,62 @@ device_controlhandler .macro
 	jsr	deviceHandler
 	.endm
 
-device_break .macro
+device_clear .macro
 	ldx	#2
 	jsr	deviceHandler
 	.endm
 
-device_clear .macro
+device_crlf .macro
 	ldx	#4
 	jsr	deviceHandler
 	.endm
 
-device_crlf .macro
+device_ink .macro
 	ldx	#6
 	jsr	deviceHandler
 	.endm
 
-device_ink .macro
+device_inkey .macro
 	ldx	#8
 	jsr	deviceHandler
 	.endm
 
-device_inkey .macro
+device_inputline .macro
 	ldx	#10
 	jsr	deviceHandler
 	.endm
 
-device_inputline .macro
+device_load .macro
 	ldx	#12
 	jsr	deviceHandler
 	.endm
 
-device_load .macro
+device_locate .macro
 	ldx	#14
 	jsr	deviceHandler
 	.endm
 
-device_locate .macro
+device_paper .macro
 	ldx	#16
 	jsr	deviceHandler
 	.endm
 
-device_paper .macro
+device_print .macro
 	ldx	#18
 	jsr	deviceHandler
 	.endm
 
-device_print .macro
+device_printascii .macro
 	ldx	#20
 	jsr	deviceHandler
 	.endm
 
-device_printascii .macro
+device_save .macro
 	ldx	#22
 	jsr	deviceHandler
 	.endm
 
-device_save .macro
+device_syncbreak .macro
 	ldx	#24
 	jsr	deviceHandler
 	.endm

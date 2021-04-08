@@ -13,6 +13,8 @@
 		.section code
 
 ExtensionHandler:
+		cmp 	#$FD 						; check for sync
+		beq 	_ExtensionSync
 		cmp 	#$FE 						; check for force mode 0
 		beq 	_ExtensionForce
 		cmp 	#$FF						; A = $FF command, otherwise unary function stack level.
@@ -39,6 +41,9 @@ _ExtensionUnary:
 
 _ExtensionForce:
 		jmp 	ForceMode0
+
+_ExtensionSync:
+		jmp 	SoundInterrupt
 
 		;
 		;		Vectors for system specific commands

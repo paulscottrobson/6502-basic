@@ -13,18 +13,18 @@ deviceHandler:
 
 deviceVectors:
 	.word IOControlHandler     ; index 0
-	.word X16Break             ; index 2
-	.word IOClearScreen        ; index 4
-	.word IONewLine            ; index 6
-	.word IOInk                ; index 8
-	.word IOInkey              ; index 10
-	.word IOInput              ; index 12
-	.word ExternLoad           ; index 14
-	.word IOLocate             ; index 16
-	.word IOPaper              ; index 18
-	.word IOPrintChar          ; index 20
-	.word IOPrintAscii         ; index 22
-	.word ExternSave           ; index 24
+	.word IOClearScreen        ; index 2
+	.word IONewLine            ; index 4
+	.word IOInk                ; index 6
+	.word IOInkey              ; index 8
+	.word IOInput              ; index 10
+	.word ExternLoad           ; index 12
+	.word IOLocate             ; index 14
+	.word IOPaper              ; index 16
+	.word IOPrintChar          ; index 18
+	.word IOPrintAscii         ; index 20
+	.word ExternSave           ; index 22
+	.word X16SyncBreak         ; index 24
 	.word IOTab                ; index 26
 	.word IOReadTimer          ; index 28
 _DummyControlHandler:

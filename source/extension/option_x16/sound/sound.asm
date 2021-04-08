@@ -240,4 +240,34 @@ _UPCount:
 		sta 	esInt0,x
 		lda 	#0
 		beq 	_UPSet13
+
+; ************************************************************************************************
+;
+;							Sound 'interrupt', called every 1/10 second
+;
+; ************************************************************************************************
+
+SoundInterrupt:
+		lda 	LiveChannels 		; anything playing ?
+		beq 	_SIExit
+		ldx 	#15 				; check each channel ?
+_SILoop:lda 	channelTime,x 		; time left ?
+		beq 	_SINext 	 		; if zero not playing
+		sec 						; subtract one from time
+		sbc 	#1
+		sta 	channelTime,x
+		bne 	_SINext 			; if non zero, time for sound off.
+		dec 	LiveChannels 		; one fewer channels.
+		txa 						; point to sound PSG
+		jsr 	CSPointChannel 		
+		lda 	#0 					; zero it all out
+		sta 	$9F23
+		sta 	$9F23
+		sta 	$9F23
+		sta 	$9F23
+_SINext:dex
+		bpl 	_SILoop		
+_SIExit:		
+		rts
+
 		.send 	code
