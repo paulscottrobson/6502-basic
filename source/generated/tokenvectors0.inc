@@ -108,3 +108,4 @@ Group0Vectors:
 	.word	TKErr11                  ; $e7 #
 	.word	CommandClear             ; $e8 clear
 	.word	TKErr16                  ; $e9 text
+	.word	Unimplemented            ; $ea type

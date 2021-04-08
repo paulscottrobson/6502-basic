@@ -1,5 +1,3 @@
-
-
 mode &35006007 
 rect ink 2 from 10,10 to 100,100
 a$ = get$():end

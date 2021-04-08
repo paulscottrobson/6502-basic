@@ -102,5 +102,6 @@ Group0Text:
 	.byte $01,$a3                          ; $e7 #
 	.byte $05,$43,$4c,$45,$41,$d2          ; $e8 clear
 	.byte $04,$54,$45,$58,$d4              ; $e9 text
+	.byte $04,$54,$59,$50,$c5              ; $ea type
 	.byte $00
 

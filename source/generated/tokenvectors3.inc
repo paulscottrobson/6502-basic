@@ -11,3 +11,4 @@ Group3Vectors:
 	.word	Unary_JoyY               ; $8c joy.y(
 	.word	Unary_JButton            ; $8d joy.b(
 	.word	Unary_Clock              ; $8e clock(
+	.word	Unimplemented            ; $8f playing(

@@ -44,7 +44,7 @@ _SCClear:									; zero all the tick counts.
 _SCClear2:									; clear all PSG registers
 		lda 	#0
 		sta 	$9F23		
-		lda 	$9F22
+		lda 	$9F20
 		bne 	_SCClear2
 		rts
 

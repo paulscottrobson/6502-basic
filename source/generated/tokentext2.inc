@@ -16,6 +16,5 @@ Group2Text:
 	.byte $04,$4c,$49,$4e,$c5              ; $91 line
 	.byte $05,$50,$41,$49,$4e,$d4          ; $92 paint
 	.byte $05,$53,$4f,$55,$4e,$c4          ; $93 sound
-	.byte $06,$56,$4f,$4c,$55,$4d,$c5      ; $94 volume
 	.byte $00
 

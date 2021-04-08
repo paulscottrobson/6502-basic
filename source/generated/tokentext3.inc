@@ -11,5 +11,6 @@ Group3Text:
 	.byte $06,$4a,$4f,$59,$2e,$59,$a8      ; $8c joy.y(
 	.byte $06,$4a,$4f,$59,$2e,$42,$a8      ; $8d joy.b(
 	.byte $06,$43,$4c,$4f,$43,$4b,$a8      ; $8e clock(
+	.byte $08,$50,$4c,$41,$59,$49,$4e,$47,$a8 ; $8f playing(
 	.byte $00
 

@@ -142,3 +142,6 @@ vary too much. Text source only.
 - Now assembles in 6502 mode - fixed jmp (nnnn,x) and a ply/phy that sneaked in.
 - Reviewed more code.
 - Sound outline code.
+
+8/4/2021
+- BUG: Now works again ... sorry 'bout that.

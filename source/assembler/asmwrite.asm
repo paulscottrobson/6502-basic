@@ -49,7 +49,7 @@ AsmWriteInstruction:
 _ASMWEchoExit:
 		.pshx
 		.device_crlf
-		.pulx#
+		.pulx
 		;
 		;		Now just output the actual values to memory.
 		;

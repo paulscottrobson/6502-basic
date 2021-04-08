@@ -1,9 +1,9 @@
 ;
 ;	Automatically generated
 ;
-cputype = 0
-autorun=1
-coldstartnew=0
+cputype = 1
+autorun = 1
+coldstartnew = 0
 CodeStart = $1000
 MemoryStorage = $800
 EndOfMemory = $9F00
