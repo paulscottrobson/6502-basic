@@ -1,5 +1,8 @@
-sound at 1181 for 10 type 0
-sound at 1181/2 for 10 type 0
+n = 1
+for i = 1 to 5
+	sound at 1181*n for 5 
+	n = n * 2
+next i
 repeat
 cls:for i = 0 to 15:print playing(i):next i
 print playing()

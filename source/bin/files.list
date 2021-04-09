@@ -24,7 +24,11 @@
 ..\source\extension\option_x16\driver\driver.asm
 ..\source\extension\option_x16\miscellany\clock.asm
 ..\source\extension\option_x16\miscellany\joystick.asm
+..\source\extension\option_x16\sound\sndqueue.asm
+..\source\extension\option_x16\sound\sndunary.asm
+..\source\extension\option_x16\sound\sndutils.asm
 ..\source\extension\option_x16\sound\sound.asm
+..\source\extension\option_x16\sound\soundsync.asm
 ..\source\extension\option_x16\sprites\collide.asm
 ..\source\extension\option_x16\sprites\sprite.asm
 ..\source\extension\option_x16\sprites\spritedraw.asm

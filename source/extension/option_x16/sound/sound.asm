@@ -17,9 +17,12 @@ LiveChannels:								; # of channels currently playing
 ChannelTime:
 		.fill 	Channels 					; # of ticks until channels goes silent if non-zero		
 ;
-;		These are the values used in the SOUND command.
+;		These are the values used in the SOUND command, and the 4 byte buffer that is queued.
+;		+ 2 bytes of additional data.
 ;
 sndPitch: 									; 16 bit pitch to play, as specified in Vera Documents.
+		.fill 	2		
+sndExtra:
 		.fill 	2		
 ;
 ;		These are updated using the token table so the order matters.
@@ -28,10 +31,21 @@ sndChannel: 								; channel to use ($FF find unused from top down)
 		.fill 	1			
 sndTime:									; time to play (in 1/10s)
 		.fill 	1		
+;
+;
+;
 sndType: 									; output type waveform 0-3, as Vera documents.
 		.fill 	1		
 sndVolume: 									; volume 0-63.
 		.fill 	1		
+;
+;		Sound queue. 6 bytes per entry. Time (00 = Not used), Channel, 4 Byte Data.
+;		Fits into one page so 42 or fewer entries here
+;
+sndQueueSize = 16
+
+sndQueue:
+		.fill	6*sndQueueSize+1 			; extra byte is so copy zero when deleting last element.
 
 		.send storage
 
@@ -113,7 +127,7 @@ _ComSoundTokens:
 		;
 _CSDoSound:
 		ldx 	sndChannel 					; if channel >= 16 look for channel unused.
-		cmp 	#16
+		cpx 	#16
 		bcc 	_CSHaveChannel
 		ldx 	#15
 _CSFindChannel:
@@ -124,24 +138,17 @@ _CSFindChannel:
 		.throw 	Hardware 					; all channels in use.
 		;
 _CSHaveChannel:
+		stx 	sndChannel 					; update channel.
 		lda 	sndTime 					; get how long
 		beq 	_CSExit 					; if zero then exit
-		sta 	channelTime,x 				; set the channel time for this channel.
-		inc 	liveChannels 				; one more channel playing
-		;
-		txa 								; point to Channel A
-		jsr 	CSPointChannel 		
-		lda 	sndPitch 					; write pitch out
-		sta 	$9F23
-		lda 	sndPitch+1
-		sta 	$9F23
+
 		lda 	sndVolume 					; get volume, max out at 63.
 		cmp 	#64
 		bcc 	_CSHaveVolume 			
 		lda 	#63
 _CSHaveVolume:		
 		ora 	#$C0 						; both channels
-		sta 	$9F23 						; write out.
+		sta 	sndExtra 					; write out.
 		;
 		lda 	sndType 					; get waveform (bits 0-1 Pulse, Sawtooth, Triangle Noise)
 		ror 	a 							; rotate into position 7,6
@@ -149,125 +156,17 @@ _CSHaveVolume:
 		ror 	a
 		and 	#$C0 						; mask other bits
 		ora 	#63 						; 50% duty cycle.
-		sta 	$9F23
-_CSExit:
-		rts
-
-; ************************************************************************************************
-;
-;						Point VRAM pointer to sound channel A
-;
-; ************************************************************************************************
-
-CSPointChannel:
-		asl 	a 							; 4 bytes / channel
-		asl 	a
-		ora 	#$C0 						; at $1F9C0
-		sta 	$9F20
-		lda 	#$F9		
-		sta 	$9F21
-		lda 	#$11
-		sta 	$9F22
-		rts
-
-; ************************************************************************************************
-;
-;									Sound channels Reset
-;
-; ************************************************************************************************
-
-SoundReset:
-		lda 	#0							; no channels playing
-		sta 	LiveChannels 		
-		ldx 	#Channels-1
-_SCClear:									; zero all the tick counts.
-		sta 	ChannelTime,x
-		dex
-		bpl 	_SCClear
+		sta 	sndExtra+1
+		.pshy
+		.pshx 								; save channel #
+		ldx 	#sndPitch & 255 			; XY = sound data
+		ldy 	#sndPitch >> 8
+		jsr 	SoundAddQueue 				; add it to the queue.
 		;
-		lda 	#$C0 						; point VRAM data pointer to $1F9C0 increment
-		sta 	$9F20
-		lda 	#$F9
-		sta 	$9F21
-		lda 	#$11
-		sta 	$9F22
-_SCClear2:									; clear all PSG registers
-		lda 	#0
-		sta 	$9F23		
-		lda 	$9F20
-		bne 	_SCClear2
-		rts
-
-; ************************************************************************************************
-;
-;									Playing(x) is sound playing ?
-;
-; ************************************************************************************************
-
-Unary_Playing:		;; [playing(]
-		pha 						; save stack position
-		lda 	(codePtr),y 		; check for playing()
-		cmp 	#TKW_RPAREN
-		beq 	_UPCount
-		pla 						; get SP back.
-		pha
-		.main_evaluatesmall 		; get address.
-		.main_checkrightparen 		; check right bracket
-		.pulx 						; get stack back in X.
-		stx 	tempShort 			; save X
-		lda 	esInt0,x 			; check level, must be < 16
-		cmp 	#16
-		bcs 	_UPValue
-		tax 						; get the time
-		lda 	ChannelTime,x 		; 0 if zero, 255 if non-zero.
-		beq 	_UPZero
-		lda 	#255
-_UPZero:		
-		ldx 	tempShort 			; stack pointer back
-		sta 	esInt0,x 			; return value
-_UPSet13:		
-		sta 	esInt1,x
-		sta 	esInt2,x
-		sta 	esInt3,x
-		rts
-_UPValue:
-		.throw 	BadValue
-
-_UPCount:
-		iny 						; skip )
-		.pulx 						; get stack back in X.
-		lda 	LiveChannels
-		sta 	esInt0,x
-		lda 	#0
-		beq 	_UPSet13
-
-; ************************************************************************************************
-;
-;							Sound 'interrupt', called every 1/10 second
-;
-; ************************************************************************************************
-
-SoundInterrupt:
-		lda 	LiveChannels 		; anything playing ?
-		beq 	_SIExit
-		ldx 	#15 				; check each channel ?
-_SILoop:lda 	channelTime,x 		; time left ?
-		beq 	_SINext 	 		; if zero not playing
-		sec 						; subtract one from time
-		sbc 	#1
-		sta 	channelTime,x
-		bne 	_SINext 			; if non zero, time for sound off.
-		dec 	LiveChannels 		; one fewer channels.
-		txa 						; point to sound PSG
-		jsr 	CSPointChannel 		
-		lda 	#0 					; zero it all out
-		sta 	$9F23
-		sta 	$9F23
-		sta 	$9F23
-		sta 	$9F23
-_SINext:dex
-		bpl 	_SILoop		
-_SIExit:		
+		pla 								; get channel #
+		jsr 	SoundCheckQueue 			; check if we can play this one now, e.g. the queue was empty.
+		.puly
+_CSExit:
 		rts
 
 		.send 	code

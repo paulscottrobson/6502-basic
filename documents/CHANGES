@@ -148,3 +148,7 @@ vary too much. Text source only.
 - BUG: Now works again ... sorry 'bout that.
 - SOUND command implemented .... but not the timer code to shut it up yet :)
 - Now it shuts up :)
+
+9/4/2021
+========
+- Rewrote the whole sound queuing/playing system.
