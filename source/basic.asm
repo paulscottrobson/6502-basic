@@ -18,6 +18,7 @@ retStackSizePages = 2
 	.include "assembler/asmconst.inc"
 	.include "assembler/assembler.inc"
 	.include "device/device.inc"
+	.include "device/option_x16/x16const.inc"
 	.include "error/error.inc"
 	.include "error/errorhandler.inc"
 	.include "extension/extension.inc"

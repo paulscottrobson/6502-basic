@@ -28,12 +28,12 @@
 ExternSave: ;; <save>
 		.pshy
 		jsr 	ExternGetLength 			; get length of file into A name YX
-		jsr 	$FFBD 						; set name
+		jsr 	KNLFileSetName 				; set name
 		;
 		lda 	#1
 		ldx 	#8	 						; device #8
 		ldy 	#0
-		jsr 	$FFBA 						; set LFS
+		jsr 	KNLFileSetLFS 				; set LFS
 		;
 		lda 	esInt0+1 					; copy start of save address to temp0
 		sta 	temp0
@@ -43,7 +43,7 @@ ExternSave: ;; <save>
 		ldx 	esInt0+2 					; end address
 		ldy 	esInt1+2
 		lda 	#temp0 						; ref to start address
-		jsr 	$FFD8 						; save
+		jsr 	KNLFileSave 				; save
 		bcs 	_ESSave
 		.puly
 		rts
@@ -60,17 +60,17 @@ _ESSave:
 ExternLoad: ;; <load>
 		.pshy
 		jsr 	ExternGetLength 			; get length of file into A name YX
-		jsr 	$FFBD 						; set name
+		jsr 	KNLFileSetName 				; set name
 		;
 		lda 	#1
 		ldx 	#8	 						; device #8
 		ldy 	#0
-		jsr 	$FFBA 						; set LFS		
+		jsr 	KNLFileSetLFS 				; set LFS		
 
 		ldx 	esInt0+1 					; load address
 		ldy 	esInt1+1
 		lda 	#0 							; load command
-		jsr 	$FFD5
+		jsr 	KNLFileLoad
 		bcs 	_ESLoad
 		.puly
 		rts

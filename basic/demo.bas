@@ -1,18 +1,5 @@
-n = 1
-for i = 1 to 5
-	sound at 1181*n for 5 
-	n = n * 2
-next i
-repeat
-cls:for i = 0 to 15:print playing(i):next i
-print playing()
-until inkey$ <> ""
-end
-psg = &1F9C0
-vdoke psg,1181
-vpoke psg+2,&C0+63
-vpoke psg+3,&00+63
-a$ = get$():vpoke psg+2,0+63:end
-
-;volume nnn
-;sound channel,pitch,duration[,type]
+mode 3
+sound at 1200 for 10
+line ink 2 from 0,0 to 100,100 to 150,50
+draw text "Hello" to 30,30 dim 3 to 50,50
+a$ = get$()

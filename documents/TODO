@@ -1,5 +1,10 @@
 TODO
 ====
+- Remove Magic Constants from x16 graphics.
+- Sound off on command line (can't call buffer)
+- IMAGE command (char definer)
+- v0.32
+
 - Write some games of some type
 - M/C interface to various functions.
 - Finish outstanding code reviews

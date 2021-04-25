@@ -152,3 +152,7 @@ vary too much. Text source only.
 9/4/2021
 ========
 - Rewrote the whole sound queuing/playing system.
+
+25/4/2021
+=========
+- Back up after other stuff. Removed magic numbers from Kernal I/O stuff

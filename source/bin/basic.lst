@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
-; 64tass -Walias -Wmacro-prefix -Wall -q -c -L ..\source\bin\basic.lst -l ..\source\bin\basic.lbl -Wall -o ..\source\bin\stub.prg basic.asm
-; Fri Apr 09 06:25:56 2021
+; 64tass -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
+; Sun Apr 25 12:06:38 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -382,6 +382,21 @@
 
 ;******  Processing file: device/device.inc
 
+
+;******  Return to file: basic.asm
+
+
+;******  Processing file: device/option_x16/x16const.inc
+
+=$ffde					KNLReadTimer = $FFDE
+=$ffd2					KNLPrintChar = $FFD2
+=$ffe4					KNLCheckKeyboarBuffer = $FFE4
+=$ffcf					KNLInputLine = $FFCF
+=$ffe1					KNLCheckBreak = $FFE1
+=$ffbd					KNLFileSetName = $FFBD
+=$ffba					KNLFileSetLFS = $FFBA
+=$ffd5					KNLFileLoad = $FFD5
+=$ffd8					KNLFileSave = $FFD8
 
 ;******  Return to file: basic.asm
 
@@ -1176,7 +1191,7 @@
 
 .13b6					X16SyncBreak:
 .13b6	5a		phy				phy
-.13b7	20 de ff	jsr $ffde			jsr 	$FFDE
+.13b7	20 de ff	jsr $ffde			jsr 	KNLReadTimer
 .13ba	ac e8 0b	ldy $0be8			ldy 	nextSyncTick 				; if NST = 0 then always sync
 .13bd	a8		tay				tay 								; save tick in Y
 .13be	38		sec				sec
@@ -1191,7 +1206,7 @@
 .13cd	20 74 18	jsr $1874		jsr	extensionHandler
 .13d0					_X16NoSync:
 .13d0	7a		ply				ply
-.13d1	20 e1 ff	jsr $ffe1			jsr 	$FFE1
+.13d1	20 e1 ff	jsr $ffe1			jsr 	KNLCheckBreak
 .13d4	f0 01		beq $13d7			beq 	_IsBreak
 .13d6	60		rts				rts
 .13d7					_IsBreak:
@@ -1206,11 +1221,11 @@
 .13dc					ExternSave:
 .13dc	5a		phy				phy
 .13dd	20 28 14	jsr $1428			jsr 	ExternGetLength 			; get length of file into A name YX
-.13e0	20 bd ff	jsr $ffbd			jsr 	$FFBD 						; set name
+.13e0	20 bd ff	jsr $ffbd			jsr 	KNLFileSetName 				; set name
 .13e3	a9 01		lda #$01			lda 	#1
 .13e5	a2 08		ldx #$08			ldx 	#8	 						; device #8
 .13e7	a0 00		ldy #$00			ldy 	#0
-.13e9	20 ba ff	jsr $ffba			jsr 	$FFBA 						; set LFS
+.13e9	20 ba ff	jsr $ffba			jsr 	KNLFileSetLFS 				; set LFS
 .13ec	a5 99		lda $99				lda 	esInt0+1 					; copy start of save address to temp0
 .13ee	85 2a		sta $2a				sta 	temp0
 .13f0	a5 a1		lda $a1				lda 	esInt1+1
@@ -1218,7 +1233,7 @@
 .13f4	a6 9a		ldx $9a				ldx 	esInt0+2 					; end address
 .13f6	a4 a2		ldy $a2				ldy 	esInt1+2
 .13f8	a9 2a		lda #$2a			lda 	#temp0 						; ref to start address
-.13fa	20 d8 ff	jsr $ffd8			jsr 	$FFD8 						; save
+.13fa	20 d8 ff	jsr $ffd8			jsr 	KNLFileSave 				; save
 .13fd	b0 02		bcs $1401			bcs 	_ESSave
 .13ff	7a		ply				ply
 .1400	60		rts				rts
@@ -1228,15 +1243,15 @@
 .1406					ExternLoad:
 .1406	5a		phy				phy
 .1407	20 28 14	jsr $1428			jsr 	ExternGetLength 			; get length of file into A name YX
-.140a	20 bd ff	jsr $ffbd			jsr 	$FFBD 						; set name
+.140a	20 bd ff	jsr $ffbd			jsr 	KNLFileSetName 				; set name
 .140d	a9 01		lda #$01			lda 	#1
 .140f	a2 08		ldx #$08			ldx 	#8	 						; device #8
 .1411	a0 00		ldy #$00			ldy 	#0
-.1413	20 ba ff	jsr $ffba			jsr 	$FFBA 						; set LFS
+.1413	20 ba ff	jsr $ffba			jsr 	KNLFileSetLFS 				; set LFS
 .1416	a6 99		ldx $99				ldx 	esInt0+1 					; load address
 .1418	a4 a1		ldy $a1				ldy 	esInt1+1
 .141a	a9 00		lda #$00			lda 	#0 							; load command
-.141c	20 d5 ff	jsr $ffd5			jsr 	$FFD5
+.141c	20 d5 ff	jsr $ffd5			jsr 	KNLFileLoad
 .141f	b0 02		bcs $1423			bcs 	_ESLoad
 .1421	7a		ply				ply
 .1422	60		rts				rts
@@ -1310,12 +1325,12 @@
 .1474	d0 02		bne $1478			bne 	_IOPCNotBS 					; Commodore/X16 backspace code.
 .1476	a9 14		lda #$14			lda 	#$14
 .1478					_IOPCNotBS:
-.1478	20 d2 ff	jsr $ffd2			jsr 	$FFD2 						; CBM OS Call.
+.1478	20 d2 ff	jsr $ffd2			jsr 	KNLPrintChar 				; CBM OS Call.
 .147b	7a		ply				ply
 .147c	60		rts				rts
 .147d					IOInkey:
 .147d	5a		phy				phy
-.147e	20 e4 ff	jsr $ffe4			jsr 	$FFE4
+.147e	20 e4 ff	jsr $ffe4			jsr 	KNLCheckKeyboarBuffer
 .1481	85 32		sta $32				sta 	tempShort
 .1483	7a		ply				ply
 .1484	a5 32		lda $32				lda 	tempShort					; no key pressed.
@@ -1379,7 +1394,7 @@
 .14d8	a9 00		lda #$00			lda 	#0
 .14da	8d f8 0a	sta $0af8			sta 	bufferCount
 .14dd					_IOILoop:
-.14dd	20 cf ff	jsr $ffcf			jsr 	$FFCF
+.14dd	20 cf ff	jsr $ffcf			jsr 	KNLInputLine
 .14e0	c9 0d		cmp #$0d			cmp 	#13
 .14e2	f0 10		beq $14f4			beq 	_IOIExit
 .14e4	ae f8 0a	ldx $0af8			ldx 	bufferCount
@@ -1401,7 +1416,7 @@
 ;******  Processing file: device/option_x16/x16timer.asm
 
 .14fd					IOReadTimer:
-.14fd	20 de ff	jsr $ffde			jsr 	$FFDE 						; reads timer into YXA so we want only YA
+.14fd	20 de ff	jsr $ffde			jsr 	KNLReadTimer 				; reads timer into YXA so we want only YA
 .1500	48		pha				pha
 .1501	8a		txa				txa
 .1502	a8		tay				tay

@@ -106,7 +106,7 @@ IOPrintChar: ;; <print>
 		bne 	_IOPCNotBS 					; Commodore/X16 backspace code.
 		lda 	#$14
 _IOPCNotBS:
-		jsr 	$FFD2 						; CBM OS Call.
+		jsr 	KNLPrintChar 				; CBM OS Call.
 		.puly
 		rts
 
@@ -120,7 +120,7 @@ _IOPCNotBS:
 
 IOInkey: ;; <inkey>
 		.pshy 								; read key with Y protected
-		jsr 	$FFE4
+		jsr 	KNLCheckKeyboarBuffer
 		sta 	tempShort
 		.puly
 		lda 	tempShort					; no key pressed.
@@ -214,7 +214,7 @@ IOInput:	;; <inputline>
 		lda 	#0
 		sta 	bufferCount
 _IOILoop:
-		jsr 	$FFCF
+		jsr 	KNLInputLine
 		cmp 	#13
 		beq 	_IOIExit
 		ldx 	bufferCount

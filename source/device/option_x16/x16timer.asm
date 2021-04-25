@@ -19,7 +19,7 @@
 ; ************************************************************************************************
 
 IOReadTimer: ;; <timer>
-		jsr 	$FFDE 						; reads timer into YXA so we want only YA
+		jsr 	KNLReadTimer 				; reads timer into YXA so we want only YA
 		pha
 		txa
 		tay

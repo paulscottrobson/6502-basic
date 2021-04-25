@@ -20,7 +20,7 @@
 
 X16SyncBreak: ;; <syncbreak>
 		.pshy
-		jsr 	$FFDE
+		jsr 	KNLReadTimer
 		ldy 	nextSyncTick 				; if NST = 0 then always sync
 		tay 								; save tick in Y
 		sec
@@ -35,7 +35,7 @@ _X16Sync:
 		.extension_execown
 _X16NoSync:
 		.puly
-		jsr 	$FFE1
+		jsr 	KNLCheckBreak
 		beq 	_IsBreak
 		rts
 _IsBreak:
