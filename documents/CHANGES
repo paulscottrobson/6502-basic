@@ -156,3 +156,7 @@ vary too much. Text source only.
 25/4/2021
 =========
 - Back up after other stuff. Removed magic numbers from Kernal I/O stuff
+
+26/4/2021
+=========
+- Removed magic numbers from graphics stuff.

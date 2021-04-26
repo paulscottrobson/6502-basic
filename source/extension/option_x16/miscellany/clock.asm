@@ -22,7 +22,7 @@ Unary_Clock:	;; [clock(]
 		pha 								; save stack pos
 		.main_checkrightparen
 		.pshy								; call RTC preserving Y.
-		jsr 	$FF50
+		jsr 	X16KReadRTC
 		.puly
 		pla 								; restore, repush, put into X to read offset
 		pha

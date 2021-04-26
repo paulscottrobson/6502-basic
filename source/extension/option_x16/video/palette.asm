@@ -28,21 +28,21 @@ CommandPalette: ;; [palette]
 		;
 		jsr 	PointToPaletteA			; point to palette register
 		lda 	esInt0+1
-		sta 	$9F23
+		sta 	X16VeraData0
 		lda 	esInt1+1
 		and 	#$0F
-		sta 	$9F23
+		sta 	X16VeraData0
 		rts
 
 PointToPaletteA:
 		asl 	a 							; x 2 -> LSB
-		sta 	$9F20
+		sta 	X16VeraAddLow
 		lda 	#0 							; carry into A
 		rol 	a
-		ora 	#$FA 						; make correct address
-		sta 	$9F21
-		lda 	#$11 						; $01 and single step => $9F22
-		sta 	$9F22
+		ora 	#(X16VeraPalette >> 8)&$FF	; make correct address
+		sta 	X16VeraAddMed
+		lda 	#(X16VeraPalette >> 16)|$10	; $01 and single step => X16VeraAddHigh
+		sta 	X16VeraAddHigh
 		rts
 
 		.send 	code

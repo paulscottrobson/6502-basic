@@ -66,12 +66,12 @@ _LVRSetAddress:
 		ror 	temp1
 		ror		a
 		;
-		sta 	$9F20 						; set write address with +1 increment
+		sta 	X16VeraAddLow 						; set write address with +1 increment
 		lda 	temp1
-		sta 	$9F21
+		sta 	X16VeraAddMed
 		lda 	temp1+1
 		ora 	#$10 					
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		bne 	_LVRLoop
 		;
 		;		Set compression to low 3 bits of A
@@ -95,10 +95,10 @@ _LVRSetPalette:
 		jsr 	PointToPaletteA 			; in palette.asm
 		;
 		jsr 	LVFGet 						; copy 12 bit palette data in.
-		sta 	$9F23
+		sta 	X16VeraData0
 		jsr 	LVFGet
 		and 	#$0F
-		sta 	$9F23
+		sta 	X16VeraData0
 		jmp 	_LVRLoop
 _LVRLoad:	
 		ldx 	compressMode
@@ -111,7 +111,7 @@ _LVRLCopyX:
 		tax
 _LVRLCopy:
 		jsr 	LVFGet 						; write to data.
-		sta 	$9F23		
+		sta 	X16VeraData0		
 		dex
 		bne 	_LVRLCopy
 		jmp 	_LVRLoop
@@ -127,19 +127,19 @@ _LVRSetSprite:
 		pla 								; restore the data held in the first byte
 		sta 	imageInfo,x 				; and write into the sprite image table.
 _LVRAlignVRAM:
-		lda 	$9F20 						; check VRAM on 32 byte boundary
+		lda 	X16VeraAddLow 						; check VRAM on 32 byte boundary
 		and 	#$1F
 		beq 	_LVRAligned
 		lda 	#$00
-		sta 	$9F23
+		sta 	X16VeraData0
 		beq 	_LVRAlignVRAM
 _LVRAligned:
-		lda 	$9F22 						; put address/32 in sprite image table
+		lda 	X16VeraAddHigh 						; put address/32 in sprite image table
 		lsr 	a 	 						; first halve into temp1						
-		lda 	$9F21
+		lda 	X16VeraAddMed
 		ror 	a
 		sta 	temp1+1
-		lda 	$9F20
+		lda 	X16VeraAddLow
 		ror 	a
 		sta 	temp1
 		;
@@ -173,7 +173,7 @@ _LVRRLEGroup:
 		tax
 		jsr 	LVFGet
 _LVRLEGroupLoop:
-		sta 	$9F23
+		sta 	X16VeraData0
 		dex
 		bne 	_LVRLEGroupLoop
 		jmp 	_LVRLoop

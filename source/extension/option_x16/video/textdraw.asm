@@ -129,16 +129,16 @@ DrawCharacterA:
 		rol 	a
 		ora 	#DefaultFont >> 8 			; A now points into font table.
 		;
-		inc 	$9F25 						; alternate port set.
-		sta 	$9F21 						; set up address
+		inc 	X16VeraControl 				; alternate port set.
+		sta 	X16VeraAddMed 				; set up address
 		lda 	#$10 						
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		sty 	tempShort
 		lda 	temp0 						; or Y (vertical line) into temp0
 		ora 	tempShort
-		sta 	$9F20 						; address set up.
-		lda 	$9F24 						; get bitmap
-		dec 	$9F25 						; original port set back
+		sta 	X16VeraAddLow 				; address set up.
+		lda 	X16VeraData1 				; get bitmap
+		dec 	X16VeraControl 				; original port set back
 		;
 		ldx 	#7 							; index into rendercache
 		sta 	temp0 						; bitmap in temp 0

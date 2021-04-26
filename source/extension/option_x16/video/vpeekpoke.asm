@@ -34,12 +34,12 @@ CmdVideoWrite:
 		jsr 	SetUpTOSVRamAddress ; copy target address to VRAM address registers
 		;
 		lda 	esInt0+1 			; get MSB of write value
-		sta 	$9F23
+		sta 	X16VeraData0
 		;
 		plp 						; if it was Poke then exit
 		bcs 	_CVWExit
 		lda 	esInt1+1 			; doke, write the MSB.
-		sta 	$9F23
+		sta 	X16VeraData0
 _CVWExit:
 		rts
 
@@ -55,13 +55,13 @@ SetUpTOSVRamAddress:
 		ora 	esInt3,x
 		bne 	CVWValue
 		lda 	esInt0,x			; set address up
-		sta 	$9F20
+		sta 	X16VeraAddLow
 		lda 	esInt1,x
-		sta	 	$9F21
+		sta	 	X16VeraAddMed
 		lda 	esInt2,x
 		and 	#1
 		ora 	#$10 				; step 1.
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		rts		
 CVWValue:
 		.throw 	BadValue
@@ -91,11 +91,11 @@ CmdVideoRead:
 		sta 	esInt2,x
 		sta 	esInt3,x
 		;
-		lda 	$9F23				; copy 1st byte
+		lda 	X16VeraData0				; copy 1st byte
 		sta 	esInt0,x
 		plp 						; check if DOKE (carry was clear)
 		bcs 	_CVRExit
-		lda 	$9F23 				; copy 2nd byte
+		lda 	X16VeraData0 				; copy 2nd byte
 		sta 	esInt1,x
 _CVRExit:
 		txa 						; return X position.

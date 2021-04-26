@@ -21,7 +21,7 @@ SpriteMove:
 		.pshy
 		lda 	#7 									; point to height/width byte and read it.
 		jsr 	SpriteSetTarget
-		lda 	$9F23
+		lda 	X16VeraData0
 		lsr 	a 									; A now contains bits 0-1 (width) 2-3 (height)
 		lsr 	a
 		lsr 	a
@@ -54,12 +54,12 @@ SMWritePosition:
 		sec
 		lda 	esInt0,x
 		sbc 	SMHalfSize,y
-		sta 	$9F23
-		inc 	$9F20
+		sta 	X16VeraData0
+		inc 	X16VeraAddLow
 		lda 	esInt1,x
 		sbc 	#0
-		sta 	$9F23
-		inc 	$9F20
+		sta 	X16VeraData0
+		inc 	X16VeraAddLow
 		rts
 
 SMHalfSize:
@@ -77,7 +77,7 @@ SpriteReadCoordinate:
 		php 										; save CTR on stack
 		lda 	#7 									; point to height/width byte and read it.
 		jsr 	SpriteSetTarget
-		lda 	$9F23
+		lda 	X16VeraData0
 		lsr 	a 									; A now contains bits 0-1 (width) 2-3 (height)
 		lsr 	a
 		lsr 	a
@@ -101,11 +101,11 @@ _SPRCNotY1:
 		jsr 	SpriteSetTarget 					; set data pointer offset by that
 		;
 		clc 										; read and unfix centre.
-		lda 	$9F23
+		lda 	X16VeraData0
 		adc 	esInt3,x
 		sta 	esInt0,x
-		inc 	$9F20 								; do MSB
-		lda 	$9F23
+		inc 	X16VeraAddLow 						; do MSB
+		lda 	X16VeraData0
 		adc 	#0
 		and 	#$0F 								; sign extend on bit 11.
 		cmp		#$08

@@ -31,10 +31,10 @@ _SILoop:lda 	channelTime,x 		; time left ?
 		txa 						; point to sound PSG
 		jsr 	CSPointChannel 		
 		lda 	#0 					; zero it all out
-		sta 	$9F23
-		sta 	$9F23
-		sta 	$9F23
-		sta 	$9F23
+		sta 	X16VeraData0
+		sta 	X16VeraData0
+		sta 	X16VeraData0
+		sta 	X16VeraData0
 		txa 						; check the queue for this for more notes.
 		jsr 	SoundCheckQueue
 _SINext:dex
@@ -43,3 +43,4 @@ _SIExit:
 		rts
 
 		.send 	code
+		

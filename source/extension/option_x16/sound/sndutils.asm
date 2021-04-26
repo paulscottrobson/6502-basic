@@ -20,12 +20,12 @@
 CSPointChannel:
 		asl 	a 							; 4 bytes / channel
 		asl 	a
-		ora 	#$C0 						; at $1F9C0
-		sta 	$9F20
-		lda 	#$F9		
-		sta 	$9F21
-		lda 	#$11
-		sta 	$9F22
+		ora 	#X16VeraSound & $FF			; at $1F9C0
+		sta 	X16VeraAddLow
+		lda 	#(X16VeraSound >> 8) & $FF
+		sta 	X16VeraAddMed
+		lda 	#(X16VeraSound >> 16) | $10
+		sta 	X16VeraAddHigh
 		rts
 
 ; ************************************************************************************************
@@ -49,16 +49,16 @@ _SCClear2:
 		dex
 		bne 	_SCClear2
 		;
-		lda 	#$C0 						; point VRAM data pointer to $1F9C0 increment
-		sta 	$9F20
-		lda 	#$F9
-		sta 	$9F21
-		lda 	#$11
-		sta 	$9F22
+		lda 	#X16VeraSound & $FF			; point VRAM data pointer to $1F9C0 increment
+		sta 	X16VeraAddLow
+		lda 	#(X16VeraSound >> 8) & $FF
+		sta 	X16VeraAddMed
+		lda 	#(X16VeraSound >> 16) | $10
+		sta 	X16VeraAddHigh
 _SCClear3:									; clear all PSG registers
 		lda 	#0
-		sta 	$9F23		
-		lda 	$9F20
+		sta 	X16VeraData0		
+		lda 	X16VeraAddLow
 		bne 	_SCClear3		
 		rts
 

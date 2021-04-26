@@ -54,14 +54,14 @@ gdModeChanged:
 		lda 	#0 							; zero the enabled flag.
 		sta 	gdEnabled
 
-		lda 	$9F2A 						; requires $40 for H/V Scale
+		lda 	X16VeraHScale 				; requires $40 for H/V Scale
 		cmp 	#$40
 		bne 	_gdExit
-		lda 	$9F2B
+		lda 	X16VeraVScale
 		cmp 	#$40
 		bne 	_gdExit
 		;
-		lda 	$9F29 						; read DC_Video, see which layers are enabled.		
+		lda 	X16VeraDCVideo 				; read DC_Video, see which layers are enabled.		
 		asl 	a 							; 
 		asl 	a 							; bit 7 now set if layer 1 enabled.
 		bpl 	_gdNotLayer1
@@ -74,7 +74,7 @@ gdModeChanged:
 _gdNotLayer1:		
 		asl 	a 							; bit 7 now set if layer 0 enabled.
 		bpl 	_gdExit 					; if not enabled, exit
-		ldx 	#0 							; check offset 0 (e.g. start at $9F2D)
+		ldx 	#0 							; check offset 0 (e.g. start at X16VeraLayerConfig)
 		jsr 	gdCheckBitmap 				; go see if this is a bitmap
 _gdExit:
 		jsr 	gdClearGraphics 			; clear graphics display.
@@ -84,17 +84,17 @@ _gdExit:
 
 ; ************************************************************************************************
 ;
-;		Check if layer at $9F2D+X is a bitmap, if so return CS and set gdEnabled Flag.
+;		Check if layer at X16VeraLayerConfig+X is a bitmap, if so return CS and set gdEnabled Flag.
 ;
 ; ************************************************************************************************
 
 gdCheckBitmap:
-		lda 	$9F2D,x 					; look at bitmap bit.
+		lda 	X16VeraLayerConfig,x 					; look at bitmap bit.
 		cmp 	#7 							; must be zero map size, bitmap and 8bpp
 		bne 	_gdCBFail
 		;
 		inc 	gdEnabled 					; set the enabled flag to non zero.
-		lda 	$9F2F,x 					; this is the bitmap address / 2
+		lda 	X16VeraLayerTileBase,x 					; this is the bitmap address / 2
 		asl 	a
 		sta 	gdBitmapAddress+1
 		adc 	#$00 						; set to no move, updated manually.
@@ -136,8 +136,8 @@ gdClearGraphics:
 		lda 	gdEnabled 					; screen enabled
 		beq 	_gdCGExit
 		;
-		set16 	gdXLimit,320 				; set the size of the bitmap.
-		set16 	gdYLimit,200
+		set16 	gdXLimit,GrWidth 			; set the size of the bitmap.
+		set16 	gdYLimit,GrHeight
 		;
 		lda 	#0 							; home cursor
 		tax
@@ -178,12 +178,12 @@ gdSetY:
 
 gdOptHorizontalWriter:
 		pha
-		lda 	$9F22 						; make it autoincrement.
+		lda 	X16VeraAddHigh 						; make it autoincrement.
 		ora 	#$10
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		pla
 _gdOLoop:
-		sta 	$9F23				
+		sta 	X16VeraData0				
 		cpx 	#0
 		bne 	_gdNoBorrow
 		cpy 	#0

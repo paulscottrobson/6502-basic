@@ -17,11 +17,11 @@
 ; ************************************************************************************************
 
 gdMvRight:
-		inc 	$9F20 						; bump $9F20
+		inc 	X16VeraAddLow 				; bump X16VeraAddLow
 		bne 	_gdMR0
-		inc 	$9F21
+		inc 	X16VeraAddMed
 		bne 	_gdMR0
-		inc 	$9F22
+		inc 	X16VeraAddHigh
 _gdMR0:										; bump position
 		inc 	gdXPos
 		bne 	_gdMR1
@@ -41,15 +41,15 @@ gdMvUp:
 		dec 	gdYPos+1
 _gdMU1:	dec 	gdYPos
 		sec 								; adjust position by -320
-		lda 	$9F20
-		sbc 	#64
-		sta 	$9F20
-		lda 	$9F21
-		sbc 	#1
-		sta 	$9F21
-		lda 	$9F22
+		lda 	X16VeraAddLow
+		sbc 	#GrWidth & $FF
+		sta 	X16VeraAddLow
+		lda 	X16VeraAddMed
+		sbc 	#GrWidth >> 8
+		sta 	X16VeraAddMed
+		lda 	X16VeraAddHigh
 		sbc 	#0
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		rts
 
 gdMvDown:	
@@ -58,15 +58,15 @@ gdMvDown:
 		inc 	gdYPos+1
 _gdMU1:	
 		clc 								; adjust position by -320
-		lda 	$9F20
-		adc 	#64
-		sta 	$9F20
-		lda 	$9F21
-		adc 	#1
-		sta 	$9F21
-		lda 	$9F22
+		lda 	X16VeraAddLow
+		adc 	#GrWidth & $FF
+		sta 	X16VeraAddLow
+		lda 	X16VeraAddMed
+		adc 	#GrWidth >> 8
+		sta 	X16VeraAddMed
+		lda 	X16VeraAddHigh
 		adc 	#0
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		rts
 
 ; ************************************************************************************************
@@ -102,13 +102,13 @@ gdSetDrawPosition:
 		clc
 		lda 	gdBitmapAddress
 		adc 	temp0
-		sta 	$9F20		
+		sta 	X16VeraAddLow		
 		lda 	gdBitmapAddress+1
 		adc 	temp0+1
-		sta 	$9F21
+		sta 	X16VeraAddMed
 		lda 	gdBitmapAddress+2
 		adc 	#0
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		rts
 
 ; ************************************************************************************************
@@ -120,14 +120,15 @@ gdSetDrawPosition:
 gdPlotInk:
 		lda 	gdInk
 gdPlotA:		
-		sta 	$9F23
+		sta 	X16VeraData0
 		rts
 gdPlotPaper:
 		lda 	gdPaper
 		cmp 	#$FF
 		beq 	_gdPPSkip
-		sta 	$9F23
+		sta 	X16VeraData0
 _gdPPSkip:		
 		rts
 
 		.send 	code
+		

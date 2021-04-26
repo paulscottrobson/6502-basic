@@ -64,12 +64,12 @@ CMNoExpand:
 		;
 CMUpdateMode:		
 		;
-		;		Clear $9F29 to $9F3A
+		;		Clear X16VeraDCVideo to $9F3A
 		;
 		ldx 	#$11
 _CMClear:
 		lda 	#0
-		sta 	$9F29,X
+		sta 	X16VeraDCVideo,X
 		dex
 		bpl 	_CMClear		
 		;	
@@ -80,7 +80,7 @@ _CMClear:
 		pha
 		and 	#$70 						; isolates bits 6,5,4 (sprites,L1 enable,L0 enable)
 		ora 	#$01 						; turn the output on.
-		sta 	$9F29 						; write to DC_VIDEO
+		sta 	X16VeraDCVideo 						; write to DC_VIDEO
 		;
 		pla 								; get back
 		jsr 	CMToScale 					; convert lower 2 bits to a scale.
@@ -90,9 +90,9 @@ _CMClear:
 		lsr 	a
 		lsr 	a
 		jsr 	CMToScale 					; convert lower 2 bits to a scale.
-		sta 	$9F2B
+		sta 	X16VeraVScale
 		; 
-		ldx 	#0 							; this is offset from $9F2D to do L0
+		ldx 	#0 							; this is offset from X16VeraLayerConfig to do L0
 		lda 	currentMode					; get L0 config byte
 		jsr 	CMDecodeLayer 				; and decode layer 0
 		;
@@ -159,14 +159,14 @@ _CMTSLoop:
 
 ; ************************************************************************************************
 ;
-;					Decode layer byte A to offseet X $9F2D onwards
+;					Decode layer byte A to offseet X X16VeraLayerConfig onwards
 ;
 ; ************************************************************************************************
 
 CMDecodeLayer:
 		pha 								; save it.
 		and 	#$F7 						; all the bits except T256C which you can't set using this
-		sta 	$9F2D,X
+		sta 	X16VeraLayerConfig,X
 		;
 		pla 								; get it back
 		and 	#$08 						; the missing bit sets the tile size.
@@ -177,12 +177,12 @@ _CMDLNotSet:
 		beq 	_CMDLayer0 					; layer 1 has standard defaults for tile table, e.g. $7C
 		;
 		ora 	#$7C 						; so set those bits and write it out.
-		sta 	$9F2F,X
+		sta 	X16VeraLayerTileBase,X
 		rts	
 
 _CMDLayer0: 								; layer 0 
 		ora 	#$80 						; tile base is $80
-		sta 	$9F2F,X
+		sta 	X16VeraLayerTileBase,X
 		rts
 
 

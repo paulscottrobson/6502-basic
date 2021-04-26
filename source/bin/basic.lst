@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
-; Sun Apr 25 12:06:38 2021
+; Mon Apr 26 09:32:38 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -468,6 +468,24 @@
 ;******  Processing file: extension/option_x16/x16const.inc
 
 =64					X16MaxImages = 64 							; max # of sprite images.
+=$9f20					X16VeraAddLow = $9F20
+=$9f21					X16VeraAddMed = $9F21
+=$9f22					X16VeraAddHigh = $9F22
+=$9f23					X16VeraData0 = $9F23
+=$9f24					X16VeraData1 = $9F24
+=$9f25					X16VeraControl = $9F25
+=$9f29					X16VeraDCVideo = $9F29
+=$9f2a					X16VeraHScale = $9F2A
+=$9f2b					X16VeraVScale = $9F2B
+=$9f2d					X16VeraLayerConfig = $9F2D
+=$9f2e					X16VeraLayerMapBase = $9F2E
+=$9f2f					X16VeraLayerTileBase = $9F2F
+=$ff56					X16KReadJoystick = $FF56
+=$ff50					X16KReadRTC = $FF50
+=$1f9c0					X16VeraSound = $1F9C0
+=$1fa00					X16VeraPalette = $1FA00
+=320					GrWidth = 320 								; gfx mode size.
+=200					GrHeight = 200
 
 ;******  Return to file: basic.asm
 
@@ -2350,11 +2368,11 @@
 ;******  Processing file: extension/option_x16/driver/coords.asm
 
 .1ce9					gdMvRight:
-.1ce9	ee 20 9f	inc $9f20			inc 	$9F20 						; bump $9F20
+.1ce9	ee 20 9f	inc $9f20			inc 	X16VeraAddLow 				; bump X16VeraAddLow
 .1cec	d0 08		bne $1cf6			bne 	_gdMR0
-.1cee	ee 21 9f	inc $9f21			inc 	$9F21
+.1cee	ee 21 9f	inc $9f21			inc 	X16VeraAddMed
 .1cf1	d0 03		bne $1cf6			bne 	_gdMR0
-.1cf3	ee 22 9f	inc $9f22			inc 	$9F22
+.1cf3	ee 22 9f	inc $9f22			inc 	X16VeraAddHigh
 .1cf6					_gdMR0:
 .1cf6	ee 54 0c	inc $0c54			inc 	gdXPos
 .1cf9	d0 03		bne $1cfe			bne 	_gdMR1
@@ -2367,15 +2385,15 @@
 .1d04	ce 57 0c	dec $0c57			dec 	gdYPos+1
 .1d07	ce 56 0c	dec $0c56	_gdMU1:	dec 	gdYPos
 .1d0a	38		sec				sec 								; adjust position by -320
-.1d0b	ad 20 9f	lda $9f20			lda 	$9F20
-.1d0e	e9 40		sbc #$40			sbc 	#64
-.1d10	8d 20 9f	sta $9f20			sta 	$9F20
-.1d13	ad 21 9f	lda $9f21			lda 	$9F21
-.1d16	e9 01		sbc #$01			sbc 	#1
-.1d18	8d 21 9f	sta $9f21			sta 	$9F21
-.1d1b	ad 22 9f	lda $9f22			lda 	$9F22
+.1d0b	ad 20 9f	lda $9f20			lda 	X16VeraAddLow
+.1d0e	e9 40		sbc #$40			sbc 	#GrWidth & $FF
+.1d10	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
+.1d13	ad 21 9f	lda $9f21			lda 	X16VeraAddMed
+.1d16	e9 01		sbc #$01			sbc 	#GrWidth >> 8
+.1d18	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
+.1d1b	ad 22 9f	lda $9f22			lda 	X16VeraAddHigh
 .1d1e	e9 00		sbc #$00			sbc 	#0
-.1d20	8d 22 9f	sta $9f22			sta 	$9F22
+.1d20	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1d23	60		rts				rts
 .1d24					gdMvDown:
 .1d24	ee 56 0c	inc $0c56			inc 	gdYPos 						; decrement Y Pos
@@ -2383,15 +2401,15 @@
 .1d29	ee 57 0c	inc $0c57			inc 	gdYPos+1
 .1d2c					_gdMU1:
 .1d2c	18		clc				clc 								; adjust position by -320
-.1d2d	ad 20 9f	lda $9f20			lda 	$9F20
-.1d30	69 40		adc #$40			adc 	#64
-.1d32	8d 20 9f	sta $9f20			sta 	$9F20
-.1d35	ad 21 9f	lda $9f21			lda 	$9F21
-.1d38	69 01		adc #$01			adc 	#1
-.1d3a	8d 21 9f	sta $9f21			sta 	$9F21
-.1d3d	ad 22 9f	lda $9f22			lda 	$9F22
+.1d2d	ad 20 9f	lda $9f20			lda 	X16VeraAddLow
+.1d30	69 40		adc #$40			adc 	#GrWidth & $FF
+.1d32	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
+.1d35	ad 21 9f	lda $9f21			lda 	X16VeraAddMed
+.1d38	69 01		adc #$01			adc 	#GrWidth >> 8
+.1d3a	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
+.1d3d	ad 22 9f	lda $9f22			lda 	X16VeraAddHigh
 .1d40	69 00		adc #$00			adc 	#0
-.1d42	8d 22 9f	sta $9f22			sta 	$9F22
+.1d42	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1d45	60		rts				rts
 .1d46					gdSetDrawPosition:
 .1d46	a9 00		lda #$00			lda 	#0 							; temp0 is LSB of result start as 256 x Y
@@ -2416,24 +2434,24 @@
 .1d6e	18		clc				clc
 .1d6f	ad 51 0c	lda $0c51			lda 	gdBitmapAddress
 .1d72	65 2a		adc $2a				adc 	temp0
-.1d74	8d 20 9f	sta $9f20			sta 	$9F20
+.1d74	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
 .1d77	ad 52 0c	lda $0c52			lda 	gdBitmapAddress+1
 .1d7a	65 2b		adc $2b				adc 	temp0+1
-.1d7c	8d 21 9f	sta $9f21			sta 	$9F21
+.1d7c	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
 .1d7f	ad 53 0c	lda $0c53			lda 	gdBitmapAddress+2
 .1d82	69 00		adc #$00			adc 	#0
-.1d84	8d 22 9f	sta $9f22			sta 	$9F22
+.1d84	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1d87	60		rts				rts
 .1d88					gdPlotInk:
 .1d88	ad fe 0b	lda $0bfe			lda 	gdInk
 .1d8b					gdPlotA:
-.1d8b	8d 23 9f	sta $9f23			sta 	$9F23
+.1d8b	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .1d8e	60		rts				rts
 .1d8f					gdPlotPaper:
 .1d8f	ad ff 0b	lda $0bff			lda 	gdPaper
 .1d92	c9 ff		cmp #$ff			cmp 	#$FF
 .1d94	f0 03		beq $1d99			beq 	_gdPPSkip
-.1d96	8d 23 9f	sta $9f23			sta 	$9F23
+.1d96	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .1d99					_gdPPSkip:
 .1d99	60		rts				rts
 
@@ -2455,13 +2473,13 @@
 .1d9b	5a		phy				phy
 .1d9c	a9 00		lda #$00			lda 	#0 							; zero the enabled flag.
 .1d9e	8d 50 0c	sta $0c50			sta 	gdEnabled
-.1da1	ad 2a 9f	lda $9f2a			lda 	$9F2A 						; requires $40 for H/V Scale
+.1da1	ad 2a 9f	lda $9f2a			lda 	X16VeraHScale 				; requires $40 for H/V Scale
 .1da4	c9 40		cmp #$40			cmp 	#$40
 .1da6	d0 1f		bne $1dc7			bne 	_gdExit
-.1da8	ad 2b 9f	lda $9f2b			lda 	$9F2B
+.1da8	ad 2b 9f	lda $9f2b			lda 	X16VeraVScale
 .1dab	c9 40		cmp #$40			cmp 	#$40
 .1dad	d0 18		bne $1dc7			bne 	_gdExit
-.1daf	ad 29 9f	lda $9f29			lda 	$9F29 						; read DC_Video, see which layers are enabled.
+.1daf	ad 29 9f	lda $9f29			lda 	X16VeraDCVideo 				; read DC_Video, see which layers are enabled.
 .1db2	0a		asl a				asl 	a 							;
 .1db3	0a		asl a				asl 	a 							; bit 7 now set if layer 1 enabled.
 .1db4	10 09		bpl $1dbf			bpl 	_gdNotLayer1
@@ -2473,7 +2491,7 @@
 .1dbf					_gdNotLayer1:
 .1dbf	0a		asl a				asl 	a 							; bit 7 now set if layer 0 enabled.
 .1dc0	10 05		bpl $1dc7			bpl 	_gdExit 					; if not enabled, exit
-.1dc2	a2 00		ldx #$00			ldx 	#0 							; check offset 0 (e.g. start at $9F2D)
+.1dc2	a2 00		ldx #$00			ldx 	#0 							; check offset 0 (e.g. start at X16VeraLayerConfig)
 .1dc4	20 cd 1d	jsr $1dcd			jsr 	gdCheckBitmap 				; go see if this is a bitmap
 .1dc7					_gdExit:
 .1dc7	20 01 1e	jsr $1e01			jsr 	gdClearGraphics 			; clear graphics display.
@@ -2481,11 +2499,11 @@
 .1dcb	fa		plx				plx
 .1dcc	60		rts				rts
 .1dcd					gdCheckBitmap:
-.1dcd	bd 2d 9f	lda $9f2d,x			lda 	$9F2D,x 					; look at bitmap bit.
+.1dcd	bd 2d 9f	lda $9f2d,x			lda 	X16VeraLayerConfig,x 					; look at bitmap bit.
 .1dd0	c9 07		cmp #$07			cmp 	#7 							; must be zero map size, bitmap and 8bpp
 .1dd2	d0 14		bne $1de8			bne 	_gdCBFail
 .1dd4	ee 50 0c	inc $0c50			inc 	gdEnabled 					; set the enabled flag to non zero.
-.1dd7	bd 2f 9f	lda $9f2f,x			lda 	$9F2F,x 					; this is the bitmap address / 2
+.1dd7	bd 2f 9f	lda $9f2f,x			lda 	X16VeraLayerTileBase,x 					; this is the bitmap address / 2
 .1dda	0a		asl a				asl 	a
 .1ddb	8d 52 0c	sta $0c52			sta 	gdBitmapAddress+1
 .1dde	69 00		adc #$00			adc 	#$00 						; set to no move, updated manually.
@@ -2513,13 +2531,13 @@
 .1e02	5a		phy				phy
 .1e03	ad 50 0c	lda $0c50			lda 	gdEnabled 					; screen enabled
 .1e06	f0 2a		beq $1e32			beq 	_gdCGExit
-.1e08	a9 40		lda #$40			lda 	#(320) & $FF
+.1e08	a9 40		lda #$40			lda 	#(GrWidth) & $FF
 .1e0a	8d 03 0c	sta $0c03			sta 	gdXLimit
-.1e0d	a9 01		lda #$01			lda 	#(320) >> 8
+.1e0d	a9 01		lda #$01			lda 	#(GrWidth) >> 8
 .1e0f	8d 04 0c	sta $0c04			sta 	1+(gdXLimit)
-.1e12	a9 c8		lda #$c8			lda 	#(200) & $FF
+.1e12	a9 c8		lda #$c8			lda 	#(GrHeight) & $FF
 .1e14	8d 05 0c	sta $0c05			sta 	gdYLimit
-.1e17	a9 00		lda #$00			lda 	#(200) >> 8
+.1e17	a9 00		lda #$00			lda 	#(GrHeight) >> 8
 .1e19	8d 06 0c	sta $0c06			sta 	1+(gdYLimit)
 .1e1c	a9 00		lda #$00			lda 	#0 							; home cursor
 .1e1e	aa		tax				tax
@@ -2544,12 +2562,12 @@
 .1e42	60		rts				rts
 .1e43					gdOptHorizontalWriter:
 .1e43	48		pha				pha
-.1e44	ad 22 9f	lda $9f22			lda 	$9F22 						; make it autoincrement.
+.1e44	ad 22 9f	lda $9f22			lda 	X16VeraAddHigh 						; make it autoincrement.
 .1e47	09 10		ora #$10			ora 	#$10
-.1e49	8d 22 9f	sta $9f22			sta 	$9F22
+.1e49	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1e4c	68		pla				pla
 .1e4d					_gdOLoop:
-.1e4d	8d 23 9f	sta $9f23			sta 	$9F23
+.1e4d	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .1e50	e0 00		cpx #$00			cpx 	#0
 .1e52	d0 05		bne $1e59			bne 	_gdNoBorrow
 .1e54	c0 00		cpy #$00			cpy 	#0
@@ -2573,7 +2591,7 @@
 .1e64	a2 04		ldx #$04		ldx	#4
 .1e66	20 f5 3f	jsr $3ff5		jsr	mainHandler
 .1e69	5a		phy				phy
-.1e6a	20 50 ff	jsr $ff50			jsr 	$FF50
+.1e6a	20 50 ff	jsr $ff50			jsr 	X16KReadRTC
 .1e6d	7a		ply				ply
 .1e6e	68		pla				pla 								; restore, repush, put into X to read offset
 .1e6f	48		pha				pha
@@ -2670,7 +2688,7 @@
 .1eeb	da		phx				phx
 .1eec	5a		phy				phy
 .1eed	a9 00		lda #$00			lda 	#0
-.1eef	20 56 ff	jsr $ff56			jsr 	$FF56
+.1eef	20 56 ff	jsr $ff56			jsr 	X16KReadJoystick
 .1ef2	c0 00		cpy #$00			cpy 	#0
 .1ef4	d0 0f		bne $1f05			bne 	_RJError
 .1ef6	c9 00		cmp #$00			cmp 	#0 							; bug, returns $00 initially
@@ -2753,7 +2771,7 @@
 .1f70	a0 04		ldy #$04			ldy 	#4 							; counter
 .1f72					_SCQCopy:
 .1f72	bd 73 0c	lda $0c73,x			lda 	sndQueue+2,x 				; copy the sound production data to the PSG
-.1f75	8d 23 9f	sta $9f23			sta 	$9F23
+.1f75	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .1f78	e8		inx				inx
 .1f79	88		dey				dey
 .1f7a	d0 f6		bne $1f72			bne 	_SCQCopy
@@ -2821,12 +2839,12 @@
 .1fca					CSPointChannel:
 .1fca	0a		asl a				asl 	a 							; 4 bytes / channel
 .1fcb	0a		asl a				asl 	a
-.1fcc	09 c0		ora #$c0			ora 	#$C0 						; at $1F9C0
-.1fce	8d 20 9f	sta $9f20			sta 	$9F20
-.1fd1	a9 f9		lda #$f9			lda 	#$F9
-.1fd3	8d 21 9f	sta $9f21			sta 	$9F21
-.1fd6	a9 11		lda #$11			lda 	#$11
-.1fd8	8d 22 9f	sta $9f22			sta 	$9F22
+.1fcc	09 c0		ora #$c0			ora 	#X16VeraSound & $FF			; at $1F9C0
+.1fce	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
+.1fd1	a9 f9		lda #$f9			lda 	#(X16VeraSound >> 8) & $FF
+.1fd3	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
+.1fd6	a9 11		lda #$11			lda 	#(X16VeraSound >> 16) | $10
+.1fd8	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1fdb	60		rts				rts
 .1fdc					SoundReset:
 .1fdc	a9 00		lda #$00			lda 	#0							; no channels playing
@@ -2841,16 +2859,16 @@
 .1feb	9d 70 0c	sta $0c70,x			sta 	sndQueue-1,x
 .1fee	ca		dex				dex
 .1fef	d0 fa		bne $1feb			bne 	_SCClear2
-.1ff1	a9 c0		lda #$c0			lda 	#$C0 						; point VRAM data pointer to $1F9C0 increment
-.1ff3	8d 20 9f	sta $9f20			sta 	$9F20
-.1ff6	a9 f9		lda #$f9			lda 	#$F9
-.1ff8	8d 21 9f	sta $9f21			sta 	$9F21
-.1ffb	a9 11		lda #$11			lda 	#$11
-.1ffd	8d 22 9f	sta $9f22			sta 	$9F22
+.1ff1	a9 c0		lda #$c0			lda 	#X16VeraSound & $FF			; point VRAM data pointer to $1F9C0 increment
+.1ff3	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
+.1ff6	a9 f9		lda #$f9			lda 	#(X16VeraSound >> 8) & $FF
+.1ff8	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
+.1ffb	a9 11		lda #$11			lda 	#(X16VeraSound >> 16) | $10
+.1ffd	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .2000					_SCClear3:
 .2000	a9 00		lda #$00			lda 	#0
-.2002	8d 23 9f	sta $9f23			sta 	$9F23
-.2005	ad 20 9f	lda $9f20			lda 	$9F20
+.2002	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.2005	ad 20 9f	lda $9f20			lda 	X16VeraAddLow
 .2008	d0 f6		bne $2000			bne 	_SCClear3
 .200a	60		rts				rts
 
@@ -2998,10 +3016,10 @@
 .20dd	8a		txa				txa 						; point to sound PSG
 .20de	20 ca 1f	jsr $1fca			jsr 	CSPointChannel
 .20e1	a9 00		lda #$00			lda 	#0 					; zero it all out
-.20e3	8d 23 9f	sta $9f23			sta 	$9F23
-.20e6	8d 23 9f	sta $9f23			sta 	$9F23
-.20e9	8d 23 9f	sta $9f23			sta 	$9F23
-.20ec	8d 23 9f	sta $9f23			sta 	$9F23
+.20e3	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.20e6	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.20e9	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.20ec	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .20ef	8a		txa				txa 						; check the queue for this for more notes.
 .20f0	20 3e 1f	jsr $1f3e			jsr 	SoundCheckQueue
 .20f3	ca		dex		_SINext:dex
@@ -3139,12 +3157,12 @@
 .21af					CommandSprite:
 .21af	20 b1 22	jsr $22b1			jsr 	CSCheckOnOff 				; look for TRUE/FALSE
 .21b2	d0 0d		bne $21c1			bne 	_CSCheckClear
-.21b4	ad 29 9f	lda $9f29			lda 	$9F29 						; sprite enable is bit 6.
+.21b4	ad 29 9f	lda $9f29			lda 	X16VeraDCVideo 				; sprite enable is bit 6.
 .21b7	29 bf		and #$bf			and 	#$BF 						; clear it whatever
 .21b9	90 02		bcc $21bd			bcc 	_CSNotOn 					; if CS turn on, so set it
 .21bb	09 40		ora #$40			ora 	#$40
 .21bd					_CSNotOn:
-.21bd	8d 29 9f	sta $9f29			sta 	$9F29 						; write it back in new state and exit
+.21bd	8d 29 9f	sta $9f29			sta 	X16VeraDCVideo 						; write it back in new state and exit
 .21c0	60		rts				rts
 .21c1					_CSCheckClear:
 .21c1	a9 00		lda #$00			lda 	#0 							; no sprite currently selected.
@@ -3185,13 +3203,13 @@
 .2202	08		php				php 								; save carry
 .2203	a9 06		lda #$06			lda 	#6 							; set pos to offset 6.
 .2205	20 98 22	jsr $2298			jsr 	SpriteSetTarget
-.2208	ad 23 9f	lda $9f23			lda 	$9F23 						; read it.
+.2208	ad 23 9f	lda $9f23			lda 	X16VeraData0 						; read it.
 .220b	29 f3		and #$f3			and 	#$F3 						; clear depth bits, disabling it.
 .220d	28		plp				plp
 .220e	90 02		bcc $2212			bcc 	_CSSetOff 					; check if carry was set
 .2210	09 0c		ora #$0c			ora 	#$0C 						; otherwise set depth bits to 11, on top.
 .2212					_CSSetOff:
-.2212	8d 23 9f	sta $9f23			sta 	$9F23 						; update and loop back
+.2212	8d 23 9f	sta $9f23			sta 	X16VeraData0 				; update and loop back
 .2215	4c d1 21	jmp $21d1			jmp 	_CSCommandLoop
 .2218					_CSSetFlip:
 .2218	a9 00		lda #$00			lda 	#0 							; image # now at level 0
@@ -3202,10 +3220,10 @@
 .2224	a5 98		lda $98				lda 	esInt0 						; flip value & 3 => temp0
 .2226	29 03		and #$03			and 	#3
 .2228	85 2a		sta $2a				sta 	temp0
-.222a	ad 23 9f	lda $9f23			lda 	$9F23 						; update the flip.
+.222a	ad 23 9f	lda $9f23			lda 	X16VeraData0 				; update the flip.
 .222d	29 fc		and #$fc			and 	#$FC
 .222f	05 2a		ora $2a				ora 	temp0
-.2231	8d 23 9f	sta $9f23			sta 	$9F23
+.2231	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2234	4c d1 21	jmp $21d1			jmp 	_CSCommandLoop
 .2237					_CSSetPos:
 .2237	a9 00		lda #$00			lda 	#0 							; X now at level 0
@@ -3227,21 +3245,21 @@
 .225b	20 98 22	jsr $2298			jsr 	SpriteSetTarget
 .225e	a6 98		ldx $98				ldx 	esInt0 						; get image # into X
 .2260	bd 1d 0d	lda $0d1d,x			lda 	imageAddr32Low,x 			; copy low address in.
-.2263	8d 23 9f	sta $9f23			sta 	$9F23
-.2266	ee 20 9f	inc $9f20			inc 	$9F20 						; bump to offset 1.
+.2263	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.2266	ee 20 9f	inc $9f20			inc 	X16VeraAddLow 				; bump to offset 1.
 .2269	bd dd 0c	lda $0cdd,x			lda 	imageInfo,x 				; get 4/8 bit flag from info.
 .226c	29 10		and #$10			and 	#$10
 .226e	0a		asl a				asl 	a
 .226f	0a		asl a				asl		a
 .2270	0a		asl a				asl 	a 							; put into bit 7
 .2271	1d 5d 0d	ora $0d5d,x			ora 	imageAddr32High,x 			; or high address with it.
-.2274	8d 23 9f	sta $9f23			sta 	$9F23 						; write the high byte.
+.2274	8d 23 9f	sta $9f23			sta 	X16VeraData0 						; write the high byte.
 .2277	a9 06		lda #$06			lda 	#6
 .2279	20 98 22	jsr $2298			jsr 	SpriteSetTarget 			; set sprite on.
-.227c	ad 23 9f	lda $9f23			lda 	$9F23
+.227c	ad 23 9f	lda $9f23			lda 	X16VeraData0
 .227f	09 0c		ora #$0c			ora 	#$0C
-.2281	8d 23 9f	sta $9f23			sta 	$9F23
-.2284	ee 20 9f	inc $9f20			inc 	$9F20 						; point to byte 7 : height/width/palette offset
+.2281	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.2284	ee 20 9f	inc $9f20			inc 	X16VeraAddLow 				; point to byte 7 : height/width/palette offset
 .2287	bd dd 0c	lda $0cdd,x			lda 	imageInfo,x 				; get image info
 .228a	0a		asl a				asl 	a 							; shift bits 0-3 to 4-7
 .228b	0a		asl a				asl 	a
@@ -3250,16 +3268,16 @@
 .228e	b0 02		bcs $2292			bcs		_CSNoOffset 				; if bit 4 was set don't set the offset.
 .2290	09 0f		ora #$0f			ora 	#$0F 						; set palette offset and write back
 .2292					_CSNoOffset:
-.2292	8d 23 9f	sta $9f23			sta 	$9F23
+.2292	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2295	4c d1 21	jmp $21d1			jmp 	_CSCommandLoop
 .2298					SpriteSetTarget:
 .2298	0d d5 0c	ora $0cd5			ora 	currSprite
-.229b	8d 20 9f	sta $9f20			sta 	$9F20
+.229b	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
 .229e	ad d6 0c	lda $0cd6			lda 	currSprite+1
 .22a1	f0 09		beq $22ac			beq 	_SSTNoSet
-.22a3	8d 21 9f	sta $9f21			sta 	$9F21
+.22a3	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
 .22a6	a9 01		lda #$01			lda 	#$01
-.22a8	8d 22 9f	sta $9f22			sta 	$9F22
+.22a8	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .22ab	60		rts				rts
 .22ac					_SSTNoSet:
 .22ac	a2 27		ldx #$27			ldx 	#ErrorID_NoSprite
@@ -3279,15 +3297,15 @@
 .22c1	60		rts				rts
 .22c2					CSClearSprites:
 .22c2	a9 11		lda #$11			lda 	#$11 						; set address to 1FC00 with single bump
-.22c4	8d 22 9f	sta $9f22			sta 	$9F22
+.22c4	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .22c7	a9 fc		lda #$fc			lda 	#$FC
-.22c9	8d 21 9f	sta $9f21			sta 	$9F21
+.22c9	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
 .22cc	a9 00		lda #$00			lda 	#0
-.22ce	8d 20 9f	sta $9f20			sta 	$9F20
+.22ce	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
 .22d1					_CSClear:
 .22d1	a9 00		lda #$00			lda 	#0 							; set everything to $00
-.22d3	8d 23 9f	sta $9f23			sta 	$9F23
-.22d6	ad 21 9f	lda $9f21			lda 	$9F21
+.22d3	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.22d6	ad 21 9f	lda $9f21			lda 	X16VeraAddMed
 .22d9	d0 f6		bne $22d1			bne 	_CSClear
 .22db	60		rts				rts
 .22dc					SelectSpriteA:
@@ -3384,22 +3402,22 @@
 .236d	26 30		rol $30				rol 	temp3
 .236f	ca		dex				dex
 .2370	d0 f7		bne $2369			bne 	_SIMult32
-.2372	ee 25 9f	inc $9f25			inc 	$9F25 						; select alternate data port
+.2372	ee 25 9f	inc $9f25			inc 	X16VeraControl 				; select alternate data port
 .2375	18		clc				clc
 .2376	a5 2a		lda $2a				lda 	temp0 						; add offset to sprite address x 32 and write to address
 .2378	65 2e		adc $2e				adc 	temp2
-.237a	8d 20 9f	sta $9f20			sta 	$9F20
+.237a	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
 .237d	a5 2b		lda $2b				lda 	temp0+1
 .237f	65 2f		adc $2f				adc 	temp2+1
-.2381	8d 21 9f	sta $9f21			sta 	$9F21
+.2381	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
 .2384	a9 10		lda #$10			lda 	#$10
 .2386	65 30		adc $30				adc 	temp3
-.2388	8d 22 9f	sta $9f22			sta 	$9F22
+.2388	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .238b	a2 00		ldx #$00			ldx 	#0 							; index into Render Cache.
 .238d					_SIFillCacheLoop:
 .238d	a5 2c		lda $2c				lda 	temp1 						; is it 8 bit ? if so, then exit
 .238f	d0 12		bne $23a3			bne 	_SI8Bit
-.2391	ad 24 9f	lda $9f24			lda 	$9F24 						; get data
+.2391	ad 24 9f	lda $9f24			lda 	X16VeraData1 				; get data
 .2394	48		pha				pha 								; save it
 .2395	4a		lsr a				lsr 	a 							; MSB first
 .2396	4a		lsr a				lsr 	a
@@ -3410,13 +3428,13 @@
 .239d	20 b3 23	jsr $23b3			jsr 	_SIWrite4Bit
 .23a0	4c aa 23	jmp $23aa			jmp 	_SIAdvance
 .23a3					_SI8Bit:
-.23a3	ad 24 9f	lda $9f24			lda 	$9F24 						; copy data into render cache
+.23a3	ad 24 9f	lda $9f24			lda 	X16VeraData1 				; copy data into render cache
 .23a6	9d 10 0c	sta $0c10,x			sta 	RenderCache,x
 .23a9	e8		inx				inx
 .23aa					_SIAdvance:
 .23aa	ec d7 0c	cpx $0cd7			cpx 	sRenderWidth 				; filled the cache to required width ?
 .23ad	d0 de		bne $238d			bne 	_SIFillCacheLoop
-.23af	ce 25 9f	dec $9f25			dec 	$9F25 						; select original data port.
+.23af	ce 25 9f	dec $9f25			dec 	X16VeraControl 				; select original data port.
 .23b2	60		rts				rts
 .23b3					_SIWrite4Bit:
 .23b3	29 0f		and #$0f			and 	#15 						; if 0 (e.g. would paint 240, return 0 transparent)
@@ -3436,7 +3454,7 @@
 .23be	5a		phy				phy
 .23bf	a9 07		lda #$07			lda 	#7 									; point to height/width byte and read it.
 .23c1	20 98 22	jsr $2298			jsr 	SpriteSetTarget
-.23c4	ad 23 9f	lda $9f23			lda 	$9F23
+.23c4	ad 23 9f	lda $9f23			lda 	X16VeraData0
 .23c7	4a		lsr a				lsr 	a 									; A now contains bits 0-1 (width) 2-3 (height)
 .23c8	4a		lsr a				lsr 	a
 .23c9	4a		lsr a				lsr 	a
@@ -3459,12 +3477,12 @@
 .23e5	38		sec				sec
 .23e6	b5 98		lda $98,x			lda 	esInt0,x
 .23e8	f9 fc 23	sbc $23fc,y			sbc 	SMHalfSize,y
-.23eb	8d 23 9f	sta $9f23			sta 	$9F23
-.23ee	ee 20 9f	inc $9f20			inc 	$9F20
+.23eb	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.23ee	ee 20 9f	inc $9f20			inc 	X16VeraAddLow
 .23f1	b5 a0		lda $a0,x			lda 	esInt1,x
 .23f3	e9 00		sbc #$00			sbc 	#0
-.23f5	8d 23 9f	sta $9f23			sta 	$9F23
-.23f8	ee 20 9f	inc $9f20			inc 	$9F20
+.23f5	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.23f8	ee 20 9f	inc $9f20			inc 	X16VeraAddLow
 .23fb	60		rts				rts
 .23fc					SMHalfSize:
 >23fc	04 08 10 20					.byte 	4,8,16,32 							; half size each dimension.
@@ -3473,7 +3491,7 @@
 .2401	08		php				php 										; save CTR on stack
 .2402	a9 07		lda #$07			lda 	#7 									; point to height/width byte and read it.
 .2404	20 98 22	jsr $2298			jsr 	SpriteSetTarget
-.2407	ad 23 9f	lda $9f23			lda 	$9F23
+.2407	ad 23 9f	lda $9f23			lda 	X16VeraData0
 .240a	4a		lsr a				lsr 	a 									; A now contains bits 0-1 (width) 2-3 (height)
 .240b	4a		lsr a				lsr 	a
 .240c	4a		lsr a				lsr 	a
@@ -3495,11 +3513,11 @@
 .2421	69 02		adc #$02			adc 	#2 									; A = 2 X A = 4 Y
 .2423	20 98 22	jsr $2298			jsr 	SpriteSetTarget 					; set data pointer offset by that
 .2426	18		clc				clc 										; read and unfix centre.
-.2427	ad 23 9f	lda $9f23			lda 	$9F23
+.2427	ad 23 9f	lda $9f23			lda 	X16VeraData0
 .242a	75 b0		adc $b0,x			adc 	esInt3,x
 .242c	95 98		sta $98,x			sta 	esInt0,x
-.242e	ee 20 9f	inc $9f20			inc 	$9F20 								; do MSB
-.2431	ad 23 9f	lda $9f23			lda 	$9F23
+.242e	ee 20 9f	inc $9f20			inc 	X16VeraAddLow 						; do MSB
+.2431	ad 23 9f	lda $9f23			lda 	X16VeraData0
 .2434	69 00		adc #$00			adc 	#0
 .2436	29 0f		and #$0f			and 	#$0F 								; sign extend on bit 11.
 .2438	c9 08		cmp #$08			cmp		#$08
@@ -3588,7 +3606,7 @@
 .24a9	a2 11		ldx #$11			ldx 	#$11
 .24ab					_CMClear:
 .24ab	a9 00		lda #$00			lda 	#0
-.24ad	9d 29 9f	sta $9f29,x			sta 	$9F29,X
+.24ad	9d 29 9f	sta $9f29,x			sta 	X16VeraDCVideo,X
 .24b0	ca		dex				dex
 .24b1	10 f8		bpl $24ab			bpl 	_CMClear
 .24b3	ad db 0c	lda $0cdb			lda 	currentMode+3 				; get current mode
@@ -3596,7 +3614,7 @@
 .24b7	48		pha				pha
 .24b8	29 70		and #$70			and 	#$70 						; isolates bits 6,5,4 (sprites,L1 enable,L0 enable)
 .24ba	09 01		ora #$01			ora 	#$01 						; turn the output on.
-.24bc	8d 29 9f	sta $9f29			sta 	$9F29 						; write to DC_VIDEO
+.24bc	8d 29 9f	sta $9f29			sta 	X16VeraDCVideo 						; write to DC_VIDEO
 .24bf	68		pla				pla 								; get back
 .24c0	20 18 25	jsr $2518			jsr 	CMToScale 					; convert lower 2 bits to a scale.
 .24c3	8d 2a 9f	sta $9f2a			sta 	$9F2A 						; write to H-Scale
@@ -3604,8 +3622,8 @@
 .24c7	4a		lsr a				lsr 	a
 .24c8	4a		lsr a				lsr 	a
 .24c9	20 18 25	jsr $2518			jsr 	CMToScale 					; convert lower 2 bits to a scale.
-.24cc	8d 2b 9f	sta $9f2b			sta 	$9F2B
-.24cf	a2 00		ldx #$00			ldx 	#0 							; this is offset from $9F2D to do L0
+.24cc	8d 2b 9f	sta $9f2b			sta 	X16VeraVScale
+.24cf	a2 00		ldx #$00			ldx 	#0 							; this is offset from X16VeraLayerConfig to do L0
 .24d1	ad d8 0c	lda $0cd8			lda 	currentMode					; get L0 config byte
 .24d4	20 23 25	jsr $2523			jsr 	CMDecodeLayer 				; and decode layer 0
 .24d7	a2 07		ldx #$07			ldx 	#7 							; when we do layer 1, offset by 7 hence starts at $9F34
@@ -3655,7 +3673,7 @@
 .2523					CMDecodeLayer:
 .2523	48		pha				pha 								; save it.
 .2524	29 f7		and #$f7			and 	#$F7 						; all the bits except T256C which you can't set using this
-.2526	9d 2d 9f	sta $9f2d,x			sta 	$9F2D,X
+.2526	9d 2d 9f	sta $9f2d,x			sta 	X16VeraLayerConfig,X
 .2529	68		pla				pla 								; get it back
 .252a	29 08		and #$08			and 	#$08 						; the missing bit sets the tile size.
 .252c	f0 02		beq $2530			beq 	_CMDLNotSet
@@ -3664,11 +3682,11 @@
 .2530	e0 00		cpx #$00			cpx 	#0
 .2532	f0 06		beq $253a			beq 	_CMDLayer0 					; layer 1 has standard defaults for tile table, e.g. $7C
 .2534	09 7c		ora #$7c			ora 	#$7C 						; so set those bits and write it out.
-.2536	9d 2f 9f	sta $9f2f,x			sta 	$9F2F,X
+.2536	9d 2f 9f	sta $9f2f,x			sta 	X16VeraLayerTileBase,X
 .2539	60		rts				rts
 .253a					_CMDLayer0:
 .253a	09 80		ora #$80			ora 	#$80 						; tile base is $80
-.253c	9d 2f 9f	sta $9f2f,x			sta 	$9F2F,X
+.253c	9d 2f 9f	sta $9f2f,x			sta 	X16VeraLayerTileBase,X
 .253f	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
@@ -3688,20 +3706,20 @@
 .2553	a5 98		lda $98				lda 	esInt0 					; get palette #
 .2555	20 65 25	jsr $2565			jsr 	PointToPaletteA			; point to palette register
 .2558	a5 99		lda $99				lda 	esInt0+1
-.255a	8d 23 9f	sta $9f23			sta 	$9F23
+.255a	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .255d	a5 a1		lda $a1				lda 	esInt1+1
 .255f	29 0f		and #$0f			and 	#$0F
-.2561	8d 23 9f	sta $9f23			sta 	$9F23
+.2561	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2564	60		rts				rts
 .2565					PointToPaletteA:
 .2565	0a		asl a				asl 	a 							; x 2 -> LSB
-.2566	8d 20 9f	sta $9f20			sta 	$9F20
+.2566	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
 .2569	a9 00		lda #$00			lda 	#0 							; carry into A
 .256b	2a		rol a				rol 	a
-.256c	09 fa		ora #$fa			ora 	#$FA 						; make correct address
-.256e	8d 21 9f	sta $9f21			sta 	$9F21
-.2571	a9 11		lda #$11			lda 	#$11 						; $01 and single step => $9F22
-.2573	8d 22 9f	sta $9f22			sta 	$9F22
+.256c	09 fa		ora #$fa			ora 	#(X16VeraPalette >> 8)&$FF	; make correct address
+.256e	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
+.2571	a9 11		lda #$11			lda 	#(X16VeraPalette >> 16)|$10	; $01 and single step => X16VeraAddHigh
+.2573	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .2576	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
@@ -3783,16 +3801,16 @@
 .25ee	06 2a		asl $2a				asl 	temp0
 .25f0	2a		rol a				rol 	a
 .25f1	09 f8		ora #$f8			ora 	#DefaultFont >> 8 			; A now points into font table.
-.25f3	ee 25 9f	inc $9f25			inc 	$9F25 						; alternate port set.
-.25f6	8d 21 9f	sta $9f21			sta 	$9F21 						; set up address
+.25f3	ee 25 9f	inc $9f25			inc 	X16VeraControl 				; alternate port set.
+.25f6	8d 21 9f	sta $9f21			sta 	X16VeraAddMed 				; set up address
 .25f9	a9 10		lda #$10			lda 	#$10
-.25fb	8d 22 9f	sta $9f22			sta 	$9F22
+.25fb	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .25fe	84 32		sty $32				sty 	tempShort
 .2600	a5 2a		lda $2a				lda 	temp0 						; or Y (vertical line) into temp0
 .2602	05 32		ora $32				ora 	tempShort
-.2604	8d 20 9f	sta $9f20			sta 	$9F20 						; address set up.
-.2607	ad 24 9f	lda $9f24			lda 	$9F24 						; get bitmap
-.260a	ce 25 9f	dec $9f25			dec 	$9F25 						; original port set back
+.2604	8d 20 9f	sta $9f20			sta 	X16VeraAddLow 				; address set up.
+.2607	ad 24 9f	lda $9f24			lda 	X16VeraData1 				; get bitmap
+.260a	ce 25 9f	dec $9f25			dec 	X16VeraControl 				; original port set back
 .260d	a2 07		ldx #$07			ldx 	#7 							; index into rendercache
 .260f	85 2a		sta $2a				sta 	temp0 						; bitmap in temp 0
 .2611					_BTADoCache:
@@ -3855,11 +3873,11 @@
 .2660	a2 00		ldx #$00			ldx 	#0
 .2662	20 73 26	jsr $2673			jsr 	SetUpTOSVRamAddress ; copy target address to VRAM address registers
 .2665	a5 99		lda $99				lda 	esInt0+1 			; get MSB of write value
-.2667	8d 23 9f	sta $9f23			sta 	$9F23
+.2667	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .266a	28		plp				plp 						; if it was Poke then exit
 .266b	b0 05		bcs $2672			bcs 	_CVWExit
 .266d	a5 a1		lda $a1				lda 	esInt1+1 			; doke, write the MSB.
-.266f	8d 23 9f	sta $9f23			sta 	$9F23
+.266f	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2672					_CVWExit:
 .2672	60		rts				rts
 .2673					SetUpTOSVRamAddress:
@@ -3868,13 +3886,13 @@
 .2677	15 b0		ora $b0,x			ora 	esInt3,x
 .2679	d0 14		bne $268f			bne 	CVWValue
 .267b	b5 98		lda $98,x			lda 	esInt0,x			; set address up
-.267d	8d 20 9f	sta $9f20			sta 	$9F20
+.267d	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
 .2680	b5 a0		lda $a0,x			lda 	esInt1,x
-.2682	8d 21 9f	sta $9f21			sta	 	$9F21
+.2682	8d 21 9f	sta $9f21			sta	 	X16VeraAddMed
 .2685	b5 a8		lda $a8,x			lda 	esInt2,x
 .2687	29 01		and #$01			and 	#1
 .2689	09 10		ora #$10			ora 	#$10 				; step 1.
-.268b	8d 22 9f	sta $9f22			sta 	$9F22
+.268b	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .268e	60		rts				rts
 .268f					CVWValue:
 .268f	a2 08		ldx #$08			ldx 	#ErrorID_BadValue
@@ -3897,11 +3915,11 @@
 .26aa	95 a0		sta $a0,x			sta 	esInt1,x
 .26ac	95 a8		sta $a8,x			sta 	esInt2,x
 .26ae	95 b0		sta $b0,x			sta 	esInt3,x
-.26b0	ad 23 9f	lda $9f23			lda 	$9F23				; copy 1st byte
+.26b0	ad 23 9f	lda $9f23			lda 	X16VeraData0				; copy 1st byte
 .26b3	95 98		sta $98,x			sta 	esInt0,x
 .26b5	28		plp				plp 						; check if DOKE (carry was clear)
 .26b6	b0 05		bcs $26bd			bcs 	_CVRExit
-.26b8	ad 23 9f	lda $9f23			lda 	$9F23 				; copy 2nd byte
+.26b8	ad 23 9f	lda $9f23			lda 	X16VeraData0 				; copy 2nd byte
 .26bb	95 a0		sta $a0,x			sta 	esInt1,x
 .26bd					_CVRExit:
 .26bd	8a		txa				txa 						; return X position.
@@ -3949,12 +3967,12 @@
 .26ed	46 2d		lsr $2d				lsr 	temp1+1
 .26ef	66 2c		ror $2c				ror 	temp1
 .26f1	6a		ror a				ror		a
-.26f2	8d 20 9f	sta $9f20			sta 	$9F20 						; set write address with +1 increment
+.26f2	8d 20 9f	sta $9f20			sta 	X16VeraAddLow 						; set write address with +1 increment
 .26f5	a5 2c		lda $2c				lda 	temp1
-.26f7	8d 21 9f	sta $9f21			sta 	$9F21
+.26f7	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
 .26fa	a5 2d		lda $2d				lda 	temp1+1
 .26fc	09 10		ora #$10			ora 	#$10
-.26fe	8d 22 9f	sta $9f22			sta 	$9F22
+.26fe	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .2701	d0 be		bne $26c1			bne 	_LVRLoop
 .2703					_LVRSetCompress:
 .2703	29 07		and #$07			and 	#7
@@ -3968,10 +3986,10 @@
 .270d	20 9b 27	jsr $279b			jsr 	LVFGet 						; get palette id.
 .2710	20 65 25	jsr $2565			jsr 	PointToPaletteA 			; in palette.asm
 .2713	20 9b 27	jsr $279b			jsr 	LVFGet 						; copy 12 bit palette data in.
-.2716	8d 23 9f	sta $9f23			sta 	$9F23
+.2716	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2719	20 9b 27	jsr $279b			jsr 	LVFGet
 .271c	29 0f		and #$0f			and 	#$0F
-.271e	8d 23 9f	sta $9f23			sta 	$9F23
+.271e	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2721	4c c1 26	jmp $26c1			jmp 	_LVRLoop
 .2724					_LVRLoad:
 .2724	ae dc 0c	ldx $0cdc			ldx 	compressMode
@@ -3981,7 +3999,7 @@
 .272b	aa		tax				tax
 .272c					_LVRLCopy:
 .272c	20 9b 27	jsr $279b			jsr 	LVFGet 						; write to data.
-.272f	8d 23 9f	sta $9f23			sta 	$9F23
+.272f	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2732	ca		dex				dex
 .2733	d0 f7		bne $272c			bne 	_LVRLCopy
 .2735	4c c1 26	jmp $26c1			jmp 	_LVRLoop
@@ -3994,19 +4012,19 @@
 .2741	68		pla				pla 								; restore the data held in the first byte
 .2742	9d dd 0c	sta $0cdd,x			sta 	imageInfo,x 				; and write into the sprite image table.
 .2745					_LVRAlignVRAM:
-.2745	ad 20 9f	lda $9f20			lda 	$9F20 						; check VRAM on 32 byte boundary
+.2745	ad 20 9f	lda $9f20			lda 	X16VeraAddLow 						; check VRAM on 32 byte boundary
 .2748	29 1f		and #$1f			and 	#$1F
 .274a	f0 07		beq $2753			beq 	_LVRAligned
 .274c	a9 00		lda #$00			lda 	#$00
-.274e	8d 23 9f	sta $9f23			sta 	$9F23
+.274e	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2751	f0 f2		beq $2745			beq 	_LVRAlignVRAM
 .2753					_LVRAligned:
-.2753	ad 22 9f	lda $9f22			lda 	$9F22 						; put address/32 in sprite image table
+.2753	ad 22 9f	lda $9f22			lda 	X16VeraAddHigh 						; put address/32 in sprite image table
 .2756	4a		lsr a				lsr 	a 	 						; first halve into temp1
-.2757	ad 21 9f	lda $9f21			lda 	$9F21
+.2757	ad 21 9f	lda $9f21			lda 	X16VeraAddMed
 .275a	6a		ror a				ror 	a
 .275b	85 2d		sta $2d				sta 	temp1+1
-.275d	ad 20 9f	lda $9f20			lda 	$9F20
+.275d	ad 20 9f	lda $9f20			lda 	X16VeraAddLow
 .2760	6a		ror a				ror 	a
 .2761	85 2c		sta $2c				sta 	temp1
 .2763	a0 04		ldy #$04			ldy 	#4 							; divide it by 16 in temp1
@@ -4034,7 +4052,7 @@
 .278a	aa		tax				tax
 .278b	20 9b 27	jsr $279b			jsr 	LVFGet
 .278e					_LVRLEGroupLoop:
-.278e	8d 23 9f	sta $9f23			sta 	$9F23
+.278e	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .2791	ca		dex				dex
 .2792	d0 fa		bne $278e			bne 	_LVRLEGroupLoop
 .2794	4c c1 26	jmp $26c1			jmp 	_LVRLoop
@@ -6027,6 +6045,7 @@
 .33b9					TKErr14:
 .33b9					TKErr15:
 .33b9					TKErr16:
+.33b9					TKErr17:
 .33b9	a2 02		ldx #$02			ldx 	#ErrorID_Syntax
 .33bb	20 27 15	jsr $1527		jsr	errorHandler
 
@@ -6139,7 +6158,7 @@
 >348c	b9 33					.word	TKErr11                  ; $e7 #
 >348e	7a 31					.word	CommandClear             ; $e8 clear
 >3490	b9 33					.word	TKErr16                  ; $e9 text
->3492	98 33					.word	Unimplemented            ; $ea type
+>3492	b9 33					.word	TKErr17                  ; $ea type
 
 ;******  Return to file: main/commands/system/run.asm
 

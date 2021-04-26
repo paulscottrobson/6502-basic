@@ -37,7 +37,7 @@ Default Mode 0
 
 $9F29 = $21 (display config) $20 $00 $60 $00
 $9F2A/B = $80
-$9F2D = 0 all zeros.
+X16VeraLayerConfig = 0 all zeros.
 $9F34 = L1_Config = $60
 $9F36 = $7C (default value, tile address)
 

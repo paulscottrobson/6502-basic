@@ -103,7 +103,7 @@ ReadJoystick:
 		.pshx
 		.pshy
 		lda 	#0
-		jsr 	$FF56 						
+		jsr 	X16KReadJoystick 						
 		cpy 	#0
 		bne 	_RJError
 		cmp 	#0 							; bug, returns $00 initially
@@ -119,3 +119,5 @@ _RJNoBug:
 _RJError:
 		.throw 	Hardware
 		.send 	code	
+
+		

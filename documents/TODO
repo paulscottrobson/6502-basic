@@ -1,6 +1,5 @@
 TODO
 ====
-- Remove Magic Constants from x16 graphics.
 - Sound off on command line (can't call buffer)
 - IMAGE command (char definer)
 - v0.32

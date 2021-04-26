@@ -26,12 +26,12 @@ CommandSprite:	;; [sprite]
 		jsr 	CSCheckOnOff 				; look for TRUE/FALSE
 		bne 	_CSCheckClear
 		;
-		lda 	$9F29 						; sprite enable is bit 6.
+		lda 	X16VeraDCVideo 				; sprite enable is bit 6.
 		and 	#$BF 						; clear it whatever
 		bcc 	_CSNotOn 					; if CS turn on, so set it
 		ora 	#$40
 _CSNotOn:
-		sta 	$9F29 						; write it back in new state and exit
+		sta 	X16VeraDCVideo 						; write it back in new state and exit
 		rts		
 
 _CSCheckClear:
@@ -86,13 +86,13 @@ _CSSetVisibility:
 		lda 	#6 							; set pos to offset 6.
 		jsr 	SpriteSetTarget
 		;
-		lda 	$9F23 						; read it.
+		lda 	X16VeraData0 						; read it.
 		and 	#$F3 						; clear depth bits, disabling it.
 		plp
 		bcc 	_CSSetOff 					; check if carry was set
 		ora 	#$0C 						; otherwise set depth bits to 11, on top.
 _CSSetOff:
-		sta 	$9F23 						; update and loop back
+		sta 	X16VeraData0 				; update and loop back
 		jmp 	_CSCommandLoop
 		;
 		;		Flip
@@ -105,10 +105,10 @@ _CSSetFlip:
 		lda 	esInt0 						; flip value & 3 => temp0
 		and 	#3
 		sta 	temp0
-		lda 	$9F23 						; update the flip.
+		lda 	X16VeraData0 				; update the flip.
 		and 	#$FC
 		ora 	temp0
-		sta 	$9F23
+		sta 	X16VeraData0
 		jmp 	_CSCommandLoop
 		;
 		;		Set sprite position.
@@ -132,8 +132,8 @@ _CSSetImage:
 		jsr 	SpriteSetTarget
 		ldx 	esInt0 						; get image # into X
 		lda 	imageAddr32Low,x 			; copy low address in.
-		sta 	$9F23
-		inc 	$9F20 						; bump to offset 1.
+		sta 	X16VeraData0
+		inc 	X16VeraAddLow 				; bump to offset 1.
 		;
 		lda 	imageInfo,x 				; get 4/8 bit flag from info.
 		and 	#$10
@@ -141,15 +141,15 @@ _CSSetImage:
 		asl		a
 		asl 	a 							; put into bit 7
 		ora 	imageAddr32High,x 			; or high address with it.
-		sta 	$9F23 						; write the high byte.
+		sta 	X16VeraData0 						; write the high byte.
 
 		lda 	#6
 		jsr 	SpriteSetTarget 			; set sprite on.
-		lda 	$9F23
+		lda 	X16VeraData0
 		ora 	#$0C
-		sta 	$9F23
+		sta 	X16VeraData0
 
-		inc 	$9F20 						; point to byte 7 : height/width/palette offset
+		inc 	X16VeraAddLow 				; point to byte 7 : height/width/palette offset
 		lda 	imageInfo,x 				; get image info
 		asl 	a 							; shift bits 0-3 to 4-7
 		asl 	a
@@ -158,7 +158,7 @@ _CSSetImage:
 		bcs		_CSNoOffset 				; if bit 4 was set don't set the offset.
 		ora 	#$0F 						; set palette offset and write back
 _CSNoOffset:		
-		sta 	$9F23
+		sta 	X16VeraData0
 		jmp 	_CSCommandLoop
 
 ; ************************************************************************************************
@@ -169,12 +169,12 @@ _CSNoOffset:
 
 SpriteSetTarget:
 		ora 	currSprite
-		sta 	$9F20
+		sta 	X16VeraAddLow
 		lda 	currSprite+1
 		beq 	_SSTNoSet
-		sta 	$9F21
+		sta 	X16VeraAddMed
 		lda 	#$01
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		rts
 
 _SSTNoSet:
@@ -209,15 +209,15 @@ _CSCOExit:
 
 CSClearSprites:
 		lda 	#$11 						; set address to 1FC00 with single bump
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		lda 	#$FC
-		sta 	$9F21
+		sta 	X16VeraAddMed
 		lda 	#0
-		sta 	$9F20
+		sta 	X16VeraAddLow
 _CSClear:
 		lda 	#0 							; set everything to $00
-		sta 	$9F23
-		lda 	$9F21
+		sta 	X16VeraData0
+		lda 	X16VeraAddMed
 		bne 	_CSClear
 		rts
 

@@ -126,18 +126,18 @@ _SIMult32:
 		dex
 		bne 	_SIMult32
 
-		inc 	$9F25 						; select alternate data port
+		inc 	X16VeraControl 				; select alternate data port
 
 		clc
 		lda 	temp0 						; add offset to sprite address x 32 and write to address
 		adc 	temp2
-		sta 	$9F20
+		sta 	X16VeraAddLow
 		lda 	temp0+1
 		adc 	temp2+1
-		sta 	$9F21
+		sta 	X16VeraAddMed
 		lda 	#$10
 		adc 	temp3
-		sta 	$9F22
+		sta 	X16VeraAddHigh
 		;
 		;		Copy data into cache.
 		;
@@ -148,7 +148,7 @@ _SIFillCacheLoop:
 		;
 		;		4 Bit handler
 		;
-		lda 	$9F24 						; get data
+		lda 	X16VeraData1 				; get data
 		pha 								; save it
 		lsr 	a 							; MSB first
 		lsr 	a
@@ -162,13 +162,13 @@ _SIFillCacheLoop:
 		;		8 Bit handler
 		;
 _SI8Bit:		
-		lda 	$9F24 						; copy data into render cache
+		lda 	X16VeraData1 				; copy data into render cache
 		sta 	RenderCache,x
 		inx
 _SIAdvance:
 		cpx 	sRenderWidth 				; filled the cache to required width ?
 		bne 	_SIFillCacheLoop		
-		dec 	$9F25 						; select original data port.
+		dec 	X16VeraControl 				; select original data port.
 		rts
 
 _SIWrite4Bit:
@@ -179,7 +179,6 @@ _SIW4Skip:
 		sta 	RenderCache,x
 		inx
 		rts		
-
 
 		.send 	code
 				

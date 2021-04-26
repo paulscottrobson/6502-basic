@@ -3,7 +3,7 @@
 ;
 ;		Name:		line.asm
 ;		Purpose:	Line code
-;		Created:	2ndt April 2021
+;		Created:	2nd April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************

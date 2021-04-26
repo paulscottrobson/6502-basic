@@ -91,7 +91,7 @@ _SCQFound: 									; found a note to play. channel temp0, time,ch,data.
 		ldy 	#4 							; counter
 _SCQCopy:
 		lda 	sndQueue+2,x 				; copy the sound production data to the PSG
-		sta 	$9F23
+		sta 	X16VeraData0
 		inx
 		dey
 		bne 	_SCQCopy
