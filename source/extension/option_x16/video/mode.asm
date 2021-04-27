@@ -4,13 +4,14 @@
 ;		Name:		mode.asm
 ;		Purpose:	Screen Mode command.
 ;		Created:	18th March 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
 
 		.section storage 
-currentMode:
+currentMode: 								; 32 bit word which is current mode.
 		.fill 	4		
 		.send storage
 
@@ -24,13 +25,13 @@ currentMode:
 
 ForceMode0:	
 		ldx 	#0
-		stx 	esInt0 						; in case we do it.
+		stx 	esInt0 						; in case we do it, like mode n command, set +0
 _FMCheck:
 		lda 	CMModeList,x 				; do we need to switch ?
 		cmp 	currentMode,x
 		bne 	CMSetMode 					; different so switch.
 		inx
-		cpx 	#4
+		cpx 	#4 							; compared all four bytes.
 		bne 	_FMCheck
 		rts
 
@@ -41,17 +42,19 @@ _FMCheck:
 ; ************************************************************************************************
 
 CommandMode:	;; [mode]
-		lda 	#0
+		lda 	#0 							; get mode number
 		.main_evaluateint
 		;
-		lda 	esInt3
-		and 	#$70
-		bne 	CMNoExpand
+		lda 	esInt3 						; these 3 bits goto $9F29 as Sprites/Layer enable
+		and 	#$70 						; so if they are all zero then this is likely a mode number
+		bne 	CMNoExpand 					; otherwise it is a user defined 32 bit one.
+		;
 CMSetMode:		
-		jsr 	CMExpandMode
+		jsr 	CMExpandMode 				; mode number -> mode definition
 		jmp 	CMUpdateMode
+
 CMNoExpand:		
-		lda 	esInt0
+		lda 	esInt0 						; copy 32 bit data to current mode.
 		sta 	currentMode
 		lda 	esInt1
 		sta 	currentMode+1
@@ -60,7 +63,7 @@ CMNoExpand:
 		lda 	esInt3
 		sta 	currentMode+3
 		;
-		;		Update the mode with the current mode.
+		;		Update the mode register in VERA with the current mode.
 		;
 CMUpdateMode:		
 		;
@@ -80,7 +83,7 @@ _CMClear:
 		pha
 		and 	#$70 						; isolates bits 6,5,4 (sprites,L1 enable,L0 enable)
 		ora 	#$01 						; turn the output on.
-		sta 	X16VeraDCVideo 						; write to DC_VIDEO
+		sta 	X16VeraDCVideo 				; write to DC_VIDEO
 		;
 		pla 								; get back
 		jsr 	CMToScale 					; convert lower 2 bits to a scale.
@@ -101,9 +104,7 @@ _CMClear:
 		jsr 	CMDecodeLayer
 		jsr 	gdModeChanged 				; check the bitmap status.
 		jsr 	GResetStorage 				; reset the graphics drawing storage.
-		jsr 	SoundReset 					; Reset the sound channels.
 		rts
-
 
 ; ************************************************************************************************
 ;
@@ -112,7 +113,7 @@ _CMClear:
 ; ************************************************************************************************
 
 CMExpandMode:
-		lda 	esInt0 						; get mode number
+		lda 	esInt0 						; get mode number, check it is valid.
 		cmp 	#(CMEndModeList-CMModeList) >> 2
 		bcs 	_CMModeError
 		asl 	a 							; x 4 into X
@@ -121,7 +122,7 @@ CMExpandMode:
 		.pshy 								; save Y.
 		ldy 	#0
 _CMEMCopy:
-		lda 	CMModeList,x
+		lda 	CMModeList,x 				; copy defined mode data in , 4 bytes
 		sta 	currentMode,y
 		inx
 		iny
@@ -184,6 +185,5 @@ _CMDLayer0: 								; layer 0
 		ora 	#$80 						; tile base is $80
 		sta 	X16VeraLayerTileBase,X
 		rts
-
 
 		.send code

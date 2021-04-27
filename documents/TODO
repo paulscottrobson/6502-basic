@@ -1,6 +1,5 @@
 TODO
 ====
-- sound:a$ = get$() <ENTER> causes type mismatch bug.
 - do some more code reviews (in list)
 - v0.32
 

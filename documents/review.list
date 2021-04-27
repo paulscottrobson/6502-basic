@@ -10,13 +10,5 @@ Review List
 ../source/extension/graphics/utils.asm [1, 4, 2021]
 ../source/extension/graphics/general.asm [1, 4, 2021]
 
-../source/extension/option_x16/miscellany/joystick.asm [30, 3, 2021]
-../source/extension/option_x16/miscellany/clock.asm [30, 3, 2021]
-
 ../source/extension/option_x16/driver/coords.asm [31, 3, 2021]
 ../source/extension/option_x16/driver/driver.asm [31, 3, 2021]
-
-../source/extension/option_x16/video/vload.asm [13, 3, 2021]
-../source/extension/option_x16/video/palette.asm [19, 3, 2021]
-../source/extension/option_x16/video/vramprocess.asm [13, 3, 2021]
-../source/extension/option_x16/video/mode.asm [18, 3, 2021]

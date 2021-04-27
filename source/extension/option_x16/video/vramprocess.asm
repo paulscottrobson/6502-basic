@@ -4,6 +4,7 @@
 ;		Name:		vramprocess.asm
 ;		Purpose:	Load VRAM format data
 ;		Created:	13th March 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -95,16 +96,19 @@ _LVRSetPalette:
 		jsr 	PointToPaletteA 			; in palette.asm
 		;
 		jsr 	LVFGet 						; copy 12 bit palette data in.
-		sta 	X16VeraData0
+		sta 	X16VeraData0 				; and send to Vera
 		jsr 	LVFGet
 		and 	#$0F
 		sta 	X16VeraData0
 		jmp 	_LVRLoop
+		;
+		;		Load data in, which may or may not be compressed.
+		;
 _LVRLoad:	
 		ldx 	compressMode
 		bne 	_LVRNotMode0
 		;
-		;		Mode 0 :Load A & 7F bytes of data in (no decompression yet)
+		;		Mode 0 :Load A & 7F bytes of data in , uncompressed
 		;
 		and 	#$7F 						; count in X (is > 0)
 _LVRLCopyX:		
@@ -127,14 +131,18 @@ _LVRSetSprite:
 		pla 								; restore the data held in the first byte
 		sta 	imageInfo,x 				; and write into the sprite image table.
 _LVRAlignVRAM:
-		lda 	X16VeraAddLow 						; check VRAM on 32 byte boundary
-		and 	#$1F
+		lda 	X16VeraAddLow 				; check VRAM on 32 byte boundary
+		and 	#$1F 						; sprite image addresses are limited to this.
 		beq 	_LVRAligned
 		lda 	#$00
 		sta 	X16VeraData0
 		beq 	_LVRAlignVRAM
+		;
+		;		Now aligned correctly, copy the address in the table converting from 17 bits
+		; 		to 12, which is the Vera internal format.
+		;
 _LVRAligned:
-		lda 	X16VeraAddHigh 						; put address/32 in sprite image table
+		lda 	X16VeraAddHigh 				; put address/32 in sprite image table
 		lsr 	a 	 						; first halve into temp1						
 		lda 	X16VeraAddMed
 		ror 	a
@@ -165,15 +173,18 @@ _LVRNotMode0:
 		cpx 	#1
 		bne 	_LVRNotMode1
 		;
+		;		Mode 1 : A & $3F elements of data, could be uncompressed (00-3F) or
+		;		compressed (00-3F) see vram.txt
+		;
 		and 	#$7F 						; drop bit 7
 		cmp 	#$40
 		bcc 	_LVRLCopyX 					; 00-3F use mode 0's copying code.
 _LVRRLEGroup:
-		and 	#$3F
+		and 	#$3F 						; the number of copies of the following byte.
 		tax
-		jsr 	LVFGet
+		jsr 	LVFGet 						; get the byte to copy
 _LVRLEGroupLoop:
-		sta 	X16VeraData0
+		sta 	X16VeraData0 				; write it out X times
 		dex
 		bne 	_LVRLEGroupLoop
 		jmp 	_LVRLoop
@@ -185,7 +196,7 @@ _LVRNotMode1:
 ; ************************************************************************************************
 ;
 ;			Read one byte from VRAM source. This MUST go through here, so we can use
-;			Paged RAM if required.
+;			Paged RAM if required. temp0 points to the VRAM.
 ;
 ; ************************************************************************************************
 

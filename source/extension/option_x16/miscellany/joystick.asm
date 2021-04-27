@@ -4,6 +4,7 @@
 ;		Name:		joystick.asm
 ;		Purpose:	Joystick code
 ;		Created:	30th March 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -27,8 +28,8 @@ JoystickRead:
 		php 								; save test flag.
 		.main_checkrightparen 				; check )
 		jsr 	ReadJoystick 				; read it.
-		plp
-		bcs 	_JRNoShift 					; if Y, shift right twice so accessing Y buttons
+		plp 								; get back axis
+		bcs 	_JRNoShift 					; if Y, shift right twice so accessing Y axis buttons
 		lsr 	a
 		lsr 	a
 _JRNoShift:
@@ -74,7 +75,7 @@ Unary_JButton: 	;; [joy.b(]
 		.main_evaluatesmall 				; evaluate button #
 		tax 								; get value to check, push on stack.
 		lda 	esInt0,x
-		cmp 	#4 							; check button 0-3
+		cmp 	#4 							; check button # 0-3
 		bcs 	_UJBadValue
 		adc 	#5 							; four more shifts to get the bit into carry.
 		pha 								; save that shift count on the stack.
@@ -106,9 +107,9 @@ ReadJoystick:
 		jsr 	X16KReadJoystick 						
 		cpy 	#0
 		bne 	_RJError
-		cmp 	#0 							; bug, returns $00 initially
-		bne 	_RJNoBug
-		lda 	#$FF
+		cmp 	#0 							; bug, returns $00 initially, which means all the
+		bne 	_RJNoBug 					; buttons are pressed, so we assume you haven't actually
+		lda 	#$FF 						; done this !
 _RJNoBug:		
 		sta 	tempShort
 		.puly

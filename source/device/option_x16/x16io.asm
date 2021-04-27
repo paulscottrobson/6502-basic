@@ -119,7 +119,7 @@ _IOPCNotBS:
 ; ************************************************************************************************
 
 IOInkey: ;; <inkey>
-		.pshy 								; read key with Y protected
+		.pshy 								; read key with XY protected
 		jsr 	KNLCheckKeyboarBuffer
 		sta 	tempShort
 		.puly

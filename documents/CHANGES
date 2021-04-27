@@ -163,3 +163,8 @@ vary too much. Text source only.
 - Added IMAGE command.
 - Sound is silenced in Warm Start as part of ForceMode0 (sound isn't updated as cannot
   interrupt the line input manually)
+
+27/4/2021
+=========
+- BUG: sound:a$=get$() occasionally produced type mismatch (X Corruption)
+- Mode change no longer silences sound (now silenced in ForceMode0)  

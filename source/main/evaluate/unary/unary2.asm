@@ -53,13 +53,15 @@ UnaryInkey:		;; [inkey(]
 
 UnaryGet:		;; [get(]
 		jsr 	CheckRightParen
-		stx 	temp0
+		.pshx
 _UGLoop:
 		.device_syncbreak		
 		.device_inkey		
 		cmp 	#0
 		beq 	_UGLoop
-		ldx 	temp0
+		sta 	tempShort
+		.pulx
+		lda 	tempShort
 		jsr 	MInt32Set8Bit
 		rts
 
