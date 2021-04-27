@@ -34,6 +34,8 @@ X16VeraPalette = $1FA00
 GrWidth = 320 								; gfx mode size.
 GrHeight = 200
 
+VeraDefaultFont = $F800 					; where font is in Vera
+
 ;
 ;	gdSetDrawPosition in coords.asm is hard coded for 320 pixels across
 ;

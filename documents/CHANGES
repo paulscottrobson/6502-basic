@@ -160,3 +160,6 @@ vary too much. Text source only.
 26/4/2021
 =========
 - Removed magic numbers from graphics stuff.
+- Added IMAGE command.
+- Sound is silenced in Warm Start as part of ForceMode0 (sound isn't updated as cannot
+  interrupt the line input manually)

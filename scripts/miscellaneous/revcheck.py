@@ -24,7 +24,7 @@ sources = {}
 
 for root,dirs,files in os.walk("../source"):
 	for f in [x for x in files if x.endswith(".asm") or x.endswith(".inc")]:
-		print(f)
+		#print(f)
 		info = { "create":None,"review":None }
 		isAuto = False
 		for l in open(root+os.sep+f).readlines():

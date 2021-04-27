@@ -40,7 +40,9 @@ _ExtensionUnary:
 		dispatch	Group3Vectors-12
 
 _ExtensionForce:
-		jmp 	ForceMode0
+		jsr 	SoundReset 					; all sound off as not updated
+		jsr 	ForceMode0 					; switch to mode 0 perhaps
+		rts
 
 _ExtensionSync:
 		jmp 	SoundInterrupt

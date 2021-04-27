@@ -1,7 +1,7 @@
 TODO
 ====
-- Sound off on command line (can't call buffer)
-- IMAGE command (char definer)
+- sound:a$ = get$() <ENTER> causes type mismatch bug.
+- do some more code reviews (in list)
 - v0.32
 
 - Write some games of some type

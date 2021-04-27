@@ -35,6 +35,7 @@
 ../source/extension/option_x16/sprites/spritedraw.asm
 ../source/extension/option_x16/sprites/spritemove.asm
 ../source/extension/option_x16/sprites/spriteutils.asm
+../source/extension/option_x16/video/imagedef.asm
 ../source/extension/option_x16/video/mode.asm
 ../source/extension/option_x16/video/palette.asm
 ../source/extension/option_x16/video/textdraw.asm

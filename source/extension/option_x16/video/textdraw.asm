@@ -8,8 +8,6 @@
 ;
 ; ************************************************************************************************
 ; ************************************************************************************************
-		
-DefaultFont = $F800
 
 		.section code	
 
@@ -108,35 +106,18 @@ BitmapTextAccess:
 ;
 _BTABitmap:
 		lda 	gdImage 					; Image => temp0:A
-		jsr 	DrawCharacterA
+		jsr 	GetRenderCharacterA
 		rts
 
 ; ************************************************************************************************
 ;
-;						Draw A at current size, ink, paper and position.
+;							Get Render Information for character A
 ;
 ; ************************************************************************************************
 
-DrawCharacterA:
-		sta 	temp0
-		;
-		lda 	#0
-		asl 	temp0	 					; x temp0:A x 8
-		rol 	a
-		asl 	temp0
-		rol 	a
-		asl 	temp0
-		rol 	a
-		ora 	#DefaultFont >> 8 			; A now points into font table.
-		;
+GetRenderCharacterA:
 		inc 	X16VeraControl 				; alternate port set.
-		sta 	X16VeraAddMed 				; set up address
-		lda 	#$10 						
-		sta 	X16VeraAddHigh
-		sty 	tempShort
-		lda 	temp0 						; or Y (vertical line) into temp0
-		ora 	tempShort
-		sta 	X16VeraAddLow 				; address set up.
+		jsr 	PointVeraCharacterA
 		lda 	X16VeraData1 				; get bitmap
 		dec 	X16VeraControl 				; original port set back
 		;
@@ -152,5 +133,32 @@ _BTANotSet:
 		dex
 		bpl 	_BTADoCache
 		;
+		rts
+
+; ************************************************************************************************
+;
+;							Point Vera to character A row Y
+;	
+; ************************************************************************************************
+
+PointVeraCharacterA:
+		sta 	temp0
+		;
+		lda 	#0
+		asl 	temp0	 					; x temp0:A x 8
+		rol 	a
+		asl 	temp0
+		rol 	a
+		asl 	temp0
+		rol 	a
+		ora 	#(VeraDefaultFont >> 8)&$FF ; A now points into font table.
+		;
+		sta 	X16VeraAddMed 				; set up address
+		lda 	#$10+(VeraDefaultFont >> 16) 						
+		sta 	X16VeraAddHigh
+		sty 	tempShort
+		lda 	temp0 						; or Y (vertical line) into temp0
+		ora 	tempShort
+		sta 	X16VeraAddLow 				; address set up.
 		rts
 		.send 	code
