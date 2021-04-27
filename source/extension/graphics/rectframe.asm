@@ -4,6 +4,7 @@
 ;		Name:		rectframe.asm
 ;		Purpose:	Rectangle and frame code
 ;		Created:	1st April 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -46,10 +47,11 @@ Command_Frame: 	;; [frame]
 ; ************************************************************************************************
 
 FrameHandler:
-		lda 	#1
-		bne 	RectHandler+2
+		lda 	#1 							; set frame flag to 1/0 on entry.
+		bne 	FRHandlerMain
 RectHandler:		
 		lda 	#0
+FRHandlerMain:		
 		sta 	frameFlag
 		jsr 	BoxSort 					; sort so topleft/bottom right
 		jsr 	DrawBoxPart 				; solid first line
@@ -59,10 +61,11 @@ _FHLoop:
 		jsr 	CompareCoords 
 		bcs 	_FHLastLine 				; Y1 >= Y2 then end.
 		lda 	frameFlag 					; identify solid or frame ?
-		beq 	_FHIsSolidRect
-		jsr 	DrawBoxEnds
+		beq 	_FHIsSolidRect 				; if solid, draw the solid line.
+		jsr 	DrawBoxEnds					; otherwise draw just the start and end
 		jmp 	_FHNext
-_FHIsSolidRect:
+
+_FHIsSolidRect:								; draw solid.
 		jsr 	DrawBoxPart
 _FHNext:		
 		inc 	gY1 						; bump Y1 and loop back.
@@ -77,7 +80,7 @@ _FHExit:
 
 ; ************************************************************************************************
 ;
-;									Draw solid line from X1/Y1
+;								Draw solid line from X1/Y1 to X2/Y1
 ;
 ; ************************************************************************************************
 
@@ -124,24 +127,6 @@ DrawHorizontalLine:
 		ldy 	tempShort
 		lda 	gdInk
 		jmp 	gdOptHorizontalWriter
-;
-;		If you don't want to implement gdOptHorizontalWriter use this code instead and
-;		comment out the above five lines.
-;		
-;		stx 	temp1+1
-;		sta 	temp1
-;_DVLLoop:
-;		jsr 	gdPlotInk
-;		jsr		gdMvRight		
-;		lda 	temp1
-;		bne 	_DVLNoBorrow
-;		dec 	temp1+1
-;_DVLNoBorrow:
-;		dec 	temp1
-;		lda 	temp1+1
-;		bpl 	_DVLLoop		
-;_DVLExit:		
-;		rts
 
 		.send code
 		

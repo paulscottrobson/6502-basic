@@ -3,12 +3,3 @@ Review List
 ;
 ;		Reviewed: 	27th April 2021
 ;
-../source/extension/graphics/renderer.asm [3, 4, 2021]
-../source/extension/graphics/line.asm [2, 4, 2021]
-../source/extension/graphics/rectframe.asm [1, 4, 2021]
-../source/extension/graphics/plot.asm [2, 4, 2021]
-../source/extension/graphics/utils.asm [1, 4, 2021]
-../source/extension/graphics/general.asm [1, 4, 2021]
-
-../source/extension/option_x16/driver/coords.asm [31, 3, 2021]
-../source/extension/option_x16/driver/driver.asm [31, 3, 2021]

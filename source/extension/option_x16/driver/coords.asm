@@ -4,8 +4,10 @@
 ;		Name:		coords.asm
 ;		Purpose:	Graphics Driver/Coordinate management
 ;		Created:	31st March 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
+; ************************************************************************************************
 ; ************************************************************************************************
 
 		.section code	
@@ -71,8 +73,30 @@ _gdMU1:
 
 ; ************************************************************************************************
 ;
+;										Plot Ink/Paper/A
+;
+; ************************************************************************************************
+
+gdPlotInk:
+		lda 	gdInk
+gdPlotA:		
+		sta 	X16VeraData0
+		rts
+gdPlotPaper:
+		lda 	gdPaper
+		cmp 	#$FF
+		beq 	_gdPPSkip
+		sta 	X16VeraData0
+_gdPPSkip:		
+		rts
+
+; ************************************************************************************************
+;
 ;						Calculate pixel offset from gdXPos,gdYPos => temp0
 ;							 Copy that to the screen display position.
+;
+;	This is used when you have seet the XY Pos to update so you can use the move and draw 
+;	functions above.
 ;
 ; ************************************************************************************************
 
@@ -99,7 +123,7 @@ gdSetDrawPosition:
 		adc 	gdXPos+1
 		sta 	temp0+1
 
-		clc
+		clc 								; write bitmapaddress + temp0 to the vera address register
 		lda 	gdBitmapAddress
 		adc 	temp0
 		sta 	X16VeraAddLow		
@@ -109,25 +133,6 @@ gdSetDrawPosition:
 		lda 	gdBitmapAddress+2
 		adc 	#0
 		sta 	X16VeraAddHigh
-		rts
-
-; ************************************************************************************************
-;
-;										Plot Ink/Paper/A
-;
-; ************************************************************************************************
-
-gdPlotInk:
-		lda 	gdInk
-gdPlotA:		
-		sta 	X16VeraData0
-		rts
-gdPlotPaper:
-		lda 	gdPaper
-		cmp 	#$FF
-		beq 	_gdPPSkip
-		sta 	X16VeraData0
-_gdPPSkip:		
 		rts
 
 		.send 	code

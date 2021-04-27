@@ -4,6 +4,7 @@
 ;		Name:		driver.asm
 ;		Purpose:	Graphics Driver.
 ;		Created:	31st March 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -89,12 +90,12 @@ _gdExit:
 ; ************************************************************************************************
 
 gdCheckBitmap:
-		lda 	X16VeraLayerConfig,x 					; look at bitmap bit.
+		lda 	X16VeraLayerConfig,x 		; look at bitmap bit.
 		cmp 	#7 							; must be zero map size, bitmap and 8bpp
 		bne 	_gdCBFail
 		;
 		inc 	gdEnabled 					; set the enabled flag to non zero.
-		lda 	X16VeraLayerTileBase,x 					; this is the bitmap address / 2
+		lda 	X16VeraLayerTileBase,x 		; this is the bitmap address / 2
 		asl 	a
 		sta 	gdBitmapAddress+1
 		adc 	#$00 						; set to no move, updated manually.
@@ -112,16 +113,16 @@ _gdCBFail:
 ; ************************************************************************************************
 
 CommandClg:	;; [clg]
-		lda 	(codePtr),y
+		lda 	(codePtr),y 				; CLG PAPER x
 		cmp 	#TKW_PAPER
 		bne 	_CCLClear
-		iny
-		lda 	#0
+		iny 								; skip paper
+		lda 	#0 							; get paper and update
 		.main_evaluatesmall
 		lda 	esInt0
 		sta 	gdPaper
 _CCLClear:		
-		jsr 	gdClearGraphics
+		jsr 	gdClearGraphics 			; call graphics clear code.
 		rts
 
 ; ************************************************************************************************
@@ -133,8 +134,8 @@ _CCLClear:
 gdClearGraphics:
 		.pshx
 		.pshy
-		lda 	gdEnabled 					; screen enabled
-		beq 	_gdCGExit
+		lda 	gdEnabled 					; bitmap screen enabled ?
+		beq 	_gdCGExit 					; no, then can't clear 
 		;
 		set16 	gdXLimit,GrWidth 			; set the size of the bitmap.
 		set16 	gdYLimit,GrHeight
@@ -146,9 +147,9 @@ gdClearGraphics:
 		jsr 	gdSetDrawPosition 			; set the draw position.
 		;
 		ldy 	#$FA						; 320 x 200 pixels = $FA00
-		ldx 	#0
+		ldx 	#0 						
 		lda 	gdPaper
-		jsr 	gdOptHorizontalWriter		
+		jsr 	gdOptHorizontalWriter		; call the optimised horizontal writer to do $FA00 of A	
 _gdCGExit:		
 		.puly
 		.pulx
@@ -172,7 +173,7 @@ gdSetY:
 
 ; ************************************************************************************************
 ;
-;									Write YX Paper elements
+;									Write YX elements of colour A
 ;
 ; ************************************************************************************************
 
@@ -183,12 +184,12 @@ gdOptHorizontalWriter:
 		sta 	X16VeraAddHigh
 		pla
 _gdOLoop:
-		sta 	X16VeraData0				
-		cpx 	#0
-		bne 	_gdNoBorrow
+		sta 	X16VeraData0						; write colour out.
+		cpx 	#0 									; exit if X = Y = 0
+		bne 	_gdNoBorrow 						; decrement YX in here.
 		cpy 	#0
-		beq 	_gdExit
-		dey
+		beq 	_gdExit		
+		dey 			 							; X 0 so borrow from Y							
 _gdNoBorrow:
 		dex
 		jmp 	_gdOLoop

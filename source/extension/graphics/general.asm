@@ -4,6 +4,7 @@
 ;		Name:		general.asm
 ;		Purpose:	Handle general types of drawing command
 ;		Created:	1st April 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -16,7 +17,7 @@
 ;
 ;		<coordinate pair>				makes current position, but does nothing else.
 ;		FROM <coordinate pair> 			same
-;		AT/TO <coordinate pair> 		makes current position
+;		AT/TO <coordinate pair> 		makes current position and does the drawing whatever it is
 ;		INK/PAPER <colour> 				set ink/paper colour.
 ;		DIM <size> 						set dimensions
 ; 		IMAGE <sprite> 					select image to draw
@@ -24,6 +25,7 @@
 ;		, 								ignored.
 ;
 ;		Not all options apply to all drawing commands.
+;		Not used for SPRITE which has its own very similar.
 ;
 ; ************************************************************************************************
 
@@ -77,9 +79,9 @@ gdPaper:									; background colour (255 = transparent)
 		.fill 	1		
 gdSize:										; current size.
 		.fill 	1
-gdImage:									; selected image
+gdImage:									; selected image (same as sprite image)
 		.fill 	1
-gdFlip:										; selected flip
+gdFlip:										; selected flip (see vera documents)
 		.fill 	1
 gEndStorage:		
 
@@ -107,7 +109,7 @@ _GRSLoop:
 		sta 	gStartStorage,x
 		dex
 		bpl 	_GRSLoop
-		lda 	#1 						
+		lda 	#1 	 						; ink and size both 1, sensible defaults.					
 		sta 	gdInk
 		sta 	gdSize
 		.pulx
@@ -115,7 +117,7 @@ _GRSLoop:
 
 ; ************************************************************************************************
 ;
-;										Graphic Handler, routine in XA
+;									Graphic Handler, routine in XA
 ;
 ; ************************************************************************************************
 
@@ -141,9 +143,9 @@ _GHLoop:
 		beq 	_GHExit
 		cmp 	#TKW_AT 					; have we found AT or TO
 		beq 	_GHCallHandler 				; update post & call the handler
-		cmp 	#TKW_TO
+		cmp 	#TKW_TO 					
 		beq 	_GHCallHandler 
-		cmp 	#TKW_FROM
+		cmp 	#TKW_FROM 					
 		beq 	_GHCPairSkip
 		cmp 	#TKW_TEXT
 		beq 	_GHText
@@ -155,6 +157,9 @@ _GHCheckTokens:
 		inx
 		lda 	_GHTokenTable,x
 		bne 	_GHCheckTokens
+		;
+		;		Hasn't matched any of those tokens, so the only other things is a coordinate pair.
+		;
 		dey
 _GHCPairSkip:	
 		iny		

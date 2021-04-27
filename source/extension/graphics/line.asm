@@ -4,6 +4,7 @@
 ;		Name:		line.asm
 ;		Purpose:	Line code
 ;		Created:	2nd April 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -43,7 +44,7 @@ LineHandler:
 		ldy 	#gY2-gX1
 		jsr 	CompareCoordsEq
 		bne 	_LHLineDrawer
-_LHRectCode:
+_LHRectCode: 								; if x1=x2 or y1 = y2 (or both) use rect drawer
 		jmp 	RectHandler
 		;
 _LHLineDrawer:

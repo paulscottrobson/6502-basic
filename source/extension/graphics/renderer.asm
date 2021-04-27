@@ -4,6 +4,7 @@
 ;		Name:		renderer.asm
 ;		Purpose:	Renderer for image/bitmap
 ;		Created:	3rd April 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -47,7 +48,7 @@ ImageRenderer:
 		;
 		txa 								; check X coordinate
 		ldx 	#0 							; offset to check position/limit.
-		jsr 	RenderCheckRange 					
+		jsr 	RenderCheckRange 			; this checks and throws error if off screen.
 		lda 	RenderHeight 				; check Y coordinate
 		ldx 	#2
 		jsr 	RenderCheckRange
@@ -56,9 +57,9 @@ ImageRenderer:
 _IRLoop1:
 		.pshy
 		jsr 	RenderFlipXY 				; flip X/Y for the correct vertical row.
-		jsr 	CallRenderFunction 			; fill the rendering cache.
+		jsr 	CallRenderFunction 			; fill the rendering cache for this row.
 		.puly
-		ldx 	gdSize 						; number of times to do the row.
+		ldx 	gdSize 						; number of times to do the row is the scale value
 _IRLoop2:
 		jsr 	RenderDrawRow 				; draw one row.
 		dex 								; scale # times.
@@ -217,6 +218,7 @@ _RCRNoAdd:
 
 _RCRValue:		
 		.throw 	BadValue
+		
 ; ************************************************************************************************
 ;
 ;								Call the rendering function

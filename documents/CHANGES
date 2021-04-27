@@ -168,3 +168,4 @@ vary too much. Text source only.
 =========
 - BUG: sound:a$=get$() occasionally produced type mismatch (X Corruption)
 - Mode change no longer silences sound (now silenced in ForceMode0)  
+- Review a pile of graphics and extension code, stabilised as 0.32

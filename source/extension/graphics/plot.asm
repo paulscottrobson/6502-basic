@@ -3,7 +3,8 @@
 ;
 ;		Name:		plot.asm
 ;		Purpose:	Plot code
-;		Created:	2ndt April 2021
+;		Created:	2nd April 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -31,7 +32,7 @@ Command_Plot: 	;; [plot]
 
 PlotHandler:
 		ldy 	#gX2-gX1
-		jsr 	SetupXY 					; set up X1,Y1 to draw.
+		jsr 	SetupXY 					; set up X2,Y2 to draw e.g. plot to 100,100
 		bcs 	_PHExit 					; off screen, return with CS.
 		jsr 	gdPlotInk 					; pixel in Ink.
 _PHExit:rts

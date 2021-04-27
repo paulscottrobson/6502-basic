@@ -4,6 +4,7 @@
 ;		Name:		utils.asm
 ;		Purpose:	Drawing Utilities
 ;		Created:	1st April 2021
+;		Reviewed: 	27th April 2021
 ;		Author:		Paul Robson (paul@robsons.org.uk)
 ;
 ; ************************************************************************************************
@@ -18,18 +19,19 @@
 ; ************************************************************************************************
 
 SetupXY:
-		lda 	gX1,y
+		lda 	gX1,y 						; set the X position
 		ldx 	gX1+1,y
 		jsr 	gdSetX
-		lda 	gY1,y
+		lda 	gY1,y 						; set the Y position
 		ldx 	gY1+1,y
 		jsr 	gdSetY
-		jsr 	gdSetDrawPosition
+		jsr 	gdSetDrawPosition 			; recalculate and set up Vera.
 		rts		
 
 ; ************************************************************************************************
 ;
 ;					>= Compare any 2 coords X or Y offsets from X1/X2 in XY
+;								  (Signed and unsigned versions)
 ;
 ; ************************************************************************************************
 
@@ -81,7 +83,7 @@ BoxSort:
 
 ; ************************************************************************************************
 ;
-;		Compare coordinate at X with coordinate at Y
+;					Compare coordinate at X with coordinate at Y (unsigned)
 ;
 ; ************************************************************************************************
 
@@ -94,7 +96,7 @@ GCompareCoords:
 
 ; ************************************************************************************************
 ;
-;		Swap coordinates at X & Y if CS e.g. X >= Y so smallest first.
+;				 Swap coordinates at X & Y if CS e.g. X >= Y so smallest first.
 ;
 ; ************************************************************************************************
 
@@ -116,6 +118,5 @@ GSwapCoords:
 		sta 	gx1+1,y
 GSMMCExit:
 		rts
-
 
 		.send code

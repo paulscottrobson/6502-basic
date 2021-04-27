@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Walias -Wmacro-prefix -Wall -q -c -L ../source/bin/basic.lst -l ../source/bin/basic.lbl -Wall -o ../source/bin/stub.prg basic.asm
-; Tue Apr 27 07:58:39 2021
+; Tue Apr 27 18:18:12 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -1777,7 +1777,7 @@
 .18d9	9d e8 0b	sta $0be8,x			sta 	gStartStorage,x
 .18dc	ca		dex				dex
 .18dd	10 fa		bpl $18d9			bpl 	_GRSLoop
-.18df	a9 01		lda #$01			lda 	#1
+.18df	a9 01		lda #$01			lda 	#1 	 						; ink and size both 1, sensible defaults.
 .18e1	8d fe 0b	sta $0bfe			sta 	gdInk
 .18e4	8d 00 0c	sta $0c00			sta 	gdSize
 .18e7	fa		plx				plx
@@ -1939,11 +1939,11 @@
 .19fc	a0 06		ldy #$06			ldy 	#gY2-gX1
 .19fe	20 9d 1c	jsr $1c9d			jsr 	CompareCoordsEq
 .1a01	d0 04		bne $1a07			bne 	_LHNextPixel
-.1a03	20 8c 1d	jsr $1d8c			jsr 	gdPlotInk 					; plot the last pixel.
+.1a03	20 4a 1d	jsr $1d4a			jsr 	gdPlotInk 					; plot the last pixel.
 .1a06					_LHExit:
 .1a06	60		rts				rts
 .1a07					_LHNextPixel:
-.1a07	20 8c 1d	jsr $1d8c			jsr 	gdPlotInk 					; plot the pixel.
+.1a07	20 4a 1d	jsr $1d4a			jsr 	gdPlotInk 					; plot the pixel.
 .1a0a	20 64 1a	jsr $1a64			jsr 	BresenhamIteration 			; do one bresenham iteration calculation
 .1a0d	4c f1 19	jmp $19f1			jmp  	_LHDrawLoop 				; and loop back if okay
 .1a10					BresenhamInitialise:
@@ -2052,9 +2052,9 @@
 .1ae4	60		rts				rts
 .1ae5					PlotHandler:
 .1ae5	a0 04		ldy #$04			ldy 	#gX2-gX1
-.1ae7	20 72 1c	jsr $1c72			jsr 	SetupXY 					; set up X1,Y1 to draw.
+.1ae7	20 72 1c	jsr $1c72			jsr 	SetupXY 					; set up X2,Y2 to draw e.g. plot to 100,100
 .1aea	b0 03		bcs $1aef			bcs 	_PHExit 					; off screen, return with CS.
-.1aec	20 8c 1d	jsr $1d8c			jsr 	gdPlotInk 					; pixel in Ink.
+.1aec	20 4a 1d	jsr $1d4a			jsr 	gdPlotInk 					; pixel in Ink.
 .1aef	60		rts		_PHExit:rts
 
 ;******  Return to file: extension/extension.asm
@@ -2075,10 +2075,11 @@
 .1afc	20 e9 18	jsr $18e9			jsr 	GHandler
 .1aff	60		rts				rts
 .1b00					FrameHandler:
-.1b00	a9 01		lda #$01			lda 	#1
-.1b02	d0 02		bne $1b06			bne 	RectHandler+2
+.1b00	a9 01		lda #$01			lda 	#1 							; set frame flag to 1/0 on entry.
+.1b02	d0 02		bne $1b06			bne 	FRHandlerMain
 .1b04					RectHandler:
 .1b04	a9 00		lda #$00			lda 	#0
+.1b06					FRHandlerMain:
 .1b06	8d 0a 0c	sta $0c0a			sta 	frameFlag
 .1b09	20 ac 1c	jsr $1cac			jsr 	BoxSort 					; sort so topleft/bottom right
 .1b0c	20 35 1b	jsr $1b35			jsr 	DrawBoxPart 				; solid first line
@@ -2088,8 +2089,8 @@
 .1b13	20 88 1c	jsr $1c88			jsr 	CompareCoords
 .1b16	b0 19		bcs $1b31			bcs 	_FHLastLine 				; Y1 >= Y2 then end.
 .1b18	ad 0a 0c	lda $0c0a			lda 	frameFlag 					; identify solid or frame ?
-.1b1b	f0 06		beq $1b23			beq 	_FHIsSolidRect
-.1b1d	20 4e 1b	jsr $1b4e			jsr 	DrawBoxEnds
+.1b1b	f0 06		beq $1b23			beq 	_FHIsSolidRect 				; if solid, draw the solid line.
+.1b1d	20 4e 1b	jsr $1b4e			jsr 	DrawBoxEnds					; otherwise draw just the start and end
 .1b20	4c 26 1b	jmp $1b26			jmp 	_FHNext
 .1b23					_FHIsSolidRect:
 .1b23	20 35 1b	jsr $1b35			jsr 	DrawBoxPart
@@ -2118,12 +2119,12 @@
 .1b4e					DrawBoxEnds:
 .1b4e	a0 00		ldy #$00			ldy 	#gX1-gX1
 .1b50	20 72 1c	jsr $1c72			jsr 	SetupXY 					; set up X1,Y1 to draw.
-.1b53	20 8c 1d	jsr $1d8c			jsr 	gdPlotInk 					; LH end.
+.1b53	20 4a 1d	jsr $1d4a			jsr 	gdPlotInk 					; LH end.
 .1b56	ad f0 0b	lda $0bf0			lda 	gX2 						; set position to X2,Y1
 .1b59	ae f1 0b	ldx $0bf1			ldx 	gX2+1
 .1b5c	20 39 1e	jsr $1e39			jsr 	gdSetX
-.1b5f	20 4a 1d	jsr $1d4a			jsr		gdSetDrawPosition 			; update position.
-.1b62	20 8c 1d	jsr $1d8c			jsr 	gdPlotInk 					; RH end.
+.1b5f	20 5c 1d	jsr $1d5c			jsr		gdSetDrawPosition 			; update position.
+.1b62	20 4a 1d	jsr $1d4a			jsr 	gdPlotInk 					; RH end.
 .1b65	60		rts				rts
 .1b66					DrawHorizontalLine:
 .1b66	86 32		stx $32				stx 	tempShort
@@ -2157,7 +2158,7 @@
 .1b82	8c 0e 0c	sty $0c0e			sty 	RenderHeight
 .1b85	8a		txa				txa 								; check X coordinate
 .1b86	a2 00		ldx #$00			ldx 	#0 							; offset to check position/limit.
-.1b88	20 21 1c	jsr $1c21			jsr 	RenderCheckRange
+.1b88	20 21 1c	jsr $1c21			jsr 	RenderCheckRange 			; this checks and throws error if off screen.
 .1b8b	ad 0e 0c	lda $0c0e			lda 	RenderHeight 				; check Y coordinate
 .1b8e	a2 02		ldx #$02			ldx 	#2
 .1b90	20 21 1c	jsr $1c21			jsr 	RenderCheckRange
@@ -2165,9 +2166,9 @@
 .1b95					_IRLoop1:
 .1b95	5a		phy				phy
 .1b96	20 fd 1b	jsr $1bfd			jsr 	RenderFlipXY 				; flip X/Y for the correct vertical row.
-.1b99	20 5a 1c	jsr $1c5a			jsr 	CallRenderFunction 			; fill the rendering cache.
+.1b99	20 5a 1c	jsr $1c5a			jsr 	CallRenderFunction 			; fill the rendering cache for this row.
 .1b9c	7a		ply				ply
-.1b9d	ae 00 0c	ldx $0c00			ldx 	gdSize 						; number of times to do the row.
+.1b9d	ae 00 0c	ldx $0c00			ldx 	gdSize 						; number of times to do the row is the scale value
 .1ba0					_IRLoop2:
 .1ba0	20 ad 1b	jsr $1bad			jsr 	RenderDrawRow 				; draw one row.
 .1ba3	ca		dex				dex 								; scale # times.
@@ -2203,7 +2204,7 @@
 .1bd5					_RDPSLoop:
 .1bd5	c9 00		cmp #$00			cmp 	#0							; don't draw if $00
 .1bd7	f0 03		beq $1bdc			beq 	_RDPSNoDraw
-.1bd9	20 8f 1d	jsr $1d8f			jsr 	gdPlotA 					; draw A otherwise
+.1bd9	20 4d 1d	jsr $1d4d			jsr 	gdPlotA 					; draw A otherwise
 .1bdc					_RDPSNoDraw:
 .1bdc	48		pha				pha 								; move right
 .1bdd	20 ed 1c	jsr $1ced			jsr 	gdMvRight
@@ -2303,13 +2304,13 @@
 ;******  Processing file: extension/graphics/utils.asm
 
 .1c72					SetupXY:
-.1c72	b9 ec 0b	lda $0bec,y			lda 	gX1,y
+.1c72	b9 ec 0b	lda $0bec,y			lda 	gX1,y 						; set the X position
 .1c75	be ed 0b	ldx $0bed,y			ldx 	gX1+1,y
 .1c78	20 39 1e	jsr $1e39			jsr 	gdSetX
-.1c7b	b9 ee 0b	lda $0bee,y			lda 	gY1,y
+.1c7b	b9 ee 0b	lda $0bee,y			lda 	gY1,y 						; set the Y position
 .1c7e	be ef 0b	ldx $0bef,y			ldx 	gY1+1,y
 .1c81	20 40 1e	jsr $1e40			jsr 	gdSetY
-.1c84	20 4a 1d	jsr $1d4a			jsr 	gdSetDrawPosition
+.1c84	20 5c 1d	jsr $1d5c			jsr 	gdSetDrawPosition 			; recalculate and set up Vera.
 .1c87	60		rts				rts
 .1c88					CompareCoords:
 .1c88	bd ec 0b	lda $0bec,x			lda 	gX1,x
@@ -2414,48 +2415,48 @@
 .1d44	69 00		adc #$00			adc 	#0
 .1d46	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1d49	60		rts				rts
-.1d4a					gdSetDrawPosition:
-.1d4a	a9 00		lda #$00			lda 	#0 							; temp0 is LSB of result start as 256 x Y
-.1d4c	85 2a		sta $2a				sta 	temp0
-.1d4e	ad 56 0c	lda $0c56			lda 	gdYPos
-.1d51	85 2b		sta $2b				sta 	temp0+1
-.1d53	46 2b		lsr $2b				lsr 	temp0+1 					; / 4 so temp0 is YC x 64
-.1d55	66 2a		ror $2a				ror 	temp0
-.1d57	46 2b		lsr $2b				lsr 	temp0+1
-.1d59	66 2a		ror $2a				ror 	temp0
-.1d5b	ad 56 0c	lda $0c56			lda 	gdYPos 						; add 256 x Y => 320 * Y < 64k
-.1d5e	18		clc				clc
-.1d5f	65 2b		adc $2b				adc 	temp0+1
-.1d61	85 2b		sta $2b				sta 	temp0+1 					; temp0 = 320 x Y now add X => pixeloffset
-.1d63	18		clc				clc
-.1d64	a5 2a		lda $2a				lda 	temp0
-.1d66	6d 54 0c	adc $0c54			adc 	gdXPos
-.1d69	85 2a		sta $2a				sta 	temp0
-.1d6b	a5 2b		lda $2b				lda 	temp0+1
-.1d6d	6d 55 0c	adc $0c55			adc 	gdXPos+1
-.1d70	85 2b		sta $2b				sta 	temp0+1
-.1d72	18		clc				clc
-.1d73	ad 51 0c	lda $0c51			lda 	gdBitmapAddress
-.1d76	65 2a		adc $2a				adc 	temp0
-.1d78	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
-.1d7b	ad 52 0c	lda $0c52			lda 	gdBitmapAddress+1
-.1d7e	65 2b		adc $2b				adc 	temp0+1
-.1d80	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
-.1d83	ad 53 0c	lda $0c53			lda 	gdBitmapAddress+2
-.1d86	69 00		adc #$00			adc 	#0
-.1d88	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
-.1d8b	60		rts				rts
-.1d8c					gdPlotInk:
-.1d8c	ad fe 0b	lda $0bfe			lda 	gdInk
-.1d8f					gdPlotA:
-.1d8f	8d 23 9f	sta $9f23			sta 	X16VeraData0
-.1d92	60		rts				rts
-.1d93					gdPlotPaper:
-.1d93	ad ff 0b	lda $0bff			lda 	gdPaper
-.1d96	c9 ff		cmp #$ff			cmp 	#$FF
-.1d98	f0 03		beq $1d9d			beq 	_gdPPSkip
-.1d9a	8d 23 9f	sta $9f23			sta 	X16VeraData0
-.1d9d					_gdPPSkip:
+.1d4a					gdPlotInk:
+.1d4a	ad fe 0b	lda $0bfe			lda 	gdInk
+.1d4d					gdPlotA:
+.1d4d	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.1d50	60		rts				rts
+.1d51					gdPlotPaper:
+.1d51	ad ff 0b	lda $0bff			lda 	gdPaper
+.1d54	c9 ff		cmp #$ff			cmp 	#$FF
+.1d56	f0 03		beq $1d5b			beq 	_gdPPSkip
+.1d58	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.1d5b					_gdPPSkip:
+.1d5b	60		rts				rts
+.1d5c					gdSetDrawPosition:
+.1d5c	a9 00		lda #$00			lda 	#0 							; temp0 is LSB of result start as 256 x Y
+.1d5e	85 2a		sta $2a				sta 	temp0
+.1d60	ad 56 0c	lda $0c56			lda 	gdYPos
+.1d63	85 2b		sta $2b				sta 	temp0+1
+.1d65	46 2b		lsr $2b				lsr 	temp0+1 					; / 4 so temp0 is YC x 64
+.1d67	66 2a		ror $2a				ror 	temp0
+.1d69	46 2b		lsr $2b				lsr 	temp0+1
+.1d6b	66 2a		ror $2a				ror 	temp0
+.1d6d	ad 56 0c	lda $0c56			lda 	gdYPos 						; add 256 x Y => 320 * Y < 64k
+.1d70	18		clc				clc
+.1d71	65 2b		adc $2b				adc 	temp0+1
+.1d73	85 2b		sta $2b				sta 	temp0+1 					; temp0 = 320 x Y now add X => pixeloffset
+.1d75	18		clc				clc
+.1d76	a5 2a		lda $2a				lda 	temp0
+.1d78	6d 54 0c	adc $0c54			adc 	gdXPos
+.1d7b	85 2a		sta $2a				sta 	temp0
+.1d7d	a5 2b		lda $2b				lda 	temp0+1
+.1d7f	6d 55 0c	adc $0c55			adc 	gdXPos+1
+.1d82	85 2b		sta $2b				sta 	temp0+1
+.1d84	18		clc				clc 								; write bitmapaddress + temp0 to the vera address register
+.1d85	ad 51 0c	lda $0c51			lda 	gdBitmapAddress
+.1d88	65 2a		adc $2a				adc 	temp0
+.1d8a	8d 20 9f	sta $9f20			sta 	X16VeraAddLow
+.1d8d	ad 52 0c	lda $0c52			lda 	gdBitmapAddress+1
+.1d90	65 2b		adc $2b				adc 	temp0+1
+.1d92	8d 21 9f	sta $9f21			sta 	X16VeraAddMed
+.1d95	ad 53 0c	lda $0c53			lda 	gdBitmapAddress+2
+.1d98	69 00		adc #$00			adc 	#0
+.1d9a	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1d9d	60		rts				rts
 
 ;******  Return to file: extension/extension.asm
@@ -2502,11 +2503,11 @@
 .1dcf	fa		plx				plx
 .1dd0	60		rts				rts
 .1dd1					gdCheckBitmap:
-.1dd1	bd 2d 9f	lda $9f2d,x			lda 	X16VeraLayerConfig,x 					; look at bitmap bit.
+.1dd1	bd 2d 9f	lda $9f2d,x			lda 	X16VeraLayerConfig,x 		; look at bitmap bit.
 .1dd4	c9 07		cmp #$07			cmp 	#7 							; must be zero map size, bitmap and 8bpp
 .1dd6	d0 14		bne $1dec			bne 	_gdCBFail
 .1dd8	ee 50 0c	inc $0c50			inc 	gdEnabled 					; set the enabled flag to non zero.
-.1ddb	bd 2f 9f	lda $9f2f,x			lda 	X16VeraLayerTileBase,x 					; this is the bitmap address / 2
+.1ddb	bd 2f 9f	lda $9f2f,x			lda 	X16VeraLayerTileBase,x 		; this is the bitmap address / 2
 .1dde	0a		asl a				asl 	a
 .1ddf	8d 52 0c	sta $0c52			sta 	gdBitmapAddress+1
 .1de2	69 00		adc #$00			adc 	#$00 						; set to no move, updated manually.
@@ -2517,23 +2518,23 @@
 .1dec	18		clc				clc
 .1ded	60		rts				rts
 .1dee					CommandClg:
-.1dee	b1 28		lda ($28),y			lda 	(codePtr),y
+.1dee	b1 28		lda ($28),y			lda 	(codePtr),y 				; CLG PAPER x
 .1df0	c9 e2		cmp #$e2			cmp 	#TKW_PAPER
 .1df2	d0 0d		bne $1e01			bne 	_CCLClear
-.1df4	c8		iny				iny
-.1df5	a9 00		lda #$00			lda 	#0
+.1df4	c8		iny				iny 								; skip paper
+.1df5	a9 00		lda #$00			lda 	#0 							; get paper and update
 .1df7	a2 0c		ldx #$0c		ldx	#12
 .1df9	20 23 40	jsr $4023		jsr	mainHandler
 .1dfc	a5 98		lda $98				lda 	esInt0
 .1dfe	8d ff 0b	sta $0bff			sta 	gdPaper
 .1e01					_CCLClear:
-.1e01	20 05 1e	jsr $1e05			jsr 	gdClearGraphics
+.1e01	20 05 1e	jsr $1e05			jsr 	gdClearGraphics 			; call graphics clear code.
 .1e04	60		rts				rts
 .1e05					gdClearGraphics:
 .1e05	da		phx				phx
 .1e06	5a		phy				phy
-.1e07	ad 50 0c	lda $0c50			lda 	gdEnabled 					; screen enabled
-.1e0a	f0 2a		beq $1e36			beq 	_gdCGExit
+.1e07	ad 50 0c	lda $0c50			lda 	gdEnabled 					; bitmap screen enabled ?
+.1e0a	f0 2a		beq $1e36			beq 	_gdCGExit 					; no, then can't clear
 .1e0c	a9 40		lda #$40			lda 	#(GrWidth) & $FF
 .1e0e	8d 03 0c	sta $0c03			sta 	gdXLimit
 .1e11	a9 01		lda #$01			lda 	#(GrWidth) >> 8
@@ -2546,11 +2547,11 @@
 .1e22	aa		tax				tax
 .1e23	20 39 1e	jsr $1e39			jsr 	gdSetX
 .1e26	20 40 1e	jsr $1e40			jsr 	gdSetY
-.1e29	20 4a 1d	jsr $1d4a			jsr 	gdSetDrawPosition 			; set the draw position.
+.1e29	20 5c 1d	jsr $1d5c			jsr 	gdSetDrawPosition 			; set the draw position.
 .1e2c	a0 fa		ldy #$fa			ldy 	#$FA						; 320 x 200 pixels = $FA00
 .1e2e	a2 00		ldx #$00			ldx 	#0
 .1e30	ad ff 0b	lda $0bff			lda 	gdPaper
-.1e33	20 47 1e	jsr $1e47			jsr 	gdOptHorizontalWriter
+.1e33	20 47 1e	jsr $1e47			jsr 	gdOptHorizontalWriter		; call the optimised horizontal writer to do $FA00 of A
 .1e36					_gdCGExit:
 .1e36	7a		ply				ply
 .1e37	fa		plx				plx
@@ -2570,12 +2571,12 @@
 .1e4d	8d 22 9f	sta $9f22			sta 	X16VeraAddHigh
 .1e50	68		pla				pla
 .1e51					_gdOLoop:
-.1e51	8d 23 9f	sta $9f23			sta 	X16VeraData0
-.1e54	e0 00		cpx #$00			cpx 	#0
-.1e56	d0 05		bne $1e5d			bne 	_gdNoBorrow
+.1e51	8d 23 9f	sta $9f23			sta 	X16VeraData0						; write colour out.
+.1e54	e0 00		cpx #$00			cpx 	#0 									; exit if X = Y = 0
+.1e56	d0 05		bne $1e5d			bne 	_gdNoBorrow 						; decrement YX in here.
 .1e58	c0 00		cpy #$00			cpy 	#0
 .1e5a	f0 05		beq $1e61			beq 	_gdExit
-.1e5c	88		dey				dey
+.1e5c	88		dey				dey 			 							; X 0 so borrow from Y
 .1e5d					_gdNoBorrow:
 .1e5d	ca		dex				dex
 .1e5e	4c 51 1e	jmp $1e51			jmp 	_gdOLoop
@@ -3664,7 +3665,7 @@
 .250d	20 d4 18	jsr $18d4			jsr 	GResetStorage 				; reset the graphics drawing storage.
 .2510	60		rts				rts
 .2511					CMExpandMode:
-.2511	a5 98		lda $98				lda 	esInt0 						; get mode number
+.2511	a5 98		lda $98				lda 	esInt0 						; get mode number, check it is valid.
 .2513	c9 04		cmp #$04			cmp 	#(CMEndModeList-CMModeList) >> 2
 .2515	b0 14		bcs $252b			bcs 	_CMModeError
 .2517	0a		asl a				asl 	a 							; x 4 into X
@@ -3673,7 +3674,7 @@
 .251a	5a		phy				phy
 .251b	a0 00		ldy #$00			ldy 	#0
 .251d					_CMEMCopy:
-.251d	bd 30 25	lda $2530,x			lda 	CMModeList,x
+.251d	bd 30 25	lda $2530,x			lda 	CMModeList,x 				; copy defined mode data in , 4 bytes
 .2520	99 d8 0c	sta $0cd8,y			sta 	currentMode,y
 .2523	e8		inx				inx
 .2524	c8		iny				iny
@@ -4018,7 +4019,7 @@
 .2739	20 c7 27	jsr $27c7			jsr 	LVFGet 						; get palette id.
 .273c	20 8d 25	jsr $258d			jsr 	PointToPaletteA 			; in palette.asm
 .273f	20 c7 27	jsr $27c7			jsr 	LVFGet 						; copy 12 bit palette data in.
-.2742	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.2742	8d 23 9f	sta $9f23			sta 	X16VeraData0 				; and send to Vera
 .2745	20 c7 27	jsr $27c7			jsr 	LVFGet
 .2748	29 0f		and #$0f			and 	#$0F
 .274a	8d 23 9f	sta $9f23			sta 	X16VeraData0
@@ -4044,14 +4045,14 @@
 .276d	68		pla				pla 								; restore the data held in the first byte
 .276e	9d dd 0c	sta $0cdd,x			sta 	imageInfo,x 				; and write into the sprite image table.
 .2771					_LVRAlignVRAM:
-.2771	ad 20 9f	lda $9f20			lda 	X16VeraAddLow 						; check VRAM on 32 byte boundary
-.2774	29 1f		and #$1f			and 	#$1F
+.2771	ad 20 9f	lda $9f20			lda 	X16VeraAddLow 				; check VRAM on 32 byte boundary
+.2774	29 1f		and #$1f			and 	#$1F 						; sprite image addresses are limited to this.
 .2776	f0 07		beq $277f			beq 	_LVRAligned
 .2778	a9 00		lda #$00			lda 	#$00
 .277a	8d 23 9f	sta $9f23			sta 	X16VeraData0
 .277d	f0 f2		beq $2771			beq 	_LVRAlignVRAM
 .277f					_LVRAligned:
-.277f	ad 22 9f	lda $9f22			lda 	X16VeraAddHigh 						; put address/32 in sprite image table
+.277f	ad 22 9f	lda $9f22			lda 	X16VeraAddHigh 				; put address/32 in sprite image table
 .2782	4a		lsr a				lsr 	a 	 						; first halve into temp1
 .2783	ad 21 9f	lda $9f21			lda 	X16VeraAddMed
 .2786	6a		ror a				ror 	a
@@ -4080,11 +4081,11 @@
 .27b0	c9 40		cmp #$40			cmp 	#$40
 .27b2	90 a3		bcc $2757			bcc 	_LVRLCopyX 					; 00-3F use mode 0's copying code.
 .27b4					_LVRRLEGroup:
-.27b4	29 3f		and #$3f			and 	#$3F
+.27b4	29 3f		and #$3f			and 	#$3F 						; the number of copies of the following byte.
 .27b6	aa		tax				tax
-.27b7	20 c7 27	jsr $27c7			jsr 	LVFGet
+.27b7	20 c7 27	jsr $27c7			jsr 	LVFGet 						; get the byte to copy
 .27ba					_LVRLEGroupLoop:
-.27ba	8d 23 9f	sta $9f23			sta 	X16VeraData0
+.27ba	8d 23 9f	sta $9f23			sta 	X16VeraData0 				; write it out X times
 .27bd	ca		dex				dex
 .27be	d0 fa		bne $27ba			bne 	_LVRLEGroupLoop
 .27c0	4c ed 26	jmp $26ed			jmp 	_LVRLoop
