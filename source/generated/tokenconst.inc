@@ -113,6 +113,7 @@ TKW_HASH                     = $e7 ; #
 TKW_CLEAR                    = $e8 ; clear
 TKW_TEXT                     = $e9 ; text
 TKW_TYPE                     = $ea ; type
+TKW_TIME                     = $eb ; time
 TKW_LOAD                     = $86 ; load
 TKW_SAVE                     = $87 ; save
 TKW_LIST                     = $88 ; list

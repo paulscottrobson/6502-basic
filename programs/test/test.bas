@@ -21,7 +21,6 @@ while clock < 60
 	if c$ = "K" and yPlayer > 0 then proc move(0,-1)
 	if c$ = "M" and yPlayer < ySize-1 then proc move(0,1)
 wend
-list ,1400
 end
 '
 defproc setup(n)

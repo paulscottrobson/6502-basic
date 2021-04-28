@@ -44,6 +44,10 @@ _FMCheck:
 CommandMode:	;; [mode]
 		lda 	#0 							; get mode number
 		.main_evaluateint
+		jsr 	SetModeTOS
+		rts
+
+SetModeTOS:		
 		;
 		lda 	esInt3 						; these 3 bits goto $9F29 as Sprites/Layer enable
 		and 	#$70 						; so if they are all zero then this is likely a mode number

@@ -109,3 +109,4 @@ Group0Vectors:
 	.word	CommandClear             ; $e8 clear
 	.word	TKErr16                  ; $e9 text
 	.word	TKErr17                  ; $ea type
+	.word	TKErr13                  ; $eb time

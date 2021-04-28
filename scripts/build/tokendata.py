@@ -62,7 +62,7 @@ class TokenData(object):
 			print	data	image 	at 		flip
 			assert 	poke 	doke 	loke 	ink
 			paper 	cls 	locate 	.		from
-			# 		clear 	text 	type
+			# 		clear 	text 	type 	time
 		##
 		##		Put these in group 1.
 		##

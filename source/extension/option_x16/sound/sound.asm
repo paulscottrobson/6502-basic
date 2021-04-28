@@ -121,7 +121,7 @@ _CSBadValue:
 		;		Token table, order same as data above.
 		;
 _ComSoundTokens:
-		.byte 	TKW_TO,TKW_FOR,TKW_TYPE,TKW_STEP
+		.byte 	TKW_TO,TKW_TIME,TKW_TYPE,TKW_STEP
 		;
 		;		Make sound out of the data.
 		;

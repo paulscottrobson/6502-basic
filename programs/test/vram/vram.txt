@@ -19,7 +19,7 @@
 ;		Move sets the VRAM write pointer, so you can specify certain tables or graphics
 ;		go in a particular space. No default.
 ;
-MOVE	$4000 
+MOVE	$10000 
 ; -----------------------------------------------------------------------------------
 ;
 ;		Define a colour or palette. Colour sprite sets a default palette between 240
