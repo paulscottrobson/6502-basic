@@ -174,3 +174,4 @@ vary too much. Text source only.
 =========
 - Improved build system.
 - Changed FOR in SOUND to TIME (was stuffing up indenting)
+- Made very minor improvements to old 'grabber' game and checked the build works.
