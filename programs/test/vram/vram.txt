@@ -1,0 +1,74 @@
+; ************************************************************************************************
+; ************************************************************************************************
+;
+;		Name:		vram.txt
+;		Purpose:	Defines the contents of the VRAM file(s)
+;		Created:	28th March 2021
+;		Author:		Paul Robson (paul@robsons.org.uk)
+;
+; ************************************************************************************************
+; ************************************************************************************************
+;
+;		Lines beginning with semicolons are comments.
+;		Case is ignored. 
+;		Blank lines are ignored.
+;		Constants can be $<hex> or <decimal>
+;
+; -----------------------------------------------------------------------------------
+;
+;		Move sets the VRAM write pointer, so you can specify certain tables or graphics
+;		go in a particular space. No default.
+;
+MOVE	$4000 
+; -----------------------------------------------------------------------------------
+;
+;		Define a colour or palette. Colour sprite sets a default palette between 240
+;		and 255 which is used for the 4 bit sprite. Colours can also be defined 
+;		individually ; 4 bit sprites must use 241-255 but the actual colours can be
+;		anything you like. (240 is transparent), so the commented out line 
+;		defines colour 240 ($F0) as Orange (Red=$F,Green=$8,Blue=$0). Because I am nice
+;		the spelling COLOR is also supported.
+;
+COLOUR 	sprite
+;
+; COLOUR $F0,$F80
+; -----------------------------------------------------------------------------------
+;
+;		Set the current sprite image, width and height. Defaults are 0,16,16. This does
+;		not create a sprite. 
+;
+SPRITE 	2,32,32
+; -----------------------------------------------------------------------------------
+;
+;		Create a sprite image according to the current sprite number, width and height.
+;		The current sprite number is incremented. So these will be sprite images 2 + 3
+;		Images need to be readable by the Pillow library and have an alpha channel for
+;		transparency.
+;
+IMAGE 	mario.png
+; -----------------------------------------------------------------------------------
+;
+;		Set the number of bits in the tile or sprite. Sprites can be 4 or 8 bits. 
+;		Defaults to 4.
+;
+BITS 	8
+IMAGE 	mario.png
+;
+SPRITE 	4,16,32
+IMAGE   box.png
+;
+; -----------------------------------------------------------------------------------
+;
+;		We're going to import a sheet. This is preparatory. The first two coordinates
+;		are the top left of the first graphic. The next 2 are the spacing between each
+;		graphic (here, they are stuck together). The last 2 are the size of each graphic.
+;
+SHEET 	sheet.png,0,0,16,16,16,16
+;
+; -----------------------------------------------------------------------------------
+;
+;		We set the sprite position and size, then import the range given, which is
+;		the coordinate of the first one as a grid, and the count across and count down.
+;		
+SPRITE 	16,16,16
+IMPORT 	0,0,8,4

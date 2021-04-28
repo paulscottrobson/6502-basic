@@ -11,6 +11,8 @@ Something like AMOS's Animation thing, animate basic movement, destroy ? looping
 
 Known Bugs
 ==========
+	Mode should do a clear screen as well (when called as instruction, not ForceMode0)
+
 	Tokeniser/Detokeniser needs to support % and a default type, which is hard coded at present.
 
 	DATA in odd places in structures won't work. May need own scanner.
