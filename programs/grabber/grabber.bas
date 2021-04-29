@@ -26,10 +26,10 @@ while clock < 60
 		clock = clock+1:proc draw.clock(clock)
 	endif
 	if event(moveEvent,8)
-		if joy.x() < 0 and xPlayer > 0 then proc move(-1,0)
-		if joy.x() > 0 and xPlayer < xSize-1 then proc move(1,0)
-		if joy.y() < 0 and yPlayer > 0 then proc move(0,-1)
-		if joy.y() > 0 and yPlayer < ySize-1 then proc move(0,1)
+		if joy.x(0) < 0 and xPlayer > 0 then proc move(-1,0)
+		if joy.x(0) > 0 and xPlayer < xSize-1 then proc move(1,0)
+		if joy.y(0) < 0 and yPlayer > 0 then proc move(0,-1)
+		if joy.y(0) > 0 and yPlayer < ySize-1 then proc move(0,1)
 	endif
 wend
 end
