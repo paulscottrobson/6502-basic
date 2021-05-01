@@ -124,6 +124,8 @@ _GRSLoop:
 GHandler:
 		stx 	gWordHandler+1 				; save code that draws the actual line or whatever.
 		sta 	gWordHandler
+		lda 	gdEnabled 					; check graphics available
+		beq 	_GHNoGraphics
 		lda 	#0							; default no text.
 		sta 	gdText+1
 		dey 								; predecrement
@@ -207,6 +209,8 @@ _GHText:
 		lda 	esInt1
 		sta 	gdText+1
 		jmp 	_GHLoop		
+_GHNoGraphics:
+		.throw 	NoGfx		
 ;
 ;		Token table used to identify element to update. 
 ;

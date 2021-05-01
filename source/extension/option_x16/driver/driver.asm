@@ -54,7 +54,6 @@ gdModeChanged:
 		.pshy
 		lda 	#0 							; zero the enabled flag.
 		sta 	gdEnabled
-
 		lda 	X16VeraHScale 				; requires $40 for H/V Scale
 		cmp 	#$40
 		bne 	_gdExit

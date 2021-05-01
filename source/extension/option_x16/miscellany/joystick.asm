@@ -26,7 +26,12 @@ Unary_JoyY:	;; [joy.y(]
 JoystickRead:
 		pha 								; save stack position
 		php 								; save test flag.
+
+		.main_evaluatesmall 				; get joystick controller #
+		pha
 		.main_checkrightparen 				; check )
+		.pulx
+		lda 	esInt0,x
 		jsr 	ReadJoystick 				; read it.
 		plp 								; get back axis
 		bcs 	_JRNoShift 					; if Y, shift right twice so accessing Y axis buttons
@@ -72,6 +77,14 @@ JoyReturn1: 								; return +1
 
 Unary_JButton: 	;; [joy.b(]
 		pha 								; save X on stack, put in X
+		.main_evaluatesmall 				; get device # and save on stack.
+		tax
+		lda 	esInt0,x
+		pha
+		txa
+		pha
+		.main_checkComma
+		pla
 		.main_evaluatesmall 				; evaluate button #
 		tax 								; get value to check, push on stack.
 		lda 	esInt0,x
@@ -82,6 +95,7 @@ Unary_JButton: 	;; [joy.b(]
 		.main_checkRightparen 				; check for )
 		;
 		.pulx 								; get count into X
+		pla 								; get device # into A
 		jsr 	ReadJoystick 				; joystick read
 _UJShift: 									; shift into carry button+5 times.
 		lsr 	a
@@ -101,9 +115,10 @@ _UJBadValue:
 ; ************************************************************************************************
 
 ReadJoystick:
+		sta 	tempShort
 		.pshx
 		.pshy
-		lda 	#0
+		lda 	tempShort
 		jsr 	X16KReadJoystick 						
 		cpy 	#0
 		bne 	_RJError
@@ -118,7 +133,8 @@ _RJNoBug:
 		eor 	#$FF 						; active 1 bit.
 		rts
 _RJError:
-		.throw 	Hardware
+		lda 	#0
+		beq 	_RJNoBug
 		.send 	code	
 
 		

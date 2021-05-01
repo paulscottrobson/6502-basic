@@ -1,11 +1,15 @@
 '
 '	"A Pong game based on the AY-3-8500"
 '
-mode 3
+mode 3:vload "data.vram"
 boardWidth = 50:rem "Size of boards back of football "
 gameType = 1: rem "0 tennis,1 soccer, 2 squash, 3 practice"
 proc Setup()
 proc DrawFrame(gameType)
+
+sprite 0 image 0 to 10,10
+sprite 1 image 1 to 110,10
+sprite 2 image 2 to 210,10
 a$ = get$()
 end
 '

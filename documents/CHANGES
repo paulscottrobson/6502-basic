@@ -175,3 +175,7 @@ vary too much. Text source only.
 - Improved build system.
 - Changed FOR in SOUND to TIME (was stuffing up indenting)
 - Made very minor improvements to old 'grabber' game and checked the build works.
+
+29/4/2021
+=========
+- Added initial parameter (device#) to joystick functions.

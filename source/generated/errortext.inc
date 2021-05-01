@@ -42,5 +42,6 @@ ErrorTextList:
 	.text 19,"Label changed value"
 	.text 18,"No Sprite Selected"
 	.text 8,"Hardware"
+	.text 21,"No graphics available"
 	.byte 0
 

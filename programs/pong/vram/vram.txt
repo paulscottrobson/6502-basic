@@ -1,3 +1,8 @@
-;
-;		Empty , generates a two byte file you can ignore.
-;
+MOVE $4000
+COLOUR 	sprite
+SPRITE 	0,8,8
+IMAGE 	ball.png
+SPRITE 	1,8,16
+IMAGE 	bat1.png
+SPRITE 	2,8,32
+IMAGE 	bat2.png

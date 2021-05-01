@@ -55,3 +55,4 @@ Branch:Branch out of range
 Label:Label changed value
 NoSprite:No Sprite Selected
 Hardware:Hardware
+NoGfx:No graphics available
