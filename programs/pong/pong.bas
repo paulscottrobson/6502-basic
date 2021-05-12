@@ -3,14 +3,16 @@
 '
 mode 3:vload "data.vram"
 boardWidth = 50:rem "Size of boards back of football "
-gameType = 1: rem "0 tennis,1 soccer, 2 squash, 3 practice"
+gameType = 2: rem "0 tennis,1 soccer, 2 squash, 3 practice"
+batSize = 2: rem "2 large, 1 small"
 proc Setup()
-proc DrawFrame(gameType)
-
-sprite 0 image 0 to 10,10
-sprite 1 image 1 to 110,10
-sprite 2 image 2 to 210,10
-a$ = get$()
+proc NewGame()
+batEvent = 0:ballEvent = 0
+proc InitialiseBall()
+repeat
+	if event(batEvent,3) then proc UpdateBats()
+	if event(ballEvent,2) then proc UpdateBall()
+until xBall < 0 or xBall > 319
 end
 '
 '		"Draw the initial layout for the game dependent on type"
@@ -61,7 +63,8 @@ endproc
 '		"Set up"
 '
 defproc Setup()
-	dim patterns(10),score(2),py(2),sx(2)
+	dim patterns(10),score(2),px(2),px2(2),py(2)
+	py(1) = 70:py(2) = 200-py(1)
 	patterns(0) = &3F
 	patterns(1) = &0C
 	patterns(2) = &76
@@ -73,8 +76,90 @@ defproc Setup()
 	patterns(8) = &FF
 	patterns(9) = &5F
 	patterns(10) = &21
-	score(1) = 3:score(2) = 15
-	sx(1) = 134:sx(2) = 167
-	proc DrawScore(sx(1),score(1))
-	proc DrawScore(sx(2),score(2))
+endproc
+'
+'	"New Game"
+'
+defproc NewGame()
+	xBall = -1
+	proc DrawFrame(gameType)
+	score(1) = 0:score(2) = 0
+	twoBats = (gameType = 1)
+	onePlayer = (gameType = 3)
+	px(1) = 10:px(2) = 320-px(1)
+	if gameType >= 2 then px(1) = 240:px(2) = px(1)+10
+	px2(1) = 220:px2(2) = 320-px2(1)
+	sprite 1 image batSize
+	if onePlayer = 0 then sprite 2 image batSize 
+	if twoBats then sprite 3 image BatSize:sprite 4 image BatSize
+	batHH = 16:if batSize = 1 then batHH = 8
+	;line ink 242 from 0,100 to 319,100
+	proc UpdateBats():proc UpdateScore()
+endproc
+'
+'	"Update the bats"
+'
+defproc UpdateBats()
+	local i,y
+	for i = 1 to 2
+	y = py(i)+joy.y(0)*5
+	y = min(200-batHH,max(y,batHH))
+	py(i) = y
+	next i
+	sprite 1 to px(1),py(1)
+	if onePlayer = 0 then sprite 2 to px(2),py(2)
+	if twoBats then sprite 3 to px2(1),py(1):sprite 4 to px2(2),py(2)
+endproc
+'
+'	"Update the score"
+'
+defproc UpdateScore()
+	proc DrawScore(130,score(1))
+	if onePlayer = 0 
+		local x = 171:if score(2) < 10 then x = x-8
+		proc DrawScore(x,score(2))
+	endif
+endproc
+'
+'	"Initialise the Ball"
+'
+defproc InitialiseBall()
+	xiBall = 4:yiBall = 4:yBall = random(180)+10
+	if xBall < 0:xBall = 10:else:xBall = -10:xiBall = -xiBall:endif
+	sprite 0 image 0 to xBall,yBall
+endproc
+'
+'	"Update the ball"
+'
+defproc UpdateBall()
+	local i
+	xBall = xBall+xiBall:yBall = yBall+yiBall
+	if yBall <= 0 or yBall >= 200 then yiBall = -yiBall
+	if xBall <= 0 or xBall >= 320 then proc CheckBounce()
+	sprite 0 image 0 to xBall,yBall
+	if abs(px(1)-xBall) < 3 then proc BatCheck(py(1),1)
+	if abs(px(2)-xBall) < 3 then proc BatCheck(py(2),-1)
+	if twoBats
+		if abs(px2(1)-xBall) < 3 then proc BatCheck(py(1),1)
+		if abs(px2(2)-xBall) < 3 then proc BatCheck(py(2),-1)
+	endif
+endproc
+'
+'	"Check for Bounce"
+'
+defproc CheckBounce()
+	local bounce = false
+	if gameType = 1 and abs(yBall-100) > 100-boardWidth then bounce = true
+	if gameType >= 2 and xBall <= 0 then bounce = true
+	if bounce then xiBall = -xiBall:xBall = xBall+xiBall
+endproc
+'
+'	"Check for hitting bat"
+'
+defproc BatCheck(y,d)
+	if abs(y-yBall) <= batHH 
+		if gameType >= 2 then d = -1
+		xiBall = d * 4
+		yiBall = 4 * abs(y-yBall) / batHH+1:if y > yBall then yiBall = -yiBall
+	endif
 endproc
