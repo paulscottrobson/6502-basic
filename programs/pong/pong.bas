@@ -1,12 +1,16 @@
 '
 '	"A Pong game based on the AY-3-8500"
 '
+'	"Written by Paul Robson. First proper demo game"
+'
 mode 3:vload "data.vram"
 boardWidth = 50:rem "Size of boards back of football "
 gameType = 0: rem "0 tennis,1 soccer, 2 squash, 3 practice"
 batSize = 2: rem "2 large, 1 small"
 proc Setup()
-proc PlayGame()
+repeat
+	proc PlayGame()
+until false
 end
 
 defproc PlayGame()
@@ -17,17 +21,23 @@ defproc PlayGame()
 		repeat
 			if event(batEvent,3) then proc UpdateBats()
 			if event(ballEvent,2) then proc UpdateBall()
-		until xBall < 0 or xBall > 319
+			fire = joy.b(0,0)
+		until xBall < 0 or xBall > 319 or fire <> 0
 		if gameType = 2 
 			score(2-rallyCount mod 2) = score(2-rallyCount mod 2)+1
 		endif
 		if gameType < 2
 			if xiBall < 0:score(2) = score(2)+1:else:score(1) = score(1)+1:endif
 		endif
-		proc UpdateScore()
+		if fire = 0 then proc UpdateScore()
 		t1 = timer()+100
-		repeat:until timer() > t1
-	until score(1) = 15 or score(2) = 15 or gameType = 3
+		repeat:until timer() > t1 or fire <> 0
+	until score(1) = 15 or score(2) = 15 or gameType = 3 or fire <> 0
+	if fire <> 0
+		repeat:until joy.b(0,0) = 0
+		gameType = (gameType+1) and 3
+		if gameType = 0 then batSize = 3 - batSize
+	endif
 endproc
 '
 '		"Draw the initial layout for the game dependent on type"
@@ -96,6 +106,7 @@ endproc
 '	"New Game"
 '
 defproc NewGame()
+	clg
 	xiBall = -1
 	proc DrawFrame(gameType)
 	score(1) = 0:score(2) = 0
@@ -156,8 +167,8 @@ defproc UpdateBall()
 	if abs(px(1)-xBall) < 3 then proc BatCheck(py(1),1,1)
 	if abs(px(2)-xBall) < 3 then proc BatCheck(py(2),-1,2)
 	if twoBats
-		if abs(px2(1)-xBall) < 3 then proc BatCheck(py(1),1)
-		if abs(px2(2)-xBall) < 3 then proc BatCheck(py(2),-1)
+		if abs(px2(1)-xBall) < 3 then proc BatCheck(py(1),1,1)
+		if abs(px2(2)-xBall) < 3 then proc BatCheck(py(2),-1,2)
 	endif
 endproc
 '
